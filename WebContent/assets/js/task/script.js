@@ -18,7 +18,7 @@ $(function() {
             currentDay.setDate(sunday.getDate() + i);
             let yobi = currentDay.getDay();
             let dayNumber = currentDay.getDate();
-            let tdClass = (currentDay.getFullYear() === year && currentDay.getMonth() === month && dayNumber === day) ? 'today' : 
+            let tdClass = (currentDay.getFullYear() === year && currentDay.getMonth() === month && dayNumber === day) ? 'toda' : 
                           (yobi === 0) ? 'sun' : (yobi === 6) ? 'sat' : '';
 
             line.append($('<td>', { text: dayNumber, class: tdClass }));

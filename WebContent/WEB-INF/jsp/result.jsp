@@ -10,7 +10,7 @@
 </head>
 <body>
     <header>
-        <a href="Homer"><img src="assets/img/Vector.png" alt=""></a>
+        <a href="Home"><img src="assets/img/Vector.png" alt=""></a>
         <h1>達成率</h1>
     </header>
 
