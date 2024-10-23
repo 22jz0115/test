@@ -41,7 +41,7 @@
             <a class="link-button" href=""><p>カテゴリー</p></a>
             <a class="link-button" href="Priset"><p>プリセット</p></a>
             <a class="link-button" href="LifeHack"><p>ライフハック</p></a>
-            <a class="todaybutton" href=Task"><p>今日のタスク</p></a>
+            <a class="todaybutton" href=Task><p>今日のタスク</p></a>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
