@@ -1,0 +1,853 @@
+@charset "utf-8";
+
+/*共通----------------------------------------------*/
+body{
+    margin: 0;
+    padding: 0;
+}
+
+ul, li{
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+}
+
+
+header{
+    height: 84px;
+    background: #FFACAC;
+    display: flex;
+    justify-content: center; /* 水平方向に中央揃え */
+    align-items: center;     /* 垂直方向に中央揃え */
+    position: relative;      /* 画像の位置調整用に追加 */
+}
+
+header img{
+    position: absolute;  /* 画像の位置を絶対配置 */
+    left: 50px;          /* 画面の左から50pxに配置 */
+    margin-top: 15px;            /* 縦方向の中央に配置 */
+    transform: translateY(-50%);  /* 縦方向の中央に正確に配置 */
+}
+
+header h1{
+    color: #ffffff;
+    margin: 0;
+    margin-top: 35px;
+}
+
+h2{
+    margin-left: 22px;
+}
+
+p{
+    padding-top: 5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/*ホーム画面ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー*/
+/* calendar------------------- */
+.calendar{
+    margin: 10px auto;
+    background: #ffe2e2;
+    border-radius: 9px;
+    font-size: 30px;
+    max-width: 1110px;
+   height: 264px;
+}
+
+.calendar-wrap {
+    margin: 5px auto;
+    width: 370px;
+    display: grid;
+    /* grid-template-columns: repeat(2, 1fr); */
+  }
+  @media (max-width: 767.98px) {
+    .calendar-wrap {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  .calendar {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .calendar th,
+  .calendar td {
+    text-align: center;
+    padding: 10px;
+    font-size: 30px;
+    font-weight: bold;
+  }
+  .calendar th {
+    padding: 6px 10px;
+  }
+  @media (max-width: 767.98px) {
+    .calendar th,
+    .calendar td {
+      padding: 6px;
+      font-size: 20px;
+    }
+    .calendar th {
+      padding: 3px 6px;
+    }
+  }
+  
+.calendar .week th{
+    font-size: 20px;
+    border-bottom: 1px solid #000;
+    
+}
+
+.today {
+    background-color: rgba(255, 33, 33, 0.822); /* 背景色を赤に */
+    border-radius: 50%;                         /* 丸くする */
+    color: #fff;                                /* 文字色を白に */
+    font-weight: bold;                          /* 太字 */
+    display: inline-block;                      /* サイズを調整しやすくする */
+    width: 25px;                                /* 幅を小さくする */
+    height: 25px;                               /* 高さを小さくする */
+    line-height: 25px;                          /* テキストを中央に揃える */
+    text-align: center;                         /* テキストを中央に配置 */
+    margin-top: 5px;
+}
+
+
+
+.notice{
+    font-size: 1rem;
+    margin-left: 10px;
+}
+
+.noticeMsg{
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 0.5em 1em;
+    color: #5989cf;
+    background: #c6e4ff;
+    border-bottom: solid 6px #aac5de;
+    border-radius: 9px;
+    max-width: 1110px;
+    height: 80px;
+    text-align: center;
+}
+
+.noticeMsg p{
+    font-size: 1rem;
+
+}
+
+.shorttaskmaneger{
+    /* max-width: 390px; */
+    width: 250px;
+    height: 200px;
+    background: #ffeeee;
+    border: #f0a8a8 solid 3px;
+    border-radius: 9px;
+    margin-left: 10px;
+}
+
+.flex-other{
+    display: flex;
+    margin-top: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+    justify-content: center;  /* 水平方向に中央揃え */
+    align-items: center;      /* 垂直方向に中央揃え */
+    
+}
+.other-button{
+    display: flex;
+    flex-flow: column;
+    margin-right: 10px;
+    
+}
+.link-button{
+    width: 110px;
+    height: 50px;
+    text-align: center;
+    background: #fedada;
+    border-radius: 25px;
+    color: #000;
+    margin: 5px 5px 13px 5px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.buttons{
+    display: flex;
+    margin: 0 auto;
+}
+
+.columntaskbt{
+    display: flex;
+    flex-flow: column;
+}
+
+.starbutton, .bellbutton,  .ratebutton{
+    width: 70px;
+    height: 50px;
+    text-align: center;
+    background: #fedada;
+    border-radius: 25px;
+    margin:10px 8px 12px 8px;
+    color: #000;
+    font-size: 12px;
+    font-weight: bold;
+
+}
+
+.starbutton img, .bellbutton img,  .ratebutton img{
+    width: 50px;
+}
+
+
+.starbutton{
+    background: #f2ff7a;
+    padding-top: 2px;
+}
+
+.todaybutton{
+    width: 110px;
+    height: 50px;
+    text-align: center;
+    background: #fedada;
+    border-radius: 25px;
+    color: #000;
+    margin: 0 5px 0 5px; 
+    font-size: 12px;
+    font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*タスク画面ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー*/
+.area{
+    /* align-items: center;
+    justify-content: center; */
+    text-align: center;
+    margin-top: 5px;
+    max-width: 1110px;
+    border-radius: 13px;
+}
+header{
+    height: 84px;
+    background: #FFACAC;
+    display: flex;
+    justify-content: center; /* 水平方向に中央揃え */
+    align-items: center;     /* 垂直方向に中央揃え */
+    position: relative;      /* 画像の位置調整用に追加 */
+}
+
+header img{
+    position: absolute;  /* 画像の位置を絶対配置 */
+    left: 50px;          /* 画面の左から50pxに配置 */
+    margin-top: 15px;            /* 縦方向の中央に配置 */
+    transform: translateY(-50%);  /* 縦方向の中央に正確に配置 */
+}
+
+header h1{
+    color: #ffffff;
+    margin: 0;
+    margin-top: 35px;
+}
+
+/* テーブル全体のスタイル */
+
+
+
+caption{
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+table {
+    background-color: #ffe2e2; /* 全体の背景色 */
+    border-collapse: collapse;
+    border-radius: 9px;
+    margin: 20px auto;
+    text-align: center;
+    max-width: 1110px;
+    width: 350px;
+    padding: 0 10px;
+}
+
+/* thタグのスタイル */
+th{
+    border-bottom: 1px solid #000; /* 下線 */
+    
+    padding: 10px;             /* パディング */
+    font-size: 14px;               /* フォントサイズ */
+    font-weight: bold;             /* 太字 */
+}
+td{
+    height: 35px;
+}
+
+
+
+/* 今日の日付のスタイル */
+.today {
+    background-color: rgba(255, 33, 33, 0.822); /* 背景色を赤に */
+    border-radius: 50%;                         /* 丸くする */
+    color: #fff;                                /* 文字色を白に */
+    font-weight: bold;                          /* 太字 */
+    display: inline-block;                      /* サイズを調整しやすくする */
+    width: 25px;                                /* 幅を小さくする */
+    height: 25px;                               /* 高さを小さくする */
+    line-height: 25px;                          /* テキストを中央に揃える */
+    text-align: center;                         /* テキストを中央に配置 */
+    margin-top: 5px;
+}
+
+/* 日曜日のスタイル */
+.sun {
+    color: red; /* 日曜日は赤色 */
+}
+
+/* 土曜日のスタイル */
+.sat {
+    color: blue; /* 土曜日は青色 */
+
+}
+
+
+.setName{
+    display: flex;
+    font-size: 12px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.setName input{
+    width: 200px;
+    height: 30px;
+    margin-left: 25px;
+}
+
+.tasks ul{
+    margin-top: 10px;
+}
+
+.tasks ul li{
+    display: flex;
+    align-items: center;
+   justify-content: space-between;
+}
+
+
+.tasks ul li input{
+    margin-right: 20px;
+}
+
+.tasks ul li{
+    display: flex;
+    align-items: center;
+   justify-content: space-between;
+}
+
+.tasks ul li div{
+    display: flex;
+}
+
+.tasks ul li div p {
+    margin-top: 0;
+    font-weight: bold;
+}
+
+.tasks ul li div .taskname{
+    width: 130px;
+    margin-left: 25px;
+}
+
+.tasks ul li input[type="reset"]{
+    margin-right: 20px;
+    margin-bottom: 45px;
+    background-color: red;
+    border: none;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+   font-size: 20px;
+   padding-bottom: 5px;
+}
+
+.tasktime{
+    border: none;
+    /* border: #c9c9c9 solid 2px; */
+    background: #c9c9c9;
+    border-radius: 50%;
+    margin: 0;
+    text-align: left;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+span{
+    width: 5px;
+    height: 50px;
+    background: #c9c9c9;
+    margin-left: 18px;
+    padding-top: 7px;
+}
+
+.timersolid{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+}
+
+
+.buttons{
+    margin: 0;
+}
+
+.toggle-button-4 {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 70px;
+    height: 30px;
+    border-radius: 50px;
+    box-sizing: content-box;
+    background-color: #ff8d8d33;
+    cursor: pointer;
+    transition: background-color .4s;
+    margin-bottom: 45px;
+    margin-right: 30px;
+}
+
+.toggle-button-4:has(:checked) {
+    background-color: #75bbff33;
+}
+
+.toggle-button-4::before {
+    position: absolute;
+    left: 5px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #ff8d8d;
+    content: '';
+    transition: left .4s;
+}
+
+.toggle-button-4:has(:checked)::before {
+    left: 45px;
+    background-color: #75bbff;
+}
+
+.toggle-button-4::after {
+    position: absolute;
+    left: 15px;
+    transform: translateX(-50%);
+    color: #fff;
+    font-weight: 600;
+    font-size: .6em;
+    content: '未';
+    transition: left .4s;
+}
+
+.toggle-button-4:has(:checked)::after {
+    left: 55px;
+    content: '完';
+}
+
+.toggle-button-4 input {
+    display: none;
+}
+
+/* 進捗バー全体のコンテナ */
+.progress-container {
+    width: 90%;
+    background-color: #e0e0e0;
+    border-radius: 25px;
+    height: 30px;
+    margin: 10px auto;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 進捗バー本体 */
+.progress-bar {
+    height: 100%;
+    background-color: #FFACAC;
+    width: 0%;
+    border-radius: 25px 0 0 25px;
+    transition: width 0.4s ease, background-color 0.4s ease;  /* 色の変化にもアニメーション追加 */
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+/* 100%になったときに色を変える */
+.progress-bar[style*="width: 100%"] {
+    background-color: #00C896;  /* 100%になったときの色 */
+}
+
+
+
+.bts{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 35px;
+    margin-top: 10px;
+}
+
+.bts a{
+    width: 150px;
+    height: 50px;
+    text-align: center;
+    background: #fedada;
+    border-radius: 25px;
+    color: #000;
+    margin: 5px 5px 13px 5px;
+    font-size: 16px;
+    font-weight: bold; 
+    padding-bottom: 3px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*タスク履歴画面ーーーーーーーーーーーーーーーーーーーー*/
+
+.taskcategory{
+    text-align: center;
+    background-color: #FFACAC;
+    width: 130px;
+    height: 50px;
+    margin: 10px auto;
+    padding-top: 9px;
+    border-radius: 25px;
+}
+
+.taskhistory{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;  /* 水平方向に中央揃え */
+    align-items: center;      /* 垂直方向に中央揃え */
+    text-align: center;
+    gap: 50px;
+    margin: 0;  /* 余白をリセット */
+    padding: 0;  /* 余白をリセット */ /* 親コンテナの高さを画面全体に設定 */
+}
+
+.taskhistory li{
+    border: #FFACAC solid 2px;
+    border-radius: 25px;
+    width: 130px;
+    height: 50px;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*統計画面ーーーーーーーーーーーーーーーーーーーーーーーーー*/
+
+.toMounthrate{
+    text-align: center;
+}
+
+#cmpmonth{
+    text-align: center;
+    margin: 0 auto;
+}
+
+.cycle-flex{
+    display: flex;
+    justify-content: center;  /* 水平方向に中央揃え */
+    align-items: center;      /* 垂直方向に中央揃え */
+    text-align: center;
+    gap: 50px;
+    margin: 0;  /* 余白をリセット */
+    padding: 0;  /* 余白をリセット */ /* 親コンテナの高さを画面全体に設定 */
+}
+
+
+
+
+
+
+
+.pie-chart-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 160px;
+    height: 160px;
+    margin: 0 auto;
+    border-radius: 50%;
+    font-weight: 600;
+    background-image: radial-gradient(#fff 55%, transparent 55%), conic-gradient(#2589d0 50%, #f2f2f2 50% 100%);
+    font-size: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*プリセット入力画面ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー*/
+.taskimg{
+    width: 150px;
+    height: 100px;
+}
+
+.setName{
+    display: flex;
+    font-size: 12px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.setName input{
+    width: 200px;
+    height: 30px;
+    margin-left: 25px;
+}
+
+.presets ul li{
+    display: flex;
+    align-items: center;
+   justify-content: space-between;
+}
+
+.presets ul li div{
+    margin-right: 30px;
+    display: flex;
+}
+
+.presets ul li div p {
+    margin-top: 0;
+    font-weight: bold;
+}
+
+.presets ul li input[type="reset"]{
+    margin-right: 20px;
+    margin-bottom: 45px;
+    background-color: red;
+    border: none;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+   font-size: 20px;
+   padding-bottom: 5px;
+}
+
+.tasktime{
+    border: none;
+    /* border: #c9c9c9 solid 2px; */
+    background: #c9c9c9;
+    border-radius: 50%;
+    margin: 0;
+    text-align: left;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+span{
+    width: 5px;
+    height: 50px;
+    background: #c9c9c9;
+    margin-left: 18px;
+    padding-top: 7px;
+}
+
+.timersolid{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+}
+
+
+input[type="submit"]{
+    margin: 10px auto;
+    width: 326px;
+    height: 47px;
+    border-radius: 25px;
+    background: #FFACAC;
+    display: block;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.presetsForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*ライフハック画面ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー*/
+
+.search-form-3 {
+    width: 290px;
+    height: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+    border: 1px solid #777777;
+    border-radius: 50px;
+    margin: 20px auto;
+}
+
+.search-form-3 input {
+    width: 250px;
+    height: 45px;
+    padding: 5px 15px;
+    border: none;
+    box-sizing: border-box;
+    font-size: 1em;
+    outline: none;
+}
+
+.search-form-3 input::placeholder{
+    color: #777777;
+}
+
+.search-form-3 button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 45px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.search-form-3 button::after {
+    width: 24px;
+    height: 24px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M18.031 16.6168L22.3137 20.8995L20.8995 22.3137L16.6168 18.031C15.0769 19.263 13.124 20 11 20C6.032 20 2 15.968 2 11C2 6.032 6.032 2 11 2C15.968 2 20 6.032 20 11C20 13.124 19.263 15.0769 18.031 16.6168ZM16.0247 15.8748C17.2475 14.6146 18 12.8956 18 11C18 7.1325 14.8675 4 11 4C7.1325 4 4 7.1325 4 11C4 14.8675 7.1325 18 11 18C12.8956 18 14.6146 17.2475 15.8748 16.0247L16.0247 15.8748Z' fill='%23777777'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    content: '';
+}
+
+.lifehacks{
+    border: #777777 solid 2px;
+    border-radius: 9px;
+    margin: 20px;
+}
+
+.lifehacks h3, .lifehacks p{
+    margin-left: 20px;
+}
+
+.lifehacks div img{
+    width: 200px;
+    display: block;        /* ブロック要素として扱う */
+    margin: 10px auto;        /* 左右の余白を自動で設定し中央寄せ */
+    max-width: 100%;       /* 親コンテナに収まるように幅を設定 (オプション) */
+    height: auto;    
+}
+
+.lifehackAdd{
+    width: 180px;
+    height: 40px;
+    margin: 0 auto;
+    background: #fedada;
+    border-radius: 25px;
+    color: #000;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.lifehackAdd a{
+    display: inline-block;  /* インラインブロック要素に変更 */
+    width: 100%;            /* aタグに親要素の幅を適用 */
+    height: 100%;           /* aタグに親要素の高さを適用 */
+    text-decoration: none;  /* アンダーラインを削除 */
+    text-align: center;     /* テキストを中央に揃える */
+    line-height: 30px;      /* ボタンの高さに合わせてテキストを中央に配置 */
+    color: inherit;         /* 親要素の色を継承 */
+    padding-top: 4px;
+    font-size: 18px;
+}
