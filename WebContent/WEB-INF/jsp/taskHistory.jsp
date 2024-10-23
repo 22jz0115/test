@@ -10,7 +10,7 @@
 </head>
 <body>
     <header>
-        <a href="#"><img src="assets/img/Vector.png" alt=""></a>
+        <a href="Category"><img src="assets/img/Vector.png" alt=""></a>
         <h1>タスク履歴</h1>
     </header>
     

@@ -17,8 +17,8 @@ import org.json.JSONObject;
 /**
  * Servlet implementation class Weather
  */
-@WebServlet("/weather")
-public class Weather extends HttpServlet {
+@WebServlet("/Home")
+public class Home extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     // 気象庁APIのURL（例: 大阪の地域コード 270000）

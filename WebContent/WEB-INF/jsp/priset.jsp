@@ -10,7 +10,7 @@
 </head>
 <body>
     <header>
-        <a href="#"><img class="imgVector" src="assets/img/Vector.png" alt=""></a>
+        <a href="Homer"><img class="imgVector" src="assets/img/Vector.png" alt=""></a>
         <h1>プリセット</h1>
     </header>
 
