@@ -120,7 +120,6 @@ p{
     height: 25px;                               /* 高さを小さくする */
     line-height: 25px;                          /* テキストを中央に揃える */
     text-align: center;                         /* テキストを中央に配置 */
-    margin-top: 5px;
 }
 
 
@@ -311,7 +310,7 @@ td{
 
 
 /* 今日の日付のスタイル */
-.today {
+.toda {
     background-color: rgba(255, 33, 33, 0.822); /* 背景色を赤に */
     border-radius: 50%;                         /* 丸くする */
     color: #fff;                                /* 文字色を白に */
