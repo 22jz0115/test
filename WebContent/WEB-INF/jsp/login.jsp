@@ -1,51 +1,48 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <!DOCTYPE html>
-<html>
+<html lang="ja">
+
 <head>
-	<meta charset="UTF-8">
-  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ビデオ作品リスト</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/an/style.css">
+    <title>ログインページ</title>
 </head>
 
 <body>
+    <div class="rogin-form">
+        <form action="login" method="post"> <!-- サーブレットにPOSTリクエストを送る -->
+            <div class="background">
+                <h1 class="rogin1">ログイン</h1>
+            </div>
+            <h2>sign in to your account</h2>
+            <div class="ground-1">
+                <div class="form-1">
+                    <div class="login">
+                        <p>
+                            <img src="assets/img/mail.png" alt="mail" class="icon">
+                            <input type="text" id="email" placeholder="メールアドレス" name="email" required>
+                            <div class="text_underline"></div>
+                        </p>
+                        <br>
+                        <p>
+                            <img src="assets/img/パスワード.png" alt="パスワード" class="icon">
+                            <input type="password" id="password" placeholder="パスワード" name="password" minlength="4" maxlength="20" required>
+                            <div class="text_underline"></div>
+                        </p>
+                        <br>
+                    </div>
+                </div>
 
-  <header>
-  	<c:choose>
-	  	<c:when test="${empty loginUser}">
-		  	<div class="btn-auth">
-		      <a href="Login" class="btn">ログイン</a>
-		    </div>
-	  	</c:when>
-	  	<c:otherwise>
-	  		<p>ログイン中 : ${loginUser.email}さん</p>
-	  		<div class="btn-auth">
-		      <a href="Logout" class="btn out">ログアウト</a>
-		    </div>
-	  	</c:otherwise>
-  	</c:choose>
-  </header>
-  
-  <ul>
-    <c:forEach var="accounts" items="${list}">
-      <li class="list-item">
-      	<div class="items">
-      	  <p class="item-ttl">${accounts.name}</p>
-      	</div>
-        
-        <div>
-          <p>${accounts.email}</p>
-        </div>
-        
-        <div>
-          <p>${accounts.location}</p>
-        </div>
-      </li>     
-    </c:forEach>
-  </ul>
-
+                <div class="migi">
+                    <button id="touroku" type="submit" class="button00">ログイン</button>
+                    <p class="sinki">
+                        <a href="src/servlet/Shink.java" class="sinki"><span id="sinki">新規登録</span></a>
+                    </p>
+                </div>
+            </div>
+        </form>
+    </div>
 </body>
+
 </html>
