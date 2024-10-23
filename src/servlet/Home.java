@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -21,14 +22,23 @@ import org.json.JSONObject;
 public class Home extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    // 気象庁APIのURL（例: 大阪の地域コード 270000）
-    private static final String API_URL = "https://www.jma.go.jp/bosai/forecast/data/overview_forecast/270000.json";
+    // 気象庁APIのベースURL（例: 大阪の地域コード 270000）
+    private static final String BASE_API_URL = "https://www.jma.go.jp/bosai/forecast/data/forecast/";
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // リクエストからエリアコードを取得（例: 270000 が大阪府）
+        String areaCode = request.getParameter("areaCode");
+        if (areaCode == null || areaCode.isEmpty()) {
+            areaCode = "270000"; // デフォルト値として大阪のエリアコード
+        }
+
+        // 気象庁APIのURL（都道府県の天気予報を取得）
+        String apiUrl = BASE_API_URL + areaCode + ".json";
+
         // APIからデータを取得
-        String weatherData = getWeatherData(API_URL);
-        
-        // 天気情報を抽出
+        String weatherData = getWeatherData(apiUrl);
+
+        // 今日の天気情報を抽出
         String weatherDescription = parseWeatherData(weatherData);
 
         // JSPに天気情報を渡す
@@ -52,26 +62,30 @@ public class Home extends HttpServlet {
         return result.toString();
     }
 
-    // JSONデータから天気情報を抽出し、特定の単語が含まれている場合に指定のテキストを表示するメソッド
+    // JSONデータから今日の天気情報を抽出し、地域名を付加して自然な文章にするメソッド
     private String parseWeatherData(String jsonData) {
-        // APIのJSONレスポンスをJSONObjectとして解析して、天気情報（"text"フィールド）を取得
-        JSONObject forecast = new JSONObject(jsonData);
+        // APIのJSONレスポンスをJSONObjectとして解析
+        JSONArray forecastArray = new JSONArray(jsonData);
+        JSONObject forecast = forecastArray.getJSONObject(0); // 先頭の天気予報データを取得
 
-        // "text"フィールドを取得
-        String weatherText = forecast.getString("text");
+        // "timeSeries"フィールドから時間帯別の天気データを取得
+        JSONArray timeSeries = forecast.getJSONArray("timeSeries");
 
-        // 特定の単語を含んでいるかどうかを確認し、カスタムメッセージを設定
-        if (weatherText.contains("雨")) {
-            return "雨が予想されています。傘を忘れないでください。";
-        } else if (weatherText.contains("雷")) {
-            return "雷の可能性があります。安全に注意してください。";
-        } else if (weatherText.contains("台風")) {
-            return "台風が接近しています。外出は控えてください。";
-        } else {
-            // それ以外の場合は通常の天気予報テキストを表示
-            return weatherText;
-        }
+        // 最初の "timeSeries" が今日の天気を示す
+        JSONObject todayWeather = timeSeries.getJSONObject(0);
+
+        // "areas" フィールドから地域の天気情報を取得
+        JSONArray areas = todayWeather.getJSONArray("areas");
+        JSONObject areaWeather = areas.getJSONObject(0);
+
+        // "weathers" フィールドから今日の天気を取得
+        JSONArray weathers = areaWeather.getJSONArray("weathers");
+        String weather = weathers.getString(0).replaceAll("　", ""); // 空白をすべて削除
+
+        // "area" フィールドから地域名を取得
+        String areaName = areaWeather.getJSONObject("area").getString("name");
+
+        // 自然な会話調の文章を作成
+        return areaName + "の今日の天気は、" + weather;
     }
-    
-    
 }
