@@ -9,20 +9,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class login
+ * Servlet implementation class presetlist
  */
-@WebServlet("/Login")
-public class Login extends HttpServlet {
+@WebServlet("/PresetListt")
+public class PresetList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-  
+ 
+
 	 
 		/**
 		 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 		 */
 		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			// TODO Auto-generated method stub
-			request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/jsp/presetList.jsp").forward(request, response);
 		}
 
 		/**
@@ -33,4 +33,6 @@ public class Login extends HttpServlet {
 
 		}
 		
+		
+
 }

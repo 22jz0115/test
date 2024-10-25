@@ -1,0 +1,1060 @@
+@charset "utf-8";
+
+/* ---------------------------------------------------------------ログイン画面---------------------------------------------- */
+
+html {
+    line-height: 1.6;
+    font-size: 62.5%; /* 1rem = 10pxに相当 */
+}
+
+body {
+    margin: 0;
+}
+
+/* 背景の設定 */
+.background {
+    margin: 0;
+    background-color: #FFACAC;
+    width: 100%;
+    padding: 75px;
+    box-sizing: border-box; /* パディングを含めて幅を100%にする */
+}
+
+/* 見やすくするために囲む枠 */
+.ground-1{
+  background-color: #9623232f;
+  width: 300px;
+ display: contents;
+  border: none; 
+}
+
+/* フォームの配置 */
+.form-1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px;
+    padding-bottom: 30px;
+}
+
+/* アイコンのスタイル */
+.icon {
+  width: 24px;  /* アイコンの幅 */
+  height: 24px; /* アイコンの高さ */
+  margin-right: 10px; /* アイコンと入力フィールドの間に余白を追加 */
+}
+
+
+/* ログインボタン */
+.migi{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* h1のスタイル */
+.rogin1 {
+  margin-top: 2cm; /* 2cm下に移動 */
+  font-family: "Nico Moji", sans-serif;
+  color: #893535;
+  font-size: 3rem;
+  text-align: center;
+}
+
+h2{
+  margin: 0;
+  padding-left: 60px;
+  color: #B3A8A8;
+}
+
+/* テキスト入力のスタイル */
+#text1 {
+    font-size: 1.6rem; /* 16pxに相当 */
+    width: 100%;
+    border: none;
+    outline: none;
+}
+
+.button00 {
+  width: 250px; /* ボタンの横幅 */
+  height: 40px; /* ボタンの高さ */
+  border-radius: 33px; /* ボタンを円形にする */
+  background-color: #ffeeee; /* 背景色 */
+  border: 1.5px solid #893535; /* 枠線の太さ、スタイル、色を指定 */
+  color: #B15E5E; /* テキストの色 */
+  font-size: 18px; /* フォントサイズ */
+}
+
+/* 下線のスタイル */
+.text_underline {
+    position: relative; /* 親要素の相対位置 */
+    border-top: 1px solid #c2c2c2; /* 下線の色とスタイル */
+}
+
+/* その他の推奨設定 */
+/* ボックスモデルを整え、全要素にデフォルトで適用 */
+* {
+    box-sizing: border-box;
+}
+
+/* スマホ画面に合わせたスタイル */
+@media screen and (max-width: 390px) {
+  html {
+      font-size: 70%; /* スマホ画面に合わせて文字サイズを調整 */
+  }
+
+  .background {
+      padding: 60px; /* 背景のパディングを縮小 */
+  }
+
+  
+
+  h2 {
+      padding-left: 20px; /* h2の左側のパディングを調整 */
+  }
+
+  .button00 {
+    width: 175px; /* ボタンの横幅 */
+    height: 50px; /* ボタンの高さ */
+    border-radius: 33px; /* ボタンを円形にする */
+    background-color: #ffeeee; /* 背景色 */
+    border: 1.5px solid #893535; /* 枠線の太さ、スタイル、色を指定 */
+    color: #B15E5E; /* テキストの色 */
+    font-size: 22px; /* フォントサイズ */
+  }
+  .form-1 {
+      padding-top: 50px; /* フォームの上部パディングを縮小 */
+      padding-bottom: 60px; /* フォームの下部パディングを縮小 */
+  }
+
+  #text1 {
+      font-size: 2rem; /* テキスト入力のフォントサイズを大きく */
+  }
+
+}
+
+
+
+
+
+/* ---------------------------------------------------------------新規登録画面---------------------------------------------- */
+html {
+    line-height: 1.6;
+    font-size: 100.5%; /* 1rem = 10pxに相当 */
+}
+
+body {
+    margin: 0;
+}
+
+/* 背景の設定 */
+.background {
+    margin: 0;
+    background-color: #FFACAC;
+    width: 100%;
+    padding: 65px;
+}
+
+/* h1のスタイル */
+.shinki00 {
+  margin-top: 1cm; /* 1cm下に移動 */
+  font-family: "Nico Moji", sans-serif;
+  color: #893535;
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+
+h2{
+  margin: 0;
+  padding-left: 60px;
+  color: #B3A8A8;
+}
+
+/* フォームの配置 */
+.form-1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* テキスト入力のスタイル */
+#text1 {
+    font-size: 1rem; /* 16pxに相当 */
+    width: 100%;
+    border: none;
+    outline: none;
+    margin-bottom: 0;
+}
+
+p {
+    margin: 0;
+    font-size:19px;
+}
+
+.text_underline {
+    position: relative;
+    border-top: 1px solid #c2c2c2;
+    margin: 0;
+}
+
+.button-0 {
+    width: 120px; /* ボタンの横幅 */
+    margin-top: 40px;
+    height: 40px; /* ボタンの高さ */
+    border-radius: 33px; /* ボタンを円形にする */
+    background-color: #ffffff; /* 背景色 */
+    border: 1.5px solid #893535; /* 枠線の太さ、スタイル、色を指定 */
+    color: #B15E5E; /* テキストの色 */
+    font-size: 16px; /* フォントサイズ */
+  }
+
+  /* ログインボタン */
+.migi{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .sinki_button {
+	  display: flex;
+	  justify-content: center;
+  }
+
+
+
+
+
+
+
+
+
+
+  /* ---------------------------------------------------------------ライフハック追加画面---------------------------------------------- */
+
+  body {
+    margin: 0;
+    padding: 0;
+  
+  }
+  
+  ul, li {
+    list-style: none;
+  }
+  
+  header {
+    height: 84px;
+    background: #FFACAC;
+    display: flex;
+    justify-content: center; /* 水平方向に中央揃え */
+    align-items: center;     /* 垂直方向に中央揃え */
+    position: relative;      /* 画像の位置調整用に追加 */
+  }
+  
+  header img {
+    position: absolute;
+    left: 50px;
+    top: 50%;                /* 縦方向の中央に配置 */
+    transform: translateY(-50%);  /* 縦方向の中央に正確に配置 */
+  }
+  
+  header h1 {
+    color: #ffffff;
+    margin: 0;
+    font-size: 1.5rem;
+  }
+  
+  /* メインコンテンツ */
+  .background-1 {
+    max-width: 790px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  .class1 {
+    margin-bottom: 20px;
+  }
+  
+  .class1 label {
+    font-size: 1.2rem;
+  }
+  
+  .class1 input {
+    width: 100%;
+    padding: 4px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  .content {
+    margin-bottom: 20px;
+  }
+  
+  .content .name label {
+    font-size: 1.2rem;
+  }
+  
+  textarea {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    margin-top: 10px;
+  }
+  
+  input[type="file"] {
+    margin-top: 10px;
+  }
+  
+  /* プレビュー画像 */
+  #preview img {
+    width: 100px;
+    margin: 10px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  /* 投稿ボタン */
+  .submit-button {
+    background-color: #FF6B6B;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    width: 100%;
+  }
+  
+  .submit-button:hover {
+    background-color: #FF4C4C;
+    transform: translateY(-2px);
+  }
+  
+  .submit-button:active {
+    transform: translateY(0);
+  }
+  
+  /* スマホ対応 */
+  @media (max-width: 480px) {
+    header h1 {
+        font-size: 1.5rem;
+    }
+  
+    .background-1 {
+        padding: 15px;
+    }
+  
+    textarea {
+        font-size: 0.9rem;
+    }
+  
+    .submit-button {
+        font-size: 1rem;
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /* ---------------------------------------------------------------プリセット一覧画面---------------------------------------------- */
+  body{
+    margin: 0;
+    padding: 0;
+  }
+  
+  ul, li{
+    list-style: none;
+  }
+  
+  header{
+    height: 84px;
+    background: #FFACAC;
+    display: flex;
+    justify-content: center; /* 水平方向に中央揃え */
+    align-items: center;     /* 垂直方向に中央揃え */
+    position: relative;      /* 画像の位置調整用に追加 */
+  }
+  
+  header img{
+    position: absolute;  /* 画像の位置を絶対配置 */
+    left: 50px;          /* 画面の左から50pxに配置 */
+    margin-top: 15px;            /* 縦方向の中央に配置 */
+    transform: translateY(-50%);  /* 縦方向の中央に正確に配置 */
+  }
+  
+  header h1{
+    color: #ffffff;
+    margin: 0;
+    margin-top: 35px;
+    font-size: 1.4rem;
+  }
+  
+  
+  /*スウィッチ表示*/
+  
+  .switch_label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    input[type='checkbox'] {
+      position: absolute;
+      width: 0;
+      height: 0;
+    }
+    
+    .base {
+      width: 56px;
+      border-radius: 15px;
+      height: 32px;
+      background-color: #ddd;
+    }
+    
+    .title {
+      margin-left: 4px;
+    }
+  
+    input:checked ~ .base {
+      background-color: rgb(219, 234, 254);
+    }
+  
+    .circle {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 24px;
+      height: 24px;
+      border-radius: 12px;
+      background-color: white;
+    }
+    
+    input:checked ~ .base {
+      background-color: rgb(219, 234, 254);
+      transition: 0.5s;
+    }
+    
+    input:checked ~ .circle {
+      transform: translateX(100%);
+      background-color: blue;
+    }
+  
+    .switch {
+      position: relative;
+    }
+  
+  
+    /* 屋外屋内のボックス */
+    .box-1 {
+      background-color: #FFEAE6;
+      margin: 10px;
+      border-radius: 10px;
+    }
+  
+    /* カテゴリー */
+    .categories p{
+      background-color: #FFD2D2;
+      border-radius: 18px;
+      width: 148px;
+      height: 59px;
+      text-align: center;
+      display: flex;
+      align-content: space-around;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  
+    .categories {
+      display: flex;
+      justify-content: space-around;
+    }
+  
+    /*削除ボタン移動*/
+    .delete {
+       display: flex;
+       justify-content: flex-end;
+       align-items: flex-end;
+       flex-direction: column;
+       padding-top: 500px;
+    }
+  
+  .delete img {
+      display: block;
+      margin: 0 auto;
+  }
+  
+  .delete p {
+      margin-top: 5px;
+      font-size: 14px; /* 好みのサイズに調整 */
+      color: #333; /* 好みの色に変更 */
+      padding-right: 20px;
+  }
+  
+  .delete a {
+    height: 39px;
+    padding-right: 20px;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /* ---------------------------------------------------------------タスタ入力画面---------------------------------------------- */
+  body {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    line-height: 1.5; /* 読みやすくするために行間を調整 */
+}
+
+ul, li {
+    list-style: none;
+}
+
+header {
+    height: 84px;
+    background: #FFACAC;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 15px; /* スマホでの余白確保 */
+}
+
+header h1 {
+    color: #ffffff;
+    margin: 0;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    padding: 0 15px; /* スマホでも左右に余白を追加 */
+}
+/* ラジオボタンの親要素のスタイル */
+.form-group {
+  margin-bottom: 20px;
+  padding: 0 15px; /* スマホでも左右に余白を追加 */
+}
+
+/* ラジオボタンとラベルのスタイル */
+.radio-group {
+  display: flex;
+  flex-direction: column; /* ラジオボタンを縦に並べる */
+  gap: 10px; /* ボタン間に適度なスペースを確保 */
+  margin-bottom: 10px;
+  align-items: flex-start;
+}
+
+.radio-group label {
+  font-size: 16px;
+  display: flex;
+  gap: 10px; /* ラジオボタンとラベル間にスペースを確保 */
+  flex-direction: row-reverse;
+  margin-top: 3px;
+}
+
+input[type="radio"] {
+  margin: 0; /* デフォルトの余白をなくす */
+  transform: scale(1.3); /* ラジオボタンを少し大きくして押しやすく */
+}
+
+/* プルダウンと入力フィールドのスタイル */
+#existingCategoryDiv, #newCategoryDiv {
+  display: none;
+  margin-top: 10px;
+}
+
+select, input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* パディングの影響を排除 */
+}
+
+.switch_label9 {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+
+.radio {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    display:flex;
+    align-items: center;
+    margin-left: 41px;
+}
+
+input, select, textarea {
+    padding: 10px; /* 余白を少し広げて入力しやすく */
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* パディングが幅に影響しないように調整 */
+}
+
+textarea {
+    resize: none;
+}
+
+button {
+    width: 100%;
+    padding: 12px; /* ボタンをタップしやすいように余白を増加 */
+    font-size: 16px;
+    border-radius: 4px;
+    background-color: #ffeeee;
+    border: 1.5px solid #893535;
+    color: #B15E5E;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #fdd; /* ホバー時に少し明るくする */
+}
+
+.migi {
+    margin-top: 20px;
+    padding: 0 15px;
+}
+
+@media screen and (max-width: 480px) {
+    body {
+        font-size: 16px;
+    }
+
+    header {
+        height: 60px;
+    }
+
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    button {
+        font-size: 16px;
+    }
+
+    input, select, textarea {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .form-group {
+        margin-bottom: 12px;
+    }
+}
+
+
+
+
+  
+ /* ---------------------------------------------------------------ご褒美画面---------------------------------------------------- */
+ .body-1{
+    margin: 0;
+    padding: 0;
+   background-color: #ffebafe3;
+  }
+  
+  ul, li{
+    list-style: none;
+  }
+  
+  header{
+    height: 84px;
+    background: #FFACAC;
+    display: flex;
+    justify-content: center; /* 水平方向に中央揃え */
+    align-items: center;     /* 垂直方向に中央揃え */
+    position: relative;      /* 画像の位置調整用に追加 */
+  }
+  
+  header img{
+    position: absolute;  /* 画像の位置を絶対配置 */
+    left: 50px;          /* 画面の左から50pxに配置 */
+    margin-top: 15px;            /* 縦方向の中央に配置 */
+    transform: translateY(-50%);  /* 縦方向の中央に正確に配置 */
+  }
+  
+  header h1{
+    color: #ffffff;
+    margin: 0;
+    margin-top: 35px;
+  }
+
+  .round-image {
+    width: 100px; /* 必要に応じてサイズを調整 */
+    height: 100px; /* 幅と高さを同じにすることで丸い形に */
+    border-radius: 50%; /* 丸くする */
+    object-fit: cover; /* 画像を枠内に収める */
+/*    border: 2px dotted rgb(70, 68, 68); */
+}
+
+.years{
+ margin: 25px;
+  text-align: center;
+  font-size: 22px;
+ font-weight: bold;
+ color: #844106;
+ margin-bottom: 0px;
+}
+
+/*点線のまる*/
+.dotted-circle {
+  width: 100px;
+  height: 100px;
+  border: 2px dotted rgb(70, 68, 68); /* 点々の丸い枠を作る */
+  border-radius: 50%; /* 丸にする */
+  display: inline-block;
+}
+.dotted-circle-1 {
+  width: 100px;
+  height: 100px;
+  border: 2px dotted rgb(70, 68, 68); /* 点々の丸い枠を作る */
+  border-radius: 50%; /* 丸にする */
+  display: inline-block;
+}
+
+.grid-container {
+  margin-top: 70px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  grid-template-columns: repeat(3, 1fr); /* 3列に分割 */
+  grid-template-rows: repeat(4, auto); /* 4行に分割 */
+  gap: 10px; /* 要素間のスペース */
+}
+
+/* まるの中の */
+
+.dotted-circle p {
+  margin: 35px; /* 不要な余白を除去 */
+  font-size: 16px; /* テキストサイズを調整 */
+  color:rgb(246, 170, 7);
+}
+
+.dotted-circle-1 p {
+  margin: 31px; /* 不要な余白を除去 */
+  font-size: 15px; /* テキストサイズを調整 */
+  color:rgb(246, 170, 7);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ /* -----------------------------------------------------------------カテゴリー画面--------------------------------------------------------------------------- */
+ body{
+    margin: 0;
+    padding: 0;
+  }
+  
+  ul, li{
+    list-style: none;
+  }
+  
+  header{
+    height: 84px;
+    background: #FFACAC;
+    display: flex;
+    justify-content: center; /* 水平方向に中央揃え */
+    align-items: center;     /* 垂直方向に中央揃え */
+    position: relative;      /* 画像の位置調整用に追加 */
+  }
+  
+  header img{
+    position: absolute;  /* 画像の位置を絶対配置 */
+    left: 50px;          /* 画面の左から50pxに配置 */
+    margin-top: 15px;            /* 縦方向の中央に配置 */
+    transform: translateY(-50%);  /* 縦方向の中央に正確に配置 */
+  }
+  
+  header h1{
+    color: #ffffff;
+    margin: 0;
+    margin-top: 35px;
+    font-size: 1.5rem;
+  }
+  
+  /*スウィッチ表示*/
+  .switch_label-4 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+  }
+    
+  input[type='checkbox'] {
+    position: absolute;
+    width: 0;
+    height: 0;
+  }
+    
+  .base {
+    width: 56px;
+    border-radius: 15px;
+    height: 32px;
+    background-color: #ddd;
+  }
+    
+  .title {
+    margin-left: 4px;
+  }
+  
+  input:checked ~ .base {
+    background-color: rgb(219, 234, 254);
+  }
+  
+  .circle {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 24px;
+    height: 24px;
+    border-radius: 12px;
+    background-color: white;
+  }
+    
+  input:checked ~ .base {
+    background-color: rgb(219, 234, 254);
+    transition: 0.5s;
+    }
+    
+  input:checked ~ .circle {
+    transform: translateX(100%);
+    background-color: blue;
+    }
+  
+  .switch {
+    position: relative;
+  }
+  
+  /* 屋外屋内のボックス */
+  .box-1 {
+    background-color: #FFEAE6;
+    margin: 10px;
+    border-radius: 10px;
+   }
+  
+   /* カテゴリー */
+  .categories p{
+    background-color: #FFD2D2;
+    border-radius: 18px;
+    width: 148px;
+    height: 59px;
+    text-align: center;
+    display: flex;
+    align-content: space-around;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .categories {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  /*削除ボタン移動*/
+  .delete {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: column;
+    padding-top: 500px;
+  }
+  
+  .delete img {
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .delete p {
+    margin-top: 5px;
+    font-size: 14px; /* 好みのサイズに調整 */
+    color: #333; /* 好みの色に変更 */
+    padding-right: 20px;
+  }
+  
+  .delete a {
+   height: 39px;
+   padding-right: 20px;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+ /* ---------------------------------------------------------------設定画面---------------------------------------------------- */
+header{
+    height: 84px;
+    background: #FFACAC;
+    display: flex;
+    justify-content: center; /* 水平方向に中央揃え */
+    align-items: center;     /* 垂直方向に中央揃え */
+    position: relative;      /* 画像の位置調整用に追加 */
+}
+
+header img{
+    position: absolute;  /* 画像の位置を絶対配置 */
+    left: 50px;          /* 画面の左から50pxに配置 */
+    margin-top: 15px;            /* 縦方向の中央に配置 */
+    transform: translateY(-50%);  /* 縦方向の中央に正確に配置 */
+}
+
+header h1{
+    color: #ffffff;
+    margin: 0;
+    margin-top: 35px;
+}
+
+.setting{
+    background-color: #D9D9D9;
+}
+
+.notification, .bluetooth {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    margin: 20px;
+}
+
+.switch {
+    margin: 5px;
+}
+
+.selection {
+  padding: 15px;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+/* カラーピッカーのスタイル */
+input[type="color"] {
+
+  border: none;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+  border: none;
+  border-radius: 50%;
+}
+
+input[type="color"]:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* 決定ボタンのスタイル */
+.button2 {
+  width: 100px;
+  padding: 10px;
+  font-size: 16px;
+  color: #fff;
+  background: linear-gradient(45deg, #FFACAC, #FF7A7A);
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.button2:hover {
+  background: linear-gradient(45deg, #FF7A7A, #FF4A4A);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.button2:active {
+  transform: scale(0.98);
+}
+
+.logout-button {
+  width: 100%;
+    padding: 12px;
+    font-size: 20px;
+    border-radius: 24px;
+    background-color: #ffeeee;
+    border: 1.5px solid #893535;
+    color: #B15E5E;
+    cursor: pointer;
+    margin-top: 87px;
+}
+
+/* 全体のレスポンシブ対応 */
+@media screen and (max-width: 480px) {
+  input[type="color"] {
+      width: 50px;
+      height: 50px;
+  }
+
+  .button2 {
+      width: 90px;
+      font-size: 14px;
+  }
+}
