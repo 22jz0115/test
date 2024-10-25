@@ -86,6 +86,6 @@ public class Home extends HttpServlet {
         String areaName = areaWeather.getJSONObject("area").getString("name");
 
         // 自然な会話調の文章を作成
-        return areaName + "の今日の天気は、" + weather;
+        return areaName + "の天気は、" + weather;
     }
 }

@@ -7,6 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="assets/css/style.css">
 	<title>Insert title here</title>
+	<script>
+        // リセットボタンがクリックされたときにその親のliを削除する関数
+        function removeTask(button) {
+            const taskItem = button.closest('li'); // ボタンの親li要素を取得
+            if (taskItem) {
+                taskItem.remove(); // li要素をDOMから削除
+            }
+        }
+    </script>
 </head>
 <body>
 	    <header>
@@ -37,7 +46,7 @@
                     <label class="toggle-button-4">
                         <input type="checkbox" class="check">
                     </label>
-                    <input type="reset" value="-">
+                    <input type="reset" value="-" onclick="removeTask(this)">
                 </div>
                 
             </li>
@@ -55,7 +64,7 @@
                     <label class="toggle-button-4">
                         <input type="checkbox" class="check">
                     </label>
-                    <input type="reset" value="-">
+                    <input type="reset" value="-" onclick="removeTask(this)">
                 </div>
                 
             </li>
@@ -66,68 +75,86 @@
                         <span></span>
                     </div>
                     <p class="taskname">
-                        朝ごはん食べる
+                        シャワー
                     </p>
                 </div>
                 <div class="buttons">
                     <label class="toggle-button-4">
                         <input type="checkbox" class="check">
                     </label>
-                    <input type="reset" value="-">
+                    <input type="reset" value="-" onclick="removeTask(this)">
                 </div>
                 
             </li>
-            <li class="task">
+             <li class="task">
                 <div>
                     <div class="timersolid">
                         <p class="tasktime">8:00</p>
                         <span></span>
                     </div>
                     <p class="taskname">
-                        朝ごはん食べる
+                        ゲーム
                     </p>
                 </div>
                 <div class="buttons">
                     <label class="toggle-button-4">
                         <input type="checkbox" class="check">
                     </label>
-                    <input type="reset" value="-">
+                    <input type="reset" value="-" onclick="removeTask(this)">
                 </div>
                 
             </li>
-            <li class="task">
+             <li class="task">
                 <div>
                     <div class="timersolid">
                         <p class="tasktime">8:00</p>
                         <span></span>
                     </div>
                     <p class="taskname">
-                        朝ごはん食べる
+                        運動する
                     </p>
                 </div>
                 <div class="buttons">
                     <label class="toggle-button-4">
                         <input type="checkbox" class="check">
                     </label>
-                    <input type="reset" value="-">
+                    <input type="reset" value="-" onclick="removeTask(this)">
                 </div>
                 
             </li>
-            <li class="task">
+             <li class="task">
                 <div>
                     <div class="timersolid">
                         <p class="tasktime">8:00</p>
                         <span></span>
                     </div>
                     <p class="taskname">
-                        朝ごはん食べる
+                        昼ごはん食べる
                     </p>
                 </div>
                 <div class="buttons">
                     <label class="toggle-button-4">
                         <input type="checkbox" class="check">
                     </label>
-                    <input type="reset" value="-">
+                    <input type="reset" value="-" onclick="removeTask(this)">
+                </div>
+                
+            </li>
+             <li class="task">
+                <div>
+                    <div class="timersolid">
+                        <p class="tasktime">8:00</p>
+                        <span></span>
+                    </div>
+                    <p class="taskname">
+                        ごはん食べる
+                    </p>
+                </div>
+                <div class="buttons">
+                    <label class="toggle-button-4">
+                        <input type="checkbox" class="check">
+                    </label>
+                    <input type="reset" value="-" onclick="removeTask(this)">
                 </div>
                 
             </li>

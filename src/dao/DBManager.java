@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class DBManager {
 	
-		private static final String jdbcUrl = "jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS=(PROTOCOL=tcps)(HOST=adb.ap-tokyo-1.oraclecloud.com)(PORT=1522))(CONNECT_DATA=(SERVICE_NAME=ga5fa430369d2d1_team03atp01_low.adb.oraclecloud.com)))";
+		private static final String jdbcUrl = "jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS=(PROTOCOL=tcps)(HOST=adb.ap-tokyo-1.oraclecloud.com)(PORT=1522))(CONNECT_DATA=(SERVICE_NAME=ga5fa430369d2d1_team03atp01_low.adb.oraclecloud.com)))?TNS_ADMIN=/opt/oracle/wallet&useUnicode=true&characterEncoding=UTF-8";
 		private static final String username = "TEST";
 		private static final String password = "fh-p*KP2&C*QV#vdh4*2";
         

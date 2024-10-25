@@ -19,11 +19,11 @@
 </head>
 <body>
     <header>
-        <a href="Homer"><img class="imgVector" src="assets/img/Vector.png" alt=""></a>
+        <a href="Home"><img class="imgVector" src="assets/img/Vector.png" alt=""></a>
         <h1>プリセット</h1>
     </header>
 
-    <form action="" method="post" class="presetsForm">
+    <form action="Task" method="post" class="presetsForm">
         <div class="setName">
             <h2>プリセット名</h2>
             <input list="presets" placeholder="選択または入力してください">
@@ -35,7 +35,7 @@
             </datalist>
         </div>
 
-        <a href="#">
+        <a href="Task">
             <img class="taskimg" src="assets/img/25630113.png" alt="">
         </a>
 

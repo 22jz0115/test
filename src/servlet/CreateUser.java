@@ -34,12 +34,15 @@ public class CreateUser extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		AccountsDAO dao = new AccountsDAO();
 		
+		request.setCharacterEncoding("UTF-8");
+		
 		String name = request.getParameter("name");
 		String email = request.getParameter("email");
 		String pass = request.getParameter("pass");
 		String location = request.getParameter("location");
 		
 		Accounts accounts = dao.create(name, email, pass, location);
+		
 		if (accounts != null) {
 			// ログインしてトップページ（今回はVoD一覧）へリダイレクト
 			HttpSession session = request.getSession();

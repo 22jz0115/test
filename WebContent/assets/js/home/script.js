@@ -68,5 +68,5 @@ function sendDate(date) {
     // URLに日付を追加
     const urlParams = new URLSearchParams();
     urlParams.append('date', formattedDate);
-    window.location.href = 'task?' + urlParams.toString();
+    window.location.href = 'Task?' + urlParams.toString();
 }
