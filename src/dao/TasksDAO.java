@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Accounts;
 import model.Tasks;
 
 
@@ -59,37 +58,37 @@ public class TasksDAO {
 	 * @param email メールアドレス
 	 * @return 発見したデータ。なければnull
 	 */
-	public Accounts findByEmail(String email) {
-		Accounts accounts = null;
+	public Tasks findByTaskName(String task_name) {
+		Tasks tasks = null;
 		DBManager manager = DBManager.getInstance();
 		try(Connection cn = manager.getConnection()) {
 			// プレースホルダで変数部分を定義
-			String sql = "SELECT * FROM accounts WHERE email = ?";
+			String sql = "SELECT * FROM tasks WHERE task_name = ?";
 			PreparedStatement stmt = cn.prepareStatement(sql);
-			stmt.setString(1, email);
+			stmt.setString(1, task_name);
 			ResultSet rs = stmt.executeQuery();
 			
 			// データをリストに格納
 			if (rs.next()) {
-				accounts = rs2model(rs);
+				tasks = rs2model(rs);
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return accounts;
+		return tasks;
 	}
 	
 	/**
 	 * DBにデータを追加する
 	 * @return 成功時は追加したデータ、失敗時はnull
 	 */
-	public Tasks create(int category_id, int account_id, String task_name, String memo) {
+	public Tasks create(int category_id, int account_id, String task_name, String memo, int outin) {
 		int ret = -1;
 		
 		// 重複確認
-		if (findByEmail(email) != null) {
-			System.out.println("該当ユーザは既に存在しています");
+		if (findByTaskName(task_name) != null) {
+			System.out.println("該当タスクは既に存在しています");
 			return null;
 		}
 		
@@ -98,12 +97,13 @@ public class TasksDAO {
 		try(Connection cn = manager.getConnection()) {
 			
 			// プレースホルダで変数部分を定義
-			String sql = "INSERT INTO tasks (category_id, account_id, task_name, memo) VALUES (?, ?, ?, ?)";
+			String sql = "INSERT INTO tasks (category_id, account_id, task_name, memo, outin) VALUES (?, ?, ?, ?, ?)";
 			PreparedStatement stmt = cn.prepareStatement(sql);
 			stmt.setInt(1, category_id);
 			stmt.setInt(2, account_id);
 			stmt.setString(3, task_name);
 			stmt.setString(4, memo);
+			stmt.setInt(5, outin);
 			
 			ret = stmt.executeUpdate();
 			
@@ -112,7 +112,7 @@ public class TasksDAO {
 		}
 		
 		if (ret >= 0) {
-			return findByEmail(email);
+			return findByTaskName(task_name);
 		}
 		return null;
 	}
@@ -128,8 +128,9 @@ public class TasksDAO {
         LocalDateTime createdAt =
                  rs.getTimestamp("created_at").toLocalDateTime();                          
         LocalDateTime updateDate = 
-                 rs.getTimestamp("update_date").toLocalDateTime();  
+                 rs.getTimestamp("update_date").toLocalDateTime(); 
+        int outin = rs.getInt("outin"); 
 
-        return new Tasks(id, category_id, account_id, task_name, taskDatetime, memo, createdAt, updateDate);
+        return new Tasks(id, category_id, account_id, task_name, taskDatetime, memo, createdAt, updateDate, outin);
     }
 }

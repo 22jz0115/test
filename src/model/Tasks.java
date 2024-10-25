@@ -11,6 +11,7 @@ public class Tasks {
 	private String memo;
 	private LocalDateTime createdAt;
 	private LocalDateTime updateDate;
+	private int outin;
 	public int getId() {
 		return id;
 	}
@@ -59,8 +60,14 @@ public class Tasks {
 	public void setUpdateDate(LocalDateTime updateDate) {
 		this.updateDate = updateDate;
 	}
+	public int getOutin() {
+		return outin;
+	}
+	public void setOutin(int outin) {
+		this.outin = outin;
+	}
 	public Tasks(int id, int categoryId, int accountId, String taskName, LocalDateTime taskDate, String memo,
-			LocalDateTime createdAt, LocalDateTime updateDate) {
+			LocalDateTime createdAt, LocalDateTime updateDate, int outin) {
 		super();
 		this.id = id;
 		this.categoryId = categoryId;
@@ -70,6 +77,7 @@ public class Tasks {
 		this.memo = memo;
 		this.createdAt = createdAt;
 		this.updateDate = updateDate;
+		this.outin = outin;
 	}
 	
 }
