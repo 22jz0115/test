@@ -32,14 +32,14 @@
                 </ul>
             </div>
             <div class="buttons">
-                <a class="starbutton" href=""><img src="assets/img/unnamed.png" alt=""></a>
-                <a class="bellbutton" href=""><img src="assets/img/kkrn_icon_oshirase_4.png" alt=""></a>
+                <a class="starbutton" href="Collection"><img src="assets/img/unnamed.png" alt=""></a>
+                <a class="bellbutton" href="Setting"><img src="assets/img/kkrn_icon_oshirase_4.png" alt=""></a>
                 <a class="ratebutton" href="Result"><img src="assets/img/22462108.png" alt=""></a>
             </div>
         </div>
         <div class="other-button">
-            <a class="link-button" href=""><p>カテゴリー</p></a>
-            <a class="link-button" href="Priset"><p>プリセット</p></a>
+            <a class="link-button" href="Category"><p>カテゴリー</p></a>
+            <a class="link-button" href="PresetList"><p>プリセット</p></a>
             <a class="link-button" href="LifeHack"><p>ライフハック</p></a>
             <a class="todaybutton" href=Task><p>今日のタスク</p></a>
         </div>

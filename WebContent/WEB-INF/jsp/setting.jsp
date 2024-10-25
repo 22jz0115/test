@@ -16,7 +16,7 @@
 </head>
 <body>
     <header>
-        <a href="../ホーム画面/index.html" class="back1"><img src="assets/img/戻るボタン.png" alt="戻る"></a>
+        <a href="Home" class="back1"><img src="assets/img/戻るボタン.png" alt="戻る"></a>
         <h1>設定</h1>
     </header>
 

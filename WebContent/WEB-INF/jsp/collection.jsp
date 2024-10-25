@@ -11,7 +11,7 @@
 <body class="body-1">
 
     <header>
-        <a href="../ホーム画面/index.html"><img src="assets/img/戻るボタン.png" alt="戻るボタン"></a><h1>Collection</h1>
+        <a href="Home"><img src="assets/img/戻るボタン.png" alt="戻るボタン"></a><h1>Collection</h1>
     </header>
 
     <p class="years">現在の年は <span id="year"><%= new java.util.Date().getYear() + 1900 %></span>年です。</p>

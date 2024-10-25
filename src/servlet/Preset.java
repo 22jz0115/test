@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class Priset
  */
-@WebServlet("/Priset")
-public class Priset extends HttpServlet {
+@WebServlet("/Preset")
+public class Preset extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**

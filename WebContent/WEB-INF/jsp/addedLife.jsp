@@ -12,7 +12,7 @@
 </head>
 <body>
     <header>
-        <a href="../ホーム画面/index.html" class="back1"><img src="assets/img/戻るボタン.png" alt="戻るボタン"></a>
+        <a href="LifeHack" class="back1"><img src="assets/img/戻るボタン.png" alt="戻るボタン"></a>
         <h1>ライフハック追加</h1>
     </header>
 

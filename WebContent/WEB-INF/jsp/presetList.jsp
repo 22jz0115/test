@@ -9,7 +9,7 @@
 </head>
 <body>
     <header>
-        <a href="../カテゴリー画面/" class="back1"><img src="assets/img/戻るボタン.png" alt="戻るボタン"></a>
+        <a href="Home" class="back1"><img src="assets/img/戻るボタン.png" alt="戻るボタン"></a>
         <h1>プリセット一覧画面</h1>
     </header>
 
