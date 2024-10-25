@@ -25,5 +25,14 @@
             </li>
         </ul>
     </div>
+    
+    <div class="delete">
+        <form action="<%= request.getContextPath() %>/deletePresetServlet" method="post"> <!-- JSPサーブレットへの削除処理のURLを指定 -->
+            <button type="submit" class="delete-button">
+                <img src="assets/img/mingcute_delete-2-line.png" alt="削除アイコン"><br>
+                削除
+            </button>
+        </form>
+    </div>
 </body>
 </html>
