@@ -18,6 +18,8 @@ public class Task extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // パラメータから日付を取得
         String selectedDate = request.getParameter("date");
+        
+     
 
         // 日付をリクエスト属性に設定
         request.setAttribute("selectedDate", selectedDate);

@@ -79,6 +79,28 @@ public class TasksDAO {
 		return tasks;
 	}
 	
+	public List<Tasks> findByTaskList(int account_id) {
+		List<Tasks> taskList = new ArrayList<>();
+		DBManager manager = DBManager.getInstance();
+		try(Connection cn = manager.getConnection()) {
+			// プレースホルダで変数部分を定義
+			String sql = "SELECT * FROM tasks WHERE account_id = ?";
+			PreparedStatement stmt = cn.prepareStatement(sql);
+			stmt.setInt(1, account_id);
+			ResultSet rs = stmt.executeQuery();
+			
+			// データをリストに格納
+			if (rs.next()) {
+				taskList.add(rs2model(rs));
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return taskList;
+	}
+	
+	
 	/**
 	 * DBにデータを追加する
 	 * @return 成功時は追加したデータ、失敗時はnull

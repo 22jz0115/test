@@ -30,6 +30,11 @@
         <!--
         //-->
     </script>
+    
+    <div class="progress-container">
+        <div class="progress-bar" id="countDisplay"></div> <!-- ここに進捗率を表示 -->
+    </div>
+    
     <div class="tasks">
         <ul>
             <li class="task">
@@ -167,18 +172,14 @@
     </div>
 
 
-    <div class="progress-container">
-        <div class="progress-bar" id="countDisplay"></div> <!-- ここに進捗率を表示 -->
-    </div>
-
     
 
     <div class="bts">
-       <a  href=""><p>タスク追加</p></a>
-       <a  href=""><p>プリセット追加</p></a> 
+       <a  href="TaskInput"><p>タスク追加</p></a>
+       <a  href="Preset"><p>プリセット追加</p></a> 
     </div>
     
-    <<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script type="text/javascript" src="assets/js/task/script.js"></script>
     
     <!-- サーバーから送られた日付をJavaScriptに渡す -->
