@@ -56,6 +56,7 @@ public class Home extends HttpServlet {
         // JSPに天気情報を渡す
         request.setAttribute("weatherDescription", weatherDescription);
         request.getRequestDispatcher("/WEB-INF/jsp/home.jsp").forward(request, response);
+        
     }
     
     
