@@ -70,3 +70,20 @@ function sendDate(date) {
     urlParams.append('date', formattedDate);
     window.location.href = 'Task?' + urlParams.toString();
 }
+
+
+
+// Service Workerからのメッセージを受け取り、Web Speech APIを使って読み上げる
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js')
+        .then(registration => {
+            console.log('Service Worker registered with scope:', registration.scope);
+        });
+}
+
+navigator.serviceWorker.addEventListener('message', function(event) {
+    const notificationText = event.data;
+    const speech = new SpeechSynthesisUtterance(notificationText);
+    speech.lang = 'ja-JP';  // 日本語で読み上げ
+    window.speechSynthesis.speak(speech);
+});

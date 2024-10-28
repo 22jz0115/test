@@ -86,7 +86,7 @@ public class TasksDAO {
 	public Tasks create(int category_id, int account_id, String task_name, String memo, int outin) {
 		int ret = -1;
 		
-		// 重複確認
+		// 重複確認 → タスク名+タスク時間が重複でメッセージ出す
 		if (findByTaskName(task_name) != null) {
 			System.out.println("該当タスクは既に存在しています");
 			return null;
