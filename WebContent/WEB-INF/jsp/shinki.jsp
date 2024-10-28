@@ -96,7 +96,7 @@
         <div class="migi">
             <!-- ログインページへのリンク -->
             <p class="sinki">
-                <a href="../ログイン画面/index.html" class="sinki"><span id="sinki">ログイン画面へ</span></a>
+                <a href="jsp/login.jsp" class="sinki"><span id="sinki">ログイン画面へ</span></a>
             </p>
         </div>
     </div>

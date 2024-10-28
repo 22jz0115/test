@@ -37,7 +37,7 @@
                 <div class="migi">
                     <button id="touroku" type="submit" class="button00">ログイン</button>
                     <p class="sinki">
-                        <a href="src/servlet/Shink.java" class="sinki"><span id="sinki">新規登録</span></a>
+                        <a href="/WEB-INF/jsp/shink.jsp" class="sinki"><span id="sinki">新規登録</span></a>
                     </p>
                 </div>
             </div>
