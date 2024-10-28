@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import dao.TasksDAO;
+import model.Tasks;
 
 /**
  * Servlet implementation class Weather
@@ -40,11 +44,24 @@ public class Home extends HttpServlet {
 
         // 今日の天気情報を抽出
         String weatherDescription = parseWeatherData(weatherData);
+        
+        TasksDAO dao = new TasksDAO();
+    	
+    	List<Tasks> taskList = dao.findByTaskList(46);
+    	
+    	String task = taskList.get(0).getTaskName();
+    	
+    	System.out.println(task);
 
         // JSPに天気情報を渡す
         request.setAttribute("weatherDescription", weatherDescription);
         request.getRequestDispatcher("/WEB-INF/jsp/home.jsp").forward(request, response);
+        
     }
+    
+    
+    
+    
 
     // 気象庁APIからデータを取得するメソッド
     private String getWeatherData(String apiUrl) throws IOException {
@@ -61,6 +78,11 @@ public class Home extends HttpServlet {
         }
         return result.toString();
     }
+    
+    
+    
+    
+    
 
     // JSONデータから今日の天気情報を抽出し、地域名を付加して自然な文章にするメソッド
     private String parseWeatherData(String jsonData) {
@@ -87,5 +109,9 @@ public class Home extends HttpServlet {
 
         // 自然な会話調の文章を作成
         return areaName + "の天気は、" + weather;
+        
+        
     }
+    
+
 }

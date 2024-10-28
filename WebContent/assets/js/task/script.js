@@ -31,14 +31,23 @@ $(function() {
     }
 
     // selectedDate (サーバーから送られた値) を使ってカレンダーを表示
-    if (selectedDate) {
+    // selectedDateがない場合、今日の日付データを格納して表示
+    let year, month, day;
+    if (selectedDate != "null") {
         const dateParts = selectedDate.split("-");
-        const year = parseInt(dateParts[0]);
-        const month = parseInt(dateParts[1]) - 1; // JavaScriptの月は0始まり
-        const day = parseInt(dateParts[2]);
-
-        displayCalendar(year, month, day);
+        year = parseInt(dateParts[0]);
+        month = parseInt(dateParts[1]) - 1; // JavaScriptの月は0始まり
+        day = parseInt(dateParts[2]);
+    } else {
+        const today = new Date();
+        year = today.getFullYear();
+        month = today.getMonth();
+        day = today.getDate();
+        
+      console.log(selectedDate)
     }
+
+    displayCalendar(year, month, day);
 
     // チェックボックスの進捗を更新する関数
     function updateCheckedCount() {
