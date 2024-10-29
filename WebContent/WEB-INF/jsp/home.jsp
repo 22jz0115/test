@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -26,10 +27,11 @@
     <div class="flex-other">
         <div class="columntaskbt">
             <div class="shorttaskmaneger">
-                <ul>
-                    <li>8:00 朝ごはん</li>
-                    <li>8:30 外出</li>
-                </ul>
+                 <ul>
+       				 <c:forEach var="task" items="${taskList}">
+                                <li>${task.formattedTime} - ${task.taskName}</li>
+                     </c:forEach>
+    			</ul>
             </div>
             <div class="buttons">
                 <a class="starbutton" href="Collection"><img src="assets/img/unnamed.png" alt=""></a>
