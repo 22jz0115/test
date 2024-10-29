@@ -416,6 +416,7 @@ p {
       display: flex;
       align-items: center;
       justify-content: center;
+      margin-left: 53px;
     }
     
     input[type='checkbox'] {
@@ -878,22 +879,27 @@ button:hover {
    }
   
    /* カテゴリー */
-  .categories p{
+ .categories {
+       display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    /* flex-direction: row; */
+    /* justify-content: space-between; */
+    align-items: stretch;
+    align-content: space-between;
+    margin-top: 34px;
+}
+
+.categories p {
     background-color: #FFD2D2;
     border-radius: 18px;
     width: 148px;
     height: 59px;
     text-align: center;
     display: flex;
-    align-content: space-around;
     justify-content: center;
-    flex-wrap: wrap;
-  }
-  
-  .categories {
-    display: flex;
-    justify-content: space-around;
-  }
+    align-items: center;
+}
   
   /*削除ボタン移動*/
   .delete {
@@ -970,20 +976,25 @@ header h1{
     display: flex;
     align-items: center;
     margin-bottom: 20px;
-    margin: 20px;
+    margin: 40px;
 }
 
 .switch {
     margin: 5px;
 }
 
-.selection {
-  padding: 15px;
-  background-color: #f7f7f7;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
+.notification .switch_label {
+	    margin-left: 130px;
 }
+
+.selection {
+    padding: 28px;
+    margin-bottom: 4px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    }
 
 /* カラーピッカーのスタイル */
 input[type="color"] {
@@ -1013,13 +1024,13 @@ input[type="color"]:hover {
 
 /* 決定ボタンのスタイル */
 .button2 {
-  width: 100px;
+  width: 80px;
   padding: 10px;
   font-size: 16px;
   color: #fff;
   background: linear-gradient(45deg, #FFACAC, #FF7A7A);
   border: none;
-  border-radius: 25px;
+  border-radius: 10px;
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
@@ -1035,15 +1046,17 @@ input[type="color"]:hover {
 }
 
 .logout-button {
-  width: 100%;
+    width: 85%;
     padding: 12px;
     font-size: 20px;
-    border-radius: 24px;
+    border-radius: 16px;
     background-color: #ffeeee;
-    border: 1.5px solid #893535;
+    border: 0.3px solid #893535;
     color: #B15E5E;
     cursor: pointer;
     margin-top: 87px;
+    margin-bottom: 35px;
+    margin-left: 33px;
 }
 
 /* 全体のレスポンシブ対応 */

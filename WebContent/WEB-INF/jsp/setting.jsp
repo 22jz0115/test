@@ -15,7 +15,7 @@
     </style>
 </head>
 <body>
-    <header>
+    <header id="header">
         <a href="Home" class="back1"><img src="assets/img/戻るボタン.png" alt="戻る"></a>
         <h1>設定</h1>
     </header>
@@ -34,21 +34,7 @@
                 <span class="title">ON</span>
             </label>
         </div>
-
-        <div class="bluetooth">
-            <img src="assets/img/bluethooth.png" alt="bluetoothアイコン">
-            <p>Bluetooth</p>
-            <label for="switch2" class="switch_label">  
-                <p>OFF</p>
-                <div class="switch">
-                    <input type="checkbox" id="switch2" />
-                    <div class="circle"></div>
-                    <div class="base"></div>
-                </div>
-                <span class="title">ON</span>
-            </label>
-        </div>
-    </div>
+   </div>
     <p class="setting">背景設定</p>
 <!-- 背景色変更のためのフォーム -->
 <div class="selection">
@@ -63,8 +49,21 @@
     <button id="textColorBtn" type="button" class="button2">決定</button>
 </div>
 
-    
-    
+ 
+    <p class="setting">ヘッダーの色変更</p>
+    <!-- ヘッダー背景色変更のためのフォーム -->
+    <div class="selection">
+        <input id="headercolor" type="color" />
+        <button id="headerColorBtn" type="button" class="button2">決定</button>
+    </div>
+
+    <script>
+    // ヘッダーの背景色を変更する関数
+    document.getElementById('headerColorBtn').addEventListener('click', function() {
+        var headerColor = document.getElementById('headercolor').value;
+        document.getElementById('header').style.backgroundColor = headerColor; // ヘッダーの背景色を変更
+    });
+    </script>
     <script>
     // 背景色を変更する関数
     document.getElementById('bgColorBtn').addEventListener('click', function() {

@@ -8,17 +8,15 @@
     <title>タスク入力画面</title>
 </head>
 <body>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script type="text/javascript" src="jquery-3.7.1.min.js"></script>
-<script type="text/javascript" src="assets/js/タスク入力画面/taskadd.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/taskup/script.js"></script>
     <header>
-        <a href="../ホーム画面/index.jsp" class="back1"><img src="assets/img/戻るボタン.png"></a><h1>タスク入力</h1>
+        <a href="../ホーム画面/index.jsp" class="back1"><img src="assets/img/戻るボタン.png"></a>
+        <h1>タスク入力</h1>
     </header>
 
     <div class="display">
         <form action="<%= request.getContextPath() %>/taskAddServlet" method="post">
-
             <!-- 日付表示 -->
             <div class="form-group">
                 <label for="dateDisplay">日付</label>
@@ -31,45 +29,69 @@
                 <input id="appt-time" type="time" name="appt-time" value="13:30" />
             </div>
 
-            <!-- 屋内/屋外の切り替えスイッチ -->
-            <div class="radiobutton">
-                <label class="switch_label9">
-                    <span>屋外</span>
-                    <div class="switch">
-                        <input type="checkbox" id="switch" />
-                        <div class="circle"></div>
-                        <div class="base"></div>
-                    </div>
-                    <span class="title">屋内</span>
-                </label>
-            </div>
+          <div class="radiobutton">
+    <label class="switch_label9">
+        <span id="outdoorText">屋内</span>
+        <div class="switch">
+            <input type="checkbox" id="switch" onclick="toggleCategory()" />
+            <div class="circle"></div>
+            <div class="base"></div>
+        </div>
+        <span id="indoorText" class="title">屋外</span>
+    </label>
+</div>
 
-            <!-- カテゴリー選択ラジオボタン -->
-            <div class="form-group radio-group">
-                <label><input type="radio" name="categoryType" class="radio" value="existing"> 既存カテゴリー</label>
-                <label><input type="radio" name="categoryType" class="radio" value="new"> 新規カテゴリー</label>
-            </div>
 
-            <!-- 既存カテゴリーのプルダウン -->
-            <div id="existingCategoryDiv" class="form-group">
-                <label for="existingCategory">既存カテゴリーを選択:</label>
-                <select id="existingCategory" name="existingCategory">
-                    <option value="category1">料理</option>
-                    <option value="category2">掃除</option>
-                </select>
-            </div>
+<!-- カテゴリーのプルダウン -->
+<div id="categoryDiv" class="form-group">
+    <label for="categorySelect">カテゴリーを選択:</label>
+    <select id="categorySelect" name="category">
+        <!-- カテゴリのオプションがJavaScriptで動的に設定されます -->
+    </select>
+</div>
 
-            <!-- 新規カテゴリーの入力 -->
-            <div id="newCategoryDiv" class="form-group" style="display:none;">
-                <label for="newCategory">新規カテゴリー名:</label>
-                <input type="text" id="newCategory" name="newCategory" minlength="4" maxlength="8" />
-            </div>
+<script>
+    // 屋外と屋内のカテゴリの選択肢
+    const outdoorCategories = [
+        { value: 'gardening', text: 'ガーデニング' },
+        { value: 'exercise', text: '運動' }
+    ];
+
+    const indoorCategories = [
+        { value: 'cooking', text: '料理' },
+        { value: 'cleaning', text: '掃除' }
+    ];
+
+    function populateCategories(categories) {
+        const categorySelect = document.getElementById('categorySelect');
+        categorySelect.innerHTML = ''; // 既存のオプションをクリア
+
+        categories.forEach(category => {
+            const option = document.createElement('option');
+            option.value = category.value;
+            option.textContent = category.text;
+            categorySelect.appendChild(option);
+        });
+    }
+
+    function toggleCategory() {
+        const isOutdoor = document.getElementById('switch').checked;
+        populateCategories(isOutdoor ? outdoorCategories : indoorCategories);
+    }
+
+    // 初期状態で屋内のカテゴリを表示
+    window.onload = function() {
+        populateCategories(indoorCategories);
+    };
+</script>
 
             <!-- タスク名の入力 -->
             <div class="form-group">
                 <label for="taskName" class="taskname">タスク名:</label>
                 <input type="text" id="taskName" name="taskName" required minlength="4" maxlength="8" />
             </div>
+            
+            
 
             <!-- メモの入力 -->
             <div class="form-group">
