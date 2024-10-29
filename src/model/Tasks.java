@@ -71,6 +71,7 @@ public class Tasks {
     public void setOutin(int outin) {
         this.outin = outin;
     }
+    
 
     // フォーマットされた時間のゲッター
     public String getFormattedTime() {
