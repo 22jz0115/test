@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" href="assets/css/an/style.css">
     <title>プリセット一覧画面</title>
+    <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
+    <link rel="manifest" href="manifest.json">
 </head>
 <body>
     <header>
