@@ -23,7 +23,7 @@
         <h1>プリセット</h1>
     </header>
 
-    <form action="Task" method="post" class="presetsForm">
+    <form action="Task?from=preset" method="post" class="presetsForm">
         <div class="setName">
             <h2>プリセット名</h2>
             <input list="presets" placeholder="選択または入力してください">
@@ -35,7 +35,7 @@
             </datalist>
         </div>
 
-        <a href="Task">
+        <a href="TaskInput?from=preset">
             <img class="taskimg" src="assets/img/25630113.png" alt="">
         </a>
 
