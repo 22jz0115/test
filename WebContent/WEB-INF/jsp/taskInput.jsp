@@ -13,11 +13,11 @@
 <script type="text/javascript" src="assets/js/タスク入力画面/taskadd.js"></script>
 
     <header>
-        <a href="../ホーム画面/index.jsp" class="back1"><img src="assets/img/戻るボタン.png"></a><h1>タスク入力</h1>
+        <a href="Home" class="back1"><img src="assets/img/戻るボタン.png"></a><h1>タスク入力</h1>
     </header>
 
     <div class="display">
-        <form action="<%= request.getContextPath() %>/taskAddServlet" method="post">
+        <form action="TaskInput" method="post">
 
             <!-- 日付表示 -->
             <div class="form-group">
