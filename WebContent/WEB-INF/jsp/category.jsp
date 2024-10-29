@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <link rel="stylesheet" href="assets/css/an/style.css">
     <title>カテゴリー画面</title>
+<<<<<<< HEAD
     <style>
         .content {
             display: none; /* 初期状態で全て非表示 */
@@ -14,6 +15,10 @@
             display: block; /* アクティブなコンテンツのみ表示 */
         }
     </style>
+=======
+    <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
+    <link rel="manifest" href="manifest.json">
+>>>>>>> branch 'master' of https://github.com/22jz0115/test.git
 </head>
 <body>
     <header>

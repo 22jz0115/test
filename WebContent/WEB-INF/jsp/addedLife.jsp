@@ -9,6 +9,8 @@
     <script type="text/javascript" src="jquery-3.7.1.min.js"></script>
     <script type="text/javascript" src="../js/ライフハック追加画面/lifehack.js"></script>
     <title>ライフハック追加画面</title>
+    <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
+    <link rel="manifest" href="manifest.json">
 </head>
 <body>
     <header>

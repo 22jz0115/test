@@ -49,9 +49,7 @@ public class Home extends HttpServlet {
     	
     	List<Tasks> taskList = dao.findByTaskList(46);
     	
-    	String task = taskList.get(0).getTaskName();
-    	
-    	System.out.println(task);
+    	request.setAttribute("taskList", taskList);
 
         // JSPに天気情報を渡す
         request.setAttribute("weatherDescription", weatherDescription);
