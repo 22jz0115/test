@@ -10,7 +10,6 @@
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
 </head>
-
 <body>
 
     <div class="rogin-form">
