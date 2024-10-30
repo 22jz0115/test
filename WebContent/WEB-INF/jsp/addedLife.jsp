@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="assets/css/an/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script type="text/javascript" src="jquery-3.7.1.min.js"></script>
-    <script type="text/javascript" src="../js/ライフハック追加画面/lifehack.js"></script>
+    <script type="text/javascript" src="../js/lifeHack/script.js"></script>
     <title>ライフハック追加画面</title>
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
