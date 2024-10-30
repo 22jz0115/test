@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class addedlist
  */
-@WebServlet("/AddedList")
-public class AddedList extends HttpServlet {
+@WebServlet("/AddedLife")
+public class AddedLife extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	 
