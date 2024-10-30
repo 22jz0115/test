@@ -1,0 +1,18 @@
+{
+  "name": "サクサクタスク",
+  "short_name": "サクサクタスク",
+  "start_url": "/test/Login",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "/test/assets/img/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/test/assets/img/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
