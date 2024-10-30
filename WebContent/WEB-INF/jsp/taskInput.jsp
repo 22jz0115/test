@@ -9,21 +9,58 @@
     <title>タスク入力画面</title>
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
+	 <!-- カテゴリー選択に応じた表示切り替えのスクリプト -->
+        <script>
+            const radios = document.querySelectorAll('input[name="categoryType"]');
+            const existingCategoryDiv = document.getElementById('existingCategoryDiv');
+            const newCategoryDiv = document.getElementById('newCategoryDiv');
 
+            radios.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    if (radio.value === 'existing') {
+                        existingCategoryDiv.style.display = 'block';
+                        newCategoryDiv.style.display = 'none';
+                    } else {
+                        existingCategoryDiv.style.display = 'none';
+                        newCategoryDiv.style.display = 'block';
+                    }
+                });
+            });
+
+        
+        </script>
 </head>
 <body>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script type="text/javascript" src="assets/js/taskinput/script.js"></script>
+<<<<<<< HEAD
+=======
+    <header>
+>>>>>>> branch 'master' of https://github.com/22jz0115/test.git
 
+<<<<<<< HEAD
         <a href="../ホーム画面/index.jsp" class="back1"><img src="assets/img/戻るボタン.png"></a>
 
         <a href="Home" class="back1"><img src="assets/img/戻るボタン.png"></a><h1>タスク入力</h1>
+=======
+        <a href="Home" class="back1"><img src="assets/img/戻るボタン.png"></a><h1>タスク入力</h1>
+
+
+
+>>>>>>> branch 'master' of https://github.com/22jz0115/test.git
     </header>
 
     <div class="display">
+<<<<<<< HEAD
         <form action="<%= request.getContextPath() %>/taskAddServlet" method="post">
-        <form action="TaskInput" method="post">
+=======
 
+>>>>>>> branch 'master' of https://github.com/22jz0115/test.git
+        <form action="TaskInput" method="post">
+<<<<<<< HEAD
+
+=======
+>>>>>>> branch 'master' of https://github.com/22jz0115/test.git
             <!-- 日付表示 -->
             <div class="form-group">
                 <label for="dateDisplay">日付</label>
@@ -59,8 +96,6 @@
     </select>
 </div>
 
-
-
             <!-- タスク名の入力 -->
             <div class="form-group">
                 <label for="taskName" class="taskname">タスク名:</label>
@@ -81,12 +116,16 @@
             </div>
         </form>
 
+<<<<<<< HEAD
         <!-- カテゴリー選択に応じた表示切り替えのスクリプト -->
         <script>
             const radios = document.querySelectorAll('input[name="categoryType"]');
             const existingCategoryDiv = document.getElementById('existingCategoryDiv');
             const newCategoryDiv = document.getElementById('newCategoryDiv');
+=======
+>>>>>>> branch 'master' of https://github.com/22jz0115/test.git
 
+<<<<<<< HEAD
             radios.forEach(radio => {
                 radio.addEventListener('change', () => {
                     if (radio.value === 'existing') {
@@ -100,6 +139,9 @@
             });
  
         </script>
+=======
+       
+>>>>>>> branch 'master' of https://github.com/22jz0115/test.git
 
     </div>
 </body>  
