@@ -100,6 +100,27 @@ public class TasksDAO {
 		return taskList;
 	}
 	
+	public List<Tasks> findByCategoryId(int account_id, int category_id) {
+		List<Tasks> taskList = new ArrayList<>();
+		DBManager manager = DBManager.getInstance();
+		try(Connection cn = manager.getConnection()) {
+			// プレースホルダで変数部分を定義
+			String sql = "SELECT * FROM tasks WHERE account_id = ? and category_id = ?";
+			PreparedStatement stmt = cn.prepareStatement(sql);
+			stmt.setInt(1, account_id);
+			stmt.setInt(2, category_id);
+			ResultSet rs = stmt.executeQuery();
+			
+			// データをリストに格納
+			if (rs.next()) {
+				taskList.add(rs2model(rs));
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return taskList;
+	}
 	
 	/**
 	 * DBにデータを追加する

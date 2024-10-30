@@ -6,9 +6,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <link rel="stylesheet" href="assets/css/an/style.css">
     <title>カテゴリー画面</title>
+<<<<<<< HEAD
+=======
+    <style>
+        .content {
+            display: none; /* 初期状態で全て非表示 */
+        }
+        .active {
+            display: block; /* アクティブなコンテンツのみ表示 */
+        }
+    </style>
+>>>>>>> branch 'master' of https://github.com/22jz0115/test.git
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
+<<<<<<< HEAD
+=======
+     
+    <script>
+        const switchInput = document.getElementById('switch');
+        const indoorContent = document.getElementById('indoorContent');
+        const outdoorContent = document.getElementById('outdoorContent');
+
+        switchInput.addEventListener('change', function() {
+            if (this.checked) {
+                // 屋外が選択された場合
+                indoorContent.classList.remove('active'); // 屋内を非表示
+                outdoorContent.classList.add('active'); // 屋外を表示
+            } else {
+                // 屋内が選択された場合
+                outdoorContent.classList.remove('active'); // 屋外を非表示
+                indoorContent.classList.add('active'); // 屋内を表示
+            }
+        });
+    </script>
+>>>>>>> branch 'master' of https://github.com/22jz0115/test.git
 </head>
+
 <body>
 
    <header>
@@ -40,6 +73,7 @@
             <p id="task-4" class="deletable">ピクニック <span class="delete1">削除</span></p>
         </div>
     </div>
+<<<<<<< HEAD
 
     <!-- JavaScript -->
     <script>
@@ -90,5 +124,18 @@
             });
         });
     </script>
+=======
+   
+    
+    
+    <div class="delete">
+        <form action="Category" method="post"> <!-- JSPサーブレットへの削除処理のURLを指定 -->
+            <button type="submit" class="delete-button">
+                <img src="assets/img/mingcute_delete-2-line.png" alt="削除アイコン"><br>
+                削除
+            </button>
+        </form>
+    </div>
+>>>>>>> branch 'master' of https://github.com/22jz0115/test.git
 </body>
 </html>

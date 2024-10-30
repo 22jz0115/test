@@ -82,7 +82,7 @@
 
     <p class="setting">ログアウト</p>
     <div class="button-1">
-        <form action="../ログイン画面/index.html" method="post">
+        <form action="Login" method="post">
             <button type="submit" class="logout-button">ログアウト</button>
         </form>
     </div>

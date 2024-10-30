@@ -43,6 +43,7 @@ $(function() {
         year = today.getFullYear();
         month = today.getMonth();
         day = today.getDate();
+        selectedDate = today.getDate;
         
       console.log(selectedDate)
     }
