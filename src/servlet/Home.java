@@ -39,6 +39,7 @@ public class Home extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/jsp/home.jsp").forward(request, response);
     }
 
+    
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 
