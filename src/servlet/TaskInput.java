@@ -21,6 +21,14 @@ public class TaskInput extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		 String selectedDate = request.getParameter("date");
+	        
+	     
+
+	        // 日付をリクエスト属性に設定
+	     request.setAttribute("selectedDate", selectedDate);
+		
+
 		request.getRequestDispatcher("/WEB-INF/jsp/taskInput.jsp").forward(request, response);
 	}
 
