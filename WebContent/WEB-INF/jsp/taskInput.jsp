@@ -9,26 +9,7 @@
     <title>タスク入力画面</title>
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
-	 <!-- カテゴリー選択に応じた表示切り替えのスクリプト -->
-        <script>
-            const radios = document.querySelectorAll('input[name="categoryType"]');
-            const existingCategoryDiv = document.getElementById('existingCategoryDiv');
-            const newCategoryDiv = document.getElementById('newCategoryDiv');
 
-            radios.forEach(radio => {
-                radio.addEventListener('change', () => {
-                    if (radio.value === 'existing') {
-                        existingCategoryDiv.style.display = 'block';
-                        newCategoryDiv.style.display = 'none';
-                    } else {
-                        existingCategoryDiv.style.display = 'none';
-                        newCategoryDiv.style.display = 'block';
-                    }
-                });
-            });
-
-        
-        </script>
 </head>
 <body>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -38,7 +19,6 @@
     </header>
 
     <div class="display">
-        <form action="<%= request.getContextPath() %>/taskAddServlet" method="post">
 
         <form action="TaskInput" method="post">
 
@@ -96,26 +76,7 @@
                 <button id="touroku" type="submit" class="button3">追加</button>
             </div>
         </form>
-        <!-- カテゴリー選択に応じた表示切り替えのスクリプト -->
-        <script>
-            const radios = document.querySelectorAll('input[name="categoryType"]');
-            const existingCategoryDiv = document.getElementById('existingCategoryDiv');
-            const newCategoryDiv = document.getElementById('newCategoryDiv');
-
-            radios.forEach(radio => {
-                radio.addEventListener('change', () => {
-                    if (radio.value === 'existing') {
-                        existingCategoryDiv.style.display = 'block';
-                        newCategoryDiv.style.display = 'none';
-                    } else {
-                        existingCategoryDiv.style.display = 'none';
-                        newCategoryDiv.style.display = 'block';
-                    }
-                });
-            });
- 
-        </script>
-
+    
 
     </div>
 </body>  

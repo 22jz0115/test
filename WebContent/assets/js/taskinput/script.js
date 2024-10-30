@@ -30,6 +30,23 @@ function dateDisplay() {
                 newCategoryDiv.style.display = 'block';
             }
         });
+        const radios = document.querySelectorAll('input[name="categoryType"]');
+            const existingCategoryDiv = document.getElementById('existingCategoryDiv');
+            const newCategoryDiv = document.getElementById('newCategoryDiv');
+
+            radios.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    if (radio.value === 'existing') {
+                        existingCategoryDiv.style.display = 'block';
+                        newCategoryDiv.style.display = 'none';
+                    } else {
+                        existingCategoryDiv.style.display = 'none';
+                        newCategoryDiv.style.display = 'block';
+                    }
+                });
+            });
+            
+
     });
 
     // 屋外と屋内のカテゴリの選択肢
@@ -62,6 +79,8 @@ function dateDisplay() {
     // 初期状態の設定
     populateCategories(indoorCategories);
     document.getElementById('switch').addEventListener('change', toggleCategory);
+    
+    
 }
 
 // ページが読み込まれたときにdateDisplay関数を実行
