@@ -33,7 +33,7 @@ public class Home extends HttpServlet {
 
         // タスクリストの取得
         TasksDAO dao = new TasksDAO();
-        List<Tasks> taskList = dao.findByTaskList(46);
+        List<Tasks> taskList = dao.findByTaskList(loginUser.getId());
         request.setAttribute("taskList", taskList);
 
         request.getRequestDispatcher("/WEB-INF/jsp/home.jsp").forward(request, response);

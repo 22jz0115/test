@@ -4,10 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <link rel="stylesheet" href="assets/css/an/style.css">
+    <link rel="stylesheet" href="assets/css/an/style.css">
     <title>カテゴリー画面</title>
-<<<<<<< HEAD
-=======
     <style>
         .content {
             display: none; /* 初期状態で全て非表示 */
@@ -16,34 +14,44 @@
             display: block; /* アクティブなコンテンツのみ表示 */
         }
     </style>
->>>>>>> branch 'master' of https://github.com/22jz0115/test.git
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
-<<<<<<< HEAD
-=======
-     
     <script>
-        const switchInput = document.getElementById('switch');
-        const indoorContent = document.getElementById('indoorContent');
-        const outdoorContent = document.getElementById('outdoorContent');
+        document.addEventListener("DOMContentLoaded", function() {
+            const switchInput = document.getElementById('switch');
+            const indoorContent = document.getElementById('indoorContent');
+            const outdoorContent = document.getElementById('outdoorContent');
 
-        switchInput.addEventListener('change', function() {
-            if (this.checked) {
-                // 屋外が選択された場合
-                indoorContent.classList.remove('active'); // 屋内を非表示
-                outdoorContent.classList.add('active'); // 屋外を表示
-            } else {
-                // 屋内が選択された場合
-                outdoorContent.classList.remove('active'); // 屋外を非表示
-                indoorContent.classList.add('active'); // 屋内を表示
-            }
+            switchInput.addEventListener('change', function() {
+                if (this.checked) {
+                    // 屋外が選択された場合
+                    indoorContent.classList.remove('active');
+                    outdoorContent.classList.add('active');
+                } else {
+                    // 屋内が選択された場合
+                    outdoorContent.classList.remove('active');
+                    indoorContent.classList.add('active');
+                }
+            });
+
+            // タスクの削除イベント
+            document.querySelectorAll('.deletable').forEach(task => {
+                const deleteButton = task.querySelector('.delete1');
+                deleteButton.addEventListener('click', (event) => {
+                    event.stopPropagation(); // 親のクリックイベントを無効にする
+                    const taskId = task.id;
+
+                    const confirmation = confirm(`${task.innerText.replace("削除", "").trim()}を削除しますか？`);
+                    if (confirmation) {
+                        // タスクを削除
+                        task.remove(); // HTML上から削除
+                    }
+                });
+            });
         });
     </script>
->>>>>>> branch 'master' of https://github.com/22jz0115/test.git
 </head>
-
 <body>
-
    <header>
         <a href="Home" class="back1"><img src="assets/img/戻るボタン.png" alt="戻るボタン"></a>
         <h1>カテゴリー</h1>
@@ -73,60 +81,6 @@
             <p id="task-4" class="deletable">ピクニック <span class="delete1">削除</span></p>
         </div>
     </div>
-<<<<<<< HEAD
-
-    <!-- JavaScript -->
-    <script>
-        const switchInput = document.getElementById('switch');
-        const indoorContent = document.getElementById('indoorContent');
-        const outdoorContent = document.getElementById('outdoorContent');
-
-        // スイッチでコンテンツ切り替え
-        switchInput.addEventListener('change', function() {
-            if (this.checked) {
-                indoorContent.style.display = 'none';
-                outdoorContent.style.display = 'flex';
-            } else {
-                outdoorContent.style.display = 'none';
-                indoorContent.style.display = 'flex';
-            }
-        });
-
-        // タスクの配列データ
-        const tasks = [
-            { id: 'task-1', name: "料理" },
-            { id: 'task-2', name: "掃除" },
-            { id: 'task-3', name: "屋外でのアクティビティ" },
-            { id: 'task-4', name: "ピクニック" }
-        ];
-
-        // タスクの削除イベント
-        document.querySelectorAll('.deletable').forEach(task => {
-            const deleteButton = task.querySelector('.delete1');
-            deleteButton.addEventListener('click', (event) => {
-                event.stopPropagation(); // 親のクリックイベントを無効にする
-                const taskId = task.id;
-                const taskData = tasks.find(t => t.id === taskId); // タスク情報を取得
-
-                if (taskData) {
-                    const confirmation = confirm(`${taskData.name}を削除しますか？`);
-                    if (confirmation) {
-                        // タスクを削除
-                        const target = document.getElementById(taskId);
-                        target.remove(); // HTML上から削除
-                        const index = tasks.findIndex(t => t.id === taskId);
-                        tasks.splice(index, 1); // 配列から削除
-
-                        // イベントリスナーを削除
-                        deleteButton.removeEventListener("click", arguments.callee);
-                    }
-                }
-            });
-        });
-    </script>
-=======
-   
-    
     
     <div class="delete">
         <form action="Category" method="post"> <!-- JSPサーブレットへの削除処理のURLを指定 -->
@@ -136,6 +90,5 @@
             </button>
         </form>
     </div>
->>>>>>> branch 'master' of https://github.com/22jz0115/test.git
 </body>
 </html>
