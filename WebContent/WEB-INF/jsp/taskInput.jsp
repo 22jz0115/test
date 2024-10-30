@@ -14,29 +14,16 @@
 <body>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script type="text/javascript" src="assets/js/taskinput/script.js"></script>
-    <header>
-<<<<<<< HEAD
-        <a href="../ホーム画面/index.jsp" class="back1"><img src="assets/img/戻るボタン.png"></a>
-=======
->>>>>>> branch 'master' of https://github.com/22jz0115/test.git
-        <a href="Home" class="back1"><img src="assets/img/戻るボタン.png"></a><h1>タスク入力</h1>
-<<<<<<< HEAD
 
-=======
->>>>>>> branch 'master' of https://github.com/22jz0115/test.git
+        <a href="../ホーム画面/index.jsp" class="back1"><img src="assets/img/戻るボタン.png"></a>
+
+        <a href="Home" class="back1"><img src="assets/img/戻るボタン.png"></a><h1>タスク入力</h1>
     </header>
 
     <div class="display">
-<<<<<<< HEAD
         <form action="<%= request.getContextPath() %>/taskAddServlet" method="post">
-=======
->>>>>>> branch 'master' of https://github.com/22jz0115/test.git
         <form action="TaskInput" method="post">
-<<<<<<< HEAD
-=======
 
-
->>>>>>> branch 'master' of https://github.com/22jz0115/test.git
             <!-- 日付表示 -->
             <div class="form-group">
                 <label for="dateDisplay">日付</label>
@@ -94,7 +81,6 @@
             </div>
         </form>
 
-<<<<<<< HEAD
         <!-- カテゴリー選択に応じた表示切り替えのスクリプト -->
         <script>
             const radios = document.querySelectorAll('input[name="categoryType"]');
@@ -112,12 +98,9 @@
                     }
                 });
             });
-
-        
+ 
         </script>
-=======
-        
->>>>>>> branch 'master' of https://github.com/22jz0115/test.git
+
     </div>
 </body>  
 </html>
