@@ -22,47 +22,50 @@ import logic.AuthLogic;
 import model.Accounts;
 import model.Tasks;
 
-/**
- * Servlet implementation class Weather
- */
 @WebServlet("/Home")
 public class Home extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    // 気象庁APIのベースURL（例: 大阪の地域コード 270000）
     private static final String BASE_API_URL = "https://www.jma.go.jp/bosai/forecast/data/forecast/";
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // リクエストからエリアコードを取得（例: 270000 が大阪府）
-        String areaCode = request.getParameter("areaCode");
-        if (areaCode == null || areaCode.isEmpty()) {
-            areaCode = "270000"; // デフォルト値として大阪のエリアコード
+        // セッションからログインユーザー情報を取得
+        HttpSession session = request.getSession();
+        Accounts loginUser = (Accounts) session.getAttribute("loginUser");
+
+        if (loginUser == null) {
+            // ログインユーザーがいない場合、ログイン画面へリダイレクト
+            request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
+            return;
         }
 
-        // 気象庁APIのURL（都道府県の天気予報を取得）
+        // ユーザーのエリアコードを取得またはデフォルト設定
+        String areaCode = loginUser.getLocation() != null ? loginUser.getLocation() : "016000";
+        System.out.println("エリアコード: " + areaCode);
+
+        // 気象庁APIのURL
         String apiUrl = BASE_API_URL + areaCode + ".json";
+        String weatherDescription = "";
 
-        // APIからデータを取得
-        String weatherData = getWeatherData(apiUrl);
+        try {
+            // APIからデータを取得
+            String weatherData = getWeatherData(apiUrl);
+            // 今日の天気情報を抽出
+            weatherDescription = parseWeatherData(weatherData);
+        } catch (IOException e) {
+            weatherDescription = "天気情報の取得に失敗しました。";
+            e.printStackTrace();
+        }
 
-        // 今日の天気情報を抽出
-        String weatherDescription = parseWeatherData(weatherData);
-        
+        // タスクリストの取得
         TasksDAO dao = new TasksDAO();
-    	
-    	List<Tasks> taskList = dao.findByTaskList(46);
-    	
-    	request.setAttribute("taskList", taskList);
+        List<Tasks> taskList = dao.findByTaskList(46);
+        request.setAttribute("taskList", taskList);
 
         // JSPに天気情報を渡す
         request.setAttribute("weatherDescription", weatherDescription);
         request.getRequestDispatcher("/WEB-INF/jsp/home.jsp").forward(request, response);
-        
     }
-    
-    
-    
-    
 
     // 気象庁APIからデータを取得するメソッド
     private String getWeatherData(String apiUrl) throws IOException {
@@ -79,61 +82,38 @@ public class Home extends HttpServlet {
         }
         return result.toString();
     }
-    
-    
-    
-    
-    
 
     // JSONデータから今日の天気情報を抽出し、地域名を付加して自然な文章にするメソッド
     private String parseWeatherData(String jsonData) {
-        // APIのJSONレスポンスをJSONObjectとして解析
         JSONArray forecastArray = new JSONArray(jsonData);
-        JSONObject forecast = forecastArray.getJSONObject(0); // 先頭の天気予報データを取得
-
-        // "timeSeries"フィールドから時間帯別の天気データを取得
+        JSONObject forecast = forecastArray.getJSONObject(0);
         JSONArray timeSeries = forecast.getJSONArray("timeSeries");
-
-        // 最初の "timeSeries" が今日の天気を示す
         JSONObject todayWeather = timeSeries.getJSONObject(0);
-
-        // "areas" フィールドから地域の天気情報を取得
         JSONArray areas = todayWeather.getJSONArray("areas");
         JSONObject areaWeather = areas.getJSONObject(0);
-
-        // "weathers" フィールドから今日の天気を取得
         JSONArray weathers = areaWeather.getJSONArray("weathers");
-        String weather = weathers.getString(0).replaceAll("　", ""); // 空白をすべて削除
-
-        // "area" フィールドから地域名を取得
+        String weather = weathers.getString(0).replaceAll("　", "");
         String areaName = areaWeather.getJSONObject("area").getString("name");
 
-        // 自然な会話調の文章を作成
         return areaName + "の天気は、" + weather;
-        
-        
     }
-    
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		
-		String email = request.getParameter("email");
-		String pass = request.getParameter("password");
-		
-		AuthLogic logic = new AuthLogic();
-		Accounts account = logic.login(email, pass);
-		
-		if (account != null) {
-			// ログインしてトップページ（今回はVoD一覧）へリダイレクト
-			HttpSession session = request.getSession();
-			session.setAttribute("loginUser", account);
-			response.sendRedirect("/test/Home");
-		} else {
-			// エラー時はエラーメッセージを追加し自分へ戻る
-			request.setAttribute("msg", "ログインに失敗しました");
-			doGet(request, response);
-		}
-	}
-    
 
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+
+        String email = request.getParameter("email");
+        String pass = request.getParameter("password");
+
+        AuthLogic logic = new AuthLogic();
+        Accounts account = logic.login(email, pass);
+
+        if (account != null) {
+            HttpSession session = request.getSession();
+            session.setAttribute("loginUser", account);
+            response.sendRedirect("/test/Home");
+        } else {
+            request.setAttribute("msg", "ログインに失敗しました");
+            doGet(request, response);
+        }
+    }
 }
