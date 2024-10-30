@@ -25,7 +25,7 @@
 
 <body>
     <div class="rogin-form">
-        <form action="login" method="post"> <!-- サーブレットにPOSTリクエストを送る -->
+        <form action="Home" method="post"> <!-- サーブレットにPOSTリクエストを送る -->
             <div class="background">
                 <h1 class="rogin1">ログイン</h1>
             </div>
@@ -51,7 +51,7 @@
                 <div class="migi">
                     <button id="touroku" type="submit" class="button00">ログイン</button>
                     <p class="sinki">
-                        <a href="/WEB-INF/jsp/shink.jsp" class="sinki"><span id="sinki">新規登録</span></a>
+                        <a href="Shinki" class="sinki"><span id="sinki">新規登録</span></a>
                     </p>
                 </div>
             </div>

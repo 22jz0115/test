@@ -14,7 +14,7 @@
 <body>
 
     <div class="rogin-form">
-        <form action="register" method="post"> <!-- サーブレットにPOSTリクエストを送る -->
+        <form action="CreateUser" method="post"> <!-- サーブレットにPOSTリクエストを送る -->
             <div class="background">
                 <h1 class="shinki00">新規登録</h1>
             </div>
@@ -88,7 +88,6 @@
                     <br>
                 </div>
             </div>
-        <form action="src/servlet/" method="GET">
             <div class="sinki_button">
                 <!-- 登録ボタン -->
                 <button  id="touroku" type="submit" class="button-0">はじめる</button>
@@ -98,7 +97,7 @@
         <div class="migi">
             <!-- ログインページへのリンク -->
             <p class="sinki">
-                <a href="jsp/login.jsp" class="sinki"><span id="sinki">ログイン画面へ</span></a>
+                <a href="Login" class="sinki"><span id="sinki">ログイン画面へ</span></a>
             </p>
         </div>
     </div>

@@ -12,11 +12,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import dao.TasksDAO;
+import logic.AuthLogic;
+import model.Accounts;
 import model.Tasks;
 
 /**
@@ -110,6 +113,27 @@ public class Home extends HttpServlet {
         
         
     }
+    
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		
+		String email = request.getParameter("email");
+		String pass = request.getParameter("password");
+		
+		AuthLogic logic = new AuthLogic();
+		Accounts account = logic.login(email, pass);
+		
+		if (account != null) {
+			// ログインしてトップページ（今回はVoD一覧）へリダイレクト
+			HttpSession session = request.getSession();
+			session.setAttribute("loginUser", account);
+			response.sendRedirect("/test/Home");
+		} else {
+			// エラー時はエラーメッセージを追加し自分へ戻る
+			request.setAttribute("msg", "ログインに失敗しました");
+			doGet(request, response);
+		}
+	}
     
 
 }

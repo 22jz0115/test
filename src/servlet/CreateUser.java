@@ -2,7 +2,6 @@ package servlet;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,8 +23,8 @@ public class CreateUser extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/createUser.jsp");
-		dispatcher.forward(request, response);
+//		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/createUser.jsp");
+//		dispatcher.forward(request, response);
 	}
 
 	/**
@@ -36,10 +35,10 @@ public class CreateUser extends HttpServlet {
 		
 		request.setCharacterEncoding("UTF-8");
 		
-		String name = request.getParameter("name");
+		String name = request.getParameter("nickname");
 		String email = request.getParameter("email");
-		String pass = request.getParameter("pass");
-		String location = request.getParameter("location");
+		String pass = request.getParameter("password");
+		String location = request.getParameter("prefecture");
 		
 		Accounts accounts = dao.create(name, email, pass, location);
 		
@@ -47,7 +46,7 @@ public class CreateUser extends HttpServlet {
 			// ログインしてトップページ（今回はVoD一覧）へリダイレクト
 			HttpSession session = request.getSession();
 			session.setAttribute("loginUser", accounts);
-			response.sendRedirect("/test/Login");
+			response.sendRedirect("/test/Home");
 		} else {
 			// エラー時はエラーメッセージを追加し自分へ戻る
 			request.setAttribute("msg", "ユーザの追加に失敗しました");
