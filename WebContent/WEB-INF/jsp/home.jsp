@@ -33,9 +33,7 @@
 
     <h2 class="notice">お知らせ</h2>
     <div class="noticeMsg">
-        <p>
-            <%= request.getAttribute("weatherDescription") != null ? request.getAttribute("weatherDescription") : "天気情報が取得できませんでした。" %>
-        </p>
+        <p id="weather"></p>
     </div>
 
     <div class="flex-other">
@@ -62,5 +60,6 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script type="text/javascript" src="assets/js/home/script.js"></script>
+    <script src="assets/js/geolocation/geocode.js"></script>
 </body>
 </html>
