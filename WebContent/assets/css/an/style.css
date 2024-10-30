@@ -786,68 +786,68 @@ button:hover {
 
 
  /* -----------------------------------------------------------------カテゴリー画面--------------------------------------------------------------------------- */
- body{
+body {
     margin: 0;
     padding: 0;
-  }
-  
-  ul, li{
+}
+
+ul, li {
     list-style: none;
-  }
-  
-  header{
+}
+
+header {
     height: 84px;
     background: #FFACAC;
     display: flex;
     justify-content: center; /* 水平方向に中央揃え */
     align-items: center;     /* 垂直方向に中央揃え */
     position: relative;      /* 画像の位置調整用に追加 */
-  }
-  
-  header img{
+}
+
+header img {
     position: absolute;  /* 画像の位置を絶対配置 */
     left: 50px;          /* 画面の左から50pxに配置 */
-    margin-top: 15px;            /* 縦方向の中央に配置 */
+    margin-top: 15px;    /* 縦方向の中央に配置 */
     transform: translateY(-50%);  /* 縦方向の中央に正確に配置 */
-  }
-  
-  header h1{
+}
+
+header h1 {
     color: #ffffff;
     margin: 0;
     margin-top: 35px;
     font-size: 1.5rem;
-  }
-  
-  /*スウィッチ表示*/
-  .switch_label-4 {
+}
+
+/* スイッチ表示 */
+.switch_label-4 {
     display: flex;
     align-items: center;
     justify-content: center;
-  
-  }
-    
-  input[type='checkbox'] {
+}
+
+input[type='checkbox'] {
     position: absolute;
     width: 0;
     height: 0;
-  }
-    
-  .base {
+}
+
+.base {
     width: 56px;
-    border-radius: 15px;
     height: 32px;
+    border-radius: 15px;
     background-color: #ddd;
-  }
-    
-  .title {
+    transition: background-color 0.5s; /* スムーズな背景色の遷移 */
+}
+
+.title {
     margin-left: 4px;
-  }
-  
-  input:checked ~ .base {
+}
+
+input:checked ~ .base {
     background-color: rgb(219, 234, 254);
-  }
-  
-  .circle {
+}
+
+.circle {
     position: absolute;
     top: 4px;
     left: 4px;
@@ -855,38 +855,31 @@ button:hover {
     height: 24px;
     border-radius: 12px;
     background-color: white;
-  }
-    
-  input:checked ~ .base {
-    background-color: rgb(219, 234, 254);
-    transition: 0.5s;
-    }
-    
-  input:checked ~ .circle {
+    transition: transform 0.5s, background-color 0.5s; /* スムーズな動き */
+}
+
+input:checked ~ .circle {
     transform: translateX(100%);
     background-color: blue;
-    }
-  
-  .switch {
+}
+
+.switch {
     position: relative;
-  }
-  
-  /* 屋外屋内のボックス */
-  .box-1 {
+}
+
+/* 屋外屋内のボックス */
+.box-1 {
     background-color: #FFEAE6;
     margin: 10px;
     border-radius: 10px;
-   }
-  
-   /* カテゴリー */
- .categories {
-       display: flex;
+}
+
+/* カテゴリー */
+.categories {
+    display: flex;
     gap: 10px;
     flex-wrap: wrap;
-    /* flex-direction: row; */
-    /* justify-content: space-between; */
     align-items: stretch;
-    align-content: space-between;
     margin-top: 34px;
 }
 
@@ -899,36 +892,53 @@ button:hover {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 31px;
+    cursor: pointer; /* 削除可能なタスクを示す */
 }
-  
-  /*削除ボタン移動*/
-  .delete {
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-    flex-direction: column;
-    padding-top: 500px;
-  }
-  
-  .delete img {
+
+.content {
+    display: none; /* 非表示を初期設定 */
+    gap: 120px; /* ボックス間の余白 */
+}
+
+.content.active {
+    display: flex; /* アクティブな時のみ横並び */
+    gap: 120px; /* ボックス間の余白 */
+    align-items: center; /* ボックスの縦位置を中央揃え */
+    flex-wrap: wrap; /* ボックスを横並びで折り返し可能に */
+}
+
+/* 削除ボタン */
+.delete1 {
+    color: red;
+    cursor: pointer;
+}
+
+.delete1 img {
     display: block;
     margin: 0 auto;
-  }
-  
-  .delete p {
+}
+
+.delete1 p {
     margin-top: 5px;
     font-size: 14px; /* 好みのサイズに調整 */
     color: #333; /* 好みの色に変更 */
     padding-right: 20px;
-  }
-  
-  .delete a {
-   height: 39px;
-   padding-right: 20px;
-  }
+}
 
+.delete1 a {
+    height: 39px;
+    padding-right: 20px;
+}
 
-
+.delete1 {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-direction: row;
+    padding-top: 0px;
+    align-content: flex-start;
+}
 
 
 
