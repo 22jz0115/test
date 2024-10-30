@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -8,23 +9,40 @@
     <title>タスク入力画面</title>
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
+
 </head>
 <body>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script type="text/javascript" src="assets/js/taskup/script.js"></script>
+    <script type="text/javascript" src="assets/js/taskinput/script.js"></script>
     <header>
+<<<<<<< HEAD
+        <a href="../ホーム画面/index.jsp" class="back1"><img src="assets/img/戻るボタン.png"></a>
+=======
+>>>>>>> branch 'master' of https://github.com/22jz0115/test.git
         <a href="Home" class="back1"><img src="assets/img/戻るボタン.png"></a><h1>タスク入力</h1>
+<<<<<<< HEAD
 
+=======
+>>>>>>> branch 'master' of https://github.com/22jz0115/test.git
     </header>
 
     <div class="display">
+<<<<<<< HEAD
+        <form action="<%= request.getContextPath() %>/taskAddServlet" method="post">
+=======
+>>>>>>> branch 'master' of https://github.com/22jz0115/test.git
         <form action="TaskInput" method="post">
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> branch 'master' of https://github.com/22jz0115/test.git
             <!-- 日付表示 -->
             <div class="form-group">
                 <label for="dateDisplay">日付</label>
-                <div id="dateDisplay"><%= new java.util.Date() %></div>
+                <div id="dateDisplay">
+                	${selectedDate }
+                </div>
             </div>
 
             <!-- 時間入力 -->
@@ -54,40 +72,7 @@
     </select>
 </div>
 
-<script>
-    // 屋外と屋内のカテゴリの選択肢
-    const outdoorCategories = [
-        { value: 'gardening', text: 'ガーデニング' },
-        { value: 'exercise', text: '運動' }
-    ];
 
-    const indoorCategories = [
-        { value: 'cooking', text: '料理' },
-        { value: 'cleaning', text: '掃除' }
-    ];
-
-    function populateCategories(categories) {
-        const categorySelect = document.getElementById('categorySelect');
-        categorySelect.innerHTML = ''; // 既存のオプションをクリア
-
-        categories.forEach(category => {
-            const option = document.createElement('option');
-            option.value = category.value;
-            option.textContent = category.text;
-            categorySelect.appendChild(option);
-        });
-    }
-
-    function toggleCategory() {
-        const isOutdoor = document.getElementById('switch').checked;
-        populateCategories(isOutdoor ? outdoorCategories : indoorCategories);
-    }
-
-    // 初期状態で屋内のカテゴリを表示
-    window.onload = function() {
-        populateCategories(indoorCategories);
-    };
-</script>
 
             <!-- タスク名の入力 -->
             <div class="form-group">
@@ -109,6 +94,7 @@
             </div>
         </form>
 
+<<<<<<< HEAD
         <!-- カテゴリー選択に応じた表示切り替えのスクリプト -->
         <script>
             const radios = document.querySelectorAll('input[name="categoryType"]');
@@ -126,7 +112,12 @@
                     }
                 });
             });
+
+        
         </script>
+=======
+        
+>>>>>>> branch 'master' of https://github.com/22jz0115/test.git
     </div>
-</body>
+</body>  
 </html>
