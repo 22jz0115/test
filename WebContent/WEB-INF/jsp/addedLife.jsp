@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="assets/css/an/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script type="text/javascript" src="jquery-3.7.1.min.js"></script>
-    <script type="text/javascript" src="../js/lifeHack/script.js"></script>
+    <script type="text/javascript" src="assets/js/lifeHack/script.js"></script>
     <title>ライフハック追加画面</title>
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
@@ -19,7 +19,7 @@
     </header>
 
     <div class="background-1">
-        <form action="<%= request.getContextPath() %>/uploadLifeHackServlet" method="post" enctype="multipart/form-data">
+        <form action="LifeHack" method="post" enctype="multipart/form-data">
             <div class="class1">
                 <label for="name">タイトル</label>
                 <input type="text" id="name" name="name" required minlength="10" maxlength="50" size="30">

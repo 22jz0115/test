@@ -41,6 +41,6 @@
         </div>
     </div>
 
-    <p  class="lifehackAdd"><a href="#">ライフハック追加</a></p>
+    <p  class="lifehackAdd"><a href="AddedLife">ライフハック追加</a></p>
 </body>
 </html>
