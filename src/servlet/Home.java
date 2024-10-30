@@ -59,7 +59,7 @@ public class Home extends HttpServlet {
 
         // タスクリストの取得
         TasksDAO dao = new TasksDAO();
-        List<Tasks> taskList = dao.findByTaskList(46);
+        List<Tasks> taskList = dao.findByTaskList(loginUser.getId());
         request.setAttribute("taskList", taskList);
 
         // JSPに天気情報を渡す

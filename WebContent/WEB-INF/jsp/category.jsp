@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <link rel="stylesheet" href="assets/css/an/style.css">
     <title>カテゴリー画面</title>
-<<<<<<< HEAD
-=======
     <style>
         .content {
             display: none; /* 初期状態で全て非表示 */
@@ -16,11 +14,9 @@
             display: block; /* アクティブなコンテンツのみ表示 */
         }
     </style>
->>>>>>> branch 'master' of https://github.com/22jz0115/test.git
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
-<<<<<<< HEAD
-=======
+
      
     <script>
         const switchInput = document.getElementById('switch');
@@ -39,42 +35,6 @@
             }
         });
     </script>
->>>>>>> branch 'master' of https://github.com/22jz0115/test.git
-</head>
-
-<body>
-
-   <header>
-        <a href="Home" class="back1"><img src="assets/img/戻るボタン.png" alt="戻るボタン"></a>
-        <h1>カテゴリー</h1>
-    </header>
-    
-    <!-- スイッチボタン -->
-    <div class="box-1">
-        <label for="switch" class="switch_label-4">  
-            <p>屋内</p>
-            <div class="switch">
-                <input type="checkbox" id="switch" />
-                <div class="circle"></div>
-                <div class="base"></div>
-            </div>
-            <span class="title">屋外</span>
-        </label>
-    </div>
-
-    <!-- 屋内・屋外コンテンツ -->
-    <div class="categories">
-        <div id="indoorContent" class="content active">
-            <p id="task-1" class="deletable">料理 <span class="delete1">削除</span></p> 
-            <p id="task-2" class="deletable">掃除 <span class="delete1">削除</span></p>
-        </div>
-        <div id="outdoorContent" class="content">
-            <p id="task-3" class="deletable">屋外でのアクティビティ <span class="delete1">削除</span></p>
-            <p id="task-4" class="deletable">ピクニック <span class="delete1">削除</span></p>
-        </div>
-    </div>
-<<<<<<< HEAD
-
     <!-- JavaScript -->
     <script>
         const switchInput = document.getElementById('switch');
@@ -124,7 +84,39 @@
             });
         });
     </script>
-=======
+</head>
+
+<body>
+
+   <header>
+        <a href="Home" class="back1"><img src="assets/img/戻るボタン.png" alt="戻るボタン"></a>
+        <h1>カテゴリー</h1>
+    </header>
+    
+    <!-- スイッチボタン -->
+    <div class="box-1">
+        <label for="switch" class="switch_label-4">  
+            <p>屋内</p>
+            <div class="switch">
+                <input type="checkbox" id="switch" />
+                <div class="circle"></div>
+                <div class="base"></div>
+            </div>
+            <span class="title">屋外</span>
+        </label>
+    </div>
+
+    <!-- 屋内・屋外コンテンツ -->
+    <div class="categories">
+        <div id="indoorContent" class="content active">
+            <p id="task-1" class="deletable">料理 <span class="delete1">削除</span></p> 
+            <p id="task-2" class="deletable">掃除 <span class="delete1">削除</span></p>
+        </div>
+        <div id="outdoorContent" class="content">
+            <p id="task-3" class="deletable">屋外でのアクティビティ <span class="delete1">削除</span></p>
+            <p id="task-4" class="deletable">ピクニック <span class="delete1">削除</span></p>
+        </div>
+    </div>
    
     
     
@@ -136,6 +128,6 @@
             </button>
         </form>
     </div>
->>>>>>> branch 'master' of https://github.com/22jz0115/test.git
+
 </body>
 </html>
