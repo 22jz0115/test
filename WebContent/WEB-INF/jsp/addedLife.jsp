@@ -4,10 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="assets/css/an/style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script type="text/javascript" src="jquery-3.7.1.min.js"></script>
-    <script type="text/javascript" src="assets/js/lifeHack/script.js"></script>
+    <link rel="stylesheet" href="assets/css/an/style.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/home/script.js"></script>
     <title>ライフハック追加画面</title>
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
@@ -19,14 +18,16 @@
     </header>
 
     <div class="background-1">
-        <form action="LifeHack" method="post" enctype="multipart/form-data">
+        <form action="<%= request.getContextPath() %>/uploadLifeHackServlet" method="post" enctype="multipart/form-data">
             <div class="class1">
                 <label for="name">タイトル</label>
                 <input type="text" id="name" name="name" required minlength="10" maxlength="50" size="30">
             </div>
+            
+           
 
             <!-- 写真を挿入する -->
-            <div class="content">
+            <div class="atcontent">
                 <div class="name">
                     <label for="comment">内容</label>
                 </div>
@@ -48,7 +49,7 @@
         // 画像プレビュー用のJavaScript
         function previewFiles(input) {
             const preview = document.getElementById('preview');
-            preview.innerHTML = ''; // 既存のプレビューをクリア
+            preview.innerHTML = ''; // 既存のプレビューをクリア	
 
             const files = input.files;
             for (let i = 0; i < files.length; i++) {
