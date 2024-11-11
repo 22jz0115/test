@@ -8,7 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import dao.CategoriesDAO;
 import model.Categories;
@@ -28,14 +27,12 @@ public class Category extends HttpServlet {
    		// TODO Auto-generated method stub
    		
    		
-   		CategoriesDAO categoryDao = new CategoriesDAO();
+   		CategoriesDAO categoriesDAO = new CategoriesDAO();
    		
-   		List<Categories> categoryList = categoryDao.get();
-   		
-   		HttpSession session = request.getSession();
-		session.setAttribute("category", categoryList);
+   		List<Categories> categoryList = categoriesDAO.get();  // DAOからデータを取得
+   		request.setAttribute("categoryList", categoryList); 
 		
-		System.out.print(categoryList.size());
+		System.out.print(categoryList.get(0).getCategoryName());
    		
    		request.getRequestDispatcher("/WEB-INF/jsp/category.jsp").forward(request, response);
    	}
