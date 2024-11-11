@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.TaskeInputDAO;
+
 /**
  * Servlet implementation class taskinput
  */
@@ -39,4 +41,32 @@ public class TaskInput extends HttpServlet {
 		doGet(request, response);
 		
 	}
+	
+	@WebServlet("/TaskInput")
+	public class TaskInputServlet extends HttpServlet {
+	    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	        // フォームからのデータを取得
+	        String date = request.getParameter("selectedDate");
+	        String time = request.getParameter("appt-time");
+	        String category = request.getParameter("category");
+	        String taskName = request.getParameter("taskName");
+	        String memo = request.getParameter("story");
+
+	        // DAOを使ってデータベースにタスクを挿入
+	        TaskeInputDAO dao = new TaskeInputDAO();
+	        boolean isInserted = dao.insertTask(date, time, category, taskName, memo);
+
+	        if (isInserted) {
+	            // 挿入が成功した場合、確認画面へリダイレクト
+	            response.sendRedirect("TaskSuccess.jsp");
+	        } else {
+	            // 挿入が失敗した場合、エラーメッセージを表示
+	            response.getWriter().println("タスクの追加に失敗しました。");
+	        }
+	    }
+	}
+	
+	
+	
+	
 }
