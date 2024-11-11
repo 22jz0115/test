@@ -159,7 +159,6 @@ public class TasksDAO {
 		}
 		return null;
 	}
-	
 	private Tasks rs2model(ResultSet rs) throws SQLException {
         int id = rs.getInt("id");
         int category_id = rs.getInt("category_id");
