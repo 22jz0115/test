@@ -904,7 +904,6 @@ input:checked ~ .circle {
 .content.active {
     display: flex; /* アクティブな時のみ横並び */
     gap: 120px; /* ボックス間の余白 */
-    align-items: center; /* ボックスの縦位置を中央揃え */
     flex-wrap: wrap; /* ボックスを横並びで折り返し可能に */
 }
 

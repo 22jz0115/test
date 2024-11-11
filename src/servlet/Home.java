@@ -35,6 +35,8 @@ public class Home extends HttpServlet {
         TasksDAO dao = new TasksDAO();
         List<Tasks> taskList = dao.findByTaskList(loginUser.getId());
         request.setAttribute("taskList", taskList);
+        
+   
 
         request.getRequestDispatcher("/WEB-INF/jsp/home.jsp").forward(request, response);
     }
@@ -52,6 +54,7 @@ public class Home extends HttpServlet {
         if (account != null) {
             HttpSession session = request.getSession();
             session.setAttribute("loginUser", account);
+           
             response.sendRedirect("/test/Home");
         } else {
             request.setAttribute("msg", "ログインに失敗しました");

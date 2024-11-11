@@ -38,6 +38,7 @@ public class Categories {
 	public void setUpdateDate(LocalDateTime updateDate) {
 		this.updateDate = updateDate;
 	}
+	
 	public Categories(int id, String categoryName, int outin, LocalDateTime createdAt, LocalDateTime updateDate) {
 		super();
 		this.id = id;
