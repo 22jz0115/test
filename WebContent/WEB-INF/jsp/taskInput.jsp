@@ -76,7 +76,6 @@
                 <button id="touroku" type="submit" class="button3">追加</button>
             </div>
         </form>
-    
 
     </div>
 </body>  
