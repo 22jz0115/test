@@ -9,19 +9,14 @@
     <title>設定画面</title>
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
-    <style>
-        body {
-            background-color: <%= request.getParameter("bgcolor") != null ? request.getParameter("bgcolor") : "#ffffff" %>;
-            color: <%= request.getParameter("textcolor") != null ? request.getParameter("textcolor") : "#000000" %>;
-        }
-    </style>
 </head>
 <body>
+   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/setting/setting.js"></script>
     <header id="header">
         <a href="Home" class="back1"><img src="assets/img/戻るボタン.png" alt="戻る"></a>
         <h1>設定</h1>
     </header>
-
     <div class="switch">   
         <div class="notification">
             <img src="assets/img/通知アイコン.png" alt="通知アイコン">
@@ -50,36 +45,12 @@
     <input id="textcolor" type="color" />
     <button id="textColorBtn" type="button" class="button2">決定</button>
 </div>
-
- 
     <p class="setting">ヘッダーの色変更</p>
     <!-- ヘッダー背景色変更のためのフォーム -->
     <div class="selection">
         <input id="headercolor" type="color" />
         <button id="headerColorBtn" type="button" class="button2">決定</button>
     </div>
-
-    <script>
-    // ヘッダーの背景色を変更する関数
-    document.getElementById('headerColorBtn').addEventListener('click', function() {
-        var headerColor = document.getElementById('headercolor').value;
-        document.getElementById('header').style.backgroundColor = headerColor; // ヘッダーの背景色を変更
-    });
-    </script>
-    <script>
-    // 背景色を変更する関数
-    document.getElementById('bgColorBtn').addEventListener('click', function() {
-        var bgColor = document.getElementById('bgcolor').value;
-        document.body.style.backgroundColor = bgColor; // 背景色を変更
-    });
-
-    // 文字色を変更する関数
-    document.getElementById('textColorBtn').addEventListener('click', function() {
-        var textColor = document.getElementById('textcolor').value;
-        document.body.style.color = textColor; // 文字色を変更
-    });
-</script>
-
     <p class="setting">ログアウト</p>
     <div class="button-1">
         <form action="Login" method="post">
