@@ -73,10 +73,10 @@
 
             <!-- 追加ボタン -->
             <div class="migi">
-                <button id="touroku" type="submit" class="button3">追加</button>
+                <button id="touroku" type="submit" class="button3" href="Task.java">追加</button>
             </div>
         </form>
-    
+
     </div>
 </body>  
 </html>

@@ -81,12 +81,11 @@ public class CategoriesDAO {
 	private Categories rs2model(ResultSet rs) throws SQLException {
         int id = rs.getInt("id");
         String category_name = rs.getString("category_name");
-        int outin = rs.getInt("outin");
         LocalDateTime createdAt =
                  rs.getTimestamp("created_at").toLocalDateTime();                          
         LocalDateTime updateDate = 
                  rs.getTimestamp("update_date").toLocalDateTime();  
 
-        return new Categories(id, category_name, outin, createdAt, updateDate);
+        return new Categories(id, category_name, createdAt, updateDate);
     }
 }
