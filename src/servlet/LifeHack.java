@@ -78,4 +78,5 @@ public class LifeHack extends HttpServlet {
 	        response.sendRedirect("LifeHack"); 
 	}
 
+	
 }
