@@ -18,10 +18,10 @@
     </header>
 
     <div class="background-1">
-        <form action="<%= request.getContextPath() %>/uploadLifeHackServlet" method="post" enctype="multipart/form-data">
+        <form action="LifeHack" method="post" enctype="multipart/form-data">
             <div class="class1">
                 <label for="name">タイトル</label>
-                <input type="text" id="name" name="name" required minlength="10" maxlength="50" size="30">
+                <input type="text" id="name" name="name" required minlength="1" maxlength="50" size="30">
             </div>
             
            
