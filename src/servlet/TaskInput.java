@@ -14,7 +14,6 @@ import dao.CategoriesDAO;
 import dao.TasksDAO;
 import model.Accounts;
 import model.Categories;
-import model.Tasks;
 
 /**
  * Servlet implementation class taskinput
@@ -42,12 +41,17 @@ public class TaskInput extends HttpServlet {
     	
     	request.setCharacterEncoding("UTF-8");
         // フォームデータを取得
-        String date = request.getParameter("selectedDate");
+        String date = request.getParameter("dateDisplay");
         String time = request.getParameter("appt-time");
-        String category = request.getParameter("category");
+        String category = request.getParameter("task-1");
         String taskName = request.getParameter("taskName");
         String memo = request.getParameter("story");
         
+        System.out.println(date);
+        System.out.println(time);
+        System.out.println(category);
+        System.out.println(taskName);
+        System.out.println(memo);
         
     	HttpSession session = request.getSession();
         Accounts loginUser = (Accounts) session.getAttribute("loginUser");
@@ -56,14 +60,14 @@ public class TaskInput extends HttpServlet {
 
         // DAOを使ってデータベースにタスクを挿入
         TasksDAO dao = new TasksDAO();
-        Tasks TaskInput = dao.create();
-
-        if (newTaskInput != null) {
-            // 挿入が成功した場合、タスク一覧画面にリダイレクト
-            response.sendRedirect("Task?date=" + date);  // 日付をクエリパラメータとして渡してリダイレクト
-        } else {
-            // 挿入が失敗した場合、エラーメッセージを表示
-            response.getWriter().println("タスクの追加に失敗しました。");
-        }
+//        Tasks TaskInput = dao.create();
+//
+//        if (newTaskInput != null) {
+//            // 挿入が成功した場合、タスク一覧画面にリダイレクト
+//            response.sendRedirect("Task?date=" + date);  // 日付をクエリパラメータとして渡してリダイレクト
+//        } else {
+//            // 挿入が失敗した場合、エラーメッセージを表示
+//            response.getWriter().println("タスクの追加に失敗しました。");
+//        }
     }
 }

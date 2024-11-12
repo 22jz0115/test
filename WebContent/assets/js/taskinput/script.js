@@ -49,15 +49,6 @@ function dateDisplay() {
 
     });
 
-    // 屋外と屋内のカテゴリの選択肢
-//    const outdoorCategories = [
-//        { value: 'gardening', text: 'ガーデニング' },
-//        { value: 'exercise', text: '運動' }
-//    ];
-//    const indoorCategories = [
-//        { value: 'cooking', text: '料理' },
-//        { value: 'cleaning', text: '掃除' }
-//    ];
 
     function populateCategories(categories) {
         const categorySelect = document.getElementById('categorySelect');

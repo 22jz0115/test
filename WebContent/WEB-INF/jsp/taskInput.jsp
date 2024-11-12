@@ -32,6 +32,11 @@
                 	${selectedDate }
                 </div>
             </div>
+            
+             <script>
+        // サーバーから渡された日付 (例: "2024-11-15") をJavaScriptに渡す
+        const selectedDate = '<%= request.getAttribute("selectedDate") %>';
+    </script>
 
             <!-- 時間入力 -->
             <div class="form-group">
@@ -51,7 +56,6 @@
     </label>
 </div>
 
-
 <!-- カテゴリーのプルダウン -->
 <div id="categoryDiv" class="form-group">
     <label for="categorySelect">カテゴリーを選択:</label>
@@ -70,8 +74,6 @@
                 <input type="text" id="taskName" name="taskName" required minlength="1" maxlength="8" />
             </div>
             
-            
-
             <!-- メモの入力 -->
             <div class="form-group">
                 <label for="story" class="memo-label">メモ</label>
