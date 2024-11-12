@@ -51,6 +51,8 @@ public class LifeHack extends HttpServlet {
 
         String title = request.getParameter("name");
         String content = request.getParameter("comment");
+        
+        content = content.replace("\n", "<br>");
 
         // ファイルパートを取得
         Part filePart = request.getPart("file"); // フォームのinput type="file"のname属性が"file"である場合
