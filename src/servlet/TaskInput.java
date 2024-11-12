@@ -14,6 +14,7 @@ import dao.CategoriesDAO;
 import dao.TasksDAO;
 import model.Accounts;
 import model.Categories;
+import model.Tasks;
 
 /**
  * Servlet implementation class taskinput
@@ -55,14 +56,14 @@ public class TaskInput extends HttpServlet {
 
         // DAOを使ってデータベースにタスクを挿入
         TasksDAO dao = new TasksDAO();
-//        Tasks TaskInput = dao.create();
-//
-//        if (newTaskInput != null) {
-//            // 挿入が成功した場合、タスク一覧画面にリダイレクト
-//            response.sendRedirect("Task?date=" + date);  // 日付をクエリパラメータとして渡してリダイレクト
-//        } else {
-//            // 挿入が失敗した場合、エラーメッセージを表示
-//            response.getWriter().println("タスクの追加に失敗しました。");
-//        }
-//    }
-}}
+        Tasks TaskInput = dao.create();
+
+        if (newTaskInput != null) {
+            // 挿入が成功した場合、タスク一覧画面にリダイレクト
+            response.sendRedirect("Task?date=" + date);  // 日付をクエリパラメータとして渡してリダイレクト
+        } else {
+            // 挿入が失敗した場合、エラーメッセージを表示
+            response.getWriter().println("タスクの追加に失敗しました。");
+        }
+    }
+}

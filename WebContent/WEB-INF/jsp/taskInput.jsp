@@ -1,4 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ja">
@@ -52,8 +55,12 @@
 <!-- カテゴリーのプルダウン -->
 <div id="categoryDiv" class="form-group">
     <label for="categorySelect">カテゴリーを選択:</label>
-    <select id="categorySelect" name="category" items="${categoryList}>
+    <select id="categorySelect"">
         <!-- カテゴリのオプションがJavaScriptで動的に設定されます -->
+        <c:forEach var="category" items="${categoryList}">
+            	<option id="task-1" class="deletable">${category.categoryName}</option> 
+            </c:forEach>
+    
     </select>
 </div>
 
