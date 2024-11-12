@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -21,25 +22,23 @@
         </label>
         <button type="submit" aria-label="検索"></button>
     </form>
-
-    <div class="lifehacks">
+    
+    
+    <c:forEach var="life" items="${lifeList}">
+          <div class="lifehacks">
         <div>
-            <h2>○○さん</h2>
-            <h3>タイトル</h3>
+            <h2>${life.accountId}さん</h2>
+            <h3>${life.title}</h3>
             <p>
-                具材
-                食パン
-                卵1個
-                チーズ
-                バター<br>
-                ベースブレット<br>
-                ベースブレット<br>
-                ベースブレット<br>
-                ベースブレット<br>
+               ${life.content}
             </p>
-            <img src="assets/img/ダウンロード.jpg" alt="">
+            <img src="${life.img}" alt="">
         </div>
-    </div>
+    </div>    	
+    
+    </c:forEach>
+
+  
 
     <p  class="lifehackAdd"><a href="AddedLife">ライフハック追加</a></p>
 </body>
