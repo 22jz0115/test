@@ -39,7 +39,9 @@ public class LifeHack extends HttpServlet {
 
         LifesDAO dao = new LifesDAO();
         List<Lifes> lifeList = dao.get();
-        request.setAttribute("taskList", lifeList);
+        request.setAttribute("lifeList", lifeList);
+        System.out.print(lifeList.size());
+        
 
         request.getRequestDispatcher("/WEB-INF/jsp/lifeHack.jsp").forward(request, response);
     }
