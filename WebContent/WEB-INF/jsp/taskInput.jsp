@@ -52,7 +52,7 @@
 <!-- カテゴリーのプルダウン -->
 <div id="categoryDiv" class="form-group">
     <label for="categorySelect">カテゴリーを選択:</label>
-    <select id="categorySelect" name="category">
+    <select id="categorySelect" name="category" items="${categoryList}>
         <!-- カテゴリのオプションがJavaScriptで動的に設定されます -->
     </select>
 </div>
@@ -71,12 +71,9 @@
                 <textarea id="story" name="story" rows="5" cols="50">メモ</textarea>
             </div>
 
-            <!-- 追加ボタン -->
-            <div class="migi">
-                <button id="touroku" type="submit" class="button3" href="Task.java">追加</button>
-            </div>
-        </form>
-
+   <form herf="Task.java" method="post">
+    <button id="touroku" type="submit" class="button3">追加</button>
+</form>
     </div>
 </body>  
 </html>
