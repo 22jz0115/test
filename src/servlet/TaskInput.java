@@ -20,22 +20,14 @@ public class TaskInput extends HttpServlet {
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
+    // GETメソッド：タスク入力フォームの表示
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String selectedDate = request.getParameter("date");
-
-        // 日付をリクエスト属性に設定
-        request.setAttribute("selectedDate", selectedDate);
-
-        // タスク入力画面へフォワード
         request.getRequestDispatcher("/WEB-INF/jsp/taskInput.jsp").forward(request, response);
     }
 
-
-    /**
-     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-     */
+    // POSTメソッド：タスクの追加処理
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // フォームからのデータを取得
+        // フォームデータを取得
         String date = request.getParameter("selectedDate");
         String time = request.getParameter("appt-time");
         String category = request.getParameter("category");
@@ -47,8 +39,8 @@ public class TaskInput extends HttpServlet {
         TaskInput newTaskInput = dao.create(date, time, category, taskName, memo);
 
         if (newTaskInput != null) {
-            // 挿入が成功した場合、成功画面へリダイレクト
-            response.sendRedirect("TaskSuccess.jsp");
+            // 挿入が成功した場合、タスク一覧画面にリダイレクト
+            response.sendRedirect("Task?date=" + date);  // 日付をクエリパラメータとして渡してリダイレクト
         } else {
             // 挿入が失敗した場合、エラーメッセージを表示
             response.getWriter().println("タスクの追加に失敗しました。");

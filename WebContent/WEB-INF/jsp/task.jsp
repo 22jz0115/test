@@ -173,9 +173,6 @@
         <textarea name="" id="" cols="50" rows="10"></textarea>
     </div>
 
-
-    
-
     <div class="bts">
        <a  href="TaskInput"><p>タスク追加</p></a>
        <a  href="Preset"><p>プリセット追加</p></a> 

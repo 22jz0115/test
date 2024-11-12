@@ -19,6 +19,8 @@ public class Task extends HttpServlet {
         // パラメータから日付を取得
         String selectedDate = request.getParameter("date");
         
+        
+        
      
 
         // 日付をリクエスト属性に設定
