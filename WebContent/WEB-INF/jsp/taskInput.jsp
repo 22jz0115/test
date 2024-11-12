@@ -33,6 +33,8 @@
                 </div>
             </div>
             
+            
+           
              <script>
         // サーバーから渡された日付 (例: "2024-11-15") をJavaScriptに渡す
         const selectedDate = '<%= request.getAttribute("selectedDate") %>';
