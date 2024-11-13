@@ -1030,6 +1030,19 @@ input[type="color"]::-webkit-color-swatch {
 input[type="color"]:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
+.notification-message {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #4CAF50; /* 緑色の背景 */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    z-index: 1000; /* 他の要素より前面に表示 */
+    display: none; /* 初期状態で非表示 */
+}
 
 /* 決定ボタンのスタイル */
 .button2 {

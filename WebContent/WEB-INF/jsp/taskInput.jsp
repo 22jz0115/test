@@ -23,14 +23,13 @@
 
         <form action="TaskInput" method="post">
 
-            <!-- 日付表示 -->
-            <div class="form-group">
-                <label for="dateDisplay">日付</label>
-                <div id="dateDisplay">
-                	${selectedDate }
-                </div>
-            </div>
-            
+    <!-- 日付表示 -->
+<div class="form-group">
+    <label for="dateInput">日付</label>
+    <!-- 日付選択 -->
+    <input type="date" id="dateInput" name="dateInput" value="${selectedDate}">
+</div>
+          
             
            
              <script>
@@ -85,4 +84,5 @@
 </form>
     </div>
 </body>  
+
 </html>

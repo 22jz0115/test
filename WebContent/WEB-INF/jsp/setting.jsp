@@ -9,8 +9,10 @@
     <title>設定画面</title>
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
+   
 </head>
 <body>
+
    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script type="text/javascript" src="assets/js/setting/setting.js"></script>
     <header id="header">
@@ -24,7 +26,7 @@
             <label for="switch1" class="switch_label">  
                 <p>OFF</p>
                 <div class="switch">
-                    <input type="checkbox" id="switch1" />
+                    <input type="checkbox" id="switch1" onchange="updateNotificationSetting(this)"/>
                     <div class="circle"></div>
                     <div class="base"></div>
                 </div>
@@ -37,6 +39,11 @@
 <div class="selection">
     <input id="bgcolor" type="color" />
     <button id="bgColorBtn" type="button" class="button2">決定</button>
+</div>
+
+<!-- 通知メッセージの要素 -->
+<div id="notification" class="notification-message" style="display: none;">
+    変更できました
 </div>
 
 <p class="setting">文字色変更</p>
@@ -57,6 +64,7 @@
             <button type="submit" class="logout-button">ログアウト</button>
         </form>
     </div>
+
 
 </body>
 </html>
