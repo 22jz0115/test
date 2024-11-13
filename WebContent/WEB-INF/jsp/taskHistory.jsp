@@ -20,12 +20,15 @@
     <h2 class="taskcategory">料理</h2>
     <div >
         <ul class="taskhistory">
-            <li>
-                <p>パスタを作る</p>
-            </li>
-            <li>
-                <p>焼き鳥を作る</p>
-            </li>
+	         <c:forEach var="task" items="${taskList}">
+	            <li>
+	                <p>${task.taskName }</p>
+	            </li>
+	            <li>
+	                <p>焼き鳥を作る</p>
+	            </li>
+	         </c:forEach>
+            
         </ul>
     </div>
     

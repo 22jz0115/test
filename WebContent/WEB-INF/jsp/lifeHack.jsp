@@ -23,6 +23,7 @@
         <button type="submit" aria-label="検索"></button>
     </form>
     
+    <p  class="lifehackAdd"><a href="AddedLife">ライフハック追加</a></p>
     
     <c:forEach var="life" items="${lifeList}">
           <div class="lifehacks">
@@ -39,7 +40,7 @@
     </c:forEach>
 
   
-
+	
     <p  class="lifehackAdd"><a href="AddedLife">ライフハック追加</a></p>
 </body>
 </html>
