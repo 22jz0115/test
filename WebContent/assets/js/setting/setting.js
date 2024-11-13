@@ -9,6 +9,15 @@ $(function() {
     $('#bgColorBtn').on('click', function() {
         var bgColor = $('#bgcolor').val();
         $('body').css('background-color', bgColor); // 背景色を変更
+        
+        // 通知メッセージを表示
+        const notification = document.getElementById("notification");
+        notification.style.display = "block";
+        
+        // 数秒後に通知メッセージを非表示にする
+        setTimeout(function() {
+            notification.style.display = "none";
+        }, 2000); // 2秒後に非表示
     });
 
     // 文字色を変更する関数
@@ -16,22 +25,23 @@ $(function() {
         var textColor = $('#textcolor').val();
         $('body').css('color', textColor); // 文字色を変更
     });
-    
-    function updateNotificationSetting(checkbox) {
-        const notificationStatus = checkbox.checked ? "ON" : "OFF";
 
-        // サーブレットに通知設定を送信
-        fetch("NotificationSetting", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: "notificationStatus=" + notificationStatus
-        })
-        .then(response => response.text())
-        .then(result => {
-            console.log(result); // 通知設定の更新結果をコンソールに表示
-        })
-        .catch(error => {
-            console.error("Error updating notification setting:", error);
-        });
+   $('#bgColorBtn').on('click', function() {
+    var bgColor = $('#bgcolor').val();
+    $('body').css('background-color', bgColor); // 背景色を変更
+    
+    // 通知メッセージを表示
+    const notification = document.getElementById("notification");
+    notification.style.display = "block";
+    
+    // 数秒後に通知メッセージを非表示にする
+    setTimeout(function() {
+        notification.style.display = "none";
+    }, 2000); // 2秒後に非表示
+});
+
+    // 通知スイッチの変更を監視して、設定を更新
+    $('#switch1').on('change', function() {
+        updateNotificationSetting(this);
+    });
+});
