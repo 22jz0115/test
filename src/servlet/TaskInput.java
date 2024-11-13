@@ -8,11 +8,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import dao.CategoriesDAO;
-import dao.TasksDAO;
-import model.Accounts;
 import model.Categories;
 
 /**
@@ -53,13 +50,13 @@ public class TaskInput extends HttpServlet {
         System.out.println(taskName);
         System.out.println(memo);
         
-    	HttpSession session = request.getSession();
-        Accounts loginUser = (Accounts) session.getAttribute("loginUser");
-        int accountId = loginUser.getId();
+    	//HttpSession session = request.getSession();
+        //Accounts loginUser = (Accounts) session.getAttribute("loginUser");
+       //int accountId = loginUser.getId();
         
 
         // DAOを使ってデータベースにタスクを挿入
-        TasksDAO dao = new TasksDAO();
+       // TasksDAO dao = new TasksDAO();
 //        Tasks TaskInput = dao.create();
 //
 //        if (newTaskInput != null) {
@@ -69,5 +66,6 @@ public class TaskInput extends HttpServlet {
 //            // 挿入が失敗した場合、エラーメッセージを表示
 //            response.getWriter().println("タスクの追加に失敗しました。");
 //        }
+        request.getRequestDispatcher("/WEB-INF/jsp/task.jsp").forward(request, response);
     }
 }
