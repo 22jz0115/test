@@ -24,9 +24,6 @@
 	            <li>
 	                <p>${task.taskName }</p>
 	            </li>
-	            <li>
-	                <p>焼き鳥を作る</p>
-	            </li>
 	         </c:forEach>
             
         </ul>
