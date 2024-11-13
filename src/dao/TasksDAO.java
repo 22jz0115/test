@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -126,7 +127,7 @@ public class TasksDAO {
 	 * DBにデータを追加する
 	 * @return 成功時は追加したデータ、失敗時はnull
 	 */
-	public Tasks create(int category_id, int account_id, String task_name, String memo, int outin) {
+	public Tasks create(int category_id, int account_id, String task_name, String memo, int outin, LocalDateTime taskDatetime) {
 		int ret = -1;
 		
 		// 重複確認 → タスク名+タスク時間が重複でメッセージ出す
@@ -140,13 +141,14 @@ public class TasksDAO {
 		try(Connection cn = manager.getConnection()) {
 			
 			// プレースホルダで変数部分を定義
-			String sql = "INSERT INTO tasks (category_id, account_id, task_name, memo, outin) VALUES (?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO tasks (category_id, account_id, task_name, memo, outin, task_datetime) VALUES (?, ?, ?, ?, ?, ?)";
 			PreparedStatement stmt = cn.prepareStatement(sql);
 			stmt.setInt(1, category_id);
 			stmt.setInt(2, account_id);
 			stmt.setString(3, task_name);
 			stmt.setString(4, memo);
 			stmt.setInt(5, outin);
+			stmt.setTimestamp(6, Timestamp.valueOf(taskDatetime));
 			
 			ret = stmt.executeUpdate();
 			
