@@ -9,8 +9,10 @@
     <title>設定画面</title>
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
+   
 </head>
 <body>
+
    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script type="text/javascript" src="assets/js/setting/setting.js"></script>
     <header id="header">
@@ -24,7 +26,7 @@
             <label for="switch1" class="switch_label">  
                 <p>OFF</p>
                 <div class="switch">
-                    <input type="checkbox" id="switch1" />
+                    <input type="checkbox" id="switch1" onchange="updateNotificationSetting(this)"/>
                     <div class="circle"></div>
                     <div class="base"></div>
                 </div>
