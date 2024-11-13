@@ -41,6 +41,11 @@
     <button id="bgColorBtn" type="button" class="button2">決定</button>
 </div>
 
+<!-- 通知メッセージの要素 -->
+<div id="notification" class="notification-message" style="display: none;">
+    変更できました
+</div>
+
 <p class="setting">文字色変更</p>
 <!-- 文字色変更のためのフォーム -->
 <div class="selection">
