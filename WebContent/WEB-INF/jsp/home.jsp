@@ -26,7 +26,24 @@
     <header>
         <a href="#"><img class="imgVector" src="assets/js/home/script.js" alt=""></a>
         <h1>ホーム</h1>
+        <div class="openbtn1"><span></span><span></span><span></span></div>
+	    <nav id="g-nav">
+	      <ul>
+	      <li> <a class="todaybutton" href=Task>今日のタスク</a></li>
+	        <li> <a class="link-button" href="Category">カテゴリー</a></li>
+	        <li> <a class="link-button" href="PresetList">プリセット</a></li>
+	        <li><a class="link-button" href="LifeHack">ライフハック</a></li>
+	        <li> <a class="link-button" href="Result">統計</a></li>
+	        <li><a class="link-button" href="Collection">コレクション</a></li>
+	        <li> <a class="link-button" href="Setting">設定</a></li>        
+	        <c:if test="${not empty loginUser }">
+	       		<li><a class="rogout" href="Logout">ログアウト</a></li>
+	       	</c:if> 
+	      </ul>
+	    </nav>
     </header>
+    
+    
     <div class="calendar-wrap">
         <table class="calendar"><caption></caption></table>
     </div>
@@ -45,17 +62,6 @@
                      </c:forEach>
     			</ul>
             </div>
-            <div class="buttons">
-                <a class="starbutton" href="Collection"><img src="assets/img/unnamed.png" alt=""></a>
-                <a class="bellbutton" href="Setting"><img src="assets/img/kkrn_icon_oshirase_4.png" alt=""></a>
-                <a class="ratebutton" href="Result"><img src="assets/img/22462108.png" alt=""></a>
-            </div>
-        </div>
-        <div class="other-button">
-            <a class="link-button" href="Category"><p>カテゴリー</p></a>
-            <a class="link-button" href="PresetList"><p>プリセット</p></a>
-            <a class="link-button" href="LifeHack"><p>ライフハック</p></a>
-            <a class="todaybutton" href=Task><p>今日のタスク</p></a>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>

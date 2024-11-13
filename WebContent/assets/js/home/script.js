@@ -1,4 +1,21 @@
 $(function() {
+	
+	const ham = document.querySelector('.openbtn1');
+    const nav = document.querySelector('#g-nav');
+
+    ham.addEventListener('click', function(){
+        ham.classList.toggle('active');
+        nav.classList.toggle('panelactive');
+    });
+
+
+    nav.addEventListener('click', function(){
+        ham.classList.remove('active');
+        nav.classList.remove('panelactive');
+    });
+    
+    
+    
     // カレンダーの生成
     const head = '<tr class="week"><th class="sun">日</th><th>月</th>' +
         '<th>火</th><th>水</th><th>木</th><th>金</th><th class="sat">土</th></tr>';
