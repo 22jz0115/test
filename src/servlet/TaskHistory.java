@@ -1,12 +1,18 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import dao.TasksDAO;
+import model.Accounts;
+import model.Tasks;
 
 /**
  * Servlet implementation class TaskHistory
@@ -20,6 +26,22 @@ public class TaskHistory extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpSession session = request.getSession();
+        Accounts loginUser = (Accounts) session.getAttribute("loginUser");
+
+        int categoryId = Integer.parseInt(request.getParameter("categoryId")); 
+        
+       TasksDAO taskDAO = new TasksDAO();
+       
+        List<Tasks> taskList = taskDAO.findByCategoryId(loginUser.getId(), categoryId);
+        
+        // 取得したデータをリクエストスコープに格納
+        request.setAttribute("taskList", taskList);
+        
+        System.out.print(taskList.size());
+		        
+		
 		request.getRequestDispatcher("/WEB-INF/jsp/taskHistory.jsp").forward(request, response);
 	}
 
