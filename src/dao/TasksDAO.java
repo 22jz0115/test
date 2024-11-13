@@ -91,8 +91,9 @@ public class TasksDAO {
 			ResultSet rs = stmt.executeQuery();
 			
 			// データをリストに格納
-			if (rs.next()) {
-				taskList.add(rs2model(rs));
+			while (rs.next()) {
+				Tasks tasks = rs2model(rs);
+				taskList.add(tasks);
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();
@@ -113,7 +114,7 @@ public class TasksDAO {
 			ResultSet rs = stmt.executeQuery();
 			
 			// データをリストに格納
-			if (rs.next()) {
+			while (rs.next()) {
 				taskList.add(rs2model(rs));
 			}
 		} catch(SQLException e) {

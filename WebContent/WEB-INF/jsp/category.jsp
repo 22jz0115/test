@@ -18,15 +18,17 @@
         <h1>カテゴリー</h1>
     </header>
 
-
     <div class="categories">
         <div id="indoorContent" class="content active">
-        	<c:forEach var="category" items="${categoryList}">
-            	<p id="task-1" class="deletable">${category.categoryName}</p> 
+            <c:forEach var="category" items="${categoryList}">
+                <form action="TaskHistory" method="get">
+                    <button id="task-1" type="submit" name="categoryId" value="${category.id}" class="deletable">
+                        ${category.categoryName}
+                    </button>
+                </form>
             </c:forEach>
         </div>       
     </div>
     
- 
 </body>
 </html>

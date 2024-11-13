@@ -16,7 +16,7 @@ public class CategoriesDAO {
 				
 		DBManager manager = DBManager.getInstance();
 		try(Connection cn = manager.getConnection()) {
-			String sql = "SELECT * FROM categories";
+			String sql = "SELECT * FROM categories ORDER BY 1";
 			PreparedStatement stmt = cn.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			
