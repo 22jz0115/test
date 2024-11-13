@@ -43,7 +43,7 @@ public class TaskInput extends HttpServlet {
         // フォームデータを取得
         String date = request.getParameter("dateDisplay");
         String time = request.getParameter("appt-time");
-        String category = request.getParameter("task-1");
+        String category = request.getParameter("categorySelect"); //int型にする
         String taskName = request.getParameter("taskName");
         String memo = request.getParameter("story");
         
@@ -56,6 +56,9 @@ public class TaskInput extends HttpServlet {
     	HttpSession session = request.getSession();
         Accounts loginUser = (Accounts) session.getAttribute("loginUser");
         int accountId = loginUser.getId();
+        
+        int outin = request.getParameter("switch") != null ? 1 : 0;
+        System.out.println("チェックボックスの値: " + outin);
         
 
         // DAOを使ってデータベースにタスクを挿入
