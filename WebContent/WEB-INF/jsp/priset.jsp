@@ -86,7 +86,7 @@
             </ul>
         </div>
 
-        <input type="submit" value="保存">
+        <input type="submit" value="追加">
     </form>
 
 </body>

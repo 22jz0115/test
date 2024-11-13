@@ -64,6 +64,11 @@
             </div>
         </div>
     </div>
+    
+    <div class="bts">
+       <a  href="TaskInput"><p>タスク追加</p></a>
+       <a  href="Preset"><p>プリセット追加</p></a> 
+    </div>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script type="text/javascript" src="assets/js/home/script.js"></script>
     <script src="assets/js/geolocation/geocode.js"></script>
