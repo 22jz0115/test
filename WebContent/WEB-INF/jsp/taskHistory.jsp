@@ -17,7 +17,7 @@
         <h1>タスク履歴</h1>
     </header>
     
-    <h2 class="taskcategory">料理</h2>
+    <h2 class="taskcategory">${categoryName.categoryName }</h2>
     <div >
         <ul class="taskhistory">
 	         <c:forEach var="task" items="${taskList}">
