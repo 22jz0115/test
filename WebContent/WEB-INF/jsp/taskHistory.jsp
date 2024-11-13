@@ -25,6 +25,7 @@
 	                <p>${task.taskName }</p>
 	            </li>
 	         </c:forEach>
+	         
             
         </ul>
     </div>
