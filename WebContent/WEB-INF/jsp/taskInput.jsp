@@ -1,8 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -49,7 +47,7 @@
     <label class="switch_label9">
         <span id="outdoorText">屋内</span>
         <div class="switch">
-            <input type="checkbox" id="switch" onclick="toggleCategory()" />
+            <input type="checkbox" name="switch" id="switch" onclick="toggleCategory()" />
             <div class="circle"></div>
             <div class="base"></div>
         </div>
@@ -60,11 +58,11 @@
 <!-- カテゴリーのプルダウン -->
 <div id="categoryDiv" class="form-group">
     <label for="categorySelect">カテゴリーを選択:</label>
-    <select id="categorySelect"">
+    <select id="categorySelect" name="categorySelect">
         <!-- カテゴリのオプションがJavaScriptで動的に設定されます -->
         <c:forEach var="category" items="${categoryList}">
-            	<option id="task-1" class="deletable">${category.categoryName}</option> 
-            </c:forEach>
+            <option id="task-1" class="deletable" value="${category.id}">${category.categoryName}</option> 
+        </c:forEach>
     
     </select>
 </div>
