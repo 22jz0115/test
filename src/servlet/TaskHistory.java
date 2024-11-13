@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.CategoriesDAO;
 import dao.TasksDAO;
 import model.Accounts;
+import model.Categories;
 import model.Tasks;
 
 /**
@@ -34,11 +36,14 @@ public class TaskHistory extends HttpServlet {
         
        TasksDAO taskDAO = new TasksDAO();
        
+       CategoriesDAO categoryDAO = new CategoriesDAO();
+       Categories categoryName = categoryDAO.find(categoryId);
+       
         List<Tasks> taskList = taskDAO.findByCategoryId(loginUser.getId(), categoryId);
         
         // 取得したデータをリクエストスコープに格納
         request.setAttribute("taskList", taskList);
-        
+        request.setAttribute("categoryName", categoryName);
         System.out.print(taskList.size());
 		        
 		
