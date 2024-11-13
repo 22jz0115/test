@@ -49,6 +49,7 @@ public class TaskInput extends HttpServlet {
         String taskName = request.getParameter("taskName");
         String memo = request.getParameter("story");
         
+        
         int categoryId = Integer.parseInt(category);
         
         String datetime = date + " " + time;
