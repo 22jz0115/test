@@ -21,7 +21,6 @@ public class Task extends HttpServlet {
         
         
         
-     
 
         // 日付をリクエスト属性に設定
         request.setAttribute("selectedDate", selectedDate);
