@@ -178,4 +178,9 @@ public class TasksDAO {
 
         return new Tasks(id, category_id, account_id, task_name, taskDatetime, memo, createdAt, updateDate, outin);
     }
+
+	public Tasks create(String date, String time, String category, String taskName, String memo) {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
 }

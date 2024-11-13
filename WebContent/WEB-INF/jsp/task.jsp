@@ -133,6 +133,7 @@
                 <div>
                     <div class="timersolid">
                         <p class="tasktime">8:00</p>
+                        <td>${task.taskName}</td>
                         <span></span>
                     </div>
                     <p class="taskname">
@@ -165,6 +166,14 @@
                 </div>
                 
             </li>
+             <c:forEach var="task" items="${taskList}">
+                <tr>
+                    <td>${task.taskName}</td>
+                    <td>${task.memo}</td>
+                    <td>${task.categoryId}</td>
+                    <td>${task.taskDateTime}</td>
+                </tr>
+            </c:forEach>
             
         </ul>
     </div>

@@ -38,7 +38,6 @@ public class TaskInput extends HttpServlet {
    		
    		 request.getRequestDispatcher("/WEB-INF/jsp/taskInput.jsp").forward(request, response);
     }
-
     // POSTメソッド：タスクの追加処理
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
@@ -69,7 +68,9 @@ public class TaskInput extends HttpServlet {
         if (TaskInput != null) {
             // 挿入が成功した場合、タスク一覧画面にリダイレクト
             response.sendRedirect("Task?date=" + date);  // 日付をクエリパラメータとして渡してリダイレクト
-           
+
+            System.out.println("okokokok");
+
         } else {
             // 挿入が失敗した場合、エラーメッセージを表示
         	System.out.println("ngngngng");
