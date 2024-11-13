@@ -53,6 +53,7 @@ public class Setting extends HttpServlet {
 
 	        // 設定ページにリダイレクト
 	        response.sendRedirect("Setting");
+	        
 	    }
 	}
 
