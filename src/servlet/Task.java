@@ -30,5 +30,7 @@ public class Task extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // POSTリクエスト処理（必要に応じて実装）
+    	
+    	
     }
 }

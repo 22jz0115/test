@@ -175,8 +175,9 @@ public class TasksDAO {
         LocalDateTime updateDate = 
                  rs.getTimestamp("update_date").toLocalDateTime(); 
         int outin = rs.getInt("outin"); 
+        int check =rs.getInt("check");
 
-        return new Tasks(id, category_id, account_id, task_name, taskDatetime, memo, createdAt, updateDate, outin);
+        return new Tasks(id, category_id, account_id, task_name, taskDatetime, memo, createdAt, updateDate, outin, check);
     }
 
 	public Tasks create(String date, String time, String category, String taskName, String memo) {

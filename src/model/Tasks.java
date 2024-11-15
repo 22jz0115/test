@@ -13,11 +13,22 @@ public class Tasks {
     private LocalDateTime createdAt;
     private LocalDateTime updateDate;
     private int outin;
+    private int check;
 
     // 新しいフィールドを追加
     private String formattedTime;
 
-    public int getId() {
+    
+    public int getCheck() {
+		return check;
+	}
+	public void setCheck(int check) {
+		this.check = check;
+	}
+	public void setFormattedTime(String formattedTime) {
+		this.formattedTime = formattedTime;
+	}
+	public int getId() {
         return id;
     }
     public void setId(int id) {
@@ -80,7 +91,7 @@ public class Tasks {
     }
 
     public Tasks(int id, int categoryId, int accountId, String taskName, LocalDateTime taskDate, String memo,
-                 LocalDateTime createdAt, LocalDateTime updateDate, int outin) {
+                 LocalDateTime createdAt, LocalDateTime updateDate, int outin, int check) {
         super();
         this.id = id;
         this.categoryId = categoryId;
@@ -91,5 +102,6 @@ public class Tasks {
         this.createdAt = createdAt;
         this.updateDate = updateDate;
         this.outin = outin;
+        this.check = check;
     }
 }
