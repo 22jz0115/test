@@ -23,6 +23,7 @@ public class Task extends HttpServlet {
 
         // 日付をリクエスト属性に設定
         request.setAttribute("selectedDate", selectedDate);
+        
 
         // 次のページに遷移
         request.getRequestDispatcher("/WEB-INF/jsp/task.jsp").forward(request, response);

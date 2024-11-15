@@ -40,6 +40,11 @@
         <a href="TaskInput?from=preset">
             <img class="taskimg" src="assets/img/25630113.png" alt="">
         </a>
+        <div class="form-group">
+		    <label for="dateInput">日付</label>
+		    <!-- 日付選択 -->
+		    <input type="date" id="dateInput" name="dateInput" value="${selectedDate}">
+		</div>
 
         <div class="presets">
             <ul>
