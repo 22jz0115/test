@@ -102,6 +102,36 @@ public class TasksDAO {
 		return taskList;
 	}
 	
+	public List<Tasks> findByCheckTask(int account_id, String date) {
+	    List<Tasks> taskList = new ArrayList<>();
+	    DBManager manager = DBManager.getInstance();
+	    try (Connection cn = manager.getConnection()) {
+	        // SQL文でtask_datetimeの年月日部分のみを比較
+	        String sql = "SELECT * FROM tasks WHERE account_id = ? AND TRUNC(task_datetime) = TO_DATE(?, 'YYYY-MM-DD')";
+	        PreparedStatement stmt = cn.prepareStatement(sql);
+	        stmt.setInt(1, account_id);
+	        
+	        System.out.println("Date: " + date); // デバッグ用の出力
+	        
+	        // パラメータとしてdateをセット
+	        stmt.setString(2, date);
+	        
+	        ResultSet rs = stmt.executeQuery();
+	        
+	        // データをリストに格納
+	        while (rs.next()) {
+	            taskList.add(rs2model(rs));
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return taskList;
+	}
+
+
+
+	
 	public List<Tasks> findByCategoryId(int account_id, int category_id) {
 		List<Tasks> taskList = new ArrayList<>();
 		DBManager manager = DBManager.getInstance();
