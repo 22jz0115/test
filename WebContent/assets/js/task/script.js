@@ -63,6 +63,36 @@ $(function() {
     document.querySelectorAll('.check').forEach(checkbox => {
         checkbox.addEventListener('change', updateCheckedCount);
     });
+    
+    document.querySelectorAll('.check').forEach(checkbox => {
+    checkbox.addEventListener('change', function () {
+        updateCheckedCount();
+
+        const taskId = this.closest('.task').getAttribute('data-task-id'); // タスクIDを取得
+        const isChecked = this.checked ? 1 : 0; // チェック状態を取得 (1: 完了, 0: 未完了)
+
+        // サーバーへ更新リクエストを送信
+        fetch('TaskUpdate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `taskId=${taskId}&check=${isChecked}`
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('サーバーエラーが発生しました');
+            }
+            return response.text();
+        })
+        .then(result => {
+            console.log('サーバー応答: ', result);
+        })
+        .catch(error => {
+            console.error('エラー: ', error);
+        });
+    });
+});
 
     updateCheckedCount(); // 初期状態の進捗を表示
 });

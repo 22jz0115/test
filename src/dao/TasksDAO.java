@@ -102,6 +102,36 @@ public class TasksDAO {
 		return taskList;
 	}
 	
+	public List<Tasks> findByCheckTask(int account_id, String date) {
+	    List<Tasks> taskList = new ArrayList<>();
+	    DBManager manager = DBManager.getInstance();
+	    try (Connection cn = manager.getConnection()) {
+	        // SQL文でtask_datetimeの年月日部分のみを比較
+	        String sql = "SELECT * FROM tasks WHERE account_id = ? AND TRUNC(task_datetime) = TO_DATE(?, 'YYYY-MM-DD')";
+	        PreparedStatement stmt = cn.prepareStatement(sql);
+	        stmt.setInt(1, account_id);
+	        
+	        System.out.println("Date: " + date); // デバッグ用の出力
+	        
+	        // パラメータとしてdateをセット
+	        stmt.setString(2, date);
+	        
+	        ResultSet rs = stmt.executeQuery();
+	        
+	        // データをリストに格納
+	        while (rs.next()) {
+	            taskList.add(rs2model(rs));
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return taskList;
+	}
+
+
+
+	
 	public List<Tasks> findByCategoryId(int account_id, int category_id) {
 		List<Tasks> taskList = new ArrayList<>();
 		DBManager manager = DBManager.getInstance();
@@ -123,6 +153,25 @@ public class TasksDAO {
 		
 		return taskList;
 	}
+	
+	
+	public boolean updateCheckTask(int taskId, int check) {
+	    DBManager manager = DBManager.getInstance();
+	    try (Connection cn = manager.getConnection()) {
+	        // SQL文で指定されたタスクの状態を更新
+	        String sql = "UPDATE tasks SET check_Task = ?, update_date = CURRENT_TIMESTAMP WHERE id = ?";
+	        PreparedStatement stmt = cn.prepareStatement(sql);
+	        stmt.setInt(1, check); // チェック状態 (1: 完了, 0: 未完了)
+	        stmt.setInt(2, taskId); // タスクID
+
+	        int rowsUpdated = stmt.executeUpdate(); // 更新された行数を取得
+	        return rowsUpdated > 0; // 1行以上更新されたらtrue
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false; // エラーが発生した場合はfalseを返す
+	    }
+	}
+
 	
 	/**
 	 * DBにデータを追加する
@@ -175,8 +224,9 @@ public class TasksDAO {
         LocalDateTime updateDate = 
                  rs.getTimestamp("update_date").toLocalDateTime(); 
         int outin = rs.getInt("outin"); 
+        int checkTask =rs.getInt("check_Task");
 
-        return new Tasks(id, category_id, account_id, task_name, taskDatetime, memo, createdAt, updateDate, outin);
+        return new Tasks(id, category_id, account_id, task_name, taskDatetime, memo, createdAt, updateDate, outin, checkTask);
     }
 
 	public Tasks create(String date, String time, String category, String taskName, String memo) {

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,140 +40,26 @@
     
     <div class="tasks">
         <ul>
-            <li class="task">
-                <div>
-                    <div class="timersolid">
-                        <p class="tasktime">8:00</p>
-                        <span></span>
-                    </div>
-                    <p class="taskname">
-                        朝ごはん食べる
-                    </p>
-                </div>
-                <div class="buttons">
-                    <label class="toggle-button-4">
-                        <input type="checkbox" class="check">
-                    </label>
-                    <input type="reset" value="-" onclick="removeTask(this)">
-                </div>
-                
-            </li>
-            <li class="task">
-                <div>
-                    <div class="timersolid">
-                        <p class="tasktime">8:00</p>
-                        <span></span>
-                    </div>
-                    <p class="taskname">
-                        朝ごはん食べる
-                    </p>
-                </div>
-                <div class="buttons">
-                    <label class="toggle-button-4">
-                        <input type="checkbox" class="check">
-                    </label>
-                    <input type="reset" value="-" onclick="removeTask(this)">
-                </div>
-                
-            </li>
-            <li class="task">
-                <div>
-                    <div class="timersolid">
-                        <p class="tasktime">8:00</p>
-                        <span></span>
-                    </div>
-                    <p class="taskname">
-                        シャワー
-                    </p>
-                </div>
-                <div class="buttons">
-                    <label class="toggle-button-4">
-                        <input type="checkbox" class="check">
-                    </label>
-                    <input type="reset" value="-" onclick="removeTask(this)">
-                </div>
-                
-            </li>
-             <li class="task">
-                <div>
-                    <div class="timersolid">
-                        <p class="tasktime">8:00</p>
-                        <span></span>
-                    </div>
-                    <p class="taskname">
-                        ゲーム
-                    </p>
-                </div>
-                <div class="buttons">
-                    <label class="toggle-button-4">
-                        <input type="checkbox" class="check">
-                    </label>
-                    <input type="reset" value="-" onclick="removeTask(this)">
-                </div>
-                
-            </li>
-             <li class="task">
-                <div>
-                    <div class="timersolid">
-                        <p class="tasktime">8:00</p>
-                        <span></span>
-                    </div>
-                    <p class="taskname">
-                        運動する
-                    </p>
-                </div>
-                <div class="buttons">
-                    <label class="toggle-button-4">
-                        <input type="checkbox" class="check">
-                    </label>
-                    <input type="reset" value="-" onclick="removeTask(this)">
-                </div>
-                
-            </li>
-             <li class="task">
-                <div>
-                    <div class="timersolid">
-                        <p class="tasktime">8:00</p>
-                        <td>${task.taskName}</td>
-                        <span></span>
-                    </div>
-                    <p class="taskname">
-                        昼ごはん食べる
-                    </p>
-                </div>
-                <div class="buttons">
-                    <label class="toggle-button-4">
-                        <input type="checkbox" class="check">
-                    </label>
-                    <input type="reset" value="-" onclick="removeTask(this)">
-                </div>
-                
-            </li>
-             <li class="task">
-                <div>
-                    <div class="timersolid">
-                        <p class="tasktime">8:00</p>
-                        <span></span>
-                    </div>
-                    <p class="taskname">
-                        ごはん食べる
-                    </p>
-                </div>
-                <div class="buttons">
-                    <label class="toggle-button-4">
-                        <input type="checkbox" class="check">
-                    </label>
-                    <input type="reset" value="-" onclick="removeTask(this)">
-                </div>
-                
-            </li>
+            
              <c:forEach var="task" items="${taskList}">
-                <tr>
-                    <td>${task.taskName}</td>
-                    <td>${task.memo}</td>
-                    <td>${task.categoryId}</td>
-                    <td>${task.taskDateTime}</td>
-                </tr>
+               	<li class="task">
+                <div>
+                    <div class="timersolid">
+                        <p class="tasktime">${task.formattedTime}</p>
+                        <span></span>
+                    </div>
+                    <p class="taskname">
+                        ${task.taskName }
+                    </p>
+                </div>
+                <div class="buttons">
+                    <label class="toggle-button-4">
+					    <input type="checkbox" class="check" 
+					        <c:if test="${task.check == 1}">checked</c:if>>
+					</label>
+                </div>
+                
+            </li>
             </c:forEach>
             
         </ul>
