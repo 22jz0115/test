@@ -17,44 +17,42 @@
         <h1>タスク詳細</h1>
     </header>
 
-    <div class="display">
-        <form action="" method="post">
-
-          
+    <form action="TaskInput" method="post">
     <!-- 日付表示 -->
-<div class="form-group">
-    <label for="dateInput">日付</label>
-    <!-- 日付選択 -->
-    <input type="date" id="dateInput" name="dateInput" value="${selectedDate}">
-</div>
+    <div class="form-group">
+        <label for="dateInput">日付</label>
+        <input type="date" id="dateInput" name="dateInput" value="${dateInput}" readonly>
+    </div>
 
-            <!-- 時間入力 -->
-            <div class="form-group">
-                <label for="appt-time">時間</label>
-                <input id="appt-time" type="time" name="appt-time" value="13:30" />
-            </div>
+    <!-- 時間入力 -->
+    <div class="form-group">
+        <label for="appt-time">時間</label>
+        <input id="appt-time" type="time" name="appt-time" value="${apptTime}" readonly />
+    </div>
 
-            <div class="form-group">
-                <label for="taskName" class="taskname">カテゴリー名:</label>
-            </div>
+    <!-- カテゴリー名表示 -->
+    <div class="form-group">
+        <label for="categorySelect">カテゴリー:</label>
+        <input type="text" id="categorySelect" name="categorySelect" value="${categoryId}" readonly />
+    </div>
 
+    <!-- タスク名表示 -->
+    <div class="form-group">
+        <label for="taskName" class="taskname">タスク名:</label>
+        <input type="text" id="taskName" name="taskName" value="${taskName}" readonly />
+    </div>
+
+    <!-- メモの表示 -->
+    <div class="form-group">
+        <label for="story" class="memo-label">メモ</label>
+        <textarea id="story" name="story" rows="5" cols="50" readonly>${story}</textarea>
+    </div>
+
+    <!-- 編集ボタン (必要なら) -->
+    <div class="migi">
+        <button id="touroku" type="submit" class="button3">変更を保存</button>
+    </div>
     
-            <!-- タスク名の入力 -->
-            <div class="form-group">
-                <label for="taskName" class="taskname">タスク名:</label>
-            </div>
-
-            <!-- メモの入力 -->
-            <div class="form-group">
-                <label for="story" class="memo-label">メモ</label>
-                <textarea id="story" name="story" rows="5" cols="50">メモ</textarea>
-            </div>
-
-            <!-- 追加ボタン -->
-            <div class="migi">
-                <button id="touroku" type="submit" class="button3">追加</button>
-            </div>
-        </form>
-
+</form>
 </body>
 </html>

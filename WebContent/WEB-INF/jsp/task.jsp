@@ -42,7 +42,7 @@
         <ul>
         <c:forEach var="task" items="${taskList}">
             <li class="task" data-task-id="${task.id}">
-                <a href="/test/taskDetail.jsp?taskId=${task.id}">
+                <a href="TaskDetail?taskId=${task.id}">
                     <div>
                         <div class="timersolid">
                             <p class="tasktime">${task.formattedTime}</p>
