@@ -485,10 +485,7 @@ p {
       flex-wrap: wrap;
     }
   
-    .categories {
-      display: flex;
-      justify-content: space-around;
-    }
+
   
     /*削除ボタン移動*/
     .delete {
@@ -876,37 +873,35 @@ input:checked ~ .circle {
 
 /* カテゴリー */
 .categories {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    align-items: stretch;
-    margin-top: 34px;
+    width: 100%;
 }
 
-.categories p {
-    background-color: #FFD2D2;
-    border-radius: 18px;
-    width: 148px;
-    height: 59px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 31px;
-    cursor: pointer; /* 削除可能なタスクを示す */
+.categories ul {
+    list-style-type: none;
+    padding: 6px;
+    margin: 4px;
 }
 
-.content {
-    display: none; /* 非表示を初期設定 */
-    gap: 120px; /* ボックス間の余白 */
+.categories li {
+    margin: 10px 0;
 }
 
-.content.active {
-    display: flex; /* アクティブな時のみ横並び */
-    gap: 120px; /* ボックス間の余白 */
-    flex-wrap: wrap; /* ボックスを横並びで折り返し可能に */
+.category-button {
+    width: 100%; /* ボタンを親要素の幅に合わせて広げる */
+    padding: 10px 15px; /* 左右の余白を増やしてテキストを左寄せ */
+    background-color: #f0f0f0; /* 背景色 */
+    border: 1px solid #ccc; /* 境界線 */
+    border-radius: 5px; /* ボタンの角を丸くする */
+    font-size: 16px; /* テキストサイズ */
+    text-align: left; /* テキストを左揃えにする */
+    cursor: pointer; /* マウスホバー時のポインタ変更 */
+    transition: background-color 0.3s; /* ホバー時の背景色アニメーション */
+    text-align: left;
 }
 
+.category-button:hover {
+    background-color: #e0e0e0; /* ホバー時の背景色 */
+}
 /* 削除ボタン */
 .delete1 {
     color: red;
@@ -938,6 +933,39 @@ input:checked ~ .circle {
     padding-top: 0px;
     align-content: flex-start;
 }
+
+
+
+
+
+
+
+
+  
+ /* ---------------------------------------------------------------タスク詳細画面---------------------------------------------------- */
+ 
+ header{
+    height: 84px;
+    background: #FFACAC;
+    display: flex;
+    justify-content: center; /* 水平方向に中央揃え */
+    align-items: center;     /* 垂直方向に中央揃え */
+    position: relative;      /* 画像の位置調整用に追加 */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

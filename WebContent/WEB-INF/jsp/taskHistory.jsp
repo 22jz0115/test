@@ -17,18 +17,16 @@
         <h1>タスク履歴</h1>
     </header>
     
-    <h2 class="taskcategory">${categoryName.categoryName }</h2>
-    <div >
-        <ul class="taskhistory">
-	         <c:forEach var="task" items="${taskList}">
-	            <li>
-	                <p>${task.taskName }</p>
-	            </li>
-	         </c:forEach>
-	         
-            
-        </ul>
-    </div>
+   <h2 class="taskcategory">${categoryName.categoryName}</h2>
+<div>
+   <ul class="taskhistory">
+    <c:forEach var="task" items="${taskList}">
+        <li>
+            <p>${task.taskName}</p>
+        </li>
+    </c:forEach>
+</ul>
+</div>
     
     <div class="delete">
         <form action="<%= request.getContextPath() %>/deletePresetServlet" method="post"> <!-- JSPサーブレットへの削除処理のURLを指定 -->

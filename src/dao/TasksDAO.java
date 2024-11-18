@@ -154,6 +154,52 @@ public class TasksDAO {
 		return taskList;
 	}
 	
+	
+	public boolean updateCheckTask(int taskId, int check) {
+	    DBManager manager = DBManager.getInstance();
+	    try (Connection cn = manager.getConnection()) {
+	        // SQL文で指定されたタスクの状態を更新
+	        String sql = "UPDATE tasks SET check_Task = ?, update_date = CURRENT_TIMESTAMP WHERE id = ?";
+	        PreparedStatement stmt = cn.prepareStatement(sql);
+	        stmt.setInt(1, check); // チェック状態 (1: 完了, 0: 未完了)
+	        stmt.setInt(2, taskId); // タスクID
+
+	        int rowsUpdated = stmt.executeUpdate(); // 更新された行数を取得
+	        return rowsUpdated > 0; // 1行以上更新されたらtrue
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false; // エラーが発生した場合はfalseを返す
+	    }
+	}
+
+	public List<Tasks> findByCurrentMonth(int accountId) {
+	    List<Tasks> taskList = new ArrayList<>();
+	    DBManager manager = DBManager.getInstance();
+	    try (Connection cn = manager.getConnection()) {
+	        // 今日の月を取得
+	        LocalDateTime now = LocalDateTime.now();
+	        int currentMonth = now.getMonthValue();
+
+	        // SQL文でtask_datetimeの月部分のみを比較
+	        String sql = "SELECT * FROM tasks WHERE account_id = ? AND EXTRACT(MONTH FROM task_datetime) = ?";
+	        PreparedStatement stmt = cn.prepareStatement(sql);
+	        stmt.setInt(1, accountId);
+	        stmt.setInt(2, currentMonth);  // 今日の月をSQLに渡す
+
+	        ResultSet rs = stmt.executeQuery();
+
+	        // データをリストに格納
+	        while (rs.next()) {
+	            taskList.add(rs2model(rs));
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return taskList;
+	}
+	
+	
 	/**
 	 * DBにデータを追加する
 	 * @return 成功時は追加したデータ、失敗時はnull
