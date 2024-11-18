@@ -22,7 +22,7 @@ public class Task extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	  // セッションからログインユーザー情報を取得
+    	// セッションからログインユーザー情報を取得
         HttpSession session = request.getSession();
         Accounts loginUser = (Accounts) session.getAttribute("loginUser");
     	

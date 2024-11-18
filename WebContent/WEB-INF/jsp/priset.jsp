@@ -6,9 +6,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="assets/js/preset/preset.js"></script>
     <title>Document</title>
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <script>
         // リセットボタンがクリックされたときにその親のliを削除する関数
         function removeTask(button) {
@@ -25,21 +29,15 @@
         <h1>プリセット</h1>
     </header>
 
-    <form action="Task?from=preset" method="post" class="presetsForm">
+    <form action="PresetInput" method="get" class="presetsForm">
         <div class="setName">
             <h2>プリセット名</h2>
-            <input list="presets" placeholder="選択または入力してください">
-            <datalist id="presets">
-                <option value="プリセット1">
-                <option value="プリセット2">
-                <option value="プリセット3">
-                <option value="プリセット4">
-            </datalist>
+            <input type="text" name="preset_name" value="" data-options="JAVA,PHP,C#"  class="free_dropdown" />
         </div>
-
-        <a href="TaskInput?from=preset">
-            <img class="taskimg" src="assets/img/25630113.png" alt="">
-        </a>
+        <input type="submit" value="プリセットタスク追加">
+    </form>
+    
+    <form action="Preset" method="post" class="presetsForm">
         <div class="form-group">
 		    <label for="dateInput">日付</label>
 		    <!-- 日付選択 -->

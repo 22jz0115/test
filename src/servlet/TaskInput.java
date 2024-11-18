@@ -31,12 +31,12 @@ public class TaskInput extends HttpServlet {
     // GETメソッド：タスク入力フォームの表示
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
        
-	CategoriesDAO categoriesDAO = new CategoriesDAO();
+    	CategoriesDAO categoriesDAO = new CategoriesDAO();
    		
    		List<Categories> categoryList = categoriesDAO.get();  // DAOからデータを取得
    		request.setAttribute("categoryList", categoryList); 
    		
-   		 request.getRequestDispatcher("/WEB-INF/jsp/taskInput.jsp").forward(request, response);
+   		request.getRequestDispatcher("/WEB-INF/jsp/taskInput.jsp").forward(request, response);
     }
     // POSTメソッド：タスクの追加処理
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
