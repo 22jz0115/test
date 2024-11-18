@@ -4,6 +4,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <link rel="stylesheet" href="assets/css/an/style.css">
+ <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
+    <link rel="manifest" href="manifest.json">
+    
 <title>タスク詳細画面</title>
 </head>
 <body>
@@ -15,11 +20,13 @@
     <div class="display">
         <form action="" method="post">
 
-            <!-- 日付表示 -->
-            <div class="form-group">
-                <label for="dateDisplay">日付</label>
-                <div id="dateDisplay"></div>
-            </div>
+          
+    <!-- 日付表示 -->
+<div class="form-group">
+    <label for="dateInput">日付</label>
+    <!-- 日付選択 -->
+    <input type="date" id="dateInput" name="dateInput" value="${selectedDate}">
+</div>
 
             <!-- 時間入力 -->
             <div class="form-group">
