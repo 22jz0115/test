@@ -18,7 +18,6 @@ public class Presets {
         this.updateDate = updateDate;
         this.tasks = new ArrayList<>(); // 空のリストで初期化
     }
-
     // ゲッターとセッター
     public int getId() {
         return id;
