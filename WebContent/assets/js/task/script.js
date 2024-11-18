@@ -33,7 +33,7 @@ $(function() {
     // selectedDate (サーバーから送られた値) を使ってカレンダーを表示
     // selectedDateがない場合、今日の日付データを格納して表示
     let year, month, day;
-    if (selectedDate != "null") {
+    if (selectedDate && selectedDate !== "null") {
         const dateParts = selectedDate.split("-");
         year = parseInt(dateParts[0]);
         month = parseInt(dateParts[1]) - 1; // JavaScriptの月は0始まり
@@ -72,7 +72,7 @@ $(function() {
         const isChecked = this.checked ? 1 : 0; // チェック状態を取得 (1: 完了, 0: 未完了)
 
         // サーバーへ更新リクエストを送信
-        fetch('TaskUpdate', {
+        fetch('Task', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
