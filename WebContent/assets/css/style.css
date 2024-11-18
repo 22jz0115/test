@@ -734,35 +734,37 @@ span{
 
 /*タスク履歴画面ーーーーーーーーーーーーーーーーーーーー*/
 
-.taskcategory{
-    text-align: center;
-    background-color: #FFACAC;
-    width: 130px;
-    height: 50px;
-    margin: 10px auto;
-    padding-top: 9px;
-    border-radius: 25px;
+.taskcategory {
+  position: relative;
+  display: inline-block;
+   margin: 28px;
 }
 
-.taskhistory{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;  /* 水平方向に中央揃え */
-    align-items: center;      /* 垂直方向に中央揃え */
-    text-align: center;
-    gap: 50px;
-    margin: 0;  /* 余白をリセット */
-    padding: 0;  /* 余白をリセット */ /* 親コンテナの高さを画面全体に設定 */
+.taskcategory:before {
+  content: '';
+  position: absolute;
+  bottom: -15px; /* 線の位置を調整 */
+  display: inline-block;
+  width: 60px; /* 装飾線の長さ */
+  height: 5px; /* 装飾線の太さ */
+  left: 50%; /* 水平中央に配置 */
+  transform: translateX(-50%); /* 左右中央揃え */
+  background-color: rgb(255, 128, 128); /* 装飾線の色 */
+  border-radius: 2px; /* 装飾線の角を丸くする */
 }
 
-.taskhistory li{
-    border: #FFACAC solid 2px;
-    border-radius: 25px;
-    width: 130px;
-    height: 50px;
-
+.taskhistory {
+  background: #dadada; /* 背景を灰色に設定 */
+  border-radius: 8px; /* 丸みを追加 */
+  box-shadow: 0px 0px 5px silver; /* シルバーのボックスシャドウ */
+  padding: 0.5em 0.5em 0.5em 2em; /* 内側の余白 */
+  list-style-type: none; /* リストのマーカーを消す */
 }
 
+.taskhistory li {
+  line-height: 1.5; /* 行間を設定 */
+  padding: 0.5em 0; /* 上下の余白 */
+}
 
 
 
