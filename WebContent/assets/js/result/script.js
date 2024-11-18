@@ -10,7 +10,7 @@ $(function(){
      
  // 例として、データベースから取得した％データをJavaScriptでシミュレート
 
-    const percentageFromDatabase = 70;  // 75%のデータを例として使用
+    const percentageFromDatabase = 15;  // 75%のデータを例として使用
 
     // 動的に円グラフのスタイルを変更
     const pieChartElement = document.getElementById('pieChart');
