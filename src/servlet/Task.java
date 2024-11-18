@@ -50,7 +50,27 @@ public class Task extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // POSTリクエスト処理（必要に応じて実装）
-    	
+    	 try {
+             // リクエストからパラメータを取得
+             int taskId = Integer.parseInt(request.getParameter("taskId"));
+             int check = Integer.parseInt(request.getParameter("check"));
+
+             // タスク状態を更新
+             TasksDAO taskDAO = new TasksDAO();
+             boolean isUpdated = taskDAO.updateCheckTask(taskId, check);
+
+             if (isUpdated) {
+                 response.setStatus(HttpServletResponse.SC_OK);
+                 response.getWriter().write("タスクが更新されました");
+             } else {
+                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                 response.getWriter().write("タスクの更新に失敗しました");
+             }
+         } catch (Exception e) {
+             e.printStackTrace();
+             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+             response.getWriter().write("不正なリクエストです");
+         }
     	
     }
 }

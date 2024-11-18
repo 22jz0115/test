@@ -54,9 +54,9 @@
                 </div>
                 <div class="buttons">
                     <label class="toggle-button-4">
-                        <input type="checkbox" class="check">
-                    </label>
-                    <input type="reset" value="-" onclick="removeTask(this)">
+					    <input type="checkbox" class="check" 
+					        <c:if test="${task.check == 1}">checked</c:if>>
+					</label>
                 </div>
                 
             </li>
