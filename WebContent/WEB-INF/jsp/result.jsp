@@ -20,10 +20,7 @@
     <h2 class="toMounthrate">今月の達成率</h2>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="assets/js/result/script.js"></script>
-    <script type="text/javascript">
-        <!--
-        //-->
-    </script>
+ 
 
     <div>
         <p id="cmpmonth"></p>

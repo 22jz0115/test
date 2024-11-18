@@ -96,3 +96,6 @@ $(function() {
 
     updateCheckedCount(); // 初期状態の進捗を表示
 });
+
+
+
