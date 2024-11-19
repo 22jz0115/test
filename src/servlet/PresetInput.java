@@ -64,7 +64,7 @@ public class PresetInput extends HttpServlet {
         
         PresetInputDAO dao = new PresetInputDAO();
         if(dao.findByPresetName(preset_name, accountId) == null) {
-        	dao.createPreset(preset_name, taskData);
+        	dao.createPreset(preset_name, taskData, accountId);
         } else {
         	int presetId = dao.findByPresetId(preset_name, accountId);
         	boolean isUpdated = dao.addTaskToPreset(presetId, taskData);

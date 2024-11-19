@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -32,7 +33,7 @@
     <form action="PresetInput" method="get" class="presetsForm">
         <div class="setName">
             <h2>プリセット名</h2>
-            <input type="text" name="preset_name" value="" data-options="JAVA,PHP,C#"  class="free_dropdown" />
+            <input type="text" name="preset_name" value="" data-options='${jsonString}'  class="free_dropdown" />
         </div>
         <input type="submit" value="プリセットタスク追加">
     </form>
@@ -91,6 +92,5 @@
 
         <input type="submit" value="追加">
     </form>
-
 </body>
 </html>

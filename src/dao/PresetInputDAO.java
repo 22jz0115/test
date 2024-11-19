@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import model.PresetTask;
@@ -104,7 +105,7 @@ public class PresetInputDAO {
 		return presets;
 	}
 	
-	public Presets createPreset(String presetName, Map<String, Object> taskData) {
+	public Presets createPreset(String presetName, Map<String, Object> taskData, int accountId) {
 	    int presetId = -1;
 
 	    // 初期タスクをJSON形式で作成
@@ -114,10 +115,11 @@ public class PresetInputDAO {
 
 	    DBManager manager = DBManager.getInstance();
 	    try (Connection cn = manager.getConnection()) {
-	        String sql = "INSERT INTO presets (preset_name, tasks) VALUES (?, ?)";
+	        String sql = "INSERT INTO presets (preset_name, tasks, account_id) VALUES (?, ?, ?)";
 	        PreparedStatement stmt = cn.prepareStatement(sql);
 	        stmt.setString(1, presetName);
 	        stmt.setString(2, tasksArray.toString());
+	        stmt.setInt(3, accountId);
 	        stmt.executeUpdate();
 
 	    } catch (SQLException e) {
@@ -171,29 +173,40 @@ public class PresetInputDAO {
         String tasksJsonString = rs.getString("tasks");
         
         // 取得したJSON文字列をJSONObjectに変換
-        JSONObject tasksJson = new JSONObject(tasksJsonString);
+        JSONArray tasksJson = new JSONArray(tasksJsonString);
+        
+     // JSON文字列がnullまたは空の場合のデフォルト処理
+        if (tasksJsonString == null || tasksJsonString.isEmpty()) {
+            tasksJsonString = "{}"; // 空のJSONオブジェクトを代入
+        }
+
+        try {
+            tasksJson = new JSONArray(tasksJsonString); // JSONパース
+        } catch (JSONException e) {
+            System.err.println("Invalid JSON: " + tasksJsonString);
+            tasksJson = new JSONArray(); // 空のJSONオブジェクト
+        }
 
         // 必要に応じて、tasksJsonから個別のタスクを取り出すことができます
         List<PresetTask> tasks = new ArrayList<>();
-        for (int i = 1; i <= 10; i++) {  // タスクは最大10個
-            if (tasksJson.has("task" + i)) {
-                JSONObject taskJson = tasksJson.getJSONObject("task" + i);
-                String name = taskJson.getString("name");
-                String memo = taskJson.getString("memo");
-                int outin = taskJson.getInt("outin");
-                int categoryId = taskJson.getInt("category_id");
-                String taskTime = taskJson.getString("task_time");
+        for (int i = 0; i < tasksJson.length(); i++) {
+            JSONObject taskJson = tasksJson.getJSONObject(i);
+            int outin = taskJson.getInt("outin");
+            String name = taskJson.getString("name");
+            String memo = taskJson.getString("memo");
+            int categoryId = taskJson.getInt("category_id");
+            String taskTime = taskJson.getString("task_time");
 
-                // PresetTaskオブジェクトを作成してリストに追加
-                tasks.add(new PresetTask(name, memo, outin, categoryId, taskTime));
-            }
+            // PresetTaskオブジェクトを作成してリストに追加
+            tasks.add(new PresetTask(name, memo, outin, categoryId, taskTime));
         }
         
         LocalDateTime createdAt =
                  rs.getTimestamp("created_at").toLocalDateTime();                          
         LocalDateTime updateDate = 
-                 rs.getTimestamp("update_date").toLocalDateTime();  
+                 rs.getTimestamp("update_date").toLocalDateTime(); 
+        int accountId = rs.getInt("account_id");
 
-        return new Presets(id, preset_name, createdAt, updateDate, tasks);
+        return new Presets(id, preset_name, createdAt, updateDate, tasks, accountId);
     }
 }
