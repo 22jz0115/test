@@ -2,6 +2,7 @@ package servlet;
 
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -30,10 +31,14 @@ public class Home extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
             return;
         }
+        
+        
+        LocalDate today = LocalDate.now();
+        String selectedDate = today.toString(); // YYYY-MM-DD形式
 
         // タスクリストの取得
         TasksDAO dao = new TasksDAO();
-        List<Tasks> taskList = dao.findByTaskList(loginUser.getId());
+        List<Tasks> taskList = dao.findByCheckTask(loginUser.getId(), selectedDate);
         request.setAttribute("taskList", taskList);
         
    
