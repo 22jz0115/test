@@ -982,6 +982,7 @@ input:checked ~ .circle {
     margin-left: 10px;  /* ボタン同士の間隔をあける */
 }
 
+
 /* ボタンが押された時のスタイル */
 button:active {
     background-color: #3e8e41;  /* 押下時にさらに濃い緑 */
