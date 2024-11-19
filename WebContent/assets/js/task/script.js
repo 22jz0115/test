@@ -31,9 +31,9 @@ $(function() {
     }
 
     // selectedDate (サーバーから送られた値) を使ってカレンダーを表示
-    // selectedDateがない場合、今日の日付データを格納して表示
+    // selectedDateがない場合、YYYY-MM-dd形式で今日の日付を取得
     let year, month, day;
-    if (selectedDate && selectedDate !== "null") {
+    if (typeof selectedDate !== "undefined" && selectedDate !== "null" && selectedDate) {
         const dateParts = selectedDate.split("-");
         year = parseInt(dateParts[0]);
         month = parseInt(dateParts[1]) - 1; // JavaScriptの月は0始まり
@@ -43,9 +43,10 @@ $(function() {
         year = today.getFullYear();
         month = today.getMonth();
         day = today.getDate();
-       ;
-        
-      console.log(selectedDate)
+
+        // 今日の日付をYYYY-MM-dd形式に変換してログに出力
+        const formattedDate = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+        console.log(`selectedDate is undefined. Using today's date: ${formattedDate}`);
     }
 
     displayCalendar(year, month, day);

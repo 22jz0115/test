@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -25,9 +26,20 @@ public class Task extends HttpServlet {
     	// セッションからログインユーザー情報を取得
         HttpSession session = request.getSession();
         Accounts loginUser = (Accounts) session.getAttribute("loginUser");
+        
+        if (loginUser == null) {
+            // ログインユーザーがいない場合、ログイン画面へリダイレクト
+            request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
+            return;
+        }
     	
     	// パラメータから日付を取得
         String selectedDate = request.getParameter("date");
+        
+        if (selectedDate == null || selectedDate.isEmpty()) {
+            LocalDate today = LocalDate.now();
+            selectedDate = today.toString(); // YYYY-MM-DD形式
+        }
         
         System.out.print(selectedDate);
         
