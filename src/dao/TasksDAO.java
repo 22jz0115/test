@@ -261,8 +261,51 @@ public class TasksDAO {
 		return null;
 	}
 
-	public boolean delete(int taskId) {
-		// TODO 自動生成されたメソッド・スタブ
-		return false;
+
+	public Tasks findById(int taskId, int userId) {
+	    DBManager manager = DBManager.getInstance();
+	    try (Connection cn = manager.getConnection()) {
+	        String sql = "SELECT * FROM tasks WHERE id = ? AND user_id = ?";
+	        PreparedStatement stmt = cn.prepareStatement(sql);
+	        stmt.setInt(1, taskId);
+	        stmt.setInt(2, userId);
+
+	        ResultSet rs = stmt.executeQuery();
+	        if (rs.next()) {
+	            Tasks task = new Tasks(userId, userId, userId, sql, null, sql, null, null, userId, userId);
+	            task.setId(rs.getInt("id"));
+	            task.setTaskName(rs.getString("task_name"));
+	            task.setMemo(rs.getString("memo"));
+	            task.setCategoryId(rs.getInt("category_id"));
+	           // task.setTaskDate(rs.getTimestamp("task_datetime"));
+	            return task;
+	        } else {
+	            return null; // タスクが見つからない場合
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return null; // エラー発生時
+	    }
 	}
+
+	// タスク更新メソッド
+	public boolean updateTask(int taskId, String taskName, String memo) {
+	    DBManager manager = DBManager.getInstance();
+	    try (Connection cn = manager.getConnection()) {
+	        String sql = "UPDATE tasks SET task_name = ?, memo = ?, update_date = CURRENT_TIMESTAMP WHERE id = ?";
+	        PreparedStatement stmt = cn.prepareStatement(sql);
+	        stmt.setString(1, taskName);
+	        stmt.setString(2, memo);
+	        stmt.setInt(3, taskId);
+
+	        int rowsUpdated = stmt.executeUpdate();  // 更新された行数を取得
+	        return rowsUpdated > 0; // 1行以上更新されたらtrue
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false; // エラー発生時
+	    }
+	}
+
+
+	
 }

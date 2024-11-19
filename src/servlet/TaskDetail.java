@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,51 +20,63 @@ import model.Tasks;
 public class TaskDetail extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	  HttpSession session = request.getSession();
-          Accounts loginUser = (Accounts) session.getAttribute("loginUser");
-    	// タスクIDをリクエストから取得
-        String taskId = request.getParameter("taskId");
-        
-        // データベースからタスクの詳細を取得する処理（仮のメソッド）
-       
-        
-        // 取得したタスク詳細をリクエストにセット
-        TasksDAO dao = new TasksDAO();
-        List<Tasks> taskList = dao.findByTaskList(loginUser.getId());
-        request.setAttribute("taskList", taskList);
-        
-        // JSPへフォワード
-        request.getRequestDispatcher("/WEB-INF/jsp/taskDetail.jsp").forward(request, response);
-    }
+	 protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		   HttpSession session = request.getSession();
+		    Accounts loginUser = (Accounts) session.getAttribute("loginUser");
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	request.setCharacterEncoding("UTF-8");
-		
-	  String action = request.getParameter("action");
-      String taskIdStr = request.getParameter("id");
+		    if (loginUser == null) {
+		        response.sendRedirect("Login"); // ログイン画面へリダイレクト
+		        return;
+		    }
 
-      if (taskIdStr == null || taskIdStr.isEmpty()) {
-          response.sendError(HttpServletResponse.SC_BAD_REQUEST, "タスクIDが指定されていません");
-          return;
-      }
+		    // タスクIDをリクエストから取得
+		    String taskIdStr = request.getParameter("taskId");
 
-      int taskId = Integer.parseInt(taskIdStr);
-      TasksDAO tasksDao = new TasksDAO();
+		    if (taskIdStr == null || taskIdStr.isEmpty()) {
+		        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "タスクIDが指定されていません");
+		        return;
+		    }
 
-      if ("delete".equals(action)) {
-          boolean isDeleted = tasksDao.delete(taskId);
-		  if (isDeleted) {
-		      // 削除成功後、タスク一覧にリダイレクト
-		      response.sendRedirect("TaskList");
-		  } else {
-		      // 削除失敗
-		      response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "タスク削除に失敗しました");
-		  }
-      }
-    }
+		    int taskId;
+		    try {
+		        taskId = Integer.parseInt(taskIdStr);
+		    } catch (NumberFormatException e) {
+		        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "無効なタスクIDです");
+		        return;
+		    }
+
+		    // データベースからタスクの詳細を取得
+		    TasksDAO dao = new TasksDAO();
+		    Tasks task = dao.findById(taskId, loginUser.getId());
+
+		    if (task == null) {
+		        response.sendError(HttpServletResponse.SC_NOT_FOUND, "指定されたタスクが見つかりません");
+		        return;
+		    }
+
+		    // 取得したタスク詳細をリクエスト属性にセット
+		    request.setAttribute("task", task);
+
+		    // タスク詳細画面へフォワード
+		    request.getRequestDispatcher("/WEB-INF/jsp/taskDetail.jsp").forward(request, response);
+		}
+	    
+
+	    // POSTメソッド：削除または更新処理
+	    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	        request.setCharacterEncoding("UTF-8");
+
+	
+
+	        String taskIdStr1 = request.getParameter("taskId");
+	        if (taskIdStr1 == null || taskIdStr1.isEmpty()) {
+	            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "タスクIDが指定されていません");
+	            return;
+	        }
+
+
+	        
+	        
+	    }
 	}
 

@@ -50,16 +50,17 @@
     </div>
     
     <!-- 削除ボタン -->
-<div class="button-container">
-    <button id="delete" type="submit" name="action" value="delete" class="button">削除</button>
-</div>
+<form action="TaskDetail" method="post">
+    <input type="hidden" name="taskId" value="${task.id}">
+    <input type="hidden" name="action" value="delete">
+    <button type="submit" class="button">削除</button>
+</form>
 
-<!-- 編集ボタン (必要なら) -->
-<div class="button-container">
-    <button id="touroku" type="submit" class="button">変更を保存</button>
-</div>
-
-
+<form action="TaskDetail" method="post">
+    <input type="hidden" name="taskId" value="${task.id}">
+    <input type="hidden" name="action" value="edit">
+    <button type="submit" class="button">変更を保存</button>
+</form>
 </form>
 </body>
 </html>
