@@ -260,4 +260,9 @@ public class TasksDAO {
 		// TODO 自動生成されたメソッド・スタブ
 		return null;
 	}
+
+	public boolean delete(int taskId) {
+		// TODO 自動生成されたメソッド・スタブ
+		return false;
+	}
 }
