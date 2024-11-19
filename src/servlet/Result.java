@@ -64,20 +64,20 @@ public class Result extends HttpServlet {
 	        }
 	        
 	     // 分母が0でないか確認してから割り算を行う
-	        double percentageFromDatabase1 = 0;
+	        int percentageFromDatabase1 = 0;
 	        if (inCheck + outCheck != 0) {
 	            // 割り算をする際、整数同士の割り算を避けるためにキャスト
-	            percentageFromDatabase1 = ((double)(inCheck + outCheck) / taskList.size()) * 100;
+	            percentageFromDatabase1 = (int) (((double)(inCheck + outCheck) / taskList.size()) * 100);
 	        }
 
-	        double percentageFromDatabase2 = 0;
+	        int percentageFromDatabase2 = 0;
 	        if (outSum != 0) { // outSumが0の場合の割り算エラーを防ぐ
-	            percentageFromDatabase2 = ((double) outCheck / outSum) * 100;
+	            percentageFromDatabase2 = (int) (((double) outCheck / outSum) * 100);
 	        }
 
-	        double percentageFromDatabase3 = 0;
+	        int percentageFromDatabase3 = 0;
 	        if (inSum != 0) { // inSumが0の場合の割り算エラーを防ぐ
-	            percentageFromDatabase3 = ((double) inCheck / inSum) * 100;
+	            percentageFromDatabase3 =(int) (((double) inCheck / inSum) * 100);
 	        }
 	        
 	        

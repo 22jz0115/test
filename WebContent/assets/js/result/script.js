@@ -1,50 +1,29 @@
-$(function(){
-
+$(function () {
     let d = new Date();
     let year = d.getFullYear();
     let month = d.getMonth();
-    const cmp = document.getElementById('cmpmonth')
+    const cmp = document.getElementById('cmpmonth');
     cmp.prepend(year + "年 " + (month + 1) + "月");
 
-
-     
- // 例として、データベースから取得した％データをJavaScriptでシミュレート
-
-    const percentageFromDatabase = 15;  // 75%のデータを例として使用
-
-    // 動的に円グラフのスタイルを変更
-    const pieChartElement = document.getElementById('pieChart');
-    pieChartElement.style.backgroundImage = `
+    // サーバーから渡されたデータを使用して円グラフを更新
+    const pieChartElement1 = document.getElementById('pieChart');
+    pieChartElement1.style.backgroundImage = `
         radial-gradient(#fff 55%, transparent 55%), 
-        conic-gradient(#2589d0 ${percentageFromDatabase}%, #f2f2f2 ${percentageFromDatabase}% 100%)
+        conic-gradient(#2589d0 ${percentageFromDatabase1}%, #f2f2f2 ${percentageFromDatabase1}% 100%)
     `;
-   
-    // グラフ内のテキストも更新
-    pieChartElement.textContent = `${percentageFromDatabase}%`;
+    pieChartElement1.textContent = `${percentageFromDatabase1}%`;
 
-    const percentageFromDatabase2 = 70;  // 75%のデータを例として使用
-
-    // 動的に円グラフのスタイルを変更
-    const pieChartElemen2t = document.getElementById('pieChart2');
-    pieChartElemen2t.style.backgroundImage = `
+    const pieChartElement2 = document.getElementById('pieChart2');
+    pieChartElement2.style.backgroundImage = `
         radial-gradient(#fff 55%, transparent 55%), 
         conic-gradient(#2589d0 ${percentageFromDatabase2}%, #f2f2f2 ${percentageFromDatabase2}% 100%)
     `;
-   
-    // グラフ内のテキストも更新
-    pieChartElemen2t.textContent = `${percentageFromDatabase2}%`;
+    pieChartElement2.textContent = `${percentageFromDatabase2}%`;
 
-    const percentageFromDatabase3 = 40;  // 75%のデータを例として使用
-
-    // 動的に円グラフのスタイルを変更
-    const pieChartElemen3t = document.getElementById('pieChart3');
-    pieChartElemen3t.style.backgroundImage = `
+    const pieChartElement3 = document.getElementById('pieChart3');
+    pieChartElement3.style.backgroundImage = `
         radial-gradient(#fff 55%, transparent 55%), 
         conic-gradient(#2589d0 ${percentageFromDatabase3}%, #f2f2f2 ${percentageFromDatabase3}% 100%)
     `;
-   
-    // グラフ内のテキストも更新
-    pieChartElemen3t.textContent = `${percentageFromDatabase3}%`;
+    pieChartElement3.textContent = `${percentageFromDatabase3}%`;
 });
-
-
