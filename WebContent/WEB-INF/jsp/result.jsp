@@ -9,6 +9,12 @@
     <title>Document</title>
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
+    <script>
+    // サーブレットから渡されたデータをJavaScriptに埋め込む
+	    const percentageFromDatabase1 = ${percentageFromDatabase1};
+	    const percentageFromDatabase2 = ${percentageFromDatabase2};
+	    const percentageFromDatabase3 = ${percentageFromDatabase3};
+	</script>
 </head>
 <body>
     <header>
