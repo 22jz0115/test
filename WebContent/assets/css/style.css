@@ -358,6 +358,7 @@ p{
     border: #f0a8a8 solid 3px;
     border-radius: 9px;
     margin-left: 10px;
+     overflow-y: auto; /* 縦方向のスクロールを有効に */
 }
 
 
