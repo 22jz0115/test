@@ -904,7 +904,7 @@ input:checked ~ .circle {
 }
 /* 削除ボタン */
 .delete1 {
-    color: red;
+    color: rgb(255, 128, 128);
     cursor: pointer;
 }
 
@@ -954,7 +954,38 @@ input:checked ~ .circle {
 }
 
 
+.button {
+    background-color: rgb(255, 128, 128);  /* 緑色の背景 */
+    color: white;  /* 白文字 */
+    padding: 10px 20px;  /* 上下左右に余白 */
+    font-size: 16px;  /* 文字サイズ */
+    border: none;  /* 枠線なし */
+    border-radius: 5px;  /* 角を丸く */
+    cursor: pointer;  /* ポインターカーソル */
+    transition: background-color 0.3s ease, transform 0.3s ease;  /* 背景色と動きに遷移を設定 */
+}
 
+/* ボタンのホバー時のスタイル */
+.button:hover {
+    background-color: rgb(255, 128, 128);  /* ホバー時に少し濃い緑に */
+    transform: translateY(-2px);  /* 少し上に移動 */
+}
+
+/* ボタンを配置するためのスタイル */
+.button-container {
+    text-align: right;  /* 右寄せ */
+    margin-top: 10px;  /* 上部に余白を追加 */
+}
+
+/* 複数ボタンを並べるためのスタイル */
+.button-container button {
+    margin-left: 10px;  /* ボタン同士の間隔をあける */
+}
+
+/* ボタンが押された時のスタイル */
+button:active {
+    background-color: #3e8e41;  /* 押下時にさらに濃い緑 */
+}
 
 
 

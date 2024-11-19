@@ -13,11 +13,12 @@
 </head>
 <body>
  <header>
-        <a href="#"><img class="imgVector" src="../img/Vector.png" alt=""></a>
+        <a href="Task"><img class="imgVector" src="assets/img/戻るボタン.png" alt=""></a>
         <h1>タスク詳細</h1>
     </header>
 
     <form action="TaskInput" method="post">
+   
     <!-- 日付表示 -->
     <div class="form-group">
         <label for="dateInput">日付</label>
@@ -47,12 +48,17 @@
         <label for="story" class="memo-label">メモ</label>
         <textarea id="story" name="story" rows="5" cols="50" readonly>${story}</textarea>
     </div>
-
-    <!-- 編集ボタン (必要なら) -->
-    <div class="migi">
-        <button id="touroku" type="submit" class="button3">変更を保存</button>
-    </div>
     
+    <!-- 削除ボタン -->
+<div class="button-container">
+    <button id="delete" type="submit" name="action" value="delete" class="button">削除</button>
+</div>
+
+<!-- 編集ボタン (必要なら) -->
+<div class="button-container">
+    <button id="touroku" type="submit" class="button">変更を保存</button>
+</div>
+
 </form>
 </body>
 </html>
