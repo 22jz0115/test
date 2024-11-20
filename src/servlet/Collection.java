@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dao.CollectionsDAO;
-import dao.MyBoxsDAO;
+import dao.MyBoxesDAO;
 import model.Accounts;
 import model.Collections;
 import model.MyBoxs;
@@ -36,7 +36,7 @@ public class Collection extends HttpServlet {
 	        return;
 	    }
 
-	    MyBoxsDAO boxDao = new MyBoxsDAO();
+	    MyBoxesDAO boxDao = new MyBoxesDAO();
 	    
 	    
 	    MyBoxs box = boxDao.create(loginUser.getId(), 1);

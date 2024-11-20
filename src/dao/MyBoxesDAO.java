@@ -10,13 +10,13 @@ import java.util.List;
 
 import model.MyBoxs;
 
-public class MyBoxsDAO {
+public class MyBoxesDAO {
 	public List<MyBoxs> get() {
 		List<MyBoxs> list = new ArrayList<>();
 				
 		DBManager manager = DBManager.getInstance();
 		try(Connection cn = manager.getConnection()) {
-			String sql = "SELECT * FROM my_boxs";
+			String sql = "SELECT * FROM my_boxes";
 			PreparedStatement stmt = cn.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			
@@ -36,7 +36,7 @@ public class MyBoxsDAO {
 				
 		DBManager manager = DBManager.getInstance();
 		try(Connection cn = manager.getConnection()) {
-			String sql = "SELECT * FROM my_boxs WHERE account_id = ?";
+			String sql = "SELECT * FROM my_boxes WHERE account_id = ?";
 			
 			PreparedStatement stmt = cn.prepareStatement(sql);
 			stmt.setInt(1, account_Id);
@@ -59,7 +59,7 @@ public class MyBoxsDAO {
 		DBManager manager = DBManager.getInstance();
 		try(Connection cn = manager.getConnection()) {
 			// プレースホルダで変数部分を定義
-			String sql = "SELECT * FROM my_boxs WHERE id = ?";
+			String sql = "SELECT * FROM my_boxes WHERE id = ?";
 			PreparedStatement stmt = cn.prepareStatement(sql);
 			stmt.setInt(1, Id);
 			ResultSet rs = stmt.executeQuery();
