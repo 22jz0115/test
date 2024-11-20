@@ -65,6 +65,7 @@ public class Home extends HttpServlet {
         } else {
             request.setAttribute("msg", "ログインに失敗しました");
             doGet(request, response);
+            
         }
     }
 }
