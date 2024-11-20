@@ -33,6 +33,8 @@ public class Collection extends HttpServlet {
 	        request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
 	        return;
 	    }
+	    
+	    
 
 //	    MyBoxesDAO boxDao = new MyBoxesDAO();
 //	    
