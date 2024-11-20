@@ -78,6 +78,7 @@ public class Task extends HttpServlet {
                 // タスク状態を更新
                 TasksDAO taskDAO = new TasksDAO();
                 boolean isUpdated = taskDAO.updateCheckTask(taskId, check);
+                
 
                 if (isUpdated) {
                     // 更新成功の場合
