@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+       <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,6 +17,7 @@
         <a href="Task"><img class="imgVector" src="assets/img/戻るボタン.png" alt=""></a>
         <h1>タスク詳細</h1>
     </header>
+ 
 
     <form action="TaskInput" method="post">
    
@@ -25,23 +27,42 @@
         <input type="date" id="dateInput" name="dateInput" value="${dateInput}" readonly>
     </div>
 
-    <!-- 時間入力 -->
-    <div class="form-group">
-        <label for="appt-time">時間</label>
-        <input id="appt-time" type="time" name="appt-time" value="${apptTime}" readonly />
-    </div>
+     <!-- 時間入力 -->
+            <div class="form-group">
+                <label for="appt-time-${task.id}">時間</label>
+                <input id="appt-time-${task.id}" type="time" name="apptTime" value="${task.formattedTime}" readonly />
+            </div>
 
-    <!-- カテゴリー名表示 -->
-    <div class="form-group">
-        <label for="categorySelect">カテゴリー:</label>
-        <input type="text" id="categorySelect" name="categorySelect" value="${categoryId}" readonly />
-    </div>
 
+<ul>
+    <c:forEach var="category" items="${categoryList}">
+        <li>
+            <a href="yourServletPath?categoryId=${category.id}">
+                ${category.categoryName}
+            </a>
+        </li>
+    </c:forEach>
+</ul>
     <!-- タスク名表示 -->
-    <div class="form-group">
-        <label for="taskName" class="taskname">タスク名:</label>
-        <input type="text" id="taskName" name="taskName" value="${taskName}" readonly />
-    </div>
+    <c:forEach var="task" items="${taskList}">
+            <li class="task" data-task-id="${task.id}">
+                <a href="TaskDetail?taskId=${task.id}">
+                    <div>
+                        <div class="timersolid">
+                           
+                            <span></span>
+                        </div>
+                        <p class="taskname">タスク名：${task.taskName}</p>
+                    </div>
+                </a>
+                <div class="buttons">
+                    <label class="toggle-button-4">
+                        <input type="checkbox" class="check" 
+                            <c:if test="${task.check == 1}">checked</c:if>>
+                    </label>
+                </div>
+            </li>
+        </c:forEach>
 
     <!-- メモの表示 -->
     <div class="form-group">
