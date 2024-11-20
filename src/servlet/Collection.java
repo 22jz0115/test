@@ -10,10 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dao.CollectionsDAO;
-import dao.MyBoxesDAO;
 import model.Accounts;
 import model.Collections;
-import model.MyBoxs;
 
 /**
  * Servlet implementation class collection
@@ -36,20 +34,14 @@ public class Collection extends HttpServlet {
 	        return;
 	    }
 
-	    MyBoxesDAO boxDao = new MyBoxesDAO();
-	    
-	    
-	    MyBoxs box = boxDao.create(loginUser.getId(), 1);
+//	    MyBoxesDAO boxDao = new MyBoxesDAO();
+//	    
+//	    
+//	    MyBoxs box = boxDao.create(loginUser.getId(), 1);
 
-	    if (box == null) {
-	        // エラー時の処理
-	        System.out.println("errorMessage");
-	        request.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);
-	        return;
-	    }
 
 	    CollectionsDAO collectDao = new CollectionsDAO();
-	    Collections collect = collectDao.find(box.getCollectionId());
+	    Collections collect = collectDao.find(1);
 
 	    if (collect == null) {
 	        request.setAttribute("errorMessage", "コレクションが見つかりませんでした。");
