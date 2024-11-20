@@ -16,7 +16,7 @@ public class MyBoxsDAO {
 				
 		DBManager manager = DBManager.getInstance();
 		try(Connection cn = manager.getConnection()) {
-			String sql = "SELECT * FROM MyBoxs";
+			String sql = "SELECT * FROM my_boxs";
 			PreparedStatement stmt = cn.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			
@@ -36,7 +36,7 @@ public class MyBoxsDAO {
 				
 		DBManager manager = DBManager.getInstance();
 		try(Connection cn = manager.getConnection()) {
-			String sql = "SELECT * FROM MyBoxs WHERE account_id = ?";
+			String sql = "SELECT * FROM my_boxs WHERE account_id = ?";
 			
 			PreparedStatement stmt = cn.prepareStatement(sql);
 			stmt.setInt(1, account_Id);
@@ -59,7 +59,7 @@ public class MyBoxsDAO {
 		DBManager manager = DBManager.getInstance();
 		try(Connection cn = manager.getConnection()) {
 			// プレースホルダで変数部分を定義
-			String sql = "SELECT * FROM MyBoxs WHERE id = ?";
+			String sql = "SELECT * FROM my_boxs WHERE id = ?";
 			PreparedStatement stmt = cn.prepareStatement(sql);
 			stmt.setInt(1, Id);
 			ResultSet rs = stmt.executeQuery();
@@ -80,7 +80,7 @@ public class MyBoxsDAO {
 		DBManager manager = DBManager.getInstance();
 		try(Connection cn = manager.getConnection()) {
 			// プレースホルダで変数部分を定義
-			String sql = "SELECT * FROM MyBoxs WHERE account_Id = ? AND collection_Id = ?";
+			String sql = "SELECT * FROM my_boxes WHERE account_Id = ? AND collection_Id = ?";
 
 			PreparedStatement stmt = cn.prepareStatement(sql);
 			stmt.setInt(1, account_Id);
@@ -113,7 +113,7 @@ public class MyBoxsDAO {
 		try(Connection cn = manager.getConnection()) {
 			
 			// プレースホルダで変数部分を定義
-			String sql = "INSERT INTO MyBoxs (account_id, collection_id) VALUES (?, ?)";
+			String sql = "INSERT INTO my_boxes (account_id, collection_id) VALUES (?, ?)";
 			PreparedStatement stmt = cn.prepareStatement(sql);
 		
 			stmt.setInt(1, account_Id);
