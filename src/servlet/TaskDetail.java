@@ -39,20 +39,21 @@ public class TaskDetail extends HttpServlet {
 	        
 	        
 	        System.out.print(selectedDate);
+	        
 	        TasksDAO tasksDAO = new TasksDAO();
 	          // アカウントIDに関連するタスク一覧を取得
 	       Tasks tasks = tasksDAO.findById(taskId, loginUser.getId());
 	       System.out.print("タスク確認"+tasks.getTaskName());
 	  
 	        
-   request.setAttribute("task", tasks);
+          request.setAttribute("task", tasks);
 	    
 	        
 
-	      //  CategoriesDAO categoriesDAO = new CategoriesDAO();
-	       // Categories categoryList = categoriesDAO.find(task.getCategoryId());
+	       // CategoriesDAO categoriesDAO = new CategoriesDAO();
+	       // Categories categoryList = categoriesDAO.findByName(tasks.getId());
 	       
-	     //   request.setAttribute("categoryList", categoryList);
+	       //request.setAttribute("categoryList", categoryList);
 	      
 		    // タスク詳細画面へフォワード
 		    request.getRequestDispatcher("/WEB-INF/jsp/taskDetail.jsp").forward(request, response);

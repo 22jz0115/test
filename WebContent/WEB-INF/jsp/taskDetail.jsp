@@ -25,41 +25,41 @@
    
   
 
-    <!-- 日付表示 
-   <c:forEach var="task" items="${task}">
+    <!-- 日付表示 -->
+ 
        <div class="form-group">
-            <label for="dateInput">日付</label>
-            <input type="date" id="dateInput" name="dateInput" value="${task.taskDate}" readonly>
+            <label for="dateInput">日付:</label>
+            <input type="date" id="dateInput" name="dateInput" value="${task.formattedDate}" readonly>
         </div>     
-    </c:forEach>-->
+        
     <!-- 時間入力 -->
     <div class="form-group">
-        <label for="appt-time-${task.id}">時間</label>
+        <label for="appt-time-${task.id}">時間:</label>
         <input id="appt-time-${task.id}" type="time" name="apptTime" value="${task.formattedTime}" readonly />
     </div>
 
     <!-- カテゴリ表示 -->
     <ul>
-        <c:forEach var="category" items="${categoryList}">
             <li>
                 <a href="yourServletPath?categoryId=${category.id}">
                     ${category.categoryName}
                 </a>
             </li>
-        </c:forEach>
     </ul>
 
     <!-- タスク名表示 -->
-    <c:forEach var="task" items="${taskList}">
+   
         <li class="task" data-task-id="${task.id}">
-            <a href="TaskDetail?taskId=${task.id}">
+       
                 <div>
                     <div class="timersolid">
                         <span></span>
                     </div>
                     <p class="taskname">タスク名：${task.taskName}</p>
                 </div>
-            </a>
+                
+                
+     
             <div class="buttons">
                 <label class="toggle-button-4">
                     <input type="checkbox" class="check" 
@@ -67,7 +67,7 @@
                 </label>
             </div>
         </li>
-    </c:forEach>
+
 
     <!-- メモの表示 -->
     <div class="form-group">

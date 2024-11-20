@@ -89,6 +89,11 @@ public class Tasks {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm"); // 時間のフォーマット
         return formattedTime = taskDate.format(formatter);
     }
+    
+    public String getFormattedDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMdd"); // 時間のフォーマット
+        return formattedTime = taskDate.format(formatter);
+    }
 
     public Tasks(int id, int categoryId, int accountId, String taskName, LocalDateTime taskDate, String memo,
                  LocalDateTime createdAt, LocalDateTime updateDate, int outin, int checkTask) {
