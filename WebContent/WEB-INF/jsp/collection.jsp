@@ -21,14 +21,17 @@
 
     <div class="grid-container">
     	 <c:forEach begin="1" end="12" step="1" var="month">
-	    	 <c:choose>
-			    <c:when test="${collection.id == month }">
-			    	<img src="${collection.img }" alt="金メダル" class="round-image">
-			    </c:when>
-			    <c:otherwise>
-			    	<div class="dotted-circle"><p>${month }月</p></div>
-			    </c:otherwise>
-			</c:choose>            
+    	 	<c:forEach var="collect" items="${collection }">
+	    	 	 <c:choose>
+				    <c:when test="${collect.id == month }">
+				    	<img src="${collect.img }" alt="金メダル" class="round-image">
+				    </c:when>
+				    <c:otherwise>
+				    	<div class="dotted-circle"><p>${month }月</p></div>
+				    </c:otherwise>
+				</c:choose>   
+    	 	</c:forEach>
+	    	         
         </c:forEach>
         
     </div>

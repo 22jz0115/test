@@ -52,6 +52,40 @@ public class CollectionsDAO {
 		return collection;
     }
 	
+	public List<Collections> findByCollectionList(List<Integer> collectionIds) {
+	    List<Collections> collectList = new ArrayList<>();
+	    DBManager manager = DBManager.getInstance();
+
+	    // 引数が空の場合、すぐに空のリストを返す
+	    if (collectionIds == null || collectionIds.isEmpty()) {
+	        return collectList;
+	    }
+
+	    try (Connection cn = manager.getConnection()) {
+	        // IN句のプレースホルダを動的に生成
+	        String placeholders = String.join(",", collectionIds.stream().map(id -> "?").toArray(String[]::new));
+	        String sql = "SELECT * FROM collections WHERE id IN (" + placeholders + ")";
+	        PreparedStatement stmt = cn.prepareStatement(sql);
+
+	        // プレースホルダに値をセット
+	        for (int i = 0; i < collectionIds.size(); i++) {
+	            stmt.setInt(i + 1, collectionIds.get(i));
+	        }
+
+	        ResultSet rs = stmt.executeQuery();
+
+	        // データをリストに格納
+	        while (rs.next()) {
+	            Collections collect = rs2model(rs);
+	            collectList.add(collect);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return collectList;
+	}
+	
 	private Collections rs2model(ResultSet rs) throws SQLException {
         int id = rs.getInt("id");
         String img = rs.getString("img");
