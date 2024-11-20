@@ -40,7 +40,7 @@ public class Login extends HttpServlet {
             logic.logout(session);
             System.out.println(loginUser.getEmail());
         }
-
+      
         // ログアウト後にログインページへリダイレクト
         response.sendRedirect(request.getContextPath() + "/Login");
     }

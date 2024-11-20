@@ -265,7 +265,7 @@ public class TasksDAO {
 	public Tasks findById(int taskId, int userId) {
 	    DBManager manager = DBManager.getInstance();
 	    try (Connection cn = manager.getConnection()) {
-	        String sql = "SELECT * FROM tasks WHERE id = ? AND user_id = ?";
+	        String sql = "SELECT * FROM tasks WHERE id = ? AND account_id = ?";
 	        PreparedStatement stmt = cn.prepareStatement(sql);
 	        stmt.setInt(1, taskId);
 	        stmt.setInt(2, userId);
@@ -277,7 +277,15 @@ public class TasksDAO {
 	            task.setTaskName(rs.getString("task_name"));
 	            task.setMemo(rs.getString("memo"));
 	            task.setCategoryId(rs.getInt("category_id"));
-	           // task.setTaskDate(rs.getTimestamp("task_datetime"));
+	          //  task.setTaskDate(rs.getInt("task_date"));
+	          //  Timestamp taskTimestamp = Timestamp.valueOf(rs.getTimestamp("task_date")); // Timestampに変換
+	           // LocalDateTime taskDate = LocalDateTime.parse(taskTimestamp); // 日付をLocalDateTimeに変換
+	            LocalDateTime taskDatetime =
+	                    rs.getTimestamp("task_date").toLocalDateTime(); 
+
+	         //   task.setTaskDate(rs.getTimestamp("task_date"));	  
+	            task.setTaskDate(taskDatetime);
+
 	            return task;
 	        } else {
 	            return null; // タスクが見つからない場合

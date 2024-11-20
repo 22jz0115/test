@@ -27,6 +27,7 @@ public class TaskDetail extends HttpServlet {
 		   HttpSession session = request.getSession();
 		    Accounts loginUser = (Accounts) session.getAttribute("loginUser");
 		    
+		     
 		    String taskIdStr = request.getParameter("taskId");
 		    int taskId = Integer.parseInt(taskIdStr);
 		    
@@ -38,20 +39,22 @@ public class TaskDetail extends HttpServlet {
 	            selectedDate = today.toString(); // YYYY-MM-DD形式
 	        }
 	        
+	        
 	        System.out.print(selectedDate);
 	        TasksDAO tasksDAO = new TasksDAO();
-	        
+	      
 	          // アカウントIDに関連するタスク一覧を取得
 	       Tasks task = tasksDAO.findById(taskId, loginUser.getId());
+	       System.out.print("タスク確認"+task.getTaskName());
 	        request.setAttribute("task", task);
+	        
 		  
 	        
+
 	        CategoriesDAO categoriesDAO = new CategoriesDAO();
-
-	        // カテゴリ一覧を取得してリクエストスコープにセット
 	        Categories categoryList = categoriesDAO.find(task.getCategoryId());
+	       
 	        request.setAttribute("categoryList", categoryList);
-
 	      
 		    // タスク詳細画面へフォワード
 		    request.getRequestDispatcher("/WEB-INF/jsp/taskDetail.jsp").forward(request, response);

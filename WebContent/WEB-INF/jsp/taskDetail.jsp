@@ -19,69 +19,71 @@
     </header>
  
 
-    <form action="TaskInput" method="post">
+     <form action="TaskInput" method="post">
    
     <!-- 日付表示 -->
+     <c:forEach var="task" items="${task}">
     <div class="form-group">
         <label for="dateInput">日付</label>
-        <input type="date" id="dateInput" name="dateInput" value="${dateInput}" readonly>
+        <input type="date" id="dateInput" name="dateInput" value="${task.date}" readonly>
+    </div>     </c:forEach>
+
+    <!-- 時間入力 -->
+    <div class="form-group">
+        <label for="appt-time-${task.id}">時間</label>
+        <input id="appt-time-${task.id}" type="time" name="apptTime" value="${task.formattedTime}" readonly />
     </div>
 
-     <!-- 時間入力 -->
-            <div class="form-group">
-                <label for="appt-time-${task.id}">時間</label>
-                <input id="appt-time-${task.id}" type="time" name="apptTime" value="${task.formattedTime}" readonly />
-            </div>
-
-
-<ul>
-    <c:forEach var="category" items="${categoryList}">
-        <li>
-            <a href="yourServletPath?categoryId=${category.id}">
-                ${category.categoryName}
-            </a>
-        </li>
-    </c:forEach>
-</ul>
-    <!-- タスク名表示 -->
-    <c:forEach var="task" items="${taskList}">
-            <li class="task" data-task-id="${task.id}">
-                <a href="TaskDetail?taskId=${task.id}">
-                    <div>
-                        <div class="timersolid">
-                           
-                            <span></span>
-                        </div>
-                        <p class="taskname">タスク名：${task.taskName}</p>
-                    </div>
+    <!-- カテゴリ表示 -->
+    <ul>
+        <c:forEach var="category" items="${categoryList}">
+            <li>
+                <a href="yourServletPath?categoryId=${category.id}">
+                    ${category.categoryName}
                 </a>
-                <div class="buttons">
-                    <label class="toggle-button-4">
-                        <input type="checkbox" class="check" 
-                            <c:if test="${task.check == 1}">checked</c:if>>
-                    </label>
-                </div>
             </li>
         </c:forEach>
+    </ul>
+
+    <!-- タスク名表示 -->
+    <c:forEach var="task" items="${taskList}">
+        <li class="task" data-task-id="${task.id}">
+            <a href="TaskDetail?taskId=${task.id}">
+                <div>
+                    <div class="timersolid">
+                        <span></span>
+                    </div>
+                    <p class="taskname">タスク名：${task.taskName}</p>
+                </div>
+            </a>
+            <div class="buttons">
+                <label class="toggle-button-4">
+                    <input type="checkbox" class="check" 
+                        <c:if test="${task.check == 1}">checked</c:if>>
+                </label>
+            </div>
+        </li>
+    </c:forEach>
 
     <!-- メモの表示 -->
     <div class="form-group">
         <label for="story" class="memo-label">メモ</label>
-        <textarea id="story" name="story" rows="5" cols="50" readonly>${story}</textarea>
+        <textarea id="story" name="story" rows="5" cols="50" readonly>${task.memo}</textarea>
     </div>
     
     <!-- 削除ボタン -->
-<form action="TaskDetail" method="post">
-    <input type="hidden" name="taskId" value="${task.id}">
-    <input type="hidden" name="action" value="delete">
-    <button type="submit" class="button">削除</button>
-</form>
+    <form action="TaskDetail" method="post">
+        <input type="hidden" name="taskId" value="${task.id}">
+        <input type="hidden" name="action" value="delete">
+        <button type="submit" class="button">削除</button>
+    </form>
 
-<form action="TaskDetail" method="post">
-    <input type="hidden" name="taskId" value="${task.id}">
-    <input type="hidden" name="action" value="edit">
-    <button type="submit" class="button">変更を保存</button>
-</form>
+    <!-- 変更保存ボタン -->
+    <form action="TaskDetail" method="post">
+        <input type="hidden" name="taskId" value="${task.id}">
+        <input type="hidden" name="action" value="edit">
+        <button type="submit" class="button">変更を保存</button>
+    </form>
 </form>
 </body>
 </html>
