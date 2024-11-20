@@ -69,8 +69,12 @@ public class PresetInputDAO {
 			stmt.setInt(2, account_id);
 			ResultSet rs = stmt.executeQuery();
 			
-			String result = String.valueOf(rs);
-			resultId = Integer.parseInt(result);
+			// 結果が存在する場合のみ処理
+	        if (rs.next()) {
+	            resultId = rs.getInt("id"); // カラム名 "id" を指定
+	        } else {
+	            System.out.println("結果が見つかりませんでした");
+	        }
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
@@ -144,8 +148,17 @@ public class PresetInputDAO {
 	        JSONArray tasksArray = new JSONArray();
 	        if (rs.next()) {
 	            String tasksJson = rs.getString("tasks");
-	            tasksArray = new JSONArray(tasksJson);
+	            if (tasksJson == null || tasksJson.isEmpty()) {
+	                tasksArray = new JSONArray(); // 空の配列を初期化
+	            } else {
+	                tasksArray = new JSONArray(tasksJson);
+	            }
 	        }
+	        if (tasksArray.length() >= 10) {
+	            System.out.println("タスクの上限に達しました。");
+	            return false;
+	        }
+
 
 	        // 2. 新しいタスクを追加
 	        JSONObject newTask = new JSONObject(taskData);
@@ -172,7 +185,7 @@ public class PresetInputDAO {
      // JSON形式の文字列を取得
         String tasksJsonString = rs.getString("tasks");
         
-        // 取得したJSON文字列をJSONObjectに変換
+        // 取得したJSON文字列をJSONArrayに変換
         JSONArray tasksJson = new JSONArray(tasksJsonString);
         
      // JSON文字列がnullまたは空の場合のデフォルト処理
