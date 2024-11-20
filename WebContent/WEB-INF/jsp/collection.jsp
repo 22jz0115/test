@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -19,18 +20,17 @@
     <p class="years">現在の年は <span id="year"><%= new java.util.Date().getYear() + 1900 %></span>年です。</p>
 
     <div class="grid-container">
-        <img src="assets/img/cat2.png" alt="金メダル" class="round-image">
-        <div class="dotted-circle"><p>2月</p></div>
-        <div class="dotted-circle"><p>3月</p></div>
-        <div class="dotted-circle"><p>4月</p></div>
-        <div class="dotted-circle"><p>5月</p></div>
-        <div class="dotted-circle"><p>6月</p></div>
-        <div class="dotted-circle"><p>7月</p></div>
-        <div class="dotted-circle"><p>8月</p></div>
-        <div class="dotted-circle"><p>9月</p></div>
-        <div class="dotted-circle-1"><p>10月</p></div>
-        <div class="dotted-circle-1"><p>11月</p></div>
-        <div class="dotted-circle-1"><p>12月</p></div>
+    	 <c:forEach begin="1" end="12" step="1" var="month">
+	    	 <c:choose>
+			    <c:when test="${collection.id == month }">
+			    	<img src="${collection.img }" alt="金メダル" class="round-image">
+			    </c:when>
+			    <c:otherwise>
+			    	<div class="dotted-circle"><p>${month }月</p></div>
+			    </c:otherwise>
+			</c:choose>            
+        </c:forEach>
+        
     </div>
 </body>
 </html>

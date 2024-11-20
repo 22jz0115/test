@@ -34,12 +34,12 @@
     </div>
     <div class="cycle-flex">
         <div>
-            <p>屋内タスク</p>
+            <p>屋外タスク</p>
             <div class="pie-chart-2" id="pieChart2"></div>
         </div>
         
         <div>
-            <p>屋外タスク</p>
+            <p>屋内タスク</p>
             <div class="pie-chart-2" id="pieChart3"></div>
         </div>
     </div>
