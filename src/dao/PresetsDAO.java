@@ -107,6 +107,28 @@ public class PresetsDAO {
 		return presets;
 	}
 	
+	public Presets findByPreset(String preset_name, int account_id) {
+		Presets presets = null;
+		DBManager manager = DBManager.getInstance();
+		try(Connection cn = manager.getConnection()) {
+			// プレースホルダで変数部分を定義
+			String sql = "SELECT * FROM presets WHERE preset_name = ? AND account_id = ?";
+			PreparedStatement stmt = cn.prepareStatement(sql);
+			stmt.setString(1, preset_name);
+			stmt.setInt(2, account_id);
+			ResultSet rs = stmt.executeQuery();
+			
+			// データをリストに格納
+			if (rs.next()) {
+				presets = rs2model(rs);
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return presets;
+	}
+	
 	/**
 	 * DBにデータを追加する
 	 * @return 成功時は追加したデータ、失敗時はnull

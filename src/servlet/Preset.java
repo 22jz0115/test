@@ -38,10 +38,6 @@ public class Preset extends HttpServlet {
         List<Presets> presetList = dao.get(accountId);
         request.setAttribute("presetList", presetList);
         
-        List<String> presetNameList = dao.getName(accountId);
-        String optionsString = String.join(",", presetNameList);
-        request.setAttribute("jsonString", optionsString);
-        
 		request.getRequestDispatcher("/WEB-INF/jsp/priset.jsp").forward(request, response);
 	}
 

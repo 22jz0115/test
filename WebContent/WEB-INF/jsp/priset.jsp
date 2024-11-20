@@ -16,55 +16,58 @@
 
     <script>
     
-        // リセットボタンがクリックされたときにその親のliを削除する関数
-        function removeTask(button) {
-            const taskItem = button.closest('li'); // ボタンの親li要素を取得
-            if (taskItem) {
-                taskItem.remove(); // li要素をDOMから削除
-            }
-        }
-
-        // プリセット名を選択したときにタスクリストを更新する関数
-        function updateTaskList() {
-            const presetName = document.querySelector('[name="preset_name"]').value;
-
-            // プリセットが見つかった場合にタスクリストを表示
-            if (${presetList}) {
-                const taskList = document.getElementById('taskList');
-                taskList.innerHTML = ''; // 既存のリストをクリア
-
-                // タスクデータをリストに追加
-                presetData.tasks.forEach(task => {
-                    const taskItem = document.createElement('li');
-                    taskItem.classList.add('task');
-
-                    const taskContent = `
-                        <div class="timersolid">
-                            <p class="tasktime">${task.taskTime}</p>
-                            <span></span>
-                        </div>
-                        <p>${task.name}</p>
-                        <input type="reset" value="-" onclick="removeTask(this)">
-                    `;
-                    taskItem.innerHTML = taskContent;
-                    taskList.appendChild(taskItem);
-                });
-            } else {
-                const taskList = document.getElementById('taskList');
-                taskList.innerHTML = '<li>プリセットが選択されていません。</li>';
-            }
-        }
-
-        // ページ読み込み時に初期化
-        $(document).ready(function() {
-            // 初期状態でタスクリストを更新
-            updateTaskList();
+    $(document).ready(function() {
+        // preset_nameの変更イベントを監視
+        $('[name="preset_name"]').change(function() {
+            // preset_nameを取得
+            const presetName = $(this).val();
+            
+            // サーバーにAJAXリクエストを送信
+            $.ajax({
+                url: '/test/GetPresetData',  // サーバーのURL（このURLに合わせてサーバー側でエンドポイントを作成）
+                type: 'GET',
+                data: { name: presetName }, // preset_nameをパラメータとして送信
+                success: function(response) {
+                    // 成功時にtaskListを更新
+                    updateTaskList(response);  // サーバーから受け取ったプリセットデータを引数として渡す
+                },
+                error: function() {
+                    alert('プリセットを取得できませんでした。');
+                }
+            });
         });
+    });
 
-        function inputChange() {
-        	$('[name="preset_name"]').change(updateTaskList);
-            console.log("come");
+    // taskListを更新する関数
+    function updateTaskList(presetData) {
+        const taskList = $('#taskList');
+        taskList.empty();  // 既存のタスクリストをクリア
+        console.log(presetData);
+
+        // サーバーから受け取ったプリセットのタスクをリストに追加
+        if (presetData && presetData.tasks && presetData.tasks.length > 0) {
+            presetData.tasks.forEach(function(task) {
+                const taskItem = `<li class="task">
+                                    <div class="timersolid">
+                                        <p class="tasktime">${task.taskTime}</p>
+                                    </div>
+                                    <p>${task.name}</p>
+                                    <input type="reset" value="-" onclick="removeTask(this)">
+                                  </li>`;
+                taskList.append(taskItem);
+            });
+        } else {
+            taskList.append('<li>選択されたプリセットにはタスクがありません。</li>');
         }
+    }
+
+    // リセットボタンがクリックされたときにその親のliを削除する関数
+    function removeTask(button) {
+        const taskItem = button.closest('li');
+        if (taskItem) {
+            taskItem.remove();
+        }
+    }
     
     </script>
 </head>
@@ -78,7 +81,12 @@
         <div class="setName">
             <h2>プリセット名</h2>
             <!-- プリセット名を選択するための入力欄 -->
-            <input type="text" name="preset_name" value="テスト" data-options='${jsonString}' class="free_dropdown" onchange="inputChange()" />
+            <!-- <input type="text" name="preset_name" value="" data-options='${jsonString}' class="free_dropdown" /> -->
+            <select name="preset_name">
+            	,<c:forEach var="preset" items="${presetList}">
+            		<option value="${preset.presetName}">${preset.presetName}</option>
+            	 </c:forEach>
+            </select>
         </div>
         <input type="submit" value="プリセットタスク追加">
     </form>
