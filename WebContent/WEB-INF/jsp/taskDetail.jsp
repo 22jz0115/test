@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+       <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,13 +23,15 @@
 
      <form action="TaskInput" method="post">
    
-    <!-- 日付表示 -->
-     <c:forEach var="task" items="${task}">
-    <div class="form-group">
-        <label for="dateInput">日付</label>
-        <input type="date" id="dateInput" name="dateInput" value="${task.date}" readonly>
-    </div>     </c:forEach>
+  
 
+    <!-- 日付表示 
+   <c:forEach var="task" items="${task}">
+       <div class="form-group">
+            <label for="dateInput">日付</label>
+            <input type="date" id="dateInput" name="dateInput" value="${task.taskDate}" readonly>
+        </div>     
+    </c:forEach>-->
     <!-- 時間入力 -->
     <div class="form-group">
         <label for="appt-time-${task.id}">時間</label>

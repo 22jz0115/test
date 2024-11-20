@@ -10,10 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dao.CategoriesDAO;
 import dao.TasksDAO;
 import model.Accounts;
-import model.Categories;
 import model.Tasks;
 
 /**
@@ -42,19 +40,19 @@ public class TaskDetail extends HttpServlet {
 	        
 	        System.out.print(selectedDate);
 	        TasksDAO tasksDAO = new TasksDAO();
-	      
 	          // アカウントIDに関連するタスク一覧を取得
-	       Tasks task = tasksDAO.findById(taskId, loginUser.getId());
-	       System.out.print("タスク確認"+task.getTaskName());
-	        request.setAttribute("task", task);
+	       Tasks tasks = tasksDAO.findById(taskId, loginUser.getId());
+	       System.out.print("タスク確認"+tasks.getTaskName());
+	  
 	        
-		  
+   request.setAttribute("task", tasks);
+	    
 	        
 
-	        CategoriesDAO categoriesDAO = new CategoriesDAO();
-	        Categories categoryList = categoriesDAO.find(task.getCategoryId());
+	      //  CategoriesDAO categoriesDAO = new CategoriesDAO();
+	       // Categories categoryList = categoriesDAO.find(task.getCategoryId());
 	       
-	        request.setAttribute("categoryList", categoryList);
+	     //   request.setAttribute("categoryList", categoryList);
 	      
 		    // タスク詳細画面へフォワード
 		    request.getRequestDispatcher("/WEB-INF/jsp/taskDetail.jsp").forward(request, response);

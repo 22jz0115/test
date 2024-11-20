@@ -280,13 +280,13 @@ public class TasksDAO {
 	          //  task.setTaskDate(rs.getInt("task_date"));
 	          //  Timestamp taskTimestamp = Timestamp.valueOf(rs.getTimestamp("task_date")); // Timestampに変換
 	           // LocalDateTime taskDate = LocalDateTime.parse(taskTimestamp); // 日付をLocalDateTimeに変換
-	            LocalDateTime taskDatetime =
-	                    rs.getTimestamp("task_date").toLocalDateTime(); 
+	           LocalDateTime taskDatetime =
+	                   rs.getTimestamp("task_datetime").toLocalDateTime(); 
 
 	         //   task.setTaskDate(rs.getTimestamp("task_date"));	  
-	            task.setTaskDate(taskDatetime);
+	          task.setTaskDate(taskDatetime);
 
-	            return task;
+	             return task;
 	        } else {
 	            return null; // タスクが見つからない場合
 	        }
