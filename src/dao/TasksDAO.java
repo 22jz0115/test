@@ -317,14 +317,19 @@ public class TasksDAO {
 	}
 
 	// タスク更新メソッド
-	public boolean updateTask(int taskId, String taskName, String memo) {
+	public boolean updateTask(int taskId, int category_id, int account_id, String task_name, String memo, int outin, LocalDateTime taskDatetime ) {
 	    DBManager manager = DBManager.getInstance();
 	    try (Connection cn = manager.getConnection()) {
-	        String sql = "UPDATE tasks SET task_name = ?, memo = ?, update_date = CURRENT_TIMESTAMP WHERE id = ?";
+	        String sql = "UPDATE tasks SET　category_id　= ?, account_id = ?, task_name = ?, memo = ?, outin = ?, task_datetime = ? WHERE id = ?";
 	        PreparedStatement stmt = cn.prepareStatement(sql);
-	        stmt.setString(1, taskName);
-	        stmt.setString(2, memo);
-	        stmt.setInt(3, taskId);
+	    
+	        stmt.setInt(1, category_id);
+	        stmt.setInt(2, account_id);
+	        stmt.setString(3, task_name);
+	        stmt.setString(4, memo);
+	        stmt.setInt(5, outin);
+	        stmt.setTimestamp(6, Timestamp.valueOf(taskDatetime));
+	        stmt.setInt(7, taskId);
 
 	        int rowsUpdated = stmt.executeUpdate();  // 更新された行数を取得
 	        return rowsUpdated > 0; // 1行以上更新されたらtrue
