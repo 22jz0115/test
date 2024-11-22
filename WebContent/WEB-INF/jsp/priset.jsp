@@ -78,20 +78,21 @@
     </header>
 
     <form action="PresetInput" method="get" class="presetsForm">
-        <div class="setName">
-            <h2>プリセット名</h2>
-            <!-- プリセット名を選択するための入力欄 -->
-            <!-- <input type="text" name="preset_name" value="" data-options='${jsonString}' class="free_dropdown" /> -->
-            <select name="preset_name">
-            	,<c:forEach var="preset" items="${presetList}">
-            		<option value="${preset.presetName}">${preset.presetName}</option>
-            	 </c:forEach>
-            </select>
-        </div>
+        
         <input type="submit" value="プリセットタスク追加">
     </form>
 
     <form action="Preset" method="post" class="presetsForm">
+    	<div class="setName">
+            <h2>プリセット名</h2>
+            <select id="presetName" name="preset_name">
+            	<option  hidden selected="selected" value="">プリセットを選択してください</option>
+            	<c:forEach var="preset" items="${presetList}">
+			            <option id="preset" value="${preset.id}">${preset.presetName}</option> 
+			    </c:forEach>
+            </select>
+        </div>
+        
         <div class="form-group">
             <label for="dateInput">日付</label>
             <!-- 日付選択 -->

@@ -142,7 +142,7 @@ const BASE_API_URL = "https://www.jma.go.jp/bosai/forecast/data/forecast/";
 		    const weathers = areaWeather.weathers;
 		    const weather = weathers[0].replaceAll("　", ""); // 不要な空白を削除
 		    const areaName = areaWeather.area.name; // 地域名の取得
-		
+		    	
 		    return `${areaName}の天気は、${weather}`;
 		}
 

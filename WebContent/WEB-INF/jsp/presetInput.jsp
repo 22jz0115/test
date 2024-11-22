@@ -1,20 +1,21 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="assets/css/an/style.css">
+  	<link rel="stylesheet" href="assets/css/an/style.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="assets/js/preset/preset.js"></script>
     <title>プリセット入力画面</title>
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
 
 </head>
 <body>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script type="text/javascript" src="assets/js/taskinput/script.js"></script>
     <header>
         <a href="Preset" class="back1"><img src="assets/img/戻るボタン.png"></a><h1>プリセット入力</h1>
     </header>
@@ -23,7 +24,11 @@
 
         <form action="PresetInput" method="post">
 
-			<input type="hidden" name="preset_name" value="${presetName}">
+			<div class="setName">
+                <label for="preset_name">プリセット名</label>
+                <input type="text" name="preset_name" value="" data-options='${presetList}' class="free_dropdown" />
+            </div>
+			
             <!-- 時間入力 -->
             <div class="form-group">
                 <label for="appt-time">時間</label>

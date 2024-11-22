@@ -12,9 +12,10 @@ import javax.servlet.http.HttpSession;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+import dao.PresetTasksDAO;
 import dao.PresetsDAO;
 import model.Accounts;
-import model.Presets;
+import model.PresetTasks;
 
 /**
  * Servlet implementation class GetPresetData
@@ -30,8 +31,11 @@ public class GetPresetData extends HttpServlet {
         Accounts loginUser = (Accounts) session.getAttribute("loginUser");
         int accountId = loginUser.getId();
         
-        PresetsDAO dao = new PresetsDAO();
-        Presets presetData = dao.findByPreset(presetName, accountId);
+        PresetsDAO presetsDao = new PresetsDAO();
+        int presetId = presetsDao.findByPresetId(presetName, accountId);
+        
+        PresetTasksDAO dao = new PresetTasksDAO();
+        PresetTasks presetData = dao.findByPresetTask(presetId);
         
      // JSON形式で返す準備
         response.setContentType("application/json");
@@ -41,8 +45,6 @@ public class GetPresetData extends HttpServlet {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule()); // LocalDateTime対応
         
-        System.out.println("come");
-		System.out.println(presetData.getTasks());
 
         // プリセットをJSON形式で返す
         objectMapper.writeValue(response.getWriter(), presetData);

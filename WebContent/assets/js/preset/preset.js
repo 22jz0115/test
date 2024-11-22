@@ -14,3 +14,10 @@ $(document).ready(function () {
         $(this).autocomplete("search", "");
     });
 });
+
+$('*').on('scroll', function (e) {
+		$(".ui-autocomplete").hide();
+	});
+	$(window).on('scroll', function (e) {
+		$(".ui-autocomplete").hide();
+	});
