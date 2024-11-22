@@ -37,6 +37,18 @@
         <label for="appt-time-${task.id}">時間:</label>
         <input id="appt-time-${task.id}" type="time" name="apptTime" value="${task.formattedTime}" readonly />
     </div>
+    
+          <div class="radiobutton">
+		    <label class="switch_label9">
+		        <span id="outdoorText">屋内</span>
+		        <div class="switch">
+		            <input type="checkbox" name="switch" id="switch" onclick="toggleCategory()" />
+		            <div class="circle"></div>
+		            <div class="base"></div>
+		        </div>
+		        <span id="indoorText" class="title">屋外</span>
+		    </label>
+		</div>
 
        
        <div class="form-group">
