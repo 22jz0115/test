@@ -40,6 +40,7 @@ public class Home extends HttpServlet {
         TasksDAO dao = new TasksDAO();
         List<Tasks> taskList = dao.findByCheckTask(loginUser.getId(), selectedDate);
         request.setAttribute("taskList", taskList);
+        session.setAttribute("lastCheckedDate", today);
         
    
 
