@@ -295,6 +295,26 @@ public class TasksDAO {
 	        return null; // エラー発生時
 	    }
 	}
+	
+	public boolean deleteTask(int accountId, int taskId) {
+	    int ret = -1;
+	    DBManager manager = DBManager.getInstance();
+	    try (Connection cn = manager.getConnection()) {
+	        // SQL文をDELETE文に変更
+	        String sql = "DELETE FROM tasks WHERE id = ?  AND account_id = ?";
+	        PreparedStatement stmt = cn.prepareStatement(sql);
+	        // プレースホルダーに値を設定
+	        
+	        stmt.setInt(1, taskId);
+	        stmt.setInt(2, accountId);
+	        // 実行結果を取得
+	        ret = stmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    // 更新された行が1行以上かどうかを返す
+	    return ret > 0;
+	}
 
 	// タスク更新メソッド
 	public boolean updateTask(int taskId, String taskName, String memo) {
@@ -313,5 +333,7 @@ public class TasksDAO {
 	        return false; // エラー発生時
 	    }
 	}
+	
+	
 
 }
