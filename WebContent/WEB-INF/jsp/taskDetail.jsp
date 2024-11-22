@@ -21,7 +21,7 @@
     </header>
  
 
-     <form action="TaskInput" method="post">
+     <form action="TaskDetail" method="post">
    
   
 
@@ -73,9 +73,12 @@
         <textarea id="story" name="story" rows="5" cols="50" readonly>${task.memo}</textarea>
     </div>
     
+    </form>
+    
     <!-- 削除ボタン -->
-    <form action="Detele" method="post">
+    <form action="Delete" method="post">
         <input type="hidden" name="taskId" value="${task.id}">
+        <input type="hidden" name="selectedDate" value="${selectedDate}">
         <input type="hidden" name="action" value="delete">
         <button type="submit" class="button">削除</button>
     </form>
@@ -86,6 +89,6 @@
         <input type="hidden" name="action" value="edit">
         <button type="submit" class="button">変更を保存</button>
     </form>
-</form>
+
 </body>
 </html>

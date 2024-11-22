@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.time.LocalDate;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -36,16 +35,14 @@ public class Delete extends HttpServlet {
 		 // パラメータから日付を取得
 	        String selectedDate = request.getParameter("selectedDate");
 	        
-	        if (selectedDate == null || selectedDate.isEmpty()) {
-	            LocalDate today = LocalDate.now();
-	            selectedDate = today.toString(); // YYYY-MM-DD形式
-	        }
+	       
+	        System.out.println("Delete SelectedDate : " + selectedDate);
 	        
 	        TasksDAO taskdao = new TasksDAO();
 	        taskdao.deleteTask(loginUser.getId(), taskId);
 	        
 	        request.getAttribute("selectedDate");
-	   		request.getRequestDispatcher("/WEB-INF/jsp/Tasks.jsp").forward(request, response);
+	        response.sendRedirect(request.getContextPath() + "/Task?date=" + selectedDate);
 	   		
 	}
 

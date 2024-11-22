@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.time.LocalDate;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,23 +31,15 @@ public class TaskDetail extends HttpServlet {
 		    int taskId = Integer.parseInt(taskIdStr);
 		    
 		 // パラメータから日付を取得
-	        String selectedDate = request.getParameter("date");
+	       
 	        
-	        if (selectedDate == null || selectedDate.isEmpty()) {
-	            LocalDate today = LocalDate.now();
-	            selectedDate = today.toString(); // YYYY-MM-DD形式
-	        }
-	        
-	        request.setAttribute("selectedDate", selectedDate);
 	        
 	       
-	        System.out.print(selectedDate);
-	        
 	        TasksDAO tasksDAO = new TasksDAO();
 	          // アカウントIDに関連するタスク一覧を取得
 	       Tasks tasks = tasksDAO.findById(taskId, loginUser.getId());
 	       System.out.print("タスク確認"+tasks.getTaskName());
-	  
+	       String selectedDate = tasks.getFormattedDate();
           request.setAttribute("task", tasks);
         
           int categoryId = tasks.getCategoryId();
@@ -60,6 +51,9 @@ public class TaskDetail extends HttpServlet {
           request.setAttribute("categorys", categorys);
           System.out.println(categorys.getCategoryName());
           
+         
+          request.setAttribute("selectedDate", selectedDate);
+          System.out.println("selectedDate: " + selectedDate);
           
 
          
