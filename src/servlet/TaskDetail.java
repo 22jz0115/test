@@ -39,6 +39,8 @@ public class TaskDetail extends HttpServlet {
 	            selectedDate = today.toString(); // YYYY-MM-DD形式
 	        }
 	        
+	        request.setAttribute("selectedDate", selectedDate);
+	        
 	       
 	        System.out.print(selectedDate);
 	        
@@ -57,6 +59,8 @@ public class TaskDetail extends HttpServlet {
           // リクエストスコープに格納
           request.setAttribute("categorys", categorys);
           System.out.println(categorys.getCategoryName());
+          
+          
 
          
 		    // タスク詳細画面へフォワード

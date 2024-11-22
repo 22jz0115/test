@@ -74,7 +74,7 @@
     </div>
     
     <!-- 削除ボタン -->
-    <form action="TaskDetail" method="post">
+    <form action="Detele" method="post">
         <input type="hidden" name="taskId" value="${task.id}">
         <input type="hidden" name="action" value="delete">
         <button type="submit" class="button">削除</button>
