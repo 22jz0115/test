@@ -39,13 +39,12 @@
     </div>
 
     <!-- カテゴリ表示 -->
-    <ul>
-            <li>
-         
-                   <p>カテゴリ名： ${categorys.categoryName}</p>
-            </li>
-    </ul>
-
+       <div class="form-group">
+                   <p class="taskname">カテゴリ名</p>
+                <input type="text" id="categotyname" name="categotyname" value="${categorys.categoryName}" required minlength="1" maxlength="8" />
+            </div>
+    
+    
     <!-- タスク名表示 -->
    
         <li class="task" data-task-id="${task.id}">
