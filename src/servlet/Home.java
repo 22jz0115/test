@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,7 +41,12 @@ public class Home extends HttpServlet {
         TasksDAO dao = new TasksDAO();
         List<Tasks> taskList = dao.findByCheckTask(loginUser.getId(), selectedDate);
         request.setAttribute("taskList", taskList);
-        session.setAttribute("lastCheckedDate", today);
+        
+        
+        ServletContext sc = getServletContext();
+
+     // アプリケーションスコープに保存
+        sc.setAttribute("lastCheckdDate", today);
         
    
 

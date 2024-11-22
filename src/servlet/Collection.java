@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -45,8 +46,9 @@ public class Collection extends HttpServlet {
         // 現在の日付を取得
         LocalDate now = LocalDate.now();
 
+        ServletContext sc = getServletContext();
         // セッションから最後にチェックした日付を取得
-        LocalDate lastCheckedDate = (LocalDate) session.getAttribute("lastCheckedDate");
+        LocalDate lastCheckedDate = (LocalDate) sc.getAttribute("lastCheckedDate");
         System.out.print(lastCheckedDate.getMonthValue());
 
         // 最後にチェックした日付がnullか、月が異なる場合
