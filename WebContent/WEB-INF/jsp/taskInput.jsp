@@ -66,7 +66,6 @@
     
     </select>
 </div>
-
             <!-- タスク名の入力 -->
             <div class="form-group">
                 <label for="taskName" class="taskname">タスク名:</label>
