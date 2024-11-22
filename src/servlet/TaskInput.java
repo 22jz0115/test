@@ -3,6 +3,7 @@ package servlet;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,8 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.CategoriesDAO;
 import dao.TasksDAO;
 import model.Accounts;
+import model.Categories;
 import model.Tasks;
 
 /**
@@ -33,6 +36,11 @@ public class TaskInput extends HttpServlet {
         String selectedDate = request.getParameter("date");
         
         System.out.print(selectedDate);
+        
+        CategoriesDAO categoriesDAO = new CategoriesDAO();
+   		
+   		List<Categories> categoryList = categoriesDAO.get();  // DAOからデータを取得
+   		request.setAttribute("categoryList", categoryList); 
         
    		
    		request.getRequestDispatcher("/WEB-INF/jsp/taskInput.jsp").forward(request, response);
