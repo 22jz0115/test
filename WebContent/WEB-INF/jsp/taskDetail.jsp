@@ -29,7 +29,7 @@
  
        <div class="form-group">
             <label for="dateInput">日付:</label>
-            <input type="date" id="dateInput" name="dateInput" value="${task.formattedDate}" readonly>
+           <input type="date" id="dateInput" name="dateInput" value="${task.formattedDate}">
         </div>     
         
     <!-- 時間入力 -->
