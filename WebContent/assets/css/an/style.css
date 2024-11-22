@@ -963,6 +963,7 @@ input:checked ~ .circle {
     border-radius: 5px;  /* 角を丸く */
     cursor: pointer;  /* ポインターカーソル */
     transition: background-color 0.3s ease, transform 0.3s ease;  /* 背景色と動きに遷移を設定 */
+    margin: 10px;
 }
 
 /* ボタンのホバー時のスタイル */

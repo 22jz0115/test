@@ -41,9 +41,8 @@
     <!-- カテゴリ表示 -->
     <ul>
             <li>
-                <a href="yourServletPath?categoryId=${category.id}">
-                    ${category.categoryName}
-                </a>
+         
+                   <p>カテゴリ名： ${categorys.categoryName}</p>
             </li>
     </ul>
 
@@ -51,13 +50,13 @@
    
         <li class="task" data-task-id="${task.id}">
        
-                <div>
-                    <div class="timersolid">
-                        <span></span>
-                    </div>
-                    <p class="taskname">タスク名：${task.taskName}</p>
-                </div>
+              
                 
+                     <!-- タスク名の入力 -->
+            <div class="form-group">
+                   <p class="taskname">タスク名</p>
+                <input type="text" id="taskName" name="taskName" value="${task.taskName}" required minlength="1" maxlength="8" />
+            </div>
                 
      
             <div class="buttons">

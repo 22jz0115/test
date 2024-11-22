@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.CategoriesDAO;
 import dao.TasksDAO;
 import model.Accounts;
+import model.Categories;
 import model.Tasks;
 
 /**
@@ -37,7 +39,7 @@ public class TaskDetail extends HttpServlet {
 	            selectedDate = today.toString(); // YYYY-MM-DD形式
 	        }
 	        
-	        
+	       
 	        System.out.print(selectedDate);
 	        
 	        TasksDAO tasksDAO = new TasksDAO();
@@ -45,16 +47,18 @@ public class TaskDetail extends HttpServlet {
 	       Tasks tasks = tasksDAO.findById(taskId, loginUser.getId());
 	       System.out.print("タスク確認"+tasks.getTaskName());
 	  
-	        
           request.setAttribute("task", tasks);
-	    
-	        
+        
+          int categoryId = tasks.getCategoryId();
+       // DAOを使ってカテゴリーを取得
+          CategoriesDAO CategoriesDAO = new CategoriesDAO();
+          Categories categorys = CategoriesDAO.find(categoryId);
+       
+          // リクエストスコープに格納
+          request.setAttribute("categorys", categorys);
+          System.out.println(categorys.getCategoryName());
 
-	       // CategoriesDAO categoriesDAO = new CategoriesDAO();
-	       // Categories categoryList = categoriesDAO.findByName(tasks.getId());
-	       
-	       //request.setAttribute("categoryList", categoryList);
-	      
+         
 		    // タスク詳細画面へフォワード
 		    request.getRequestDispatcher("/WEB-INF/jsp/taskDetail.jsp").forward(request, response);
 		}

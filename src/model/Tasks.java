@@ -91,7 +91,7 @@ public class Tasks {
     }
     
     public String getFormattedDate() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMdd"); // 時間のフォーマット
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // 時間のフォーマット
         return formattedTime = taskDate.format(formatter);
     }
 
