@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,9 +15,11 @@ import javax.servlet.http.HttpSession;
 
 import dao.CollectionsDAO;
 import dao.MyBoxesDAO;
+import dao.TasksDAO;
 import model.Accounts;
 import model.Collections;
 import model.MyBoxs;
+import model.Tasks;
 
 /**
  * Servlet implementation class Collection
@@ -40,18 +43,58 @@ public class Collection extends HttpServlet {
 
         MyBoxesDAO boxDao = new MyBoxesDAO();
 
-        // 現在の年月を取得
+        // 現在の日付を取得
         LocalDate now = LocalDate.now();
-        int currentMonth = now.getMonthValue();
-        Integer lastCheckedMonth = (Integer) session.getAttribute("lastCheckedMonth");
 
-        // 月が変わったかを確認
-        if (lastCheckedMonth == null || lastCheckedMonth != currentMonth) {
-            // 月が変わった場合、createを呼び出す
-            boxDao.create(loginUser.getId(), currentMonth);
+        ServletContext sc = getServletContext();
+        // セッションから最後にチェックした日付を取得
+        LocalDate lastCheckedDate = (LocalDate) sc.getAttribute("lastCheckedDate");
+        System.out.print(lastCheckedDate.getMonthValue());
 
-            // セッションに現在の月を保存
-            session.setAttribute("lastCheckedMonth", currentMonth);
+        // 最後にチェックした日付がnullか、月が異なる場合
+        if (lastCheckedDate == null || now.getMonthValue() != lastCheckedDate.getMonthValue()) {
+            int outSum = 0;
+            int inSum = 0;
+            int outCheck = 0;
+            int inCheck = 0;
+
+            int comperTask = 10;
+            int comperParsent = 90;
+
+            // タスクリストの取得
+            TasksDAO dao = new TasksDAO();
+            List<Tasks> taskList = dao.findByCurrentMonth(loginUser.getId());
+
+            for (Tasks task : taskList) {
+                if (task.getOutin() == 1) {
+                    outSum++;
+                    if (task.getCheck() == 1) {
+                        outCheck++;
+                    }
+                } else {
+                    inSum++;
+                    if (task.getCheck() == 1) {
+                        inCheck++;
+                    }
+                }
+            }
+
+            // 分母が0でないか確認してから割り算を行う
+            int percentageFromDatabase1 = 0;
+            if (inCheck + outCheck != 0) {
+                // 割り算をする際、整数同士の割り算を避けるためにキャスト
+                percentageFromDatabase1 = (int) (((double)(inCheck + outCheck) / taskList.size()) * 100);
+            }
+
+            if (taskList.size() > comperTask) {
+                if (percentageFromDatabase1 < comperParsent) {
+                    // 月が変わった場合、createを呼び出す
+                    boxDao.create(loginUser.getId(), now.getMonthValue());
+
+                    // セッションに現在の日付を保存
+                    session.setAttribute("lastCheckedDate", now);
+                }
+            }
         }
 
         // MyBoxsデータを取得
