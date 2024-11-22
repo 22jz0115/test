@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -46,6 +47,10 @@ public class TaskDetail extends HttpServlet {
        // DAOを使ってカテゴリーを取得
           CategoriesDAO CategoriesDAO = new CategoriesDAO();
           Categories categorys = CategoriesDAO.find(categoryId);
+          
+     		
+     		List<Categories> categoryList = CategoriesDAO.get();  // DAOからデータを取得
+     		request.setAttribute("categoryList", categoryList); 
        
           // リクエストスコープに格納
           request.setAttribute("categorys", categorys);

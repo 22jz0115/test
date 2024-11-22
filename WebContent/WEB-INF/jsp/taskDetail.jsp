@@ -38,11 +38,20 @@
         <input id="appt-time-${task.id}" type="time" name="apptTime" value="${task.formattedTime}" readonly />
     </div>
 
-    <!-- カテゴリ表示 -->
+       
        <div class="form-group">
-                   <p class="taskname">カテゴリ名</p>
-                <input type="text" id="categotyname" name="categotyname" value="${categorys.categoryName}" required minlength="1" maxlength="8" />
-            </div>
+		    <p class="taskname">カテゴリ名</p>
+		    <select id="categorySelect" name="categorySelect" required>
+		        <c:forEach var="category" items="${categoryList}">
+		            <option 
+		                value="${category.id}" 
+		                <c:if test="${category.id == task.categoryId}">selected</c:if>
+		            >
+		                ${category.categoryName}
+		            </option>
+		        </c:forEach>
+		    </select>
+		</div>
     
     
     <!-- タスク名表示 -->
