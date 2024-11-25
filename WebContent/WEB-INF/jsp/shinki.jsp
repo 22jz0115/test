@@ -93,6 +93,7 @@
             </div>
         </form>
         
+        
         <div class="migi">
             <!-- ログインページへのリンク -->
             <p class="sinki">
