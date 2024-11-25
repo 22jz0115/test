@@ -19,23 +19,13 @@
     
    <h2 class="taskcategory">${categoryName.categoryName}</h2>
 <div>
-   <ul class="taskhistory">
-    <c:forEach var="task" items="${taskList}">
-        <li>
-            <p>${task.taskName}</p>
-        </li>
-    </c:forEach>
+<ul class="taskhistory">
+  <c:forEach var="task" items="${taskList}">
+    <li class="history">
+      ${task.taskName}
+    </li>
+  </c:forEach>
 </ul>
 </div>
-    
-    <div class="delete">
-        <form action="<%= request.getContextPath() %>/deletePresetServlet" method="post"> <!-- JSPサーブレットへの削除処理のURLを指定 -->
-            <button type="submit" class="delete-button">
-                <img src="assets/img/mingcute_delete-2-line.png" alt="削除アイコン"><br>
-                削除
-            </button>
-        </form>
-    </div>
-    
 </body>
 </html>
