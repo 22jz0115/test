@@ -40,7 +40,5 @@
     </c:forEach>
 
   
-	
-    <p  class="lifehackAdd"><a href="AddedLife">ライフハック追加</a></p>
 </body>
 </html>

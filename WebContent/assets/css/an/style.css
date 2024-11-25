@@ -134,6 +134,22 @@ h2{
 
 }
 
+/* 新規登録リンクのスタイル */
+.sinki {
+  text-align: center; /* テキストを中央揃え（オプション） */
+}
+
+.sinki a {
+  text-decoration: none; /* デフォルトの下線を消す */
+  color: #722d2d; /* テキストの色（白） */
+
+}
+
+/* ホバー時のエフェクト */
+.sinki a:hover {
+  background-color: #0056b3; /* 背景色を暗めの青に変更 */
+  color: #FFD700; /* テキスト色をゴールドに変更 */
+}
 
 
 
