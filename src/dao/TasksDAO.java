@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.PresetTasks;
 import model.Tasks;
 
 
@@ -260,6 +261,34 @@ public class TasksDAO {
 		// TODO 自動生成されたメソッド・スタブ
 		return null;
 	}
+	
+	public boolean insertPresetTasks(List<PresetTasks> presetTasks, int accountId, String date) {
+        String sql = "INSERT INTO tasks (category_id, account_id, task_name, memo, outin, task_datetime) VALUES (?, ?, ?, ?, ?, ?)";
+        boolean result = false;
+
+        DBManager manager = DBManager.getInstance();
+        try (Connection conn = manager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            // バッチ処理の開始
+            for (PresetTasks task : presetTasks) {
+                stmt.setInt(1, task.getCategoryId());
+                stmt.setInt(2, accountId);
+                stmt.setString(3, task.getName());
+
+                // バッチに追加
+                stmt.addBatch();
+            }
+
+            // バッチ処理を実行
+            int[] insertCounts = stmt.executeBatch();
+            result = insertCounts.length == presetTasks.size();  // すべての挿入が成功した場合
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    } 
 
 
 	public Tasks findById(int task_id, int account_id) {
