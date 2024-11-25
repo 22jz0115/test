@@ -36,7 +36,6 @@ $(document).ready(function() {
             dataType: 'json',  // サーバーからJSON形式でデータを受信
             success: function(response) {
                 // 成功時にtaskListを更新
-                console.log("サーバーからのレスポンス:", response);
                 updateTaskList(response);  // サーバーから受け取ったプリセットデータを引数として渡す
             },
             error: function(status, error) {
@@ -73,5 +72,4 @@ function updateTaskList(presetData) {
     } else {
         taskList.append('<li>選択されたプリセットにはタスクがありません。</li>');
     }
-    console.log("Updated Task List HTML:", taskList.html());
 }
