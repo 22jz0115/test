@@ -1,6 +1,8 @@
 package servlet;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -69,7 +71,52 @@ public class TaskDetail extends HttpServlet {
 
 	    // POSTメソッド：削除または更新処理
 	    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    	doGet(request, response);
+	    	request.setCharacterEncoding("UTF-8");
+	        // フォームデータを取得
+	        String date = request.getParameter("dateInput");
+	        
+	        String time = request.getParameter("apptTime");
+	        
+	        String category = request.getParameter("categorySelect"); //int型にする
+	        String taskName = request.getParameter("taskName");
+	        String memo = request.getParameter("story");
+	        String taskid = request.getParameter("taskId");
+	        System.out.println(date);
+	        System.out.println(time);
+	        System.out.println(category);
+	        System.out.println(taskName);
+	        System.out.println(memo);
+	        System.out.println(taskid);
+	        
+	        
+	        int taskId = Integer.parseInt(taskid);
+	        int categoryId = Integer.parseInt(category);
+	        
+	        String datetime = date + " " + time;
+	        LocalDateTime taskDateTime = LocalDateTime.parse(datetime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+	        
+	    	HttpSession session = request.getSession();
+	        Accounts loginUser = (Accounts) session.getAttribute("loginUser");
+	        int accountId = loginUser.getId();
+	        
+	        int outin = request.getParameter("switch") != null ? 1 : 0;
+	        
+
+	        // DAOを使ってデータベースにタスクを挿入
+	        TasksDAO dao = new TasksDAO();
+	        boolean clear =  dao.updateTask(taskId, categoryId, accountId, taskName, memo, outin, taskDateTime);
+
+	        if (clear != false) {
+	            // 挿入が成功した場合、タスク一覧画面にリダイレクト
+	            response.sendRedirect("Task?date=" + date);  // 日付をクエリパラメータとして渡してリダイレクト
+
+	            System.out.println("okokokok");
+
+	        } else {
+	            // 挿入が失敗した場合、エラーメッセージを表示
+	        	System.out.println("ngngngng");
+	        	response.sendRedirect("Task?date=" + date);
+	        }
 	
 	        
 	    }
