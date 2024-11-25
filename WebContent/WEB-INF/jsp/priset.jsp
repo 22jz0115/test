@@ -35,7 +35,7 @@
         <input type="submit" value="プリセットタスク追加">
     </form>
 
-    <div class="presetsForm">
+    <form action="Preset" method="post" class="presetsForm">
     	<div class="setName">
             <h2>プリセット名</h2>
             <select id="presetName" name="preset_name">
@@ -57,7 +57,8 @@
                 <!-- タスクリストはJavaScriptで動的に表示されます -->
             </ul>
         </div>
-    </div>
-    <button class="presetTaskInsert">タスク追加</button>
+
+        <input type="submit" value="タスク追加">
+    </form>
 </body>
 </html>
