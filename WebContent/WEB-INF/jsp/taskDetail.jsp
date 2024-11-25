@@ -60,6 +60,7 @@
                 </c:forEach>
             </select>
         </div>
+        
 
         <!-- タスク名表示 -->
         <li class="task" data-task-id="${task.id}">
