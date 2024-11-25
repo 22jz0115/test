@@ -15,6 +15,8 @@
 <title>タスク詳細画面</title>
 </head>
 <body>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/taskDetail/script.js"></script>
  <header>
         <a href="Task?date=${task.formattedDate}"><img class="imgVector" src="assets/img/戻るボタン.png" alt=""></a>
         <h1>タスク詳細</h1>
@@ -39,16 +41,18 @@
     </div>
     
           <div class="radiobutton">
-		    <label class="switch_label9">
-		        <span id="outdoorText">屋内</span>
-		        <div class="switch">
-		            <input type="checkbox" name="switch" id="switch" onclick="toggleCategory()" />
-		            <div class="circle"></div>
-		            <div class="base"></div>
-		        </div>
-		        <span id="indoorText" class="title">屋外</span>
-		    </label>
-		</div>
+			    <label class="switch_label9">
+			        <span id="outdoorText">屋内</span>
+			        <div class="switch">
+			            <input type="checkbox" class="check" id="checkTask" data-check-task="${task.outin}">
+			            <div class="circle"></div>
+			            <div class="base"></div>
+			        </div>
+			        <span id="indoorText" class="title">屋外</span>
+			    </label>
+			</div>
+	
+
 
        
        <div class="form-group">

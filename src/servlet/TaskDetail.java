@@ -39,7 +39,7 @@ public class TaskDetail extends HttpServlet {
 	        TasksDAO tasksDAO = new TasksDAO();
 	          // アカウントIDに関連するタスク一覧を取得
 	       Tasks tasks = tasksDAO.findById(taskId, loginUser.getId());
-	       System.out.print("タスク確認"+tasks.getTaskName());
+	       System.out.print("タスク確認"+ tasks.getTaskName());
 	       String selectedDate = tasks.getFormattedDate();
           request.setAttribute("task", tasks);
         

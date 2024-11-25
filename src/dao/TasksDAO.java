@@ -262,39 +262,27 @@ public class TasksDAO {
 	}
 
 
-	public Tasks findById(int taskId, int userId) {
-	    DBManager manager = DBManager.getInstance();
-	    try (Connection cn = manager.getConnection()) {
-	        String sql = "SELECT * FROM tasks WHERE id = ? AND account_id = ?";
-	        PreparedStatement stmt = cn.prepareStatement(sql);
-	        stmt.setInt(1, taskId);
-	        stmt.setInt(2, userId);
-
-	        ResultSet rs = stmt.executeQuery();
-	        if (rs.next()) {
-	            Tasks task = new Tasks(userId, userId, userId, sql, null, sql, null, null, userId, userId);
-	            task.setId(rs.getInt("id"));
-	            task.setTaskName(rs.getString("task_name"));
-	            task.setMemo(rs.getString("memo"));
-	            task.setCategoryId(rs.getInt("category_id"));
-	          //  task.setTaskDate(rs.getInt("task_date"));
-	          //  Timestamp taskTimestamp = Timestamp.valueOf(rs.getTimestamp("task_date")); // Timestampに変換
-	           // LocalDateTime taskDate = LocalDateTime.parse(taskTimestamp); // 日付をLocalDateTimeに変換
-	           LocalDateTime taskDatetime =
-	                   rs.getTimestamp("task_datetime").toLocalDateTime(); 
-
-	         //   task.setTaskDate(rs.getTimestamp("task_date"));	  
-	          task.setTaskDate(taskDatetime);
-
-	             return task;
-	        } else {
-	            return null; // タスクが見つからない場合
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	        return null; // エラー発生時
-	    }
-	}
+	public Tasks findById(int task_id, int account_id) {
+    	Tasks tasks = null;
+		DBManager manager = DBManager.getInstance();
+		try(Connection cn = manager.getConnection()) {
+			// プレースホルダで変数部分を定義
+			String sql = "SELECT * FROM tasks WHERE id = ? AND account_id = ?";
+			PreparedStatement stmt = cn.prepareStatement(sql);
+			stmt.setInt(1, task_id);
+			stmt.setInt(2, account_id);
+			ResultSet rs = stmt.executeQuery();
+			
+			// データをリストに格納
+			if (rs.next()) {
+				tasks = rs2model(rs);
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return tasks;
+    }
 	
 	public boolean deleteTask(int accountId, int taskId) {
 	    int ret = -1;
