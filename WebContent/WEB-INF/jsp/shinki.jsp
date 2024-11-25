@@ -20,20 +20,20 @@
             <h2>sign in to your account</h2>
             <div class="form-1">
                 <div class="login">
-                    <p>ニックネーム
+                    <p>ニックネーム　　:
                         <input type="text" id="nickname" placeholder="ニックネーム" name="nickname" required>
                         <div class="text_underline"></div><br>
                     </p>
-                    <p>メールアドレス
+                    <p>メールアドレス　:
                         <input type="email" id="email" placeholder="メールアドレス" name="email" required>
                         <div class="text_underline"></div><br>
                     </p>
-                    <p>パスワード
+                    <p>パスワード　　　:
                         <input type="password" id="password" placeholder="パスワード" name="password" minlength="4" maxlength="20" required>
                         <div class="text_underline"></div>
                     </p>
                     <br>
-                    <p>都道府県：
+                    <p>都道府県　　　　：
                         <select name="prefecture" required>
                             <option value="016000">北海道</option>
                             <option value="020000">青森県</option>

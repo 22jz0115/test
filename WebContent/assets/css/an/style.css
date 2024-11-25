@@ -124,8 +124,11 @@ h2{
     font-size: 22px; /* フォントサイズ */
   }
   .form-1 {
-      padding-top: 50px; /* フォームの上部パディングを縮小 */
-      padding-bottom: 60px; /* フォームの下部パディングを縮小 */
+     display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    flex-direction: column;
   }
 
   #text1 {
@@ -141,7 +144,7 @@ h2{
 
 .sinki a {
   text-decoration: none; /* デフォルトの下線を消す */
-  color: #722d2d; /* テキストの色（白） */
+  color: #722d2d;/* テキストの色（白） */
 
 }
 
@@ -150,6 +153,7 @@ h2{
   background-color: #0056b3; /* 背景色を暗めの青に変更 */
   color: #FFD700; /* テキスト色をゴールドに変更 */
 }
+
 
 
 
@@ -194,6 +198,7 @@ h2{
     justify-content: center;
     align-items: center;
     margin-top: 20px;
+    flex-direction: column;
 }
 
 /* テキスト入力のスタイル */
@@ -217,10 +222,10 @@ p {
 }
 
 .button-0 {
-    width: 120px; /* ボタンの横幅 */
+    width: 190px; /* ボタンの横幅 */
     margin-top: 40px;
     height: 40px; /* ボタンの高さ */
-    border-radius: 33px; /* ボタンを円形にする */
+    border-radius: 9px; /* ボタンを円形にする */
     background-color: #ffffff; /* 背景色 */
     border: 1.5px solid #893535; /* 枠線の太さ、スタイル、色を指定 */
     color: #B15E5E; /* テキストの色 */
@@ -607,7 +612,6 @@ input[type="radio"] {
 }
 
 select, input[type="text"] {
-  width: 100%;
   padding: 8px;
   font-size: 14px;
   border: 1px solid #ccc;
