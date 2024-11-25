@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.PresetTasksDAO;
 import dao.PresetsDAO;
 import model.Accounts;
+import model.PresetTasks;
 import model.Presets;
 
 /**
@@ -43,7 +45,13 @@ public class Preset extends HttpServlet {
         Accounts loginUser = (Accounts) session.getAttribute("loginUser");
         int accountId = loginUser.getId();
         
-        
+        String presetName = request.getParameter("preset_name");
+		int presetId = Integer.parseInt(presetName);
+		
+		String date = request.getParameter("dateInput");
+		
+		PresetTasksDAO dao = new PresetTasksDAO();
+        List<PresetTasks> presetData = dao.findPresetTask(presetId);
 	}
 
 }
