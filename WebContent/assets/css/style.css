@@ -708,7 +708,7 @@ span{
     margin-top: 10px;
 }
 
-.bts a{
+.bts a {
     width: 150px;
     height: 50px;
     text-align: center;
@@ -717,8 +717,15 @@ span{
     color: #000;
     margin: 5px 5px 13px 5px;
     font-size: 16px;
-    font-weight: bold; 
-    padding-bottom: 3px;
+    font-weight: bold;
+    display: flex; /* 子要素を中央配置するためにflexboxを有効化 */
+    align-items: center; /* 縦方向の中央揃え */
+    justify-content: center; /* 横方向の中央揃え */
+    text-decoration: none; /* 必要に応じて下線を削除 */
+}
+
+.bts a p {
+    margin: 0; /* デフォルトのマージンをリセット */
 }
 
 

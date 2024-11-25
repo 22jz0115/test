@@ -48,8 +48,15 @@ public class Collection extends HttpServlet {
 
         ServletContext sc = getServletContext();
         // セッションから最後にチェックした日付を取得
+     // セッションから最後にチェックした日付を取得
         LocalDate lastCheckedDate = (LocalDate) sc.getAttribute("lastCheckedDate");
-        System.out.print(lastCheckedDate.getMonthValue());
+
+        // lastCheckedDateがnullの場合の処理
+        if (lastCheckedDate == null) {
+            System.out.println("lastCheckedDate is null.");
+        } else {
+            System.out.print(lastCheckedDate.getMonthValue());
+        }
 
         // 最後にチェックした日付がnullか、月が異なる場合
         if (lastCheckedDate == null || now.getMonthValue() != lastCheckedDate.getMonthValue()) {
@@ -91,11 +98,12 @@ public class Collection extends HttpServlet {
                     // 月が変わった場合、createを呼び出す
                     boxDao.create(loginUser.getId(), now.getMonthValue());
 
-                    // セッションに現在の日付を保存
-                    session.setAttribute("lastCheckedDate", now);
+                    // 現在の日付を`ServletContext`に保存
+                    sc.setAttribute("lastCheckedDate", now);
                 }
             }
         }
+
 
         // MyBoxsデータを取得
         List<MyBoxs> box = boxDao.findByAccountId(loginUser.getId());
