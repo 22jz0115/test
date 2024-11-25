@@ -46,11 +46,12 @@ body {
 
 
 /* ログインボタン */
-.migi{
+.migi0{
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  margin-top: 70px;
 }
 
 /* h1のスタイル */
@@ -79,7 +80,7 @@ h2{
 .button00 {
   width: 250px; /* ボタンの横幅 */
   height: 40px; /* ボタンの高さ */
-  border-radius: 33px; /* ボタンを円形にする */
+  border-radius: 13px; /* ボタンを円形にする */
   background-color: #ffeeee; /* 背景色 */
   border: 1.5px solid #893535; /* 枠線の太さ、スタイル、色を指定 */
   color: #B15E5E; /* テキストの色 */
@@ -91,6 +92,7 @@ h2{
     position: relative; /* 親要素の相対位置 */
     border-top: 1px solid #c2c2c2; /* 下線の色とスタイル */
 }
+
 
 /* その他の推奨設定 */
 /* ボックスモデルを整え、全要素にデフォルトで適用 */
