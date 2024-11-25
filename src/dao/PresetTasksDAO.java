@@ -34,6 +34,28 @@ public class PresetTasksDAO {
 		return list;
     }
 	
+	public List<PresetTasks> findPresetTask(int id) {
+		List<PresetTasks> list = new ArrayList<>();
+		DBManager manager = DBManager.getInstance();
+		try(Connection cn = manager.getConnection()) {
+			// プレースホルダで変数部分を定義
+			String sql = "SELECT * FROM preset_tasks WHERE preset_id = ?";
+			PreparedStatement stmt = cn.prepareStatement(sql);
+			stmt.setInt(1, id);
+			ResultSet rs = stmt.executeQuery();
+			
+			// データをリストに格納
+			while (rs.next()) {
+			    PresetTasks presetTasks = rs2model(rs);
+			    list.add(presetTasks);
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+    }
+	
 	public PresetTasks find(int id) {
     	PresetTasks presetTasks = null;
 		DBManager manager = DBManager.getInstance();
@@ -68,27 +90,6 @@ public class PresetTasksDAO {
 			String sql = "SELECT * FROM preset_tasks WHERE name = ?";
 			PreparedStatement stmt = cn.prepareStatement(sql);
 			stmt.setString(1, name);
-			ResultSet rs = stmt.executeQuery();
-			
-			// データをリストに格納
-			if (rs.next()) {
-				presetTasks = rs2model(rs);
-			}
-		} catch(SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return presetTasks;
-	}
-	
-	public PresetTasks findByPresetTask(int presetId) {
-		PresetTasks presetTasks = null;
-		DBManager manager = DBManager.getInstance();
-		try(Connection cn = manager.getConnection()) {
-			// プレースホルダで変数部分を定義
-			String sql = "SELECT * FROM preset_tasks WHERE preset_id = ?";
-			PreparedStatement stmt = cn.prepareStatement(sql);
-			stmt.setInt(1, presetId);
 			ResultSet rs = stmt.executeQuery();
 			
 			// データをリストに格納
