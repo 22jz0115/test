@@ -12,21 +12,21 @@
     <link rel="manifest" href="manifest.json">
 </head>
 <body>
-    <header>
-        <a href="Category"><img src="assets/img/Vector.png" alt=""></a>
-        <h1>タスク履歴</h1>
-    </header>
-    
-   <h2 class="taskcategory">${categoryName.categoryName}</h2>
-<div>
-<ul class="taskhistory">
-  <c:forEach var="task" items="${taskList}">
-    <li class="history">
-      ${task.taskName}
-    </li>
-  </c:forEach>
-  
-</ul>
-</div>
+	<header>
+	    <a href="Category"><img src="assets/img/Vector.png" alt=""></a>
+	    <h1>タスク履歴</h1>
+	</header>
+	 
+	<h2 class="taskcategory">${categoryName.categoryName}</h2>
+	<div>
+		<ul class="taskhistory">
+		  <c:forEach var="task" items="${taskList}">
+		    <li class="history">
+		      ${task.taskName}
+		    </li>
+		  </c:forEach>
+		  
+		</ul>
+	</div>
 </body>
 </html>

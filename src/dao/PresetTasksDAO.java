@@ -34,14 +34,14 @@ public class PresetTasksDAO {
 		return list;
     }
 	
-	public List<PresetTasks> findPresetTask(int id) {
+	public List<PresetTasks> findPresetTask(int presetId) {
 		List<PresetTasks> list = new ArrayList<>();
 		DBManager manager = DBManager.getInstance();
 		try(Connection cn = manager.getConnection()) {
 			// プレースホルダで変数部分を定義
 			String sql = "SELECT * FROM preset_tasks WHERE preset_id = ?";
 			PreparedStatement stmt = cn.prepareStatement(sql);
-			stmt.setInt(1, id);
+			stmt.setInt(1, presetId);
 			ResultSet rs = stmt.executeQuery();
 			
 			// データをリストに格納

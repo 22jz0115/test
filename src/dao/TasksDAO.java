@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -272,9 +273,15 @@ public class TasksDAO {
 
             // バッチ処理の開始
             for (PresetTasks task : presetTasks) {
+            	String datetime = date + " " + task.getTaskTime();
+                LocalDateTime taskDateTime = LocalDateTime.parse(datetime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+            	
                 stmt.setInt(1, task.getCategoryId());
                 stmt.setInt(2, accountId);
                 stmt.setString(3, task.getName());
+                stmt.setString(4, task.getMemo());
+                stmt.setInt(5, task.getOutin());
+                stmt.setTimestamp(6, Timestamp.valueOf(taskDateTime));
 
                 // バッチに追加
                 stmt.addBatch();

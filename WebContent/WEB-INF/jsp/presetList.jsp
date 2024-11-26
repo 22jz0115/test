@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -14,31 +15,21 @@
         <a href="Home" class="back1"><img src="assets/img/戻るボタン.png" alt="戻るボタン"></a>
         <h1>プリセット一覧画面</h1>
     </header>
-
-    <div class="box-1">
-        <label for="switch" class="switch_label">  
-            <p>屋外</p>
-            <div class="switch">
-                <input type="checkbox" id="switch" />
-                <div class="circle"></div>
-                <div class="base"></div>
-            </div>
-            <span class="title">屋内</span>
-        </label>
-    </div>
     
     <div class="categories">
-        <p>月曜日</p>
-        <p>火曜日</p>
-    </div>
-
-    <div class="delete">
-        <form action="<%= request.getContextPath() %>/deletePresetServlet" method="post"> <!-- JSPサーブレットへの削除処理のURLを指定 -->
-            <button type="submit" class="delete-button">
-                <img src="assets/img/mingcute_delete-2-line.png" alt="削除アイコン"><br>
-                削除
-            </button>
-        </form>
-    </div>
+	    <div id="indoorContent" class="content active">
+	        <ul>
+	           <c:forEach var="preset" items="${presetList}">
+	               <li>
+	                   <form action="PresetDetail" method="get">
+	                       <button type="submit" name="presetId" value="${preset.id}" class="category-button">
+	                           ${preset.presetName}
+	                       </button>
+	                   </form>
+	               </li>
+	           </c:forEach>
+	        </ul>
+	    </div>  
+	</div>
 </body>
 </html>

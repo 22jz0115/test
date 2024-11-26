@@ -17,21 +17,20 @@
         <a href="Home" class="back1"><img src="assets/img/戻るボタン.png" alt="戻るボタン"></a>
         <h1>カテゴリー</h1>
     </header>
-<div class="categories">
-    <div id="indoorContent" class="content active">
-        <ul>
-            <c:forEach var="category" items="${categoryList}">
-                <li>
-                    <form action="TaskHistory" method="get">
-                        <button type="submit" name="categoryId" value="${category.id}" class="category-button">
-                            ${category.categoryName}
-                        </button>
-                    </form>
-                </li>
-            </c:forEach>
-        </ul>
-    </div>  
-         
-</div>
+	<div class="categories">
+	    <div id="indoorContent" class="content active">
+	        <ul>
+	            <c:forEach var="category" items="${categoryList}">
+	               <li>
+	                   <form action="TaskHistory" method="get">
+	                       <button type="submit" name="categoryId" value="${category.id}" class="category-button">
+	                           ${category.categoryName}
+	                       </button>
+	                   </form>
+	               </li>
+	           </c:forEach>
+	        </ul>
+	    </div>  
+	</div>
 </body>
 </html>

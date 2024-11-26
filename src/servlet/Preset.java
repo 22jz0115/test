@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import dao.PresetTasksDAO;
 import dao.PresetsDAO;
+import dao.TasksDAO;
 import model.Accounts;
 import model.PresetTasks;
 import model.Presets;
@@ -52,6 +53,17 @@ public class Preset extends HttpServlet {
 		
 		PresetTasksDAO dao = new PresetTasksDAO();
         List<PresetTasks> presetData = dao.findPresetTask(presetId);
+        
+        TasksDAO taskDao = new TasksDAO();
+        boolean result = taskDao.insertPresetTasks(presetData, accountId, date);
+        
+        if (result) {
+        	request.setAttribute("msg", "タスクが挿入されました");
+        	response.sendRedirect("/test/Task?date=" + date);
+        } else {
+        	request.setAttribute("msg", "タスクの挿入に失敗しました");
+        	response.sendRedirect("/test/Preset?date=" + date);
+        }
 	}
 
 }

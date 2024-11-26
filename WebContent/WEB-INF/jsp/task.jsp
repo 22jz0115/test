@@ -40,26 +40,26 @@
     
     <div class="tasks">
         <ul>
-        <c:forEach var="task" items="${taskList}">
-            <li class="task" data-task-id="${task.id}">
-                <a href="TaskDetail?taskId=${task.id}">
+	        <c:forEach var="task" items="${taskList}">
+	            <li class="task" data-task-id="${task.id}">
                     <div>
                         <div class="timersolid">
                             <p class="tasktime">${task.formattedTime}</p>
                             <span></span>
                         </div>
-                        <p class="taskname">${task.taskName}</p>
+                		<a href="TaskDetail?taskId=${task.id}">
+                        	<p class="taskname">${task.taskName}</p>
+                		</a>
                     </div>
-                </a>
-                <div class="buttons">
-                    <label class="toggle-button-4">
-                        <input type="checkbox" class="check" 
-                            <c:if test="${task.check == 1}">checked</c:if>>
-                    </label>
-                </div>
-            </li>
-        </c:forEach>
-    </ul>
+	                <div class="buttons">
+	                    <label class="toggle-button-4">
+	                        <input type="checkbox" class="check" 
+	                            <c:if test="${task.check == 1}">checked</c:if>>
+	                    </label>
+	                </div>
+	            </li>
+	        </c:forEach>
+	    </ul>
     </div>
     <h2>メモ</h2>
     <div class="area">
