@@ -50,7 +50,7 @@ p{
 
 #g-nav {
 	/*position:fixed;にし、z-indexの数値を大きくして前面へ*/
-	position: fixed;
+	position: absolute;
 	z-index: 999;
 	/*ナビのスタート位置と形状*/
 	top: 0;
@@ -110,7 +110,7 @@ p{
 
 /*========= ボタンのためのCSS ===============*/
 .openbtn1 {
-	position: fixed;
+	position: absolute;
 	z-index: 9999;
 	/*ボタンを最前面に*/
 	top: 10px;

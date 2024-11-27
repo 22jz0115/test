@@ -884,9 +884,12 @@ header h1 {
 }
 
 input[type='checkbox'] {
+    /* チェックボックスを完全に隠す */
     position: absolute;
+    opacity: 0; /* 透明にして見えなくする */
     width: 0;
     height: 0;
+    pointer-events: none; /* タップイベントを無効化 */
 }
 
 .base {
