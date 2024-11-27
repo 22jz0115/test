@@ -818,7 +818,7 @@ button:hover {
 /* まるの中の */
 
 .dotted-circle p {
-  margin: 35px 0px 0px 30px; /* 不要な余白を除去 */
+  margin: 35px 0px 0px 33px; /* 不要な余白を除去 */
   font-size: 16px; /* テキストサイズを調整 */
   color:rgb(246, 170, 7);
 }
