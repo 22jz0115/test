@@ -61,10 +61,6 @@
 	        </c:forEach>
 	    </ul>
     </div>
-    <h2>メモ</h2>
-    <div class="area">
-        <textarea name="" id="" cols="50" rows="10"></textarea>
-    </div>
 
     <div class="bts">
        <a  href="TaskInput"><p>タスク追加</p></a>
