@@ -8,19 +8,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class addedlist
- */
 @WebServlet("/AddedLife")
 public class AddedLife extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-	 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		// 画面遷移だけ
 		request.getRequestDispatcher("/WEB-INF/jsp/addedLife.jsp").forward(request, response);
 	}
 
