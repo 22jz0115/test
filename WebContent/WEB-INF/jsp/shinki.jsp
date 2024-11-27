@@ -89,12 +89,13 @@
             </div>
             <div class="sinki_button">
                 <!-- 登録ボタン -->
-                <button  id="touroku" type="submit" class="button-0">はじめる</button>
+                 <button id="touroku" type="submit" class="button01">はじめる</button>
+                    <p class="sinki">
             </div>
         </form>
         
         
-        <div class="migi">
+        <div class="migi01">
             <!-- ログインページへのリンク -->
             <p class="sinki">
                 <a href="Login" class="sinki"><span id="sinki">ログイン画面へ</span></a>

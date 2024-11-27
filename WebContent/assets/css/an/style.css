@@ -156,15 +156,7 @@ h2{
       padding-left: 20px; /* h2の左側のパディングを調整 */
   }
 
-  .button00 {
-    width: 175px; /* ボタンの横幅 */
-    height: 50px; /* ボタンの高さ */
-    border-radius: 33px; /* ボタンを円形にする */
-    background-color: #ffeeee; /* 背景色 */
-    border: 1.5px solid #893535; /* 枠線の太さ、スタイル、色を指定 */
-    color: #B15E5E; /* テキストの色 */
-    font-size: 22px; /* フォントサイズ */
-  }
+
   
   .form-1 {
      display: flex;
@@ -256,7 +248,7 @@ h2{
 
 p {
     margin: 0;
-    font-size:19px;
+    font-size:16px;
 }
 
 .text_underline {
@@ -265,23 +257,24 @@ p {
     margin: 0;
 }
 
-.button-0 {
-    width: 190px; /* ボタンの横幅 */
-    margin-top: 40px;
-    height: 40px; /* ボタンの高さ */
-    border-radius: 9px; /* ボタンを円形にする */
-    background-color: #ffffff; /* 背景色 */
-    border: 1.5px solid #893535; /* 枠線の太さ、スタイル、色を指定 */
-    color: #B15E5E; /* テキストの色 */
-    font-size: 16px; /* フォントサイズ */
-  }
+.button01 {
+  width: 250px; /* ボタンの横幅 */
+  height: 40px; /* ボタンの高さ */
+  border-radius: 18px; /* ボタンを円形にする */
+  background-color: #ffeeee; /* 背景色 */
+  border: 1.5px solid #893535; /* 枠線の太さ、スタイル、色を指定 */
+  color: #B15E5E; /* テキストの色 */
+  font-size: 18px; /* フォントサイズ */
+  display: flex; /* フレックスボックスを有効化 */
+  justify-content: center; /* 水平方向の中央揃え */
+  align-items: center; /* 垂直方向の中央揃え */
+  text-align: center; /* テキストの中央揃え */
+  cursor: pointer; /* ポインタに変化 */
+}
 
   /* ログインボタン */
-.migi{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+.migi01{
+padding: 0 15px;
   }
   
   .sinki_button {
