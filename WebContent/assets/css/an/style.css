@@ -37,9 +37,45 @@ body {
     padding-bottom: 30px;
 }
 
+/* 全体の文字サイズ調整 */
+.form-item {
+  font-size: 18px; /* テキストの文字サイズ */
+  line-height: 1.6; /* 行の高さを設定 */
+  padding: 5px;
+}
+
+/* メール用 */
+.email-item .icon {
+  width: 24px;
+  margin-right: 10px;
+}
+
+.email-item input {
+  font-size: 18px;
+  width: 100%;
+}
+
+/* パスワード用 */
+.password-item .icon {
+  width: 28px; /* パスワードアイコンを大きくする例 */
+  margin-right: 10px;
+}
+
+.password-item input {
+  font-size: 16px;
+  width: 90%;
+}
+
+/* 下線スタイル */
+.text_underline {
+  height: 2px;
+  background-color: #ccc;
+  margin-top: 5px;
+}
+
 /* アイコンのスタイル */
 .icon {
-  width: 24px;  /* アイコンの幅 */
+  width: 29px;  /* アイコンの幅 */
   height: 24px; /* アイコンの高さ */
   margin-right: 10px; /* アイコンと入力フィールドの間に余白を追加 */
 }
@@ -62,6 +98,8 @@ body {
   font-size: 3rem;
   text-align: center;
 }
+
+
 
 h2{
   margin: 0;
@@ -124,6 +162,7 @@ h2{
     color: #B15E5E; /* テキストの色 */
     font-size: 22px; /* フォントサイズ */
   }
+  
   .form-1 {
      display: flex;
     justify-content: center;
@@ -141,6 +180,7 @@ h2{
 /* 新規登録リンクのスタイル */
 .sinki {
   text-align: center; /* テキストを中央揃え（オプション） */
+  margin-top: 20px;
 }
 
 .sinki a {
@@ -336,6 +376,10 @@ p {
     margin-top: 10px;
   }
   
+   
+  input[type="text"] {
+ font-size: 20px;
+  }
   /* プレビュー画像 */
   #preview img {
     width: 100px;
@@ -614,7 +658,7 @@ input[type="radio"] {
 
 select, input[type="text"] {
   padding: 8px;
-  font-size: 14px;
+  font-size: 20px;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box; /* パディングの影響を排除 */
@@ -686,7 +730,7 @@ button:hover {
     }
 
     input, select, textarea {
-        font-size: 14px;
+        font-size: 20px;
         padding: 8px;
     }
 
