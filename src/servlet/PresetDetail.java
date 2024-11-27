@@ -41,8 +41,7 @@ public class PresetDetail extends HttpServlet {
 		
 		if (result != false) {
             System.out.println("okokokok");
-            response.sendRedirect("PresetList");  
-
+            response.sendRedirect("PresetList");
         } else {
         	System.out.println("ngngngng");
         	response.sendRedirect("PresetDetail?presetId=" + presetId);
