@@ -9,7 +9,6 @@
     <title>ログインページ</title>
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
-    
     <script>
 	    if ('serviceWorker' in navigator) {
 	        window.addEventListener('load', () => {

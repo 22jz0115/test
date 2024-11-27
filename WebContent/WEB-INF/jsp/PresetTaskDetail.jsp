@@ -10,6 +10,17 @@
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
     <title>プリセットタスク詳細画面</title>
+    <script>
+	    if ('serviceWorker' in navigator) {
+	        window.addEventListener('load', () => {
+	            navigator.serviceWorker.register('/test/service-worker.js').then((registration) => {
+	                console.log('Service Worker registered with scope:', registration.scope);
+	            }).catch((error) => {
+	                console.error('Service Worker registration failed:', error);
+	            });
+	        });
+	    }
+	</script>
 </head>
 <body>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>

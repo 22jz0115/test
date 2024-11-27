@@ -11,14 +11,16 @@
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
 	<script>
-        // リセットボタンがクリックされたときにその親のliを削除する関数
-        function removeTask(button) {
-            const taskItem = button.closest('li'); // ボタンの親li要素を取得
-            if (taskItem) {
-                taskItem.remove(); // li要素をDOMから削除
-            }
-        }
-    </script>
+	    if ('serviceWorker' in navigator) {
+	        window.addEventListener('load', () => {
+	            navigator.serviceWorker.register('/test/service-worker.js').then((registration) => {
+	                console.log('Service Worker registered with scope:', registration.scope);
+	            }).catch((error) => {
+	                console.error('Service Worker registration failed:', error);
+	            });
+	        });
+	    }
+	</script>
 </head>
 <body>
 	    <header>

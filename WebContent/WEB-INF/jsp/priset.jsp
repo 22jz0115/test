@@ -13,16 +13,17 @@
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
-
-    <script>
-	    // リセットボタンがクリックされたときにその親のliを削除する関数
-	    function removeTask(button) {
-	        const taskItem = button.closest('li');
-	        if (taskItem) {
-	            taskItem.remove();
-	        }
+	<script>
+	    if ('serviceWorker' in navigator) {
+	        window.addEventListener('load', () => {
+	            navigator.serviceWorker.register('/test/service-worker.js').then((registration) => {
+	                console.log('Service Worker registered with scope:', registration.scope);
+	            }).catch((error) => {
+	                console.error('Service Worker registration failed:', error);
+	            });
+	        });
 	    }
-    </script>
+	</script>
 </head>
 <body>
     <header>

@@ -9,6 +9,17 @@
     <title>ご褒美画面</title>
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
+    <script>
+	    if ('serviceWorker' in navigator) {
+	        window.addEventListener('load', () => {
+	            navigator.serviceWorker.register('/test/service-worker.js').then((registration) => {
+	                console.log('Service Worker registered with scope:', registration.scope);
+	            }).catch((error) => {
+	                console.error('Service Worker registration failed:', error);
+	            });
+	        });
+	    }
+	</script>
 </head>
 
 <body class="body-1">

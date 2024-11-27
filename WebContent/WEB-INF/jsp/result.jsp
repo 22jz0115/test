@@ -15,6 +15,17 @@
 	    const percentageFromDatabase2 = ${percentageFromDatabase2};
 	    const percentageFromDatabase3 = ${percentageFromDatabase3};
 	</script>
+	<script>
+	    if ('serviceWorker' in navigator) {
+	        window.addEventListener('load', () => {
+	            navigator.serviceWorker.register('/test/service-worker.js').then((registration) => {
+	                console.log('Service Worker registered with scope:', registration.scope);
+	            }).catch((error) => {
+	                console.error('Service Worker registration failed:', error);
+	            });
+	        });
+	    }
+	</script>
 </head>
 <body>
     <header>
