@@ -114,17 +114,20 @@ h2{
     border: none;
     outline: none;
 }
-
 .button00 {
   width: 250px; /* ボタンの横幅 */
   height: 40px; /* ボタンの高さ */
-  border-radius: 13px; /* ボタンを円形にする */
+  border-radius: 18px; /* ボタンを円形にする */
   background-color: #ffeeee; /* 背景色 */
   border: 1.5px solid #893535; /* 枠線の太さ、スタイル、色を指定 */
   color: #B15E5E; /* テキストの色 */
   font-size: 18px; /* フォントサイズ */
+  display: flex; /* フレックスボックスを有効化 */
+  justify-content: center; /* 水平方向の中央揃え */
+  align-items: center; /* 垂直方向の中央揃え */
+  text-align: center; /* テキストの中央揃え */
+  cursor: pointer; /* ポインタに変化 */
 }
-
 /* 下線のスタイル */
 .text_underline {
     position: relative; /* 親要素の相対位置 */
