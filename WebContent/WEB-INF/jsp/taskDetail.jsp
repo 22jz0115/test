@@ -41,7 +41,7 @@
             <label class="switch_label9">
                 <span id="outdoorText">屋内</span>
                 <div class="switch">
-                    <input type="checkbox" class="check" id="checkTask" data-check-task="${task.outin}">
+                    <input type="checkbox" class="check" name="switch" id="checkTask" data-check-task="${task.outin}">
                     <div class="circle"></div>
                     <div class="base"></div>
                 </div>
@@ -67,11 +67,6 @@
             <div class="form-group">
                 <p class="taskname">タスク名</p>
                 <input type="text" id="taskName" name="taskName" value="${task.taskName}" required minlength="1" maxlength="8" />
-            </div>
-            <div class="buttons">
-                <label class="toggle-button-4">
-                    <input type="checkbox" class="check" <c:if test="${task.check == 1}">checked</c:if>>
-                </label>
             </div>
         </li>
 

@@ -16,24 +16,18 @@
     <script type="text/javascript" src="assets/js/taskDetail/script.js"></script>
     
     <header>
-        <a href="presetDetail">
+        <a href="PresetDetail?presetId=${presetTask.presetId}">
             <img class="imgVector" src="assets/img/戻るボタン.png" alt="">
         </a>
         <h1>プリセットタスク詳細</h1>
     </header>
 
     <form action="PresetTaskDetail" method="post">
-        
-        <!-- 日付表示 -->
-        <div class="form-group">
-            <label for="dateInput">日付:</label>
-            <input type="date" id="dateInput" name="dateInput" value="${task.formattedDate}">
-        </div>
 
         <!-- 時間入力 -->
         <div class="form-group">
-            <label for="appt-time-${task.id}">時間:</label>
-            <input id="appt-time-${task.id}" type="time" name="apptTime" value="${task.formattedTime}"  />
+            <label for="appt-time-${presetTask.id}">時間:</label>
+            <input id="appt-time-${presetTask.id}" type="time" name="apptTime" value="${presetTask.taskTime}"  />
         </div>
 
         <!-- 屋内・屋外スイッチ -->
@@ -41,7 +35,7 @@
             <label class="switch_label9">
                 <span id="outdoorText">屋内</span>
                 <div class="switch">
-                    <input type="checkbox" class="check" id="checkTask" data-check-task="${task.outin}">
+                    <input type="checkbox" class="check" name="switch" id="checkTask" data-check-task="${presetTask.outin}">
                     <div class="circle"></div>
                     <div class="base"></div>
                 </div>
@@ -54,7 +48,7 @@
             <p class="taskname">カテゴリ名</p>
             <select id="categorySelect" name="categorySelect" required>
                 <c:forEach var="category" items="${categoryList}">
-                    <option value="${category.id}" <c:if test="${category.id == task.categoryId}">selected</c:if>>
+                    <option value="${category.id}" <c:if test="${category.id == presetTask.categoryId}">selected</c:if>>
                         ${category.categoryName}
                     </option>
                 </c:forEach>
@@ -63,36 +57,31 @@
         
 
         <!-- タスク名表示 -->
-        <li class="task" data-task-id="${task.id}">
+        <li class="task" data-task-id="${presetTask.id}">
             <div class="form-group">
                 <p class="taskname">タスク名</p>
-                <input type="text" id="taskName" name="taskName" value="${task.taskName}" required minlength="1" maxlength="8" />
-            </div>
-            <div class="buttons">
-                <label class="toggle-button-4">
-                    <input type="checkbox" class="check" <c:if test="${task.check == 1}">checked</c:if>>
-                </label>
+                <input type="text" id="taskName" name="taskName" value="${presetTask.name}" required minlength="1" maxlength="8" />
             </div>
         </li>
 
         <!-- メモの表示 -->
         <div class="form-group">
             <label for="story" class="memo-label">メモ</label>
-            <textarea id="story" name="story" rows="5" cols="50">${task.memo}</textarea>
+            <textarea id="story" name="story" rows="5" cols="50">${presetTask.memo}</textarea>
         </div>
 
      
 
         <!-- 変更保存ボタン -->
-        <input type="hidden" name="taskId" value="${task.id}">
+        <input type="hidden" name="presetTaskId" value="${presetTask.id}">
         <input type="hidden" name="action" value="edit">
         <button type="submit" class="button">変更を保存</button>
     </form>
     
        <!-- 削除ボタン -->
-        <form action="Delete" method="post">
-            <input type="hidden" name="taskId" value="${task.id}">
-            <input type="hidden" name="selectedDate" value="${selectedDate}">
+        <form action="PresetTaskDelete" method="post">
+            <input type="hidden" name="taskId" value="${presetTask.id}">
+            <input type="hidden" name="presetId" value="${presetTask.presetId}">
             <input type="hidden" name="action" value="delete">
             <button type="submit" class="button">削除</button>
         </form>

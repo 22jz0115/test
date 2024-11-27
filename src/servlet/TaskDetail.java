@@ -51,8 +51,8 @@ public class TaskDetail extends HttpServlet {
           Categories categorys = CategoriesDAO.find(categoryId);
           
      		
-     		List<Categories> categoryList = CategoriesDAO.get();  // DAOからデータを取得
-     		request.setAttribute("categoryList", categoryList); 
+     	  List<Categories> categoryList = CategoriesDAO.get();  // DAOからデータを取得
+     	  request.setAttribute("categoryList", categoryList); 
        
           // リクエストスコープに格納
           request.setAttribute("categorys", categorys);
@@ -117,8 +117,6 @@ public class TaskDetail extends HttpServlet {
 	        	System.out.println("ngngngng");
 	        	response.sendRedirect("Task?date=" + date);
 	        }
-	
-	        
 	    }
 	}
 

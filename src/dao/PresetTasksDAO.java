@@ -135,6 +135,47 @@ public class PresetTasksDAO {
 	    return null;
 	}
 	
+	public boolean updatePresetTask(int presetTaskId, int categoryId, String name, LocalTime taskTime, String memo, int outin) {
+		LocalDateTime dateTime = LocalDateTime.of(LocalDate.now(), taskTime);
+		DBManager manager = DBManager.getInstance();
+	    try (Connection cn = manager.getConnection()) {
+	        String sql = "UPDATE preset_tasks SET category_id　= ?, name = ?, task_time = ?, memo = ?, outin = ? WHERE id = ?";
+	        PreparedStatement stmt = cn.prepareStatement(sql);
+	    
+	        stmt.setInt(1, categoryId);
+	        stmt.setString(2, name);
+	        stmt.setTimestamp(3, Timestamp.valueOf(dateTime));
+	        stmt.setString(4, memo);
+	        stmt.setInt(5, outin);
+	        stmt.setInt(6, presetTaskId);
+
+	        int rowsUpdated = stmt.executeUpdate();  // 更新された行数を取得
+	        return rowsUpdated > 0; // 1行以上更新されたらtrue
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false; // エラー発生時
+	    }
+	}
+	
+	public boolean deletePresetTask(int presetTaskId) {
+	    int ret = -1;
+	    DBManager manager = DBManager.getInstance();
+	    try (Connection cn = manager.getConnection()) {
+	        // SQL文をDELETE文に変更
+	        String sql = "DELETE FROM preset_tasks WHERE id = ?";
+	        PreparedStatement stmt = cn.prepareStatement(sql);
+	        // プレースホルダーに値を設定
+	        
+	        stmt.setInt(1, presetTaskId);
+	        // 実行結果を取得
+	        ret = stmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    // 更新された行が1行以上かどうかを返す
+	    return ret > 0;
+	}
+	
 	private PresetTasks rs2model(ResultSet rs) throws SQLException {
         int id = rs.getInt("id");
         int presetId = rs.getInt("preset_id");

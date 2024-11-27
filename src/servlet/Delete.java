@@ -24,17 +24,15 @@ public class Delete extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 HttpSession session = request.getSession();
+			HttpSession session = request.getSession();
 		    Accounts loginUser = (Accounts) session.getAttribute("loginUser");
 		    
-		     
 		    String taskIdStr = request.getParameter("taskId");
 		    int taskId = Integer.parseInt(taskIdStr);
 		    
 		 // パラメータから日付を取得
 	        String selectedDate = request.getParameter("selectedDate");
 	        
-	       
 	        System.out.println("Delete SelectedDate : " + selectedDate);
 	        
 	        TasksDAO taskdao = new TasksDAO();
