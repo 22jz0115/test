@@ -731,6 +731,7 @@ button:hover {
     }
 
     .form-group {
+		margin-top: 10px;
         margin-bottom: 12px;
     }
 }
@@ -1018,6 +1019,15 @@ input:checked ~ .circle {
 }
 
 
+/* ボタンコンテナのスタイル */
+.button-container {
+    display: flex;
+    flex-direction: column; /* 縦に並べる */
+    align-items: center; /* 中央揃え */
+    gap: 15px; /* ボタン間のスペース */
+    margin: 0 auto
+}
+
 .button {
     background-color: rgb(255, 128, 128);  /* 緑色の背景 */
     color: white;  /* 白文字 */
@@ -1027,7 +1037,8 @@ input:checked ~ .circle {
     border-radius: 5px;  /* 角を丸く */
     cursor: pointer;  /* ポインターカーソル */
     transition: background-color 0.3s ease, transform 0.3s ease;  /* 背景色と動きに遷移を設定 */
-    margin: 10px;
+    width: 350px;
+    
 }
 
 /* ボタンのホバー時のスタイル */
