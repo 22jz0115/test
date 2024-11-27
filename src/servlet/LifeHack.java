@@ -59,7 +59,7 @@ public class LifeHack extends HttpServlet {
         String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // ファイル名を取得
 
         // 保存先のディレクトリを指定 (絶対パスを使用)
-        String uploadDir = "C:\\pleiades_Servlet\\workspace\\test\\WebContent\\assets\\img"; // 直接絶対パスを指定
+        String uploadDir = "/opt/tomcat/webapps/test/assets/img"; // 直接絶対パスを指定
         
         System.out.println("Upload directory: " + uploadDir);
 
