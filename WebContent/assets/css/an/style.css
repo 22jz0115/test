@@ -407,6 +407,12 @@ padding: 0 15px;
     transform: translateY(0);
   }
   
+ 
+
+.pagetop:hover {
+    box-shadow: 0 0 10px #00A6C4;
+}
+  
   /* スマホ対応 */
   @media (max-width: 480px) {
     header h1 {

@@ -1072,3 +1072,29 @@ input[type="submit"]{
     padding-top: 4px;
     font-size: 18px;
 }
+
+
+.space {
+  height: 5000px;
+}
+.pagetop {
+  cursor: pointer;
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  transition: .3s;
+  color: #00A6C4;
+  background: #fff;
+  
+/*   デフォルトは非表示 */
+  opacity: 0;
+}
+.pagetop:hover {
+    box-shadow: 0 0 10px #00A6C4;
+}

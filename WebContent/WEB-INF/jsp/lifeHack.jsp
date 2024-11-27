@@ -23,33 +23,56 @@
 	</script>
 </head>
 <body>
-    <header>
-        <a href="Home"><img class="imgVector" src="assets/img/Vector.png" alt=""></a>
-        <h1>ライフハック</h1>
-    </header>
-    <form action="#" class="search-form-3">
-        <label>
-            <input type="text" placeholder="キーワードを入力">
-        </label>
-        <button type="submit" aria-label="検索"></button>
-    </form>
-    
-    <p  class="lifehackAdd"><a href="AddedLife">ライフハック追加</a></p>
-    
-    <c:forEach var="life" items="${lifeList}">
-          <div class="lifehacks">
+<div class="pagetop">Top</div>
+
+<header>
+    <a href="Home"><img class="imgVector" src="assets/img/Vector.png" alt="Home"></a>
+    <h1>ライフハック</h1>
+</header>
+
+<!-- 検索フォーム -->
+<form action="#" class="search-form-3">
+    <label>
+        <input type="text" placeholder="キーワードを入力">
+    </label>
+    <button type="submit" aria-label="検索"></button>
+</form>
+
+<!-- ライフハック追加リンク -->
+<p class="lifehackAdd"><a href="AddedLife">ライフハック追加</a></p>
+
+<!-- ライフハックリストを表示 -->
+<c:forEach var="life" items="${lifeList}">
+    <div class="lifehacks">
         <div>
             <h2>${life.accountId}さん</h2>
             <h3>${life.title}</h3>
-            <p>
-               ${life.content}
-            </p>
-            <img src="${life.img}" alt="">
+            <p>${life.content}</p>
+            <img src="${life.img}" alt="画像">
         </div>
     </div>    	
-    
-    </c:forEach>
+</c:forEach>
 
-  
+<script>
+    // ページトップボタンのスムーズスクロールと表示切り替え
+    const pagetopBtn = document.querySelector(".pagetop");
+
+    // ページトップへ移動
+    pagetopBtn.addEventListener("click", scrollToTop);
+    function scrollToTop() {
+        window.scroll({ top: 0, behavior: "smooth" });
+    }
+
+    // スクロール時のイベント
+    window.addEventListener("scroll", handleScroll);
+    function handleScroll() {
+        if (window.pageYOffset > 100) {
+            pagetopBtn.style.opacity = "1"; // ボタンを表示
+        } else {
+            pagetopBtn.style.opacity = "0"; // ボタンを非表示
+        }
+    }
+</script>
+
 </body>
 </html>
