@@ -147,6 +147,45 @@ public class PresetsDAO {
 		return null;
 	}
 	
+	public boolean deleteAllPresetTask(int presetId) {
+		int ret = -1;
+	    DBManager manager = DBManager.getInstance();
+	    try (Connection cn = manager.getConnection()) {
+	        // SQL文をDELETE文に変更
+	        String sql = "DELETE FROM preset_tasks WHERE preset_id = ?";
+	        PreparedStatement stmt = cn.prepareStatement(sql);
+	        // プレースホルダーに値を設定
+	        stmt.setInt(1, presetId);
+	        // 実行結果を取得
+	        ret = stmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    // 更新された行が1行以上かどうかを返す
+	    return ret > 0;
+	}
+	
+	public boolean deleteAllPreset(int presetId) {
+		int ret = -1;
+		boolean result = deleteAllPresetTask(presetId);
+		if(result == true) {
+			DBManager manager = DBManager.getInstance();
+		    try (Connection cn = manager.getConnection()) {
+		        // SQL文をDELETE文に変更
+		        String sql = "DELETE FROM presets WHERE id = ?";
+		        PreparedStatement stmt = cn.prepareStatement(sql);
+		        // プレースホルダーに値を設定
+		        stmt.setInt(1, presetId);
+		        // 実行結果を取得
+		        ret = stmt.executeUpdate();
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		}
+	    // 更新された行が1行以上かどうかを返す
+	    return ret > 0;
+	}
+	
 	private Presets rs2model(ResultSet rs) throws SQLException {
         int id = rs.getInt("id");
         String preset_name = rs.getString("preset_name");

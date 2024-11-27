@@ -34,8 +34,19 @@ public class PresetDetail extends HttpServlet {
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		int presetId = Integer.parseInt(request.getParameter("presetId"));
+		
+		PresetsDAO dao = new PresetsDAO();
+		boolean result = dao.deleteAllPreset(presetId);
+		
+		if (result != false) {
+            System.out.println("okokokok");
+            response.sendRedirect("PresetList");  
+
+        } else {
+        	System.out.println("ngngngng");
+        	response.sendRedirect("PresetDetail?presetId=" + presetId);
+        }
 	}
 
 }

@@ -934,7 +934,50 @@ input[type="submit"]{
     align-items: center;
 }
 
+#presetDelete {
+	display: flex;
+	align-items: center;
+}
 
+.presetCategory {
+  position: relative;
+  display: inline-block;
+  flex-grow: 1;
+   margin: 28px;
+}
+
+.presetCategory:before {
+  content: '';
+  position: absolute;
+  bottom: -15px; /* 線の位置を調整 */
+  display: inline-block;
+  width: 60px; /* 装飾線の長さ */
+  height: 5px; /* 装飾線の太さ */
+  left: 12%; /* 水平中央に配置 */
+  transform: translateX(-50%); /* 左右中央揃え */
+  background-color: rgb(255, 128, 128); /* 装飾線の色 */
+  border-radius: 2px; /* 装飾線の角を丸くする */
+}
+
+#presetDeleteForm {
+	margin: 0;
+}
+
+#presetDeleteButton {
+	width: 150px;
+    height: 50px;
+    text-align: center;
+    background: #fedada;
+    border-radius: 25px;
+    color: #000;
+    margin: 5px 15px 13px 5px;
+    font-size: 16px;
+    font-weight: bold;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    margin-left: auto;
+}
 
 
 

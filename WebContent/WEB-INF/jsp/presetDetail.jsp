@@ -17,8 +17,13 @@
 	    <h1>プリセット詳細</h1>
 	</header>
 	 
-	<h2 class="taskcategory">${preset.presetName}</h2>
-	<input type="hidden" id="presetId" name="presetId" value="${presetId}" />
+	<div id="presetDelete">
+		<h2 class="presetCategory">${preset.presetName}</h2>
+		<form action="PresetDetail" method="post" id="presetDeleteForm">
+			<input type="hidden" id="presetId" name="presetId" value="${presetId}" />
+			<button type="submit" id="presetDeleteButton">プリセット削除</button>
+		</form>
+	</div> 
 	
 	<div class="tasks">
         <ul>
