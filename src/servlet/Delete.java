@@ -18,7 +18,10 @@ import model.Accounts;
 @WebServlet("/Delete")
 public class Delete extends HttpServlet {
     private static final long serialVersionUID = 1L;
-       
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 画面遷移だけ
+		request.getRequestDispatcher("/WEB-INF/jsp/Task.jsp").forward(request, response);
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

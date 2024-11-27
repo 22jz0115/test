@@ -42,6 +42,6 @@ public class Login extends HttpServlet {
         }
       
         // ログアウト後にログインページへリダイレクト
-        response.sendRedirect(request.getContextPath() + "/Login");
+        response.sendRedirect("/Login");
     }
 }
