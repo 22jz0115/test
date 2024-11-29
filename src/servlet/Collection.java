@@ -49,7 +49,7 @@ public class Collection extends HttpServlet {
         ServletContext sc = getServletContext();
         // セッションから最後にチェックした日付を取得
      // セッションから最後にチェックした日付を取得
-        LocalDate lastCheckedDate = (LocalDate) sc.getAttribute("lastCheckedDate");
+        LocalDate lastCheckedDate = (LocalDate) sc.getAttribute("lastCheckdDate");
 
         // lastCheckedDateがnullの場合の処理
         if (lastCheckedDate == null) {
