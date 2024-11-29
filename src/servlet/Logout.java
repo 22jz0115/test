@@ -1,7 +1,9 @@
 package servlet;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,8 +33,16 @@ public class Logout extends HttpServlet {
         	AuthLogic logic = new AuthLogic();
             logic.logout(session);
             System.out.println(loginUser.getEmail());
+            
+            
+            
         }
+        
+        LocalDate today = LocalDate.now();
 
+        ServletContext sc = getServletContext();
+        // アプリケーションスコープに保存
+        sc.setAttribute("lastCheckdDate", today);
         // ログアウト後にログインページへリダイレクト
         response.sendRedirect(request.getContextPath() + "/Login");
 	}

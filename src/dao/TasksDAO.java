@@ -174,13 +174,11 @@ public class TasksDAO {
 	    }
 	}
 
-	public List<Tasks> findByCurrentMonth(int accountId) {
+	public List<Tasks> findByCurrentMonth(int accountId , int currentMonth) {
 	    List<Tasks> taskList = new ArrayList<>();
 	    DBManager manager = DBManager.getInstance();
 	    try (Connection cn = manager.getConnection()) {
-	        // 今日の月を取得
-	        LocalDateTime now = LocalDateTime.now();
-	        int currentMonth = now.getMonthValue();
+
 
 	        // SQL文でtask_datetimeの月部分のみを比較
 	        String sql = "SELECT * FROM tasks WHERE account_id = ? AND EXTRACT(MONTH FROM task_datetime) = ?";

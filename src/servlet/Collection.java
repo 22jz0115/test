@@ -49,28 +49,32 @@ public class Collection extends HttpServlet {
         ServletContext sc = getServletContext();
         // セッションから最後にチェックした日付を取得
      // セッションから最後にチェックした日付を取得
-        LocalDate lastCheckedDate = (LocalDate) sc.getAttribute("lastCheckdDate");
+        String lastCheckedDate = (String) sc.getAttribute("lastCheckdDate");
+        
+        int getCollectionMounth = Integer.parseInt(lastCheckedDate);
 
         // lastCheckedDateがnullの場合の処理
-        if (lastCheckedDate == null) {
+        if (getCollectionMounth == 0) {
             System.out.println("lastCheckedDate is null.");
         } else {
-            System.out.print(lastCheckedDate.getMonthValue());
+            System.out.print(getCollectionMounth);
         }
 
         // 最後にチェックした日付がnullか、月が異なる場合
-        if (lastCheckedDate == null || now.getMonthValue() != lastCheckedDate.getMonthValue()) {
+        if (lastCheckedDate == null || now.getMonthValue() != getCollectionMounth) {
             int outSum = 0;
             int inSum = 0;
             int outCheck = 0;
             int inCheck = 0;
 
             int comperTask = 10;
-            int comperParsent = 90;
+            int comperParsent = 10;
+            
+            
 
             // タスクリストの取得
             TasksDAO dao = new TasksDAO();
-            List<Tasks> taskList = dao.findByCurrentMonth(loginUser.getId());
+            List<Tasks> taskList = dao.findByCurrentMonth(loginUser.getId() , getCollectionMounth);
 
             for (Tasks task : taskList) {
                 if (task.getOutin() == 1) {
@@ -94,9 +98,11 @@ public class Collection extends HttpServlet {
             }
 
             if (taskList.size() > comperTask) {
-                if (percentageFromDatabase1 < comperParsent) {
+                if (percentageFromDatabase1 > comperParsent) {
+                	
+                	getCollectionMounth = Integer.parseInt(lastCheckedDate);
                     // 月が変わった場合、createを呼び出す
-                    boxDao.create(loginUser.getId(), now.getMonthValue());
+                    boxDao.create(loginUser.getId(), Integer.parseInt(getServletInfo()));
 
                     // 現在の日付を`ServletContext`に保存
                     sc.setAttribute("lastCheckedDate", now);
