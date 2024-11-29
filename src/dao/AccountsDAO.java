@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -117,6 +118,28 @@ public class AccountsDAO {
 			return findByEmail(email);
 		}
 		return null;
+	}
+	
+	public boolean updateLoginTime(int accountId) {
+	    DBManager manager = DBManager.getInstance();
+	    int result = 0;
+	    try (Connection cn = manager.getConnection()) {
+	        // 現在のタイムスタンプを取得
+	        Timestamp currentTimestamp = Timestamp.valueOf(LocalDateTime.now());
+
+	        // SQLクエリで update_date を更新
+	        String sql = "UPDATE accounts SET update_date = ? WHERE id = ?";
+	        PreparedStatement stmt = cn.prepareStatement(sql);
+	        stmt.setTimestamp(1, currentTimestamp);
+	        stmt.setInt(2, accountId);
+
+	        // 更新結果を取得
+	        result = stmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    // 更新が成功すれば true、失敗すれば false を返す
+	    return result > 0;
 	}
 	
 	private Accounts rs2model(ResultSet rs) throws SQLException {

@@ -2,10 +2,10 @@ package servlet;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,68 +21,59 @@ import model.Collections;
 import model.MyBoxs;
 import model.Tasks;
 
-/**
- * Servlet implementation class Collection
- */
 @WebServlet("/Collection")
 public class Collection extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    /**
-     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         Accounts loginUser = (Accounts) session.getAttribute("loginUser");
 
+        // ログインユーザーが null の場合、ログイン画面にリダイレクト
         if (loginUser == null) {
-            // ログイン画面にリダイレクト
             request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
             return;
         }
 
         MyBoxesDAO boxDao = new MyBoxesDAO();
+        LocalDate now = LocalDate.now();  // 現在の日付を取得
 
-        // 現在の日付を取得
-        LocalDate now = LocalDate.now();
+        int getCollectionMonth = 0;  // 初期値を設定
 
-        ServletContext sc = getServletContext();
-        // セッションから最後にチェックした日付を取得
-     // セッションから最後にチェックした日付を取得
-        String lastCheckedDate = (String) sc.getAttribute("lastCheckdDate");
-        
-        int getCollectionMounth = Integer.parseInt(lastCheckedDate);
 
-        // lastCheckedDateがnullの場合の処理
-        if (getCollectionMounth == 0) {
-            System.out.println("lastCheckedDate is null.");
+            LocalDateTime updateDate = loginUser.getUpdateDate();  // updateDate を取得
+
+        if (updateDate != null) {
+            // updateDate の月を取得
+            getCollectionMonth = updateDate.getMonthValue();
+            System.out.println("Login user's updateDate month: " + getCollectionMonth);
         } else {
-            System.out.print(getCollectionMounth);
+            System.err.println("loginUser's updateDate is null.");
         }
+        
 
-        // 最後にチェックした日付がnullか、月が異なる場合
-        if (lastCheckedDate == null || now.getMonthValue() != getCollectionMounth) {
+        // 最後にチェックした月が異なる場合、または getCollectionMonth が 0 の場合
+        if (getCollectionMonth == 0 || now.getMonthValue() != getCollectionMonth) {
             int outSum = 0;
             int inSum = 0;
             int outCheck = 0;
             int inCheck = 0;
 
-            int comperTask = 10;
-            int comperParsent = 10;
-            
-            
+            int comperTask = 10;  // 比較基準となるタスク数
+            int comperParsent = 10;  // 比較基準となる達成率
 
-            // タスクリストの取得
+            // タスクリストを取得
             TasksDAO dao = new TasksDAO();
-            List<Tasks> taskList = dao.findByCurrentMonth(loginUser.getId() , getCollectionMounth);
+            List<Tasks> taskList = dao.findByCurrentMonth(loginUser.getId(), getCollectionMonth);
 
+            // タスクリストを反復処理
             for (Tasks task : taskList) {
-                if (task.getOutin() == 1) {
+                if (task.getOutin() == 1) {  // 出て行くタスク
                     outSum++;
                     if (task.getCheck() == 1) {
                         outCheck++;
                     }
-                } else {
+                } else {  // 入ってくるタスク
                     inSum++;
                     if (task.getCheck() == 1) {
                         inCheck++;
@@ -90,46 +81,39 @@ public class Collection extends HttpServlet {
                 }
             }
 
-            // 分母が0でないか確認してから割り算を行う
+            // タスクチェック率の計算
             int percentageFromDatabase1 = 0;
             if (inCheck + outCheck != 0) {
-                // 割り算をする際、整数同士の割り算を避けるためにキャスト
-                percentageFromDatabase1 = (int) (((double)(inCheck + outCheck) / taskList.size()) * 100);
+                percentageFromDatabase1 = (int) (((double) (inCheck + outCheck) / taskList.size()) * 100);
             }
 
-            if (taskList.size() > comperTask) {
-                if (percentageFromDatabase1 > comperParsent) {
-                	
-                	getCollectionMounth = Integer.parseInt(lastCheckedDate);
-                    // 月が変わった場合、createを呼び出す
-                    boxDao.create(loginUser.getId(), Integer.parseInt(getServletInfo()));
-
-                    // 現在の日付を`ServletContext`に保存
-                    sc.setAttribute("lastCheckedDate", now);
-                }
+            // タスク数と達成率に基づいて新しいコレクションを作成
+            if (taskList.size() > comperTask && percentageFromDatabase1 > comperParsent) {
+                boxDao.create(loginUser.getId(), now.getMonthValue());  // 新しいコレクションを作成
             }
         }
 
-
         // MyBoxsデータを取得
         List<MyBoxs> box = boxDao.findByAccountId(loginUser.getId());
-
-        // MyBoxsリストからcollectionIdを抽出
         List<Integer> collectionIds = new ArrayList<>();
+
+        // MyBoxsリストから collectionId を抽出
         for (MyBoxs myBox : box) {
             collectionIds.add(myBox.getCollectionId());
         }
 
-        // CollectionsDAOでコレクションリストを取得
+        // CollectionsDAO を使ってコレクションリストを取得
         CollectionsDAO collectDao = new CollectionsDAO();
         List<Collections> collects = collectDao.findByCollectionList(collectionIds);
 
+        // コレクションが存在しない場合のエラーハンドリング
         if (collects == null || collects.isEmpty()) {
             request.setAttribute("errorMessage", "コレクションが見つかりませんでした。");
             request.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);
             return;
         }
 
+        // コレクションリストをリクエストスコープに設定
         request.setAttribute("collection", collects);
         request.getRequestDispatcher("/WEB-INF/jsp/collection.jsp").forward(request, response);
     }

@@ -39,7 +39,7 @@ public class Logout extends HttpServlet {
         }
         
         LocalDate today = LocalDate.now();
-
+        
         ServletContext sc = getServletContext();
         // アプリケーションスコープに保存
         sc.setAttribute("lastCheckdDate", today);

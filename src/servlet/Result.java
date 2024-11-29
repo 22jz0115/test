@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -45,8 +46,11 @@ public class Result extends HttpServlet {
 	        
 	        
 	        // タスクリストの取得
+	        LocalDate today = LocalDate.now();
+	        int month = today.getMonthValue();
+	        
 	        TasksDAO dao = new TasksDAO();
-	        List<Tasks> taskList = dao.findByCurrentMonth(loginUser.getId());
+	        List<Tasks> taskList = dao.findByCurrentMonth(loginUser.getId(), month );
 	        
 	        for( Tasks task : taskList ) {
 	        	if(task.getOutin() == 1) {

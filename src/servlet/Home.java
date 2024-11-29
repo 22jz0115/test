@@ -41,9 +41,8 @@ public class Home extends HttpServlet {
         List<Tasks> taskList = dao.findByCheckTask(loginUser.getId(), selectedDate);
         request.setAttribute("taskList", taskList);
         
-        
-        
 
+        
     
         
    
