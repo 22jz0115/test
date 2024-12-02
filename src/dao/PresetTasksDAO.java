@@ -39,7 +39,7 @@ public class PresetTasksDAO {
 		DBManager manager = DBManager.getInstance();
 		try(Connection cn = manager.getConnection()) {
 			// プレースホルダで変数部分を定義
-			String sql = "SELECT * FROM preset_tasks WHERE preset_id = ?";
+			String sql = "SELECT * FROM preset_tasks WHERE preset_id = ? ORDER BY task_time";
 			PreparedStatement stmt = cn.prepareStatement(sql);
 			stmt.setInt(1, presetId);
 			ResultSet rs = stmt.executeQuery();
@@ -82,14 +82,15 @@ public class PresetTasksDAO {
 	 * @param preset_name プリセット名
 	 * @return 発見したデータ。なければnull
 	 */
-	public PresetTasks findByPresetTaskName(String name) {
+	public PresetTasks findByPresetTaskName(String name, int presetId) {
 		PresetTasks presetTasks = null;
 		DBManager manager = DBManager.getInstance();
 		try(Connection cn = manager.getConnection()) {
 			// プレースホルダで変数部分を定義
-			String sql = "SELECT * FROM preset_tasks WHERE name = ?";
+			String sql = "SELECT * FROM preset_tasks WHERE name = ? AND preset_id = ?";
 			PreparedStatement stmt = cn.prepareStatement(sql);
 			stmt.setString(1, name);
+			stmt.setInt(2, presetId);
 			ResultSet rs = stmt.executeQuery();
 			
 			// データをリストに格納
@@ -107,7 +108,7 @@ public class PresetTasksDAO {
 	    int ret = -1;
 	    LocalDateTime dateTime = LocalDateTime.of(LocalDate.now(), taskTime);
 	    // 重複確認
-	 		if (findByPresetTaskName(name) != null) {
+	 		if (findByPresetTaskName(name, presetId) != null) {
 	 			System.out.println("該当プリセットタスク名は既に存在しています");
 	 			return null;
 	 		}

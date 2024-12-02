@@ -39,7 +39,7 @@
     <form action="Preset" method="post" class="presetsForm">
     	<div class="setName">
             <h2>プリセット名</h2>
-            <select id="presetName" name="preset_name">
+            <select id="presetName" name="preset_name" required>
             	<option  hidden selected="selected" value="">プリセットを選択してください</option>
             	<c:forEach var="preset" items="${presetList}">
 			            <option id="preset" value="${preset.id}">${preset.presetName}</option> 
@@ -50,7 +50,7 @@
         <div class="form-group">
             <label for="dateInput">日付</label>
             <!-- 日付選択 -->
-            <input type="date" id="dateInput" name="dateInput" value="${selectedDate}">
+            <input type="date" id="dateInput" name="dateInput" value="${selectedDate}" required>
         </div>
 
         <div class="presets">

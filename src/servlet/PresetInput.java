@@ -54,7 +54,7 @@ public class PresetInput extends HttpServlet {
         int accountId = loginUser.getId();
 		
         // フォームデータを取得
-		String preset_name = request.getParameter("preset_name");
+		String preset_name = request.getParameter("presetTask_name");
 		
 		PresetsDAO dao = new PresetsDAO();
 		Presets preset =	dao.findByPreset(preset_name, accountId);

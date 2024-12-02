@@ -37,7 +37,7 @@
 
 			<div class="setName">
                 <label for="preset_name">プリセット名</label>
-                <input type="text" name="preset_name" value="" data-options='${presetList}' class="free_dropdown" />
+                <input type="text" name="presetTask_name" value="" data-options='${presetList}' class="free_dropdown" required/>
             </div>
 			
             <!-- 時間入力 -->
@@ -73,13 +73,13 @@
 		    <!-- タスク名の入力 -->
 		    <div class="form-group">
 		        <label for="taskName" class="taskname">タスク名:</label>
-		        <input type="text" id="taskName" name="taskName" required minlength="1" maxlength="8" />
+		        <input type="text" id="taskName" name="taskName" required minlength="1" maxlength="8" required/>
 		    </div>
 		    
 		    <!-- メモの入力 -->
 		    <div class="form-group">
 		        <label for="story" class="memo-label">メモ</label>
-		        <textarea id="story" name="story" rows="5" cols="50">メモ</textarea>
+		        <textarea id="story" name="story" rows="5" cols="50" required>メモ</textarea>
 		    </div>
 		
 		    <button id="touroku" type="submit" class="button3">追加</button>

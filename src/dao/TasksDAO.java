@@ -199,6 +199,28 @@ public class TasksDAO {
 	    return taskList;
 	}
 	
+	public Tasks findByTask(String task_name, LocalDateTime taskDatetime, int category_id) {
+		Tasks tasks = null;
+		DBManager manager = DBManager.getInstance();
+		try(Connection cn = manager.getConnection()) {
+			// プレースホルダで変数部分を定義
+			String sql = "SELECT * FROM tasks WHERE task_name = ? AND task_datetime = ? AND category_id = ?";
+			PreparedStatement stmt = cn.prepareStatement(sql);
+			stmt.setString(1, task_name);
+			stmt.setTimestamp(2, Timestamp.valueOf(taskDatetime));
+			stmt.setInt(3, category_id);
+			ResultSet rs = stmt.executeQuery();
+			
+			// データをリストに格納
+			if (rs.next()) {
+				tasks = rs2model(rs);
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return tasks;
+	}
 	
 	/**
 	 * DBにデータを追加する
@@ -208,7 +230,7 @@ public class TasksDAO {
 		int ret = -1;
 		
 		// 重複確認 → タスク名+タスク時間が重複でメッセージ出す
-		if (findByTaskName(task_name) != null) {
+		if (findByTask(task_name, taskDatetime, category_id) != null) {
 			System.out.println("該当タスクは既に存在しています");
 			return null;
 		}
