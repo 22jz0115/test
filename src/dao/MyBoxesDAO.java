@@ -106,6 +106,12 @@ public class MyBoxesDAO {
 	public MyBoxs create(int account_Id, int collection_Id) {
 		int ret = -1;
 		
+		// 重複確認 → タスク名+タスク時間が重複でメッセージ出す
+		if (find(account_Id, collection_Id) != null) {
+			System.out.println("既に存在しています");
+			return null;
+		}
+		
 	
 		
 		// DBにデータを追加

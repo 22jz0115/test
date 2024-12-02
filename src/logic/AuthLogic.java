@@ -18,13 +18,7 @@ public class AuthLogic {
 		AccountsDAO dao = new AccountsDAO();
 		Accounts account = dao.findByEmail(email);
 		
-		boolean isUpdated = dao.updateLoginTime(account.getId());
-
-		if (isUpdated) {
-		    System.out.println("ログイン時刻が更新されました。");
-		} else {
-		    System.out.println("ログイン時刻の更新に失敗しました。");
-		}
+		
 		
 		if ((account != null) && (BCrypt.checkpw(password, account.getPass()))) {
 			return account;

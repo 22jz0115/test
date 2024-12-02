@@ -42,7 +42,7 @@
 				    </c:otherwise>
 				</c:choose>   
     	 	</c:forEach>
-	    	         
+	       
         </c:forEach>
         
     </div>
