@@ -47,14 +47,14 @@ $(function() {
 
         // クリックイベントで現在の月と日を明示的に指定
         line.append($('<td>', {
-            class: tdClass,
-            text: day,
-            click: (function(day) {
-                return function() {
-                    sendDate(new Date(d.getFullYear(), d.getMonth(), day)); // クリックされた日付を送信
-                };
-            })(day) // 即時関数で現在の日を保持
-        }));
+		    class: tdClass,
+		    text: day,
+		    click: (function(year, month, day) {
+		        return function() {
+		            sendDate(new Date(year, month, day)); // 正しい年月日を指定
+		        };
+		    })(d.getFullYear(), d.getMonth(), day) // 即時関数で現在の年月日を保持
+		}));
 
         if (yobi == 6) {  // 土曜日で行を終了
             $("table").append(line);
@@ -75,18 +75,20 @@ $(function() {
     }
 });
 
-// 日付を送信する関数
 function sendDate(date) {
     // 日付を"YYYY-MM-DD"形式にフォーマット
     const formattedDate = date.getFullYear() + '-' + 
-                          String(date.getMonth()).padStart(2, '0') + '-' + 
+                          String(date.getMonth() + 1).padStart(2, '0') + '-' + 
                           String(date.getDate()).padStart(2, '0');
+                          
+    console.log("HomeJavaScriptの日付: " + formattedDate);
     
     // URLに日付を追加
     const urlParams = new URLSearchParams();
     urlParams.append('date', formattedDate);
     window.location.href = 'Task?' + urlParams.toString();
 }
+
 
 
 

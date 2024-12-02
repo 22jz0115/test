@@ -41,6 +41,8 @@ public class Home extends HttpServlet {
         List<Tasks> taskList = dao.findByCheckTask(loginUser.getId(), selectedDate);
         request.setAttribute("taskList", taskList);
         
+        System.out.println("HomeServletに渡された日付データ" + selectedDate);
+        
 
         
     

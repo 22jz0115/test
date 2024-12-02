@@ -41,7 +41,7 @@ public class Task extends HttpServlet {
             selectedDate = today.toString(); // YYYY-MM-DD形式
         }
         
-        System.out.print(selectedDate);
+        System.out.println("TaskSurvletに渡された日付データ" + selectedDate);
         
         
 

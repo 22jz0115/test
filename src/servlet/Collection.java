@@ -53,9 +53,7 @@ public class Collection extends HttpServlet {
         
 
         // 最後にチェックした月が異なる場合、または getCollectionMonth が 0 の場合
-        if (getCollectionMonth == 0 || now.getMonthValue() != getCollectionMonth) {
-            int outSum = 0;
-            int inSum = 0;
+        
             int outCheck = 0;
             int inCheck = 0;
 
@@ -69,12 +67,12 @@ public class Collection extends HttpServlet {
             // タスクリストを反復処理
             for (Tasks task : taskList) {
                 if (task.getOutin() == 1) {  // 出て行くタスク
-                    outSum++;
+            
                     if (task.getCheck() == 1) {
                         outCheck++;
                     }
                 } else {  // 入ってくるタスク
-                    inSum++;
+             
                     if (task.getCheck() == 1) {
                         inCheck++;
                     }
@@ -89,10 +87,9 @@ public class Collection extends HttpServlet {
 
             // タスク数と達成率に基づいて新しいコレクションを作成
             if (taskList.size() > comperTask && percentageFromDatabase1 > comperParsent) {
-                boxDao.create(loginUser.getId(), now.getMonthValue());  // 新しいコレクションを作成
+                boxDao.create(loginUser.getId(), now.getMonthValue() - 1);  // 新しいコレクションを作成
             }
-        }
-
+        
         // MyBoxsデータを取得
         List<MyBoxs> box = boxDao.findByAccountId(loginUser.getId());
         List<Integer> collectionIds = new ArrayList<>();
@@ -106,12 +103,7 @@ public class Collection extends HttpServlet {
         CollectionsDAO collectDao = new CollectionsDAO();
         List<Collections> collects = collectDao.findByCollectionList(collectionIds);
 
-        // コレクションが存在しない場合のエラーハンドリング
-        if (collects == null || collects.isEmpty()) {
-            request.setAttribute("errorMessage", "コレクションが見つかりませんでした。");
-            request.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);
-            return;
-        }
+
 
         // コレクションリストをリクエストスコープに設定
         request.setAttribute("collection", collects);
