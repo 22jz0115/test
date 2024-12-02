@@ -14,11 +14,42 @@
 	        window.addEventListener('load', () => {
 	            navigator.serviceWorker.register('/test/service-worker.js').then((registration) => {
 	                console.log('Service Worker registered with scope:', registration.scope);
+	                subscribeToPushNotifications(registration);
 	            }).catch((error) => {
 	                console.error('Service Worker registration failed:', error);
 	            });
 	        });
+	    }else {
+	        console.warn('サービスワーカーまたはPushManagerがサポートされていません');
 	    }
+
+	    // VAPID公開鍵（事前にサーバー側で生成して埋め込む）
+        const vapidPublicKey = 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlhI3eNMWKAmqQDM7tGOHjthyRD1qtGDaQyndE_45WIWKhsjoU_uaIJLptetAwSaT8APe277ZK7dAA3psGjRkb76_tcg1bTR-H3_2wTN1uGHuQNaXagjMGafC12wAayhdFkQ4HP6TsBFgycGrscvi1udZ3AC78Ot3NW3nOba1P9cdKfXyGkXEJLfp5CRy9QdBOqELLdv-McxLQFX4K_ic4MaJGVPu9xu1zkDhK4pkXlwrxYS9DHuWAB20Jf72LAQ06JqIR0Bi0WMQuYaIfaSGL-4tSJzIBorKM6buodhX4kjFB_hYNGrgiEyCziz_ZgGZPgBTbkxsWIuW1RUsMUAEwQIDAQAB';
+
+        // Push Subscriptionの登録
+        async function subscribeUserToPush() {
+            const subscription = await registration.pushManager.subscribe({
+                userVisibleOnly: true,
+                applicationServerKey: urlBase64ToUint8Array(vapidPublicKey)
+            });
+
+            console.log('Push Subscription:', subscription);
+
+            // サーバーに登録情報を送信
+            await fetch('/PushServlet', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(subscription)
+            });
+        }
+
+        // Utility: VAPID鍵の変換
+        function urlBase64ToUint8Array(base64String) {
+            const padding = '='.repeat((4 - base64String.length % 4) % 4);
+            const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+            const rawData = atob(base64);
+            return Uint8Array.from([...rawData].map(char => char.charCodeAt(0)));
+        }
 	</script>
 </head>
 <body>
@@ -36,7 +67,7 @@
             <label for="switch1" class="switch_label">  
                 <p>OFF</p>
                 <div class="switch">
-                    <input type="checkbox" id="switch1" onchange="updateNotificationSetting(this)"/>
+                    <input type="checkbox" id="switch1" onclick="subscribeUserToPush()"/>
                     <div class="circle"></div>
                     <div class="base"></div>
                 </div>
