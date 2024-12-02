@@ -68,6 +68,7 @@ public class Home extends HttpServlet {
         
         
         MyBoxesDAO boxDao = new MyBoxesDAO();
+        AccountsDAO Accountdao = new AccountsDAO();
         LocalDate now = LocalDate.now();  // 現在の日付を取得
 
         int getCollectionMonth = 0;  // 初期値を設定
@@ -84,14 +85,7 @@ public class Home extends HttpServlet {
         
         if (getCollectionMonth == 0 || now.getMonthValue() != getCollectionMonth) {
        	 // 最後にチェックした月が異なる場合、または getCollectionMonth が 0 の場合
-       	AccountsDAO Accountdao = new AccountsDAO();
-       	boolean isUpdated = Accountdao.updateLoginTime(account.getId());
-
-			if (isUpdated) {
-			    System.out.println("ログイン時刻が更新されました。");
-			} else {
-			    System.out.println("ログイン時刻の更新に失敗しました。");
-			}
+       	
        
            int outCheck = 0;
            int inCheck = 0;
@@ -128,8 +122,18 @@ public class Home extends HttpServlet {
            if (taskList.size() >= comperTask && percentageFromDatabase1 >= comperParsent) {
            	System.out.println("タスク数と達成率に基づいての所まで");
                boxDao.create(account.getId(), getCollectionMonth);  // 新しいコレクションを作成
+            
            }
        }
+        
+        boolean isUpdated = Accountdao.updateLoginTime(account.getId());
+        
+        if (isUpdated) {
+		    System.out.println("ログイン時刻が更新されました。");
+		} else {
+		    System.out.println("ログイン時刻の更新に失敗しました。");
+		}
+        
 
         if (account != null) {
             HttpSession session = request.getSession();
