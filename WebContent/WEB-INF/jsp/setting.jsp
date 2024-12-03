@@ -10,46 +10,50 @@
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
    	<script>
-	    if ('serviceWorker' in navigator) {
-	        window.addEventListener('load', () => {
-	            navigator.serviceWorker.register('/test/service-worker.js').then((registration) => {
-	                console.log('Service Worker registered with scope:', registration.scope);
-	                subscribeToPushNotifications(registration);
-	            }).catch((error) => {
-	                console.error('Service Worker registration failed:', error);
-	            });
-	        });
-	    }else {
-	        console.warn('サービスワーカーまたはPushManagerがサポートされていません');
-	    }
-
-	    // VAPID公開鍵（事前にサーバー側で生成して埋め込む）
-        const vapidPublicKey = 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlhI3eNMWKAmqQDM7tGOHjthyRD1qtGDaQyndE_45WIWKhsjoU_uaIJLptetAwSaT8APe277ZK7dAA3psGjRkb76_tcg1bTR-H3_2wTN1uGHuQNaXagjMGafC12wAayhdFkQ4HP6TsBFgycGrscvi1udZ3AC78Ot3NW3nOba1P9cdKfXyGkXEJLfp5CRy9QdBOqELLdv-McxLQFX4K_ic4MaJGVPu9xu1zkDhK4pkXlwrxYS9DHuWAB20Jf72LAQ06JqIR0Bi0WMQuYaIfaSGL-4tSJzIBorKM6buodhX4kjFB_hYNGrgiEyCziz_ZgGZPgBTbkxsWIuW1RUsMUAEwQIDAQAB';
-
-        // Push Subscriptionの登録
-        async function subscribeUserToPush() {
-            const subscription = await registration.pushManager.subscribe({
-                userVisibleOnly: true,
-                applicationServerKey: urlBase64ToUint8Array(vapidPublicKey)
-            });
-
-            console.log('Push Subscription:', subscription);
-
-            // サーバーに登録情報を送信
-            await fetch('/PushServlet', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(subscription)
-            });
-        }
-
-        // Utility: VAPID鍵の変換
-        function urlBase64ToUint8Array(base64String) {
-            const padding = '='.repeat((4 - base64String.length % 4) % 4);
-            const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
-            const rawData = atob(base64);
-            return Uint8Array.from([...rawData].map(char => char.charCodeAt(0)));
-        }
+	 	// サービスワーカー登録とPush通知の購読
+	   	function subscribeUserToPush() {
+	   	    if ('serviceWorker' in navigator && 'PushManager' in window) {
+	   	        // サービスワーカーを登録
+	   	        navigator.serviceWorker.register('/test/service-worker.js')
+	   	            .then(function (registration) {
+	   	                console.log('サービスワーカーが登録されました:', registration);
+	   	                // Push通知の購読関数を呼び出し
+	   	                subscribeToPushNotifications(registration);
+	   	            })
+	   	            .catch(function (error) {
+	   	                console.error('サービスワーカーの登録に失敗しました:', error);
+	   	            });
+	   	    } else {
+	   	        console.warn('このブラウザはサービスワーカーまたはPush通知をサポートしていません');
+	   	    }
+	   	}
+	
+	   	// Push通知の購読
+	   	function subscribeToPushNotifications(registration) {
+	   	    registration.pushManager.subscribe({
+	   	        userVisibleOnly: true, // 通知がユーザーに表示されることを保証
+	   	        applicationServerKey: urlBase64ToUint8Array('MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlhI3eNMWKAmqQDM7tGOHjthyRD1qtGDaQyndE_45WIWKhsjoU_uaIJLptetAwSaT8APe277ZK7dAA3psGjRkb76_tcg1bTR-H3_2wTN1uGHuQNaXagjMGafC12wAayhdFkQ4HP6TsBFgycGrscvi1udZ3AC78Ot3NW3nOba1P9cdKfXyGkXEJLfp5CRy9QdBOqELLdv-McxLQFX4K_ic4MaJGVPu9xu1zkDhK4pkXlwrxYS9DHuWAB20Jf72LAQ06JqIR0Bi0WMQuYaIfaSGL-4tSJzIBorKM6buodhX4kjFB_hYNGrgiEyCziz_ZgGZPgBTbkxsWIuW1RUsMUAEwQIDAQAB')
+	   	    })
+	   	    .then(function (subscription) {
+	   	        console.log('Push通知の購読に成功しました:', subscription);
+	   	        // 必要に応じて購読情報をサーバーに送信
+	   	    })
+	   	    .catch(function (error) {
+	   	        console.error('Push通知の購読に失敗しました:', error);
+	   	    });
+	   	}
+	
+	   	// VAPID公開鍵をUint8Arrayに変換する関数
+	   	function urlBase64ToUint8Array(base64String) {
+	   	    const padding = '='.repeat((4 - base64String.length % 4) % 4);
+	   	    const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+	   	    const rawData = window.atob(base64);
+	   	    const outputArray = new Uint8Array(rawData.length);
+	   	    for (let i = 0; i < rawData.length; ++i) {
+	   	        outputArray[i] = rawData.charCodeAt(i);
+	   	    }
+	   	    return outputArray;
+	   	}
 	</script>
 </head>
 <body>
