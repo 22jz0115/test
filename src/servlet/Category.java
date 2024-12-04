@@ -31,6 +31,7 @@ public class Category extends HttpServlet {
    		
    		List<Categories> categoryList = categoriesDAO.get();  // DAOからデータを取得
    		request.setAttribute("categoryList", categoryList); 
+   		System.out.println(categoryList.size());
 		
    		
    		request.getRequestDispatcher("/WEB-INF/jsp/category.jsp").forward(request, response);
