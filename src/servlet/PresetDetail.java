@@ -40,10 +40,10 @@ public class PresetDetail extends HttpServlet {
 		boolean result = dao.deleteAllPreset(presetId);
 		
 		if (result != false) {
-            System.out.println("okokokok");
+            
             response.sendRedirect("PresetList");
         } else {
-        	System.out.println("ngngngng");
+        	
         	response.sendRedirect("PresetDetail?presetId=" + presetId);
         }
 	}

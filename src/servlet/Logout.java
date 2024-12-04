@@ -32,7 +32,7 @@ public class Logout extends HttpServlet {
         }else {
         	AuthLogic logic = new AuthLogic();
             logic.logout(session);
-            System.out.println(loginUser.getEmail());
+      
             
             
             

@@ -41,7 +41,7 @@ public class TaskDetail extends HttpServlet {
 	        TasksDAO tasksDAO = new TasksDAO();
 	          // アカウントIDに関連するタスク一覧を取得
 	       Tasks tasks = tasksDAO.findById(taskId, loginUser.getId());
-	       System.out.print("タスク確認"+ tasks.getTaskName());
+	       
 	       String selectedDate = tasks.getFormattedDate();
           request.setAttribute("task", tasks);
         
@@ -56,12 +56,9 @@ public class TaskDetail extends HttpServlet {
        
           // リクエストスコープに格納
           request.setAttribute("categorys", categorys);
-          System.out.println(categorys.getCategoryName());
           
          
-          request.setAttribute("selectedDate", selectedDate);
-          System.out.println("selectedDate: " + selectedDate);
-          
+          request.setAttribute("selectedDate", selectedDate);      
 
          
 		    // タスク詳細画面へフォワード
@@ -110,11 +107,10 @@ public class TaskDetail extends HttpServlet {
 	            // 挿入が成功した場合、タスク一覧画面にリダイレクト
 	            response.sendRedirect("Task?date=" + date);  // 日付をクエリパラメータとして渡してリダイレクト
 
-	            System.out.println("okokokok");
+	          
 
 	        } else {
-	            // 挿入が失敗した場合、エラーメッセージを表示
-	        	System.out.println("ngngngng");
+	           
 	        	response.sendRedirect("Task?date=" + date);
 	        }
 	    }

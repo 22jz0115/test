@@ -36,7 +36,6 @@ public class Delete extends HttpServlet {
 		 // パラメータから日付を取得
 	        String selectedDate = request.getParameter("selectedDate");
 	        
-	        System.out.println("Delete SelectedDate : " + selectedDate);
 	        
 	        TasksDAO taskdao = new TasksDAO();
 	        taskdao.deleteTask(loginUser.getId(), taskId);

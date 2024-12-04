@@ -45,7 +45,7 @@
 <c:forEach var="life" items="${lifeList}">
     <div class="lifehacks">
         <div>
-            <h2>${life.accountId}さん</h2>
+            <h2>${life.account.name}さん</h2> <!-- ここを変更 -->
             <h3>${life.title}</h3>
             <p>${life.content}</p>
             <img src="${life.img}" alt="画像">

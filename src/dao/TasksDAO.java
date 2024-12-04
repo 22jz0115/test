@@ -113,7 +113,7 @@ public class TasksDAO {
 	        PreparedStatement stmt = cn.prepareStatement(sql);
 	        stmt.setInt(1, account_id);
 	        
-	        System.out.println("Date: " + date); // デバッグ用の出力
+	     
 	        
 	        // パラメータとしてdateをセット
 	        stmt.setString(2, date);

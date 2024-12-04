@@ -89,14 +89,7 @@ public class Result extends HttpServlet {
 	        request.setAttribute("percentageFromDatabase2", percentageFromDatabase2);
 	        request.setAttribute("percentageFromDatabase3", percentageFromDatabase3);
 	        request.setAttribute("taskList", taskList);
-	        System.out.println("月比較されたデータの個数は：" + taskList.size());
-	        System.out.println("OutSum :" + outSum);
-	        System.out.println("inSum :" + inSum);
-	        System.out.println("OutCheck :" + outCheck);
-	        System.out.println("inCheck :" + inCheck);
-	        System.out.println("percentageFromDatabase1 :" + percentageFromDatabase1);
-	        System.out.println("percentageFromDatabase2 :" + percentageFromDatabase2);
-	        System.out.println("percentageFromDatabase3 :" + percentageFromDatabase3);
+	        
 		request.getRequestDispatcher("/WEB-INF/jsp/result.jsp").forward(request, response);
 	}
 

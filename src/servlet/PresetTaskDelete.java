@@ -24,11 +24,11 @@ public class PresetTaskDelete extends HttpServlet {
 		boolean result = dao.deletePresetTask(presetTaskId);
 		
 		if (result != false) {
-            System.out.println("okokokok");
+           
             response.sendRedirect("PresetDetail?presetId=" + presetId);  
 
         } else {
-        	System.out.println("ngngngng");
+        	
         	response.sendRedirect("PresetDetail?presetId=" + presetId);
         }
 	}

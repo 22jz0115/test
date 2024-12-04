@@ -11,6 +11,8 @@ public class Lifes {
 	private LocalDateTime postDate;
 	private LocalDateTime creeatedAt;
 	private LocalDateTime updateDate;
+    private Accounts account; // 追加: account情報を保持するフィールド
+    
 	public int getId() {
 		return id;
 	}
@@ -59,6 +61,16 @@ public class Lifes {
 	public void setUpdateDate(LocalDateTime updateDate) {
 		this.updateDate = updateDate;
 	}
+	
+	 // 追加: アカウント情報のゲッターとセッター
+    public Accounts getAccount() {
+        return account;
+    }
+
+    public void setAccount(Accounts account) {
+        this.account = account;
+    }
+    
 	public Lifes(int id, int accountId, String title, String img, String content, LocalDateTime postDate,
 			LocalDateTime creeatedAt, LocalDateTime updateDate) {
 		super();
@@ -71,5 +83,20 @@ public class Lifes {
 		this.creeatedAt = creeatedAt;
 		this.updateDate = updateDate;
 	}
+	
+	// コンストラクタ（修正）
+    public Lifes(int id, int accountId, String title, String img, String content, LocalDateTime postDate,
+            LocalDateTime creeatedAt, LocalDateTime updateDate, Accounts account) {
+        super();
+        this.id = id;
+        this.accountId = accountId;
+        this.title = title;
+        this.img = img;
+        this.content = content;
+        this.postDate = postDate;
+        this.creeatedAt = creeatedAt;
+        this.updateDate = updateDate;
+        this.account = account; // アカウント情報の設定
+    }
 	
 }

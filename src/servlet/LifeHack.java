@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import dao.AccountsDAO;
 import dao.LifesDAO;
 import model.Accounts;
 import model.Lifes;
@@ -39,8 +40,18 @@ public class LifeHack extends HttpServlet {
 
         LifesDAO dao = new LifesDAO();
         List<Lifes> lifeList = dao.get();
+       
+        
+        // AccountDAOを使って各Lifeのaccount_idに対応するアカウント情報を取得
+        AccountsDAO accountDAO = new AccountsDAO();
+        for (Lifes life : lifeList) {
+            Accounts account = accountDAO.find(life.getAccountId());
+            life.setAccount(account);  // Lifeオブジェクトに関連するアカウント情報をセット
+        }
+        
+   
         request.setAttribute("lifeList", lifeList);
-        System.out.print(lifeList.size());
+      
         
 
         request.getRequestDispatcher("/WEB-INF/jsp/lifeHack.jsp").forward(request, response);
@@ -61,7 +72,7 @@ public class LifeHack extends HttpServlet {
         // 保存先のディレクトリを指定 (絶対パスを使用)
         String uploadDir = "/opt/tomcat/webapps/test/assets/img"; // 直接絶対パスを指定
         
-        System.out.println("Upload directory: " + uploadDir);
+        
 
         // 保存先のディレクトリが存在しない場合は作成
         File uploadDirFile = new File(uploadDir);

@@ -263,18 +263,21 @@ p{
     font-size: 30px;
     max-width: 1110px;
    height: 264px;
+
 }
 
 .calendar-wrap {
     margin: 5px auto;
     width: 370px;
     display: grid;
+
     /* grid-template-columns: repeat(2, 1fr); */
   }
   @media (max-width: 767.98px) {
     .calendar-wrap {
       display: flex;
       flex-direction: column;
+   
     }
   }
   .calendar {
@@ -411,6 +414,19 @@ p{
 
 
 
+/* 日曜日の背景色を赤に */
+.sunday {
+    background-color: rgb(242, 57, 71, 0.7);
+    color: white;
+    font-weight: bold;
+}
+
+/* 土曜日の背景色を青に */
+.saturday {
+    background-color: rgba(56, 180, 245, 0.8);
+    color: white;
+    font-weight: bold;
+}
 
 
 
@@ -905,7 +921,7 @@ span{
     width: 5px;
     height: 50px;
     background: #c9c9c9;
-    margin-left: 18px;
+    margin-left: 25px;
     padding-top: 7px;
 }
 

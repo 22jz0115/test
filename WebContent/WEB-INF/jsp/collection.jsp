@@ -31,20 +31,33 @@
     <p class="years">現在の年は <span id="year"><%= new java.util.Date().getYear() + 1900 %></span>年です。</p>
 
     <div class="grid-container">
-    	 <c:forEach begin="1" end="12" step="1" var="month">
-    	 	<c:forEach var="collect" items="${collection }">
-	    	 	 <c:choose>
-				    <c:when test="${collect.id == month }">
-				    	<img src="${collect.img }" alt="金メダル" class="round-image">
-				    </c:when>
-				    <c:otherwise>
-				    	<div class="dotted-circle"><p>${month }月</p></div>
-				    </c:otherwise>
-				</c:choose>   
-    	 	</c:forEach>
-	       
-        </c:forEach>
-        
+        <c:choose>
+            <c:when test="${empty collection}">
+                <!-- ${collection} が空の場合、1から12までの月を表示 -->
+                <c:forEach var="month" begin="1" end="12" step="1">
+                    <div class="dotted-circle">
+                        <p>${month}月</p>
+                    </div>
+                </c:forEach>
+            </c:when>
+            <c:otherwise>
+                <!-- ${collection} がある場合は、各月のコレクション画像を表示 -->
+                <c:forEach var="month" begin="1" end="12" step="1">
+                    <c:forEach var="collect" items="${collection}">
+                        <c:choose>
+                            <c:when test="${collect.id == month}">
+                                <img src="${collect.img}" alt="金メダル" class="round-image">
+                            </c:when>
+                            <c:otherwise>
+                                <div class="dotted-circle">
+                                    <p>${month}月</p>
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                </c:forEach>
+            </c:otherwise>
+        </c:choose>
     </div>
 </body>
 </html>
