@@ -35,7 +35,7 @@ public class TaskNotificationScheduler {
             List<Tasks> list = dao.findTaskTime(dateTime);
             
             if(list != null) {
-            	
+            	//listが入っていたらfor文で実行
             }
         }, 0, 1, TimeUnit.MINUTES); // 毎分チェック
     }
