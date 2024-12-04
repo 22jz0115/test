@@ -109,7 +109,7 @@ public class TasksDAO {
 	    DBManager manager = DBManager.getInstance();
 	    try (Connection cn = manager.getConnection()) {
 	        // SQL文でtask_datetimeの年月日部分のみを比較
-	        String sql = "SELECT * FROM tasks WHERE account_id = ? AND TRUNC(task_datetime) = TO_DATE(?, 'YYYY-MM-DD') ORDER　BY 5";
+	        String sql = "SELECT * FROM tasks WHERE account_id = ? AND TRUNC(task_datetime) = TO_DATE(?, 'YYYY-MM-DD') ORDER BY 5";
 	        PreparedStatement stmt = cn.prepareStatement(sql);
 	        stmt.setInt(1, account_id);
 	        
@@ -383,8 +383,24 @@ public class TasksDAO {
 	    }
 	}
 	
-	
-	
-	
-
+	public List<Tasks> findTaskTime(LocalDateTime dateTime) {
+		List<Tasks> list = new ArrayList<>();
+		DBManager manager = DBManager.getInstance();
+		try(Connection cn = manager.getConnection()) {
+			// プレースホルダで変数部分を定義
+			String sql = "SELECT * FROM tasks WHERE task_datetime = ?";
+			PreparedStatement stmt = cn.prepareStatement(sql);
+			stmt.setTimestamp(1, Timestamp.valueOf(dateTime));
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				Tasks tasks = rs2model(rs);
+				list.add(tasks);
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
 }

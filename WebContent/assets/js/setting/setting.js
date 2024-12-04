@@ -29,5 +29,5 @@ $(function() {
    $('#bgColorBtn').on('click', function() {
     var bgColor = $('#bgcolor').val();
     $('body').css('background-color', bgColor); // 背景色を変更
-    
-    
+   }); 
+});    

@@ -32,11 +32,16 @@
 	   	function subscribeToPushNotifications(registration) {
 	   	    registration.pushManager.subscribe({
 	   	        userVisibleOnly: true, // 通知がユーザーに表示されることを保証
-	   	        applicationServerKey: urlBase64ToUint8Array('MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlhI3eNMWKAmqQDM7tGOHjthyRD1qtGDaQyndE_45WIWKhsjoU_uaIJLptetAwSaT8APe277ZK7dAA3psGjRkb76_tcg1bTR-H3_2wTN1uGHuQNaXagjMGafC12wAayhdFkQ4HP6TsBFgycGrscvi1udZ3AC78Ot3NW3nOba1P9cdKfXyGkXEJLfp5CRy9QdBOqELLdv-McxLQFX4K_ic4MaJGVPu9xu1zkDhK4pkXlwrxYS9DHuWAB20Jf72LAQ06JqIR0Bi0WMQuYaIfaSGL-4tSJzIBorKM6buodhX4kjFB_hYNGrgiEyCziz_ZgGZPgBTbkxsWIuW1RUsMUAEwQIDAQAB')
+	   	        applicationServerKey: urlBase64ToUint8Array('BP198Ghlpaac41UMKrRvYyNt56tt7JCcgusX1JSh1e3W-kApskF2BLqCNi0c2GBjPx5BflPezwvi0OwVsaGTclI=')
 	   	    })
 	   	    .then(function (subscription) {
 	   	        console.log('Push通知の購読に成功しました:', subscription);
-	   	        // 必要に応じて購読情報をサーバーに送信
+	   	  		// サーバーに登録情報を送信
+	            fetch('/test/PushServlet', {
+	                method: 'POST',
+	                headers: { 'Content-Type': 'application/json' },
+	                body: JSON.stringify(subscription)
+	            });
 	   	    })
 	   	    .catch(function (error) {
 	   	        console.error('Push通知の購読に失敗しました:', error);
