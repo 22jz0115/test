@@ -34,6 +34,27 @@ public class AccountsDAO {
 		return list;
     }
 	
+	public List<Accounts> findByAccountId(int account_id) {
+		List<Accounts> list = new ArrayList<>();
+				
+		DBManager manager = DBManager.getInstance();
+		try(Connection cn = manager.getConnection()) {
+			String sql = "SELECT * FROM accounts WHERE id = account_id";
+			PreparedStatement stmt = cn.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			
+			// データをリストに格納
+			while(rs.next()) {
+				Accounts accounts = rs2model(rs);
+				list.add(accounts);
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}	
+		return list;
+    }
+	
+	
 	public Accounts find(int id) {
     	Accounts accounts = null;
 		DBManager manager = DBManager.getInstance();
@@ -54,6 +75,8 @@ public class AccountsDAO {
 		
 		return accounts;
     }
+	
+
 	
 	/**
 	 * テーブルの中から、指定されたメールアドレスを持つレコードを返すメソッド
