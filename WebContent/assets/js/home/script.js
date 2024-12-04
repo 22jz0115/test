@@ -1,6 +1,5 @@
 $(function() {
-	
-	const ham = document.querySelector('.openbtn1');
+    const ham = document.querySelector('.openbtn1');
     const nav = document.querySelector('#g-nav');
 
     ham.addEventListener('click', function(){
@@ -8,14 +7,11 @@ $(function() {
         nav.classList.toggle('panelactive');
     });
 
-
     nav.addEventListener('click', function(){
         ham.classList.remove('active');
         nav.classList.remove('panelactive');
     });
-    
-    
-    
+
     // カレンダーの生成
     const head = '<tr class="week"><th class="sun">日</th><th>月</th>' +
         '<th>火</th><th>水</th><th>木</th><th>金</th><th class="sat">土</th></tr>';
@@ -45,16 +41,23 @@ $(function() {
         yobi = d.getDay();
         let tdClass = (today.getFullYear() === d.getFullYear() && today.getMonth() === d.getMonth() && today.getDate() === day) ? 'today' : '';
 
+        // 土曜日と日曜日の背景色を設定
+        if (yobi === 0) {
+            tdClass += ' sunday'; // 日曜日
+        } else if (yobi === 6) {
+            tdClass += ' saturday'; // 土曜日
+        }
+
         // クリックイベントで現在の月と日を明示的に指定
         line.append($('<td>', {
-		    class: tdClass,
-		    text: day,
-		    click: (function(year, month, day) {
-		        return function() {
-		            sendDate(new Date(year, month, day)); // 正しい年月日を指定
-		        };
-		    })(d.getFullYear(), d.getMonth(), day) // 即時関数で現在の年月日を保持
-		}));
+            class: tdClass,
+            text: day,
+            click: (function(year, month, day) {
+                return function() {
+                    sendDate(new Date(year, month, day)); // 正しい年月日を指定
+                };
+            })(d.getFullYear(), d.getMonth(), day) // 即時関数で現在の年月日を保持
+        }));
 
         if (yobi == 6) {  // 土曜日で行を終了
             $("table").append(line);
