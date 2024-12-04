@@ -22,7 +22,7 @@
 	    }
 
 	    const Location = '${Location}';
-	    console.log("Location:", Location); // デバッグ用
+
 
 	    
 	</script>

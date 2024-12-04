@@ -51,7 +51,7 @@ public class LifeHack extends HttpServlet {
         
    
         request.setAttribute("lifeList", lifeList);
-        System.out.print(lifeList.size());
+      
         
 
         request.getRequestDispatcher("/WEB-INF/jsp/lifeHack.jsp").forward(request, response);
@@ -72,7 +72,7 @@ public class LifeHack extends HttpServlet {
         // 保存先のディレクトリを指定 (絶対パスを使用)
         String uploadDir = "/opt/tomcat/webapps/test/assets/img"; // 直接絶対パスを指定
         
-        System.out.println("Upload directory: " + uploadDir);
+        
 
         // 保存先のディレクトリが存在しない場合は作成
         File uploadDirFile = new File(uploadDir);

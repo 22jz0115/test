@@ -40,10 +40,7 @@ public class Task extends HttpServlet {
             LocalDate today = LocalDate.now();
             selectedDate = today.toString(); // YYYY-MM-DD形式
         }
-        
-        System.out.println("TaskSurvletに渡された日付データ" + selectedDate);
-        
-        
+          
 
         // 日付をリクエスト属性に設定
         request.setAttribute("selectedDate", selectedDate);
@@ -54,7 +51,7 @@ public class Task extends HttpServlet {
         
         request.setAttribute("taskList", taskList);
         
-        System.out.print("taskの個数" + taskList.size());
+       
 
         // 次のページに遷移
         request.getRequestDispatcher("/WEB-INF/jsp/task.jsp").forward(request, response);
