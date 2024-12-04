@@ -44,12 +44,10 @@ public class Home extends HttpServlet {
         List<Tasks> taskList = dao.findByCheckTask(loginUser.getId(), selectedDate);
         request.setAttribute("taskList", taskList);
         
-        System.out.println("HomeServletに渡された日付データ" + selectedDate);
-        
 
      // JavaScriptに渡すためのデータをリクエスト属性に追加
         request.setAttribute("Location", loginUser.getLocation());
-        System.out.println(loginUser.getLocation());
+
     
         
    
@@ -122,7 +120,7 @@ public class Home extends HttpServlet {
 
            // タスク数と達成率に基づいて新しいコレクションを作成
            if (taskList.size() >= comperTask && percentageFromDatabase1 >= comperParsent) {
-           	System.out.println("タスク数と達成率に基づいての所まで");
+           
                boxDao.create(account.getId(), getCollectionMonth);  // 新しいコレクションを作成
             
            }
@@ -137,14 +135,9 @@ public class Home extends HttpServlet {
 		}
         
 
-        if (account != null) {
-            HttpSession session = request.getSession();
-            session.setAttribute("loginUser", account);
-           
-            response.sendRedirect("/test/Home");
-        } else {
-            request.setAttribute("msg", "ログインに失敗しました");
-            doGet(request, response);
-        }
+        HttpSession session = request.getSession();
+		session.setAttribute("loginUser", account);
+         
+		response.sendRedirect("/test/Home");
     }
 }
