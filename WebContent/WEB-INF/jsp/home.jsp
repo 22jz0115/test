@@ -20,6 +20,11 @@
 	            });
 	        });
 	    }
+
+	    const Location = '${Location}';
+	    console.log("Location:", Location); // デバッグ用
+
+	    
 	</script>
 </head>
 <body>
@@ -71,5 +76,6 @@
     </div>
     <script type="text/javascript" src="assets/js/home/script.js"></script>
     <script src="assets/js/geolocation/geocode.js"></script>
+    
 </body>
 </html>

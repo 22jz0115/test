@@ -71,22 +71,29 @@ const BASE_API_URL = "https://www.jma.go.jp/bosai/forecast/data/forecast/";
             reverseGeocode(latitude, longitude);
         }
 
-        function errorCallback(error) {
-            switch(error.code) {
-                case error.PERMISSION_DENIED:
-                    alert("位置情報の取得が許可されませんでした。");
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    alert("位置情報が取得できませんでした。");
-                    break;
-                case error.TIMEOUT:
-                    alert("位置情報の取得に時間がかかりすぎてタイムアウトしました。");
-                    break;
-                default:
-                    alert("不明なエラーが発生しました。");
-                    break;
-            }
-        }
+        async function errorCallback(error) {
+		    switch (error.code) {
+		        case error.PERMISSION_DENIED:
+		            alert("位置情報の取得が許可されませんでした。" );
+		           
+		          
+	                const areaCode = Location ;
+	                
+	                getWeather(areaCode);
+		          
+		            break;
+		        case error.POSITION_UNAVAILABLE:
+		            alert("位置情報が取得できませんでした。");
+		            break;
+		        case error.TIMEOUT:
+		            alert("位置情報の取得に時間がかかりすぎてタイムアウトしました。");
+		            break;
+		        default:
+		            alert("不明なエラーが発生しました。");
+		            break;
+		    }
+		}
+
 
         function reverseGeocode(latitude, longitude) {
             const url = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&accept-language=ja`;

@@ -47,7 +47,9 @@ public class Home extends HttpServlet {
         System.out.println("HomeServletに渡された日付データ" + selectedDate);
         
 
-        
+     // JavaScriptに渡すためのデータをリクエスト属性に追加
+        request.setAttribute("Location", loginUser.getLocation());
+        System.out.println(loginUser.getLocation());
     
         
    
