@@ -77,11 +77,10 @@ public class TaskInput extends HttpServlet {
             // 挿入が成功した場合、タスク一覧画面にリダイレクト
             response.sendRedirect("Task?date=" + date);  // 日付をクエリパラメータとして渡してリダイレクト
 
-            System.out.println("okokokok");
+         
 
         } else {
-            // 挿入が失敗した場合、エラーメッセージを表示
-        	System.out.println("ngngngng");
+    
         	response.sendRedirect("Task?date=" + date);
         }
         

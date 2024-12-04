@@ -38,7 +38,7 @@ public class Collection extends HttpServlet {
         List<MyBoxs> box = boxDao.findByAccountId(loginUser.getId());
         List<Integer> collectionIds = new ArrayList<>();
         
-        System.out.println(box.size());
+  
 
         // MyBoxsリストから collectionId を抽出
         for (MyBoxs myBox : box) {

@@ -68,9 +68,7 @@ public class Task extends HttpServlet {
                 int taskId = Integer.parseInt(taskIdParam);
                 int check = Integer.parseInt(checkParam);
 
-                // デバッグ用にログ出力
-                System.out.println("受信したtaskId: " + taskId);
-                System.out.println("受信したcheck: " + check);
+          
 
                 // タスク状態を更新
                 TasksDAO taskDAO = new TasksDAO();
