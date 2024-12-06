@@ -1,4 +1,7 @@
 $(function() {
+    let currentMonth;
+    let currentYear;
+
     const ham = document.querySelector('.openbtn1');
     const nav = document.querySelector('#g-nav');
 
@@ -12,18 +15,51 @@ $(function() {
         nav.classList.remove('panelactive');
     });
 
-    // カレンダーの生成
-    const head = '<tr class="week"><th class="sun">日</th><th>月</th>' +
-        '<th>火</th><th>水</th><th>木</th><th>金</th><th class="sat">土</th></tr>';
-    $("table").prepend(head);
-
-    let d = new Date(); // 現在の年月を基準にする
-    let today = new Date();  // 今日の日付を取得
+    // 初期表示
+    let today = new Date();
+    currentMonth = today.getMonth();
+    currentYear = today.getFullYear();
 
     // 月の初日に設定
-    d.setDate(1);
-    let currentMonth = d.getMonth(); // カレンダーを表示する月
-    $("caption").prepend(d.getFullYear() + "年", d.getMonth() + 1 + "月"); // 年月の表示
+    generateCalendar(currentYear, currentMonth);
+
+    // 前月ボタン
+    $('#prev-month').click(function() {
+        currentMonth--;
+        if (currentMonth < 0) {
+            currentMonth = 11;
+            currentYear--;
+        }
+        generateCalendar(currentYear, currentMonth);
+    });
+
+    // 次月ボタン
+    $('#next-month').click(function() {
+        currentMonth++;
+        if (currentMonth > 11) {
+            currentMonth = 0;
+            currentYear++;
+        }
+        generateCalendar(currentYear, currentMonth);
+    });
+});
+
+// カレンダーを生成
+// カレンダーを生成
+function generateCalendar(year, month) {
+    const head = '<tr class="week"><th class="sun">日</th><th>月</th>' +
+        '<th>火</th><th>水</th><th>木</th><th>金</th><th class="sat">土</th></tr>';
+    $("table").empty().prepend(head);
+
+    // 年月の表示を修正
+    const monthLabel = year + "年 " + (month + 1) + "月";
+    console.log("表示される年月: " + monthLabel);
+
+    // caption の内容を更新
+    $("#yearMonth").text(monthLabel); // 月の表示を更新
+
+    let d = new Date(year, month, 1); // 指定月の初日を設定
+    let today = new Date();  // 今日の日付を取得
 
     let yobi1 = d.getDay();  // 月初めの日の曜日
     let line = $('<tr>');
@@ -67,7 +103,7 @@ $(function() {
         day++;
         d.setDate(day);  // 日付を次の日に設定
 
-    } while (d.getMonth() === currentMonth);
+    } while (d.getMonth() === month);
 
     // 月の残りの日付を埋める
     if (yobi < 6) { // 最後の週の残りを埋める
@@ -76,36 +112,20 @@ $(function() {
         }
         $("table").append(line);
     }
-});
+}
 
+
+
+// 日付を送信
 function sendDate(date) {
     // 日付を"YYYY-MM-DD"形式にフォーマット
     const formattedDate = date.getFullYear() + '-' + 
                           String(date.getMonth() + 1).padStart(2, '0') + '-' + 
                           String(date.getDate()).padStart(2, '0');
-                          
     console.log("HomeJavaScriptの日付: " + formattedDate);
-    
+
     // URLに日付を追加
     const urlParams = new URLSearchParams();
     urlParams.append('date', formattedDate);
     window.location.href = 'Task?' + urlParams.toString();
 }
-
-
-
-
-// Service Workerからのメッセージを受け取り、Web Speech APIを使って読み上げる
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js')
-        .then(registration => {
-            console.log('Service Worker registered with scope:', registration.scope);
-        });
-}
-
-navigator.serviceWorker.addEventListener('message', function(event) {
-    const notificationText = event.data;
-    const speech = new SpeechSynthesisUtterance(notificationText);
-    speech.lang = 'ja-JP';  // 日本語で読み上げ
-    window.speechSynthesis.speak(speech);
-});

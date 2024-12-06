@@ -50,7 +50,14 @@
     
     
     <div class="calendar-wrap">
-        <table class="calendar"><caption></caption></table>
+ 	   <button id="prev-month">前月</button>
+ 	   <p id="yearMonth"></p>
+        <button id="next-month">次月</button>
+        
+        <table class="calendar">
+        	
+        </table>
+    
     </div>
 
     <h2 class="notice">お知らせ</h2>
