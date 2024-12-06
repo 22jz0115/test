@@ -31,13 +31,29 @@ public class TaskHistory extends HttpServlet {
 		
 		HttpSession session = request.getSession();
         Accounts loginUser = (Accounts) session.getAttribute("loginUser");
+        
+        int categoryId = 0;
 
-        int categoryId = Integer.parseInt(request.getParameter("categoryId")); 
+        
+        String taskHistoryId = (String) session.getAttribute("taskHistoryId");
+
+        System.out.println(taskHistoryId);
         
        TasksDAO taskDAO = new TasksDAO();
        
        CategoriesDAO categoryDAO = new CategoriesDAO();
-       Categories categoryName = categoryDAO.find(categoryId);
+       
+       Categories categoryName = null;
+       
+       if(taskHistoryId != null) {
+    	   categoryId = Integer.parseInt(taskHistoryId);
+    	   categoryName = categoryDAO.find(categoryId);
+    	   
+       }else {
+    	   categoryId = Integer.parseInt(request.getParameter("categoryId")); 
+    	   categoryName = categoryDAO.find(categoryId);
+       }
+       
        
         List<Tasks> taskList = taskDAO.findByCategoryId(loginUser.getId(), categoryId);
         

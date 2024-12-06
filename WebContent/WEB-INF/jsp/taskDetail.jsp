@@ -27,13 +27,22 @@
     <script type="text/javascript" src="assets/js/taskDetail/script.js"></script>
     
     <header>
-        <a href="Task?date=${task.formattedDate}">
-            <img class="imgVector" src="assets/img/戻るボタン.png" alt="">
-        </a>
-        <h1>タスク詳細</h1>
-    </header>
+	  <a href="<c:choose>
+            <c:when test="${not empty sessionScope.taskHistoryId}">
+                TaskHistory
+            </c:when>
+            <c:otherwise>
+                Task?date=${task.formattedDate}
+            </c:otherwise>
+        </c:choose>">
+
+	        <img class="imgVector" src="assets/img/戻るボタン.png" alt="">
+	    </a>
+	    <h1>タスク詳細</h1>
+	</header>
 
     <form action="TaskDetail" method="post">
+  	  <input type="hidden" name="from" value="${from}">
         
         <!-- 日付表示 -->
         <div class="form-group">

@@ -23,96 +23,93 @@ import model.Tasks;
  */
 @WebServlet("/TaskDetail")
 public class TaskDetail extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	
-	 protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		   HttpSession session = request.getSession();
-		    Accounts loginUser = (Accounts) session.getAttribute("loginUser");
-		    
-		     
-		    String taskIdStr = request.getParameter("taskId");
-		    int taskId = Integer.parseInt(taskIdStr);
-		    
-		 // パラメータから日付を取得
-	       
-	        
-	        
-	       
-	        TasksDAO tasksDAO = new TasksDAO();
-	          // アカウントIDに関連するタスク一覧を取得
-	       Tasks tasks = tasksDAO.findById(taskId, loginUser.getId());
-	       
-	       String selectedDate = tasks.getFormattedDate();
-          request.setAttribute("task", tasks);
-        
-          int categoryId = tasks.getCategoryId();
-       // DAOを使ってカテゴリーを取得
-          CategoriesDAO CategoriesDAO = new CategoriesDAO();
-          Categories categorys = CategoriesDAO.find(categoryId);
-          
-     		
-     	  List<Categories> categoryList = CategoriesDAO.get();  // DAOからデータを取得
-     	  request.setAttribute("categoryList", categoryList); 
-       
-          // リクエストスコープに格納
-          request.setAttribute("categorys", categorys);
-          
-         
-          request.setAttribute("selectedDate", selectedDate);      
+    private static final long serialVersionUID = 1L;
 
-         
-		    // タスク詳細画面へフォワード
-		    request.getRequestDispatcher("/WEB-INF/jsp/taskDetail.jsp").forward(request, response);
-		}
-	    
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Accounts loginUser = (Accounts) session.getAttribute("loginUser");
 
-	    // POSTメソッド：削除または更新処理
-	    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    	request.setCharacterEncoding("UTF-8");
-	        // フォームデータを取得
-	        String date = request.getParameter("dateInput");
-	        
-	        String time = request.getParameter("apptTime");
-	        
-	        String category = request.getParameter("categorySelect"); //int型にする
-	        String taskName = request.getParameter("taskName");
-	        String memo = request.getParameter("story");
-	        String taskid = request.getParameter("taskId");
-	        System.out.println(date);
-	        System.out.println(time);
-	        System.out.println(category);
-	        System.out.println(taskName);
-	        System.out.println(memo);
-	        System.out.println(taskid);
-	        
-	        
-	        int taskId = Integer.parseInt(taskid);
-	        int categoryId = Integer.parseInt(category);
-	        
-	        String datetime = date + " " + time;
-	        LocalDateTime taskDateTime = LocalDateTime.parse(datetime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-	        
-	    	HttpSession session = request.getSession();
-	        Accounts loginUser = (Accounts) session.getAttribute("loginUser");
-	        int accountId = loginUser.getId();
-	        
-	        int outin = request.getParameter("switch") != null ? 1 : 0;
-	        
+        String taskIdStr = request.getParameter("taskId");
+        int taskId = Integer.parseInt(taskIdStr);
 
-	        // DAOを使ってデータベースにタスクを挿入
-	        TasksDAO dao = new TasksDAO();
-	        boolean clear =  dao.updateTask(taskId, categoryId, accountId, taskName, memo, outin, taskDateTime);
+        TasksDAO tasksDAO = new TasksDAO();
+        Tasks tasks = tasksDAO.findById(taskId, loginUser.getId());
 
-	        if (clear != false) {
-	            // 挿入が成功した場合、タスク一覧画面にリダイレクト
-	            response.sendRedirect("Task?date=" + date);  // 日付をクエリパラメータとして渡してリダイレクト
+        String selectedDate = tasks.getFormattedDate();
+        request.setAttribute("task", tasks);
 
-	          
+        int categoryId = tasks.getCategoryId();
+        CategoriesDAO categoriesDAO = new CategoriesDAO();
+        Categories category = categoriesDAO.find(categoryId);
 
-	        } else {
-	           
-	        	response.sendRedirect("Task?date=" + date);
-	        }
-	    }
-	}
+        List<Categories> categoryList = categoriesDAO.get();
+        request.setAttribute("categoryList", categoryList);
+        request.setAttribute("categorys", category);
+        request.setAttribute("selectedDate", selectedDate);
+
+        // 呼び出し元を取得してリクエストスコープに保存
+        String from = request.getParameter("from");
+        String taskHistoryId = request.getParameter("categoryId");
+        System.out.println(from);
+        if (from != null && taskHistoryId != null) {
+            request.setAttribute("from", from);
+            session.setAttribute("taskHistoryId", taskHistoryId);
+            System.out.println(taskHistoryId);
+            
+        }else {
+        	session.setAttribute("taskHistoryId", null);
+        }
+
+        // タスク詳細画面へフォワード
+        request.getRequestDispatcher("/WEB-INF/jsp/taskDetail.jsp").forward(request, response);
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        String date = request.getParameter("dateInput");
+        String time = request.getParameter("apptTime");
+        String category = request.getParameter("categorySelect");
+        String taskName = request.getParameter("taskName");
+        String memo = request.getParameter("story");
+        String taskid = request.getParameter("taskId");
+
+        int taskId = Integer.parseInt(taskid);
+        int categoryId = Integer.parseInt(category);
+
+        String datetime = date + " " + time;
+        LocalDateTime taskDateTime = LocalDateTime.parse(datetime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+
+        HttpSession session = request.getSession();
+        Accounts loginUser = (Accounts) session.getAttribute("loginUser");
+        int accountId = loginUser.getId();
+
+        int outin = request.getParameter("switch") != null ? 1 : 0;
+
+        TasksDAO dao = new TasksDAO();
+        boolean clear = dao.updateTask(taskId, categoryId, accountId, taskName, memo, outin, taskDateTime);
+
+        // 呼び出し元の情報を取得
+        String from = request.getParameter("from");
+        String taskHistoryId = (String) session.getAttribute("taskHistoryId");
+        System.out.println(taskHistoryId);
+
+        if (clear) {
+            // 成功時：呼び出し元にリダイレクト
+            if ("TaskHistory".equals(from)) {
+            	session.setAttribute("taskHistoryId", taskHistoryId);  // セッションに保存
+                response.sendRedirect("TaskHistory"); // `TaskHistory`へのリダイレクト
+            } else {
+                response.sendRedirect("Task?date=" + date);
+            }
+        } else {
+            // 失敗時：同様に呼び出し元にリダイレクト
+            if ("TaskHistory".equals(from)) {
+            	session.setAttribute("taskHistoryId", taskHistoryId);  // セッションに保存
+                response.sendRedirect("TaskHistory");
+            } else {
+                response.sendRedirect("Task?date=" + date);
+            }
+        }
+    }
+}
 
