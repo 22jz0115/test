@@ -28,63 +28,110 @@ public class TaskNotificationScheduler {
     public static void start() {
         scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(() -> {
-            // タスクの実行内容
-            System.out.println("チェック中...");
             // 現在の時刻を取得
             Calendar now = Calendar.getInstance();
             int currentYear = now.get(Calendar.YEAR);
-            int currentMonth = now.get(Calendar.MONTH + 1);
+            int currentMonth = now.get(Calendar.MONTH) + 1;
+            int currentDay = now.get(Calendar.DAY_OF_MONTH);
             int currentHour = now.get(Calendar.HOUR_OF_DAY);
             int currentMinute = now.get(Calendar.MINUTE);
             
-            int currentDateTime = currentYear + currentMonth + currentHour + currentMinute;
-            String current = currentDateTime + "";
-
-            LocalDateTime dateTime = LocalDateTime.parse(current, DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm"));
+         // 現在時刻をyyyyMMddHHmm形式に変換
+            String currentDateTime = (currentYear + "/" + currentMonth + "/" + currentDay + " " + currentHour + ":" + currentMinute + ":00");
             
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/M/d H:m:ss");
+            LocalDateTime dateTime = LocalDateTime.parse(currentDateTime, formatter);
+    		System.out.println("dateTime=" + dateTime);
+
             TasksDAO dao = new TasksDAO();
             List<Tasks> list = dao.findTaskTime(dateTime);
             
-            if(list != null) {
+            if(list != null && !list.isEmpty()) {
             	//listが入っていたらfor文で実行
             	for(Tasks task : list) {
             		int accountId = task.getAccountId();
             		SubscriptionsDAO subDao = new SubscriptionsDAO(); 
             		Subscriptions userSubsc = subDao.findByAccount(accountId);
-            		pushNotifiction(task, userSubsc);
+            		System.out.println("push送るよ");
+            		System.out.println("endpoint" + userSubsc.getEnd_point());
+            		System.out.println("p256" + userSubsc.getP256dh());
+            		System.out.println("auth" + userSubsc.getAuth());
+            		try {
+						pushNotifiction(task, userSubsc);
+					} catch (GeneralSecurityException e) {
+						// TODO 自動生成された catch ブロック
+						e.printStackTrace();
+					}
             	}
             }
         }, 0, 1, TimeUnit.MINUTES); // 毎分チェック
     }
     
-    public static void pushNotifiction(Tasks task, Subscriptions userSubsc) {
+    public static void pushNotifiction(Tasks task, Subscriptions userSubsc) throws GeneralSecurityException {
     	try {
-            // 1. 通知データを作成
+    		System.out.println("メソッドきてます");
             JsonObject payload = new JsonObject();
-            payload.addProperty("title", task.getTaskName());
-            payload.addProperty("body", task.getMemo());
+            try {
+                // 1. JsonObjectの生成
+                payload.addProperty("title", task.getTaskName());  // 例: task.getTaskName() の部分で例外が発生する可能性
+                payload.addProperty("body", task.getMemo());      // 例: task.getMemo() の部分で例外が発生する可能性
 
-            // 2. Web Push通知オブジェクトを生成
-            Notification notification = new Notification(
-                userSubsc.getEnd_point(),
-                userSubsc.getP256dh(),
-                userSubsc.getAuth(),
-                payload.toString()
-            );
+                System.out.println("Payload created: " + payload.toString());
 
-            // 3. PushServiceのセットアップ
+            } catch (Exception e) {
+                System.out.println("Error creating payload: " + e.getMessage());
+            }  
+
+    		Notification notification = null;
+    		try {
+    			System.out.println("ここはok");
+    		    // Notificationのインスタンス化
+    		    notification = new Notification(
+    		        userSubsc.getEnd_point(),  // userSubsc.getEnd_point() が null でないか確認
+    		        userSubsc.getP256dh(),     // userSubsc.getP256dh() が null でないか確認
+    		        userSubsc.getAuth(),       // userSubsc.getAuth() が null でないか確認
+    		        payload.toString()         // payload.toString() が null でないか確認
+    		    );
+    		    System.out.println("Notification created successfully");
+
+    		} catch (IllegalArgumentException e) {
+    		    // 引数に問題があった場合
+    		    System.out.println("Error in Notification creation: " + e.getMessage());
+    		} catch (NullPointerException e) {
+    		    // null 参照が原因の場合
+    		    System.out.println("Null reference error in Notification creation: " + e.getMessage());
+    		} catch (Exception e) {
+    		    // その他の予期しないエラー
+    		    System.out.println("Unexpected error while creating notification: " + e.getMessage());
+    		}
+
             PushService pushService = new PushService();
-            pushService.setPublicKey(Utils.loadPublicKey(VAPID_PUBLIC_KEY));
-            pushService.setPrivateKey(Utils.loadPrivateKey(VAPID_PRIVATE_KEY));
-            pushService.setSubject(VAPID_SUBJECT);
+            try {
+                // 3. PushServiceのセットアップ
+                pushService.setPublicKey(Utils.loadPublicKey(VAPID_PUBLIC_KEY));
+                pushService.setPrivateKey(Utils.loadPrivateKey(VAPID_PRIVATE_KEY));
+                pushService.setSubject(VAPID_SUBJECT);
+
+                System.out.println("PushService setup completed");
+
+            } catch (Exception e) {
+                System.out.println("Error setting up PushService: " + e.getMessage());
+            }
             
-            // 4. 通知を送信
-            pushService.send(notification);
-            System.out.println("通知を送信しました: " + task.getTaskName());
-        } catch (GeneralSecurityException e) {
-            System.err.println("セキュリティエラー: " + e.getMessage());
+            if (notification != null) {
+                try {
+                    // 4. 通知を送信
+                    pushService.send(notification);
+                    System.out.println("Notification sent successfully");
+                } catch (Exception e) {
+                    System.out.println("Error sending notification: " + e.getMessage());
+                }
+            } else {
+                System.out.println("Notification was not created, skipping sending.");
+            }
+            
         } catch (Exception e) {
-            System.err.println("通知送信中にエラーが発生しました: " + e.getMessage());
+            System.out.println("通知送信中にエラーが発生しました: " + e.getMessage());
         }
     }
 

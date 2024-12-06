@@ -396,6 +396,7 @@ public class TasksDAO {
 			while(rs.next()) {
 				Tasks tasks = rs2model(rs);
 				list.add(tasks);
+				System.out.println("タスクあるよ");
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();
