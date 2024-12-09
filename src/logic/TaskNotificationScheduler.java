@@ -87,10 +87,10 @@ public class TaskNotificationScheduler {
     			System.out.println("ここはok");
     		    // Notificationのインスタンス化
     		    notification = new Notification(
-    		        userSubsc.getEnd_point(),  // userSubsc.getEnd_point() が null でないか確認
-    		        userSubsc.getP256dh(),     // userSubsc.getP256dh() が null でないか確認
-    		        userSubsc.getAuth(),       // userSubsc.getAuth() が null でないか確認
-    		        payload.toString()         // payload.toString() が null でないか確認
+    		    	userSubsc.getEnd_point(),
+    		    	userSubsc.getP256dh(),
+    		    	userSubsc.getAuth(),
+    		    	payload.toString().getBytes()
     		    );
     		    System.out.println("Notification created successfully");
 
