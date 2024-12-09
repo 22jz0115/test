@@ -50,12 +50,15 @@
     
     
     <div class="calendar-wrap">
- 	   <button id="prev-month">前月</button>
- 	   <p id="yearMonth"></p>
-        <button id="next-month">次月</button>
+        <div id="month-buttons">
+            <button id="prev-month"><img alt="前月" src="assets/img/left_01.png"></button>
+            <h2 id="yearMonth"></h2>
+            <button id="next-month"><img alt="次月" src="assets/img/right_01.png"></button>
+        </div>
+    
+ 	   
         
-        <table class="calendar">
-        	
+        <table class="calendar">   	
         </table>
     
     </div>
