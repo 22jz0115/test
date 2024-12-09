@@ -8,8 +8,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.mindrot.jbcrypt.BCrypt;
-
 import model.Lifes;
 
 
@@ -55,6 +53,29 @@ public class LifesDAO {
 		return lifes;
     }
 	
+	/**
+	 * 検索キーワードに合致するものを取得する
+	 * @return 成功時は追加したデータ、失敗時はnull
+	 */
+	public List<Lifes> searchByKeyword(String keyword) {
+	    List<Lifes> list = new ArrayList<>();
+	    DBManager manager = DBManager.getInstance();
+
+	    try (Connection cn = manager.getConnection()) {
+	        String sql = "SELECT * FROM lifes WHERE content LIKE ?";
+	        PreparedStatement stmt = cn.prepareStatement(sql);
+	        stmt.setString(1, "%" + keyword + "%");
+	        ResultSet rs = stmt.executeQuery();
+
+	        while (rs.next()) {
+	            Lifes lifes = rs2model(rs);
+	            list.add(lifes);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return list;
+	}
 	
 	/**
 	 * DBにデータを追加する

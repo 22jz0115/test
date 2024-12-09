@@ -31,9 +31,9 @@
 </header>
 
 <!-- 検索フォーム -->
-<form action="#" class="search-form-3">
+<form action="LifeHack" method="get" class="search-form-3">
     <label>
-        <input type="text" placeholder="キーワードを入力">
+        <input type="text" name="keyword"  placeholder="キーワードを入力">
     </label>
     <button type="submit" aria-label="検索"></button>
 </form>

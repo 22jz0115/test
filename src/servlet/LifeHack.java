@@ -28,34 +28,39 @@ public class LifeHack extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // セッションからログインユーザー情報を取得
         HttpSession session = request.getSession();
         Accounts loginUser = (Accounts) session.getAttribute("loginUser");
 
         if (loginUser == null) {
-            // ログインユーザーがいない場合、ログイン画面へリダイレクト
             request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
             return;
         }
 
+        // キーワード取得
+        String keyword = request.getParameter("keyword");
+
         LifesDAO dao = new LifesDAO();
-        List<Lifes> lifeList = dao.get();
-       
-        
-        // AccountDAOを使って各Lifeのaccount_idに対応するアカウント情報を取得
+        List<Lifes> lifeList;
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            // 検索結果を取得
+            lifeList = dao.searchByKeyword(keyword.trim());
+        } else {
+            // 全件取得
+            lifeList = dao.get();
+        }
+
+        // 関連するアカウント情報の取得
         AccountsDAO accountDAO = new AccountsDAO();
         for (Lifes life : lifeList) {
             Accounts account = accountDAO.find(life.getAccountId());
-            life.setAccount(account);  // Lifeオブジェクトに関連するアカウント情報をセット
+            life.setAccount(account);  
         }
-        
-   
-        request.setAttribute("lifeList", lifeList);
-      
-        
 
+        request.setAttribute("lifeList", lifeList);
         request.getRequestDispatcher("/WEB-INF/jsp/lifeHack.jsp").forward(request, response);
     }
+
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");

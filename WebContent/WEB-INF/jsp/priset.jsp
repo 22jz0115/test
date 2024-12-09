@@ -31,10 +31,7 @@
         <h1>プリセット</h1>
     </header>
 
-    <form action="PresetInput" method="get" class="presetsForm">
-        
-        <input type="submit" value="プリセットタスク追加">
-    </form>
+    
 
     <form action="Preset" method="post" class="presetsForm">
     	<div class="setName">
@@ -50,16 +47,23 @@
         <div class="form-group">
             <label for="dateInput">日付</label>
             <!-- 日付選択 -->
-            <input type="date" id="dateInput" name="dateInput" value="${selectedDate}" required>
+            <input type="date" id="dateInput" name="dateInput" value="${selectedDate != null ? selectedDate : ''}" required>
         </div>
 
         <div class="presets">
-            <ul id="taskList">
-                <!-- タスクリストはJavaScriptで動的に表示されます -->
-            </ul>
-        </div>
-
-        <input type="submit" value="タスク追加">
+		    <ul id="taskList">
+		        <!-- タスクリストはJavaScriptで動的に表示されます -->
+		    </ul>
+		</div>
+		
+		<div class="presetActions">
+		    <input type="submit" value="プリセット追加">
+		    <a href="PresetInput" id="presetButton">
+		        <button id="presetTaskAdd" type="button">
+		            <img alt="追加ボタン" src="assets/img/pulsButton.png">
+		        </button>
+		    </a>
+		</div>
     </form>
 </body>
 </html>
