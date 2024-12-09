@@ -1,5 +1,6 @@
 package logic;
 
+import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -84,24 +85,27 @@ public class TaskNotificationScheduler {
 
     		Notification notification = null;
     		try {
-    			System.out.println("ここはok");
-    		    // Notificationのインスタンス化
-    		    notification = new Notification(
-    		    	userSubsc.getEnd_point(),
-    		    	userSubsc.getP256dh(),
-    		    	userSubsc.getAuth(),
-    		    	payload.toString().getBytes()
-    		    );
+    		    System.out.println("ここはok");
+
+    		    String endPoint = userSubsc.getEnd_point();
+    		    String p256dh = userSubsc.getP256dh();
+    		    String auth = userSubsc.getAuth();
+    		    byte[] payloadBytes = payload.toString().getBytes(StandardCharsets.UTF_8);
+
+    		    System.out.println("EndPoint: " + endPoint);
+    		    System.out.println("P256dh: " + p256dh);
+    		    System.out.println("Auth: " + auth);
+    		    System.out.println("Payload: " + new String(payloadBytes, StandardCharsets.UTF_8));
+
+    		    notification = new Notification(endPoint, p256dh, auth, payloadBytes);
+
     		    System.out.println("Notification created successfully");
 
     		} catch (IllegalArgumentException e) {
-    		    // 引数に問題があった場合
     		    System.out.println("Error in Notification creation: " + e.getMessage());
     		} catch (NullPointerException e) {
-    		    // null 参照が原因の場合
     		    System.out.println("Null reference error in Notification creation: " + e.getMessage());
     		} catch (Exception e) {
-    		    // その他の予期しないエラー
     		    System.out.println("Unexpected error while creating notification: " + e.getMessage());
     		}
 
@@ -119,13 +123,14 @@ public class TaskNotificationScheduler {
             }
             
             if (notification != null) {
-                try {
-                    // 4. 通知を送信
-                    pushService.send(notification);
-                    System.out.println("Notification sent successfully");
-                } catch (Exception e) {
-                    System.out.println("Error sending notification: " + e.getMessage());
-                }
+            	try {
+            	    pushService.send(notification);
+            	    System.out.println("Notification sent successfully");
+            	} catch (Exception e) {
+            	    System.out.println("Error sending notification: " + e.getMessage());
+            	    // さらに詳細なログを追加
+            	    e.printStackTrace();
+            	}
             } else {
                 System.out.println("Notification was not created, skipping sending.");
             }
