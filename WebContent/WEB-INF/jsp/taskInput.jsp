@@ -28,11 +28,24 @@
     <script type="text/javascript" src="assets/js/taskinput/script.js"></script>
 
     <header>
-        <a href="Home" class="back1">
-            <img src="assets/img/戻るボタン.png" alt="戻る">
-        </a>
-        <h1>タスク入力</h1>
-    </header>
+	    <c:choose>
+	
+	        <c:when test="${not empty selectedDate}">
+	            <a href="Task?date=${selectedDate}" class="back1">
+	                <img src="assets/img/戻るボタン.png" alt="戻る">
+	            </a>
+	        </c:when>
+	
+	   
+	        <c:otherwise>
+	            <a href="Home" class="back1">
+	                <img src="assets/img/戻るボタン.png" alt="戻る">
+	            </a>
+	        </c:otherwise>
+	    </c:choose>
+	    <h1>タスク入力</h1>
+	</header>
+
 
     <div class="display">
         <form action="TaskInput" method="post">
