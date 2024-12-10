@@ -27,8 +27,12 @@
         <a href="Home"><img class="imgVector" src="assets/img/Vector.png" alt=""></a>
         <h1>タスク</h1>
     </header>
-    
-        <table><caption></caption></table>
+    	 <div id="month-buttons">
+            <button id="prev-month"><img alt="前月" src="assets/img/left_01.png"></button>
+            <h2 id="yearMonth"></h2>
+            <button id="next-month"><img alt="次月" src="assets/img/right_01.png"></button>
+        </div>
+        <table></table>
             
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
@@ -65,17 +69,20 @@
     </div>
 
     <div class="bts">
-       <a  href="TaskInput"><p>タスク追加</p></a>
-       <a  href="Preset"><p>プリセット追加</p></a> 
+       <a  href="TaskInput?date=${selectedDate}"><p>タスク追加</p></a>
+       <a  href="Preset?date=${selectedDate}"><p>プリセット追加</p></a> 
     </div>
     
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script type="text/javascript" src="assets/js/task/script.js"></script>
     
     <!-- サーバーから送られた日付をJavaScriptに渡す -->
-    <script>
-        // サーバーから渡された日付 (例: "2024-11-15") をJavaScriptに渡す
-        const selectedDate = '<%= request.getAttribute("selectedDate") %>';
-    </script>
+	<script>
+	// サーバーから送られた日付を取得
+	    const selectedDateString = '<%= request.getAttribute("selectedDate") %>';
+	    const selectedDate = selectedDateString ? new Date(selectedDateString) : new Date();
+    console.log("サーブレットからの日付: " + selectedDate.toISOString());
+	</script>
+
 </body>
 </html>

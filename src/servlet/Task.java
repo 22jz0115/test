@@ -23,39 +23,33 @@ public class Task extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	// セッションからログインユーザー情報を取得
         HttpSession session = request.getSession();
         Accounts loginUser = (Accounts) session.getAttribute("loginUser");
         
         if (loginUser == null) {
-            // ログインユーザーがいない場合、ログイン画面へリダイレクト
             request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
             return;
         }
-    	
-    	// パラメータから日付を取得
+
         String selectedDate = request.getParameter("date");
+        System.out.println("date = " + selectedDate);
         
         if (selectedDate == null || selectedDate.isEmpty()) {
             LocalDate today = LocalDate.now();
-            selectedDate = today.toString(); // YYYY-MM-DD形式
+            selectedDate = today.toString();
         }
-          
 
-        // 日付をリクエスト属性に設定
         request.setAttribute("selectedDate", selectedDate);
         
         TasksDAO taskDAO = new TasksDAO();
-        
-        List<Tasks> taskList  = taskDAO.findByCheckTask(loginUser.getId() , selectedDate);
+        List<Tasks> taskList  = taskDAO.findByCheckTask(loginUser.getId(), selectedDate);
         
         request.setAttribute("taskList", taskList);
-        
-       
 
-        // 次のページに遷移
         request.getRequestDispatcher("/WEB-INF/jsp/task.jsp").forward(request, response);
     }
+
+
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {

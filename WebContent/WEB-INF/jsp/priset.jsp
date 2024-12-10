@@ -26,10 +26,25 @@
 	</script>
 </head>
 <body>
-    <header>
-        <a href="Home"><img class="imgVector" src="assets/img/Vector.png" alt=""></a>
-        <h1>プリセット</h1>
-    </header>
+    
+     <header>
+	    <c:choose>
+	
+	        <c:when test="${not empty selectedDate}">
+	            <a href="Task?date=${selectedDate}" class="back1">
+	                <img src="assets/img/戻るボタン.png" alt="戻る">
+	            </a>
+	        </c:when>
+	
+	   
+	        <c:otherwise>
+	            <a href="Home" class="back1">
+	                <img src="assets/img/戻るボタン.png" alt="戻る">
+	            </a>
+	        </c:otherwise>
+	    </c:choose>
+	    <h1>プリセット</h1>
+	</header>
 
     
 

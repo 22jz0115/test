@@ -74,10 +74,10 @@ public class TaskNotificationScheduler {
     public static void pushNotifiction(Tasks task, Subscriptions userSubsc) throws GeneralSecurityException {
     	try {
             // VAPID 鍵ペアを準備
-            String publicKey = "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUZrd0V3WUhLb1pJemowQ0FRWUlLb1pJemowREFRY0RRZ0FFSDgrT3RSa3p1V1VTajE3cVZadzc1RC9OSmtsNgorUE1EUnFXZnJXaUZVMGVCNDEyTE5lR05mcUowTGxkNkswdnc5QjZlS3kvZk5nR05DakM5UUQzRmxnPT0KLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tCg==";
-            String privateKey = "LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR0hBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJHMHdhd0lCQVFRZ1p4RitUTmltUk1xRHM4dXAKMXVreXNQR1Nka09SMFNubEd0YURoM1ZXMGNTaFJBTkNBQVFmejQ2MUdUTzVaUktQWHVwVm5EdmtQODBtU1hyNAo4d05HcFordGFJVlRSNEhqWFlzMTRZMStvblF1VjNvclMvRDBIcDRyTDk4MkFZMEtNTDFBUGNXVwotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0tCg==";
-            String subject = "https://graduation03.mydns.jp/test/Login"; // VAPID の送信元
-
+    		String publicKey = "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUZrd0V3WUhLb1pJemowQ0FRWUlLb1pJemowREFRY0RRZ0FFSDgrT3RSa3p1V1VTajE3cVZadzc1RC9OSmtsNgorUE1EUnFXZnJXaUZVMGVCNDEyTE5lR05mcUowTGxkNkswdnc5QjZlS3kvZk5nR05DakM5UUQzRmxnPT0KLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tCg==";
+    		String privateKey = "LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR0hBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJHMHdhd0lCQVFRZ1p4RitUTmltUk1xRHM4dXAKMXVreXNQR1Nka09SMFNubEd0YURoM1ZXMGNTaFJBTkNBQVFmejQ2MUdUTzVaUktQWHVwVm5EdmtQODBtU1hyNAo4d05HcFordGFJVlRSNEhqWFlzMTRZMStvblF1VjNvclMvRDBIcDRyTDk4MkFZMEtNTDFBUGNXVwotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0tCg==";
+    		String subject = "https://graduation03.mydns.jp/test/Login";
+    		
             // ペイロードの生成
             String payload = "{\"title\":\"" + task.getTaskName() + "\",\"body\":\"" + task.getMemo() + "\"}";
             System.out.println("Payload created: " + payload);

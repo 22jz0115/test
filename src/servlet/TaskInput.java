@@ -35,12 +35,13 @@ public class TaskInput extends HttpServlet {
     	// パラメータから日付を取得
         String selectedDate = request.getParameter("date");
         
-        System.out.print(selectedDate);
+        System.out.print("date=" + selectedDate);
         
         CategoriesDAO categoriesDAO = new CategoriesDAO();
    		
    		List<Categories> categoryList = categoriesDAO.get();  // DAOからデータを取得
    		request.setAttribute("categoryList", categoryList); 
+   		request.setAttribute("selectedDate", selectedDate); 
         
    		
    		request.getRequestDispatcher("/WEB-INF/jsp/taskInput.jsp").forward(request, response);
