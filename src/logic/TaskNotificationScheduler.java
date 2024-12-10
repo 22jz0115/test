@@ -1,30 +1,34 @@
 package logic;
 
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.security.GeneralSecurityException;
+import java.security.KeyFactory;
+import java.security.PrivateKey;
+import java.security.Signature;
+import java.security.interfaces.ECPublicKey;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import com.google.gson.JsonObject;
+import javax.crypto.Cipher;
 
 import dao.SubscriptionsDAO;
 import dao.TasksDAO;
 import model.Subscriptions;
 import model.Tasks;
-import nl.martijndwars.webpush.Notification;
-import nl.martijndwars.webpush.PushService;
-import nl.martijndwars.webpush.Utils;
 
 public class TaskNotificationScheduler {
     private static ScheduledExecutorService scheduler;
-    private static final String VAPID_PUBLIC_KEY = "BP198Ghlpaac41UMKrRvYyNt56tt7JCcgusX1JSh1e3W-kApskF2BLqCNi0c2GBjPx5BflPezwvi0OwVsaGTclI=";
-    private static final String VAPID_PRIVATE_KEY = "Kzh4c_SbGLXoybns7pCiRdvhx9b0m_H5AEyD8DD9Bvw=";
-    private static final String VAPID_SUBJECT = "https://graduation03.mydns.jp/test/Login";
-
+    
     public static void start() {
         scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(() -> {
@@ -69,71 +73,103 @@ public class TaskNotificationScheduler {
     
     public static void pushNotifiction(Tasks task, Subscriptions userSubsc) throws GeneralSecurityException {
     	try {
-    		System.out.println("メソッドきてます");
-            JsonObject payload = new JsonObject();
-            try {
-                // 1. JsonObjectの生成
-                payload.addProperty("title", task.getTaskName());  // 例: task.getTaskName() の部分で例外が発生する可能性
-                payload.addProperty("body", task.getMemo());      // 例: task.getMemo() の部分で例外が発生する可能性
+            // VAPID 鍵ペアを準備
+            String publicKey = "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUZrd0V3WUhLb1pJemowQ0FRWUlLb1pJemowREFRY0RRZ0FFSDgrT3RSa3p1V1VTajE3cVZadzc1RC9OSmtsNgorUE1EUnFXZnJXaUZVMGVCNDEyTE5lR05mcUowTGxkNkswdnc5QjZlS3kvZk5nR05DakM5UUQzRmxnPT0KLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tCg==";
+            String privateKey = "LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR0hBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJHMHdhd0lCQVFRZ1p4RitUTmltUk1xRHM4dXAKMXVreXNQR1Nka09SMFNubEd0YURoM1ZXMGNTaFJBTkNBQVFmejQ2MUdUTzVaUktQWHVwVm5EdmtQODBtU1hyNAo4d05HcFordGFJVlRSNEhqWFlzMTRZMStvblF1VjNvclMvRDBIcDRyTDk4MkFZMEtNTDFBUGNXVwotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0tCg==";
+            String subject = "https://graduation03.mydns.jp/test/Login"; // VAPID の送信元
 
-                System.out.println("Payload created: " + payload.toString());
+            // ペイロードの生成
+            String payload = "{\"title\":\"" + task.getTaskName() + "\",\"body\":\"" + task.getMemo() + "\"}";
+            System.out.println("Payload created: " + payload);
 
-            } catch (Exception e) {
-                System.out.println("Error creating payload: " + e.getMessage());
-            }  
+            // VAPID トークンの生成
+            String vapidToken = createVapidToken(userSubsc.getEnd_point(), publicKey, privateKey, subject);
 
-    		Notification notification = null;
-    		try {
-    			System.out.println("ここはok");
-    		    // Notificationのインスタンス化
-    		    notification = new Notification(
-    		    	userSubsc.getEnd_point(),
-    		    	userSubsc.getP256dh(),
-    		    	userSubsc.getAuth(),
-    		    	payload.toString().getBytes()
-    		    );
-    		    System.out.println("Notification created successfully");
+            // Web Push 通知を送信
+            URL url = new URL(userSubsc.getEnd_point());
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/octet-stream");
+            connection.setRequestProperty("Authorization", "WebPush " + vapidToken);
+            connection.setRequestProperty("TTL", "2419200"); // 有効期限 (秒)
+            connection.setDoOutput(true);
 
-    		} catch (IllegalArgumentException e) {
-    		    // 引数に問題があった場合
-    		    System.out.println("Error in Notification creation: " + e.getMessage());
-    		} catch (NullPointerException e) {
-    		    // null 参照が原因の場合
-    		    System.out.println("Null reference error in Notification creation: " + e.getMessage());
-    		} catch (Exception e) {
-    		    // その他の予期しないエラー
-    		    System.out.println("Unexpected error while creating notification: " + e.getMessage());
-    		}
-
-            PushService pushService = new PushService();
-            try {
-                // 3. PushServiceのセットアップ
-                pushService.setPublicKey(Utils.loadPublicKey(VAPID_PUBLIC_KEY));
-                pushService.setPrivateKey(Utils.loadPrivateKey(VAPID_PRIVATE_KEY));
-                pushService.setSubject(VAPID_SUBJECT);
-
-                System.out.println("PushService setup completed");
-
-            } catch (Exception e) {
-                System.out.println("Error setting up PushService: " + e.getMessage());
+            // 暗号化されたペイロードを送信
+            byte[] encryptedPayload = encryptPayload(payload, userSubsc.getP256dh(), userSubsc.getAuth());
+            try (OutputStream os = connection.getOutputStream()) {
+                os.write(encryptedPayload);
             }
-            
-            if (notification != null) {
-                try {
-                    // 4. 通知を送信
-                    pushService.send(notification);
-                    System.out.println("Notification sent successfully");
-                } catch (Exception e) {
-                    System.out.println("Error sending notification: " + e.getMessage());
-                }
-            } else {
-                System.out.println("Notification was not created, skipping sending.");
-            }
-            
+
+            // レスポンスコードの確認
+            int responseCode = connection.getResponseCode();
+            System.out.println("Response Code: " + responseCode);
         } catch (Exception e) {
-            System.out.println("通知送信中にエラーが発生しました: " + e.getMessage());
+            e.printStackTrace();
         }
     }
+    
+ // p256dhとauthキーを使ってペイロードを暗号化
+    public static byte[] encryptPayload(String payload, String p256dh, String auth) throws Exception {
+        // 公開鍵と認証キーをBase64デコード
+        byte[] p256dhBytes = Base64.getDecoder().decode(p256dh);
+        byte[] authBytes = Base64.getDecoder().decode(auth);
+        
+        // ECPublicKeyを作成
+        X509EncodedKeySpec spec = new X509EncodedKeySpec(p256dhBytes);
+        KeyFactory keyFactory = KeyFactory.getInstance("EC");
+        ECPublicKey publicKey = (ECPublicKey) keyFactory.generatePublic(spec);
+
+        // 暗号化のための準備
+        Cipher cipher = Cipher.getInstance("ECIES");
+        cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+
+        // ペイロードの暗号化
+        byte[] encryptedPayload = cipher.doFinal(payload.getBytes("UTF-8"));
+
+        // 認証キーとペイロードを結合して最終的なバイナリデータを作成
+        byte[] result = new byte[authBytes.length + encryptedPayload.length];
+        System.arraycopy(authBytes, 0, result, 0, authBytes.length);
+        System.arraycopy(encryptedPayload, 0, result, authBytes.length, encryptedPayload.length);
+
+        return result;
+    }
+
+    // 例としてVAPIDトークンの生成
+    public static String createVapidToken(String endpoint, String publicKey, String privateKey, String subject) throws Exception {
+        // VAPIDのヘッダーとペイロードを作成
+        String header = Base64.getUrlEncoder().withoutPadding().encodeToString("{\"alg\":\"ES256\"}".getBytes());
+        String payload = Base64.getUrlEncoder().withoutPadding().encodeToString((
+            "{\"aud\":\"" + endpoint + "\","
+            + "\"exp\":" + (System.currentTimeMillis() / 1000 + 12 * 60 * 60) + ","
+            + "\"sub\":\"" + subject + "\"}"
+        ).getBytes());
+
+        // 署名の生成
+        String unsignedToken = header + "." + payload;
+        byte[] signature = signToken(privateKey, unsignedToken.getBytes());
+
+        // VAPIDトークンを作成
+        return unsignedToken + "." + Base64.getUrlEncoder().withoutPadding().encodeToString(signature);
+    }
+
+    // JWT署名を生成（秘密鍵を使って）
+    public static byte[] signToken(String privateKeyBase64, byte[] unsignedToken) throws Exception {
+        // URLセーフBase64デコード
+        byte[] decodedKey = Base64.getDecoder().decode(privateKeyBase64);
+
+        // PKCS#8形式で秘密鍵を読み取る
+        PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(decodedKey);
+        KeyFactory keyFactory = KeyFactory.getInstance("EC");
+        PrivateKey privateKey = keyFactory.generatePrivate(keySpec);
+
+        // ECDSAによる署名を生成
+        Signature signature = Signature.getInstance("SHA256withECDSA");
+        signature.initSign(privateKey);
+        signature.update(unsignedToken);
+
+        return signature.sign();
+    }
+
 
     public static void stop() {
         if (scheduler != null && !scheduler.isShutdown()) {
