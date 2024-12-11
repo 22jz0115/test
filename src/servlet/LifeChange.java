@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,10 +24,10 @@ import model.Lifes;
  * Servlet implementation class LifeChange
  */
 @WebServlet("/LifeChange")
+@MultipartConfig
 public class LifeChange extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -39,7 +40,6 @@ public class LifeChange extends HttpServlet {
 	            return;
 	        }
 	        
-	       
 	        String lifeIdParam = request.getParameter("lifeId");
 	        if (lifeIdParam == null || lifeIdParam.isEmpty()) {
 	            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "lifeId パラメータがありません");
@@ -54,34 +54,25 @@ public class LifeChange extends HttpServlet {
 	            return;
 	        }
 
-
 	        LifesDAO dao = new LifesDAO();
-	        Lifes life;
-	        
-	        life = dao.find(lifeId);
+	        Lifes life = dao.find(lifeId);
 	        
 	        request.setAttribute("life", life);
-	        System.out.println("id = " + life.getId());
-		    System.out.println("title = " + life.getTitle());
-		    System.out.println("content = " + life.getContent());
-	        
-	        
+	        System.out.println(life.getId());
 	        request.getRequestDispatcher("/WEB-INF/jsp/lifeChange.jsp").forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    request.setCharacterEncoding("UTF-8");
 
 	    // lifeId パラメータの取得と検証
 	    String lifeIdParam = request.getParameter("lifeId");
+	    System.out.println(lifeIdParam);
 	    String title = request.getParameter("title");
-	    String content = request.getParameter("co");
-	    System.out.println("id = " + lifeIdParam);
-	    System.out.println("title = " + title);
-	    System.out.println("content = " + content);
+        String content = request.getParameter("comment");
+        System.out.println(title);
+        System.out.println(content);
+
 	    if (lifeIdParam == null || lifeIdParam.isEmpty()) {
 	        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "lifeId パラメータがありません");
 	        return;
@@ -94,10 +85,8 @@ public class LifeChange extends HttpServlet {
 	        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "lifeId が数値ではありません");
 	        return;
 	    }
-	    
-	    System.out.println(lifeId);
-	    // パラメータの取得
-	    
+
+	    // 改行を <br> に変換
 	    content = content.replace("\n", "<br>");
 
 	    // ファイルアップロードの処理
@@ -106,7 +95,7 @@ public class LifeChange extends HttpServlet {
 	                      ? Paths.get(filePart.getSubmittedFileName()).getFileName().toString() 
 	                      : null;
 
-	    String uploadDir = "/opt/tomcat/webapps/test/assets/img";
+	    String uploadDir = "/opt/tomcat/webapps/test/assets/img"; // サーバ上のアップロード先ディレクトリ
 
 	    // ファイルを保存
 	    String relativePath = null;
@@ -120,7 +109,7 @@ public class LifeChange extends HttpServlet {
 	        try (InputStream inputStream = filePart.getInputStream()) {
 	            Files.copy(inputStream, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
 	        }
-	        relativePath = "assets/img/" + fileName;
+	        relativePath = "assets/img/" + fileName; // 相対パス
 	    }
 
 	    // DAOを使ってデータ更新
@@ -128,10 +117,11 @@ public class LifeChange extends HttpServlet {
 	    HttpSession session = request.getSession();
 	    Accounts loginUser = (Accounts) session.getAttribute("loginUser");
 
-	    lifesDAO.lifeChange(lifeId, title, relativePath, content);
+	    lifesDAO.lifeChange(lifeId, title, relativePath, content); // データ更新
+	    
+	 // 成功したらリダイレクトまたは画面遷移
+        response.sendRedirect("LifeHackHistory");
 
-	    // リダイレクト処理
-	    response.sendRedirect("LifeHackHistory");
+	   
 	}
-
 }

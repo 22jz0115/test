@@ -30,9 +30,9 @@
 	</header>
 	
 	<div class="background-1">
-	    <form action="LifeChange" method="post" enctype="multipart/form-data">
-	        <!-- lifeIdの隠し送信 -->
-	        <input type="hidden" name="lifeId" value="${life.id}">
+	   <form action="LifeChange" method="Post" style="margin: 0;" enctype="multipart/form-data">
+	    
+           <input type="hidden" name="lifeId" value="${life.id}">
 	        
 	        <div class="class1">
 	            <label for="title">タイトル</label>
@@ -42,7 +42,7 @@
 	
 	        <div class="atcontent">
 	            <label for="comment">内容</label>
-	            <textarea name="comment" id="comment" rows="13" cols="40" required>${life.content}</textarea>
+	          <textarea name="comment" id="comment" rows="13" cols="40" required>${life.content}</textarea>
 	        </div>
 	
 	        <!-- 現在の写真プレビューと削除オプション -->
@@ -62,6 +62,13 @@
 	            <button type="submit" class="submit-button">変更を保存</button>
 	        </div>
 	    </form>
+	    
+	      <form action="LifeHackHistory" method="Post" >
+	      	<div class="input">
+	      		<input type="hidden" name="lifeId" value="${life.id}">
+	            <button type="submit" class="submit-button">削除</button>
+	        </div>
+	      </form>
 	</div>
 
 	<script>

@@ -131,29 +131,53 @@ public class LifesDAO {
 	 * @return 成功時は追加したデータ、失敗時はnull
 	 */
 	public Lifes lifeChange(int id, String title, String img, String content) {
-		int ret = -1;
-		
-		
-		// DBにデータを追加
-		DBManager manager = DBManager.getInstance();
-		try(Connection cn = manager.getConnection()) {
-			
-			// プレースホルダで変数部分を定義
-			String sql = "UPDATE lifes SET tital = ? img = ? content = ? WHERE id = ?";
-			PreparedStatement stmt = cn.prepareStatement(sql);
-		
-			stmt.setString(1, title);
-			stmt.setString(2, img);
-			stmt.setString(3, content);
-			stmt.setInt(4, id);
-			
-			ret = stmt.executeUpdate();
-			
-		} catch(SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
+	    int ret = -1;
+	    Lifes lifes = null;
+
+	    DBManager manager = DBManager.getInstance();
+	    try (Connection cn = manager.getConnection()) {
+	        // 正しいSQL文に修正
+	        String sql = "UPDATE lifes SET title = ?, img = ?, content = ? WHERE id = ?";
+	        PreparedStatement stmt = cn.prepareStatement(sql);
+
+	        // プレースホルダに値をセット
+	        stmt.setString(1, title);
+	        stmt.setString(2, img);
+	        stmt.setString(3, content);
+	        stmt.setInt(4, id);
+
+	        ret = stmt.executeUpdate();
+
+	        // 更新が成功した場合はLifesオブジェクトを返す
+	        if (ret > 0) {
+	            lifes = new Lifes(id, 0, title, img, content, null, null, null); // 仮の値
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return lifes;
 	}
+	
+	public boolean deleteLife(int accountId, int Id) {
+	    int ret = -1;
+	    DBManager manager = DBManager.getInstance();
+	    try (Connection cn = manager.getConnection()) {
+	        // SQL文をDELETE文に変更
+	        String sql = "DELETE FROM lifes WHERE id = ?  AND account_id = ?";
+	        PreparedStatement stmt = cn.prepareStatement(sql);
+	        // プレースホルダーに値を設定
+	        
+	        stmt.setInt(1, Id);
+	        stmt.setInt(2, accountId);
+	        // 実行結果を取得
+	        ret = stmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    // 更新された行が1行以上かどうかを返す
+	    return ret > 0;
+	}
+	
 	
 	private Lifes rs2model(ResultSet rs) throws SQLException {
         int id = rs.getInt("id");

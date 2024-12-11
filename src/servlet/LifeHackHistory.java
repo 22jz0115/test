@@ -53,8 +53,38 @@ public class LifeHackHistory extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		HttpSession session = request.getSession();
+        Accounts loginUser = (Accounts) session.getAttribute("loginUser");
+
+        if (loginUser == null) {
+            request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
+            return;
+        }
+        
+     // lifeId パラメータの取得と検証
+	    String lifeIdParam = request.getParameter("lifeId");
+	    
+	    if (lifeIdParam == null || lifeIdParam.isEmpty()) {
+	        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "lifeId パラメータがありません");
+	        return;
+	    }
+
+	    int lifeId;
+	    try {
+	        lifeId = Integer.parseInt(lifeIdParam);
+	    } catch (NumberFormatException e) {
+	        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "lifeId が数値ではありません");
+	        return;
+	    }
+        
+        LifesDAO dao = new LifesDAO();
+        
+        dao.deleteLife(loginUser.getId(), lifeId);
+        
+        
+   	 // 成功したらリダイレクトまたは画面遷移
+           response.sendRedirect("LifeHackHistory");
+		
 	}
 
 }
