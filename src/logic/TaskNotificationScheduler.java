@@ -3,11 +3,16 @@ package logic;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.security.KeyFactory;
-import java.security.PrivateKey;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.MessageDigest;
+import java.security.PublicKey;
+import java.security.Security;
 import java.security.Signature;
-import java.security.interfaces.ECPublicKey;
+import java.security.interfaces.ECPrivateKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.time.LocalDateTime;
@@ -20,6 +25,11 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import javax.crypto.Cipher;
+import javax.crypto.KeyAgreement;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import dao.SubscriptionsDAO;
 import dao.TasksDAO;
@@ -72,12 +82,19 @@ public class TaskNotificationScheduler {
     }
     
     public static void pushNotifiction(Tasks task, Subscriptions userSubsc) throws GeneralSecurityException {
-    	try {
+        try {
+            // Bouncy Castleが登録されていない場合に登録
+            if (Security.getProvider("BC") == null) {
+                Security.addProvider(new BouncyCastleProvider());
+            }
+
             // VAPID 鍵ペアを準備
-    		String publicKey = "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUZrd0V3WUhLb1pJemowQ0FRWUlLb1pJemowREFRY0RRZ0FFSDgrT3RSa3p1V1VTajE3cVZadzc1RC9OSmtsNgorUE1EUnFXZnJXaUZVMGVCNDEyTE5lR05mcUowTGxkNkswdnc5QjZlS3kvZk5nR05DakM5UUQzRmxnPT0KLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tCg==";
-    		String privateKey = "LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR0hBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJHMHdhd0lCQVFRZ1p4RitUTmltUk1xRHM4dXAKMXVreXNQR1Nka09SMFNubEd0YURoM1ZXMGNTaFJBTkNBQVFmejQ2MUdUTzVaUktQWHVwVm5EdmtQODBtU1hyNAo4d05HcFordGFJVlRSNEhqWFlzMTRZMStvblF1VjNvclMvRDBIcDRyTDk4MkFZMEtNTDFBUGNXVwotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0tCg==";
-    		String subject = "https://graduation03.mydns.jp/test/Login";
-    		
+            String publicKey = "BDkzLFhl0ZDx2ho-Snk_ZIITgZjBfXGunbNgycezdritqHIuESNIJkjmG_-LFM5ikVVlRZBmWk1m9uJzRRkZ19Y";
+            String privateKey = "-----BEGIN EC PRIVATE KEY-----\r\n"
+                    + "MC4CAQEEIC3s3+jbbB5FiBoyOQ5efKNFoTcjKIo2jnAytv8DqN8RoAcGBSuBBAAK\r\n"
+                    + "-----END EC PRIVATE KEY-----";
+            String subject = "https://graduation03.mydns.jp/test/Login";
+
             // ペイロードの生成
             String payload = "{\"title\":\"" + task.getTaskName() + "\",\"body\":\"" + task.getMemo() + "\"}";
             System.out.println("Payload created: " + payload);
@@ -107,31 +124,41 @@ public class TaskNotificationScheduler {
             e.printStackTrace();
         }
     }
-    
- // p256dhとauthキーを使ってペイロードを暗号化
+
+    // p256dhとauthキーを使ってペイロードを暗号化
     public static byte[] encryptPayload(String payload, String p256dh, String auth) throws Exception {
-        // 公開鍵と認証キーをBase64デコード
-        byte[] p256dhBytes = Base64.getDecoder().decode(p256dh);
-        byte[] authBytes = Base64.getDecoder().decode(auth);
-        
-        // ECPublicKeyを作成
-        X509EncodedKeySpec spec = new X509EncodedKeySpec(p256dhBytes);
-        KeyFactory keyFactory = KeyFactory.getInstance("EC");
-        ECPublicKey publicKey = (ECPublicKey) keyFactory.generatePublic(spec);
+        // 公開鍵と認証キーをデコード
+        byte[] p256dhBytes = Base64.getUrlDecoder().decode(p256dh);
+        byte[] authBytes = Base64.getUrlDecoder().decode(auth);
 
-        // 暗号化のための準備
-        Cipher cipher = Cipher.getInstance("ECIES");
-        cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+        KeyFactory keyFactory = KeyFactory.getInstance("EC", "BC");
+        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(p256dhBytes);
+        PublicKey recipientPublicKey = keyFactory.generatePublic(keySpec);
 
-        // ペイロードの暗号化
-        byte[] encryptedPayload = cipher.doFinal(payload.getBytes("UTF-8"));
+        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("EC", "BC");
+        keyPairGenerator.initialize(256);
+        KeyPair ephemeralKeyPair = keyPairGenerator.generateKeyPair();
 
-        // 認証キーとペイロードを結合して最終的なバイナリデータを作成
-        byte[] result = new byte[authBytes.length + encryptedPayload.length];
-        System.arraycopy(authBytes, 0, result, 0, authBytes.length);
-        System.arraycopy(encryptedPayload, 0, result, authBytes.length, encryptedPayload.length);
+        KeyAgreement keyAgreement = KeyAgreement.getInstance("ECDH", "BC");
+        keyAgreement.init(ephemeralKeyPair.getPrivate());
+        keyAgreement.doPhase(recipientPublicKey, true);
+        byte[] sharedSecret = keyAgreement.generateSecret();
 
-        return result;
+        byte[] salt = authBytes;
+        byte[] derivedKey = hkdf(sharedSecret, salt);
+
+        Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding", "BC");
+        SecretKey aesKey = new SecretKeySpec(derivedKey, "AES");
+        cipher.init(Cipher.ENCRYPT_MODE, aesKey);
+
+        return cipher.doFinal(payload.getBytes(StandardCharsets.UTF_8));
+    }
+
+    // HKDFの実装（簡易版）
+    private static byte[] hkdf(byte[] inputKeyingMaterial, byte[] salt) throws Exception {
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        digest.update(salt);
+        return digest.digest(inputKeyingMaterial);
     }
 
     // 例としてVAPIDトークンの生成
@@ -139,7 +166,7 @@ public class TaskNotificationScheduler {
         // VAPIDのヘッダーとペイロードを作成
         String header = Base64.getUrlEncoder().withoutPadding().encodeToString("{\"alg\":\"ES256\"}".getBytes());
         String payload = Base64.getUrlEncoder().withoutPadding().encodeToString((
-            "{\"aud\":\"" + endpoint + "\","
+            "{\"aud\":\"" + endpoint + "\"," 
             + "\"exp\":" + (System.currentTimeMillis() / 1000 + 12 * 60 * 60) + ","
             + "\"sub\":\"" + subject + "\"}"
         ).getBytes());
@@ -154,20 +181,33 @@ public class TaskNotificationScheduler {
 
     // JWT署名を生成（秘密鍵を使って）
     public static byte[] signToken(String privateKeyBase64, byte[] unsignedToken) throws Exception {
-        // URLセーフBase64デコード
-        byte[] decodedKey = Base64.getDecoder().decode(privateKeyBase64);
+        try {
+        	// BouncyCastleがまだ登録されていない場合、登録
+            if (Security.getProvider("BC") == null) {
+                Security.addProvider(new BouncyCastleProvider());
+            }
+            // 秘密鍵の整形とデコード
+            String privateKeyCleaned = privateKeyBase64.replace("-----BEGIN EC PRIVATE KEY-----", "")
+                    .replace("-----END EC PRIVATE KEY-----", "")
+                    .replace("\r\n", "")
+                    .replace("\n", "");
+            byte[] decodedKey = Base64.getDecoder().decode(privateKeyCleaned);
 
-        // PKCS#8形式で秘密鍵を読み取る
-        PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(decodedKey);
-        KeyFactory keyFactory = KeyFactory.getInstance("EC");
-        PrivateKey privateKey = keyFactory.generatePrivate(keySpec);
+         // KeyFactoryを使ってEC秘密鍵を生成
+            PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(decodedKey);
+            KeyFactory keyFactory = KeyFactory.getInstance("EC", "BC");
+            ECPrivateKey privateKeyObj = (ECPrivateKey) keyFactory.generatePrivate(keySpec);
 
-        // ECDSAによる署名を生成
-        Signature signature = Signature.getInstance("SHA256withECDSA");
-        signature.initSign(privateKey);
-        signature.update(unsignedToken);
+            // ECDSAによる署名を生成
+            Signature signature = Signature.getInstance("SHA256withECDSA", "BC");
+            signature.initSign(privateKeyObj);
+            signature.update(unsignedToken);
 
-        return signature.sign();
+            return signature.sign();
+        } catch (Exception e) {
+            System.err.println("署名の生成に失敗しました: " + e.getMessage());
+            throw e;
+        }
     }
 
 

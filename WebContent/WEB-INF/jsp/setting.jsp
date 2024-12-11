@@ -32,7 +32,7 @@
 	   	function subscribeToPushNotifications(registration) {
 	   	    registration.pushManager.subscribe({
 	   	        userVisibleOnly: true, // 通知がユーザーに表示されることを保証
-	   	        applicationServerKey: urlBase64ToUint8Array('BP198Ghlpaac41UMKrRvYyNt56tt7JCcgusX1JSh1e3W-kApskF2BLqCNi0c2GBjPx5BflPezwvi0OwVsaGTclI=')
+	   	        applicationServerKey: urlBase64ToUint8Array('BDkzLFhl0ZDx2ho-Snk_ZIITgZjBfXGunbNgycezdritqHIuESNIJkjmG_-LFM5ikVVlRZBmWk1m9uJzRRkZ19Y')
 	   	    })
 	   	    .then(function (subscription) {
 	   	        console.log('Push通知の購読に成功しました:', subscription);
