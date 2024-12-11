@@ -1056,7 +1056,8 @@ input:checked ~ .circle {
 /* ボタンを配置するためのスタイル */
 .button-container {
     text-align: right;  /* 右寄せ */
-    margin-top: 10px;  /* 上部に余白を追加 */
+    margin-top: 15px;  /* 上部に余白を追加 */
+    width: 300px;
 }
 
 /* 複数ボタンを並べるためのスタイル */

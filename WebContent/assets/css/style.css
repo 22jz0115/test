@@ -1122,6 +1122,12 @@ input[type="submit"]{
 
 /*ライフハック画面ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー*/
 
+#lifeButton{
+	display: flex;
+ width: 200px;
+ position: fixed;
+}
+
 .search-form-3 {
     width: 290px;
     height: 2rem;

@@ -16,62 +16,43 @@ import model.Accounts;
 import model.Categories;
 import model.Tasks;
 
-/**
- * Servlet implementation class TaskHistory
- */
 @WebServlet("/TaskHistory")
 public class TaskHistory extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-    
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		HttpSession session = request.getSession();
+    private static final long serialVersionUID = 1L;
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
         Accounts loginUser = (Accounts) session.getAttribute("loginUser");
-        
+
         int categoryId = 0;
 
-        
         String taskHistoryId = (String) session.getAttribute("taskHistoryId");
-
         System.out.println(taskHistoryId);
-        
-       TasksDAO taskDAO = new TasksDAO();
-       
-       CategoriesDAO categoryDAO = new CategoriesDAO();
-       
-       Categories categoryName = null;
-       
-       if(taskHistoryId != null) {
-    	   categoryId = Integer.parseInt(taskHistoryId);
-    	   categoryName = categoryDAO.find(categoryId);
-    	   
-       }else {
-    	   categoryId = Integer.parseInt(request.getParameter("categoryId")); 
-    	   categoryName = categoryDAO.find(categoryId);
-       }
-       
-       
+
+        TasksDAO taskDAO = new TasksDAO();
+        CategoriesDAO categoryDAO = new CategoriesDAO();
+        Categories categoryName = null;
+
+        if (taskHistoryId != null) {
+            categoryId = Integer.parseInt(taskHistoryId);
+            categoryName = categoryDAO.find(categoryId);
+            session.removeAttribute("taskHistoryId"); // セッションから削除
+        } else {
+            categoryId = Integer.parseInt(request.getParameter("categoryId"));
+            categoryName = categoryDAO.find(categoryId);
+        }
+
         List<Tasks> taskList = taskDAO.findByCategoryId(loginUser.getId(), categoryId);
-        
+
         // 取得したデータをリクエストスコープに格納
         request.setAttribute("taskList", taskList);
         request.setAttribute("categoryName", categoryName);
         System.out.print(taskList.size());
-		        
-		
-		request.getRequestDispatcher("/WEB-INF/jsp/taskHistory.jsp").forward(request, response);
-	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+        request.getRequestDispatcher("/WEB-INF/jsp/taskHistory.jsp").forward(request, response);
+    }
 
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doGet(request, response);
+    }
 }

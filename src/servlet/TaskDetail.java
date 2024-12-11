@@ -18,9 +18,6 @@ import model.Accounts;
 import model.Categories;
 import model.Tasks;
 
-/**
- * Servlet implementation class TaskDetail
- */
 @WebServlet("/TaskDetail")
 public class TaskDetail extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -55,9 +52,8 @@ public class TaskDetail extends HttpServlet {
             request.setAttribute("from", from);
             session.setAttribute("taskHistoryId", taskHistoryId);
             System.out.println(taskHistoryId);
-            
-        }else {
-        	session.setAttribute("taskHistoryId", null);
+        } else {
+            session.removeAttribute("taskHistoryId"); // taskHistoryIdをセッションから削除
         }
 
         // タスク詳細画面へフォワード
@@ -96,7 +92,7 @@ public class TaskDetail extends HttpServlet {
         if (clear) {
             // 成功時：呼び出し元にリダイレクト
             if ("TaskHistory".equals(from)) {
-            	session.setAttribute("taskHistoryId", taskHistoryId);  // セッションに保存
+                session.setAttribute("taskHistoryId", taskHistoryId);  // セッションに保存
                 response.sendRedirect("TaskHistory"); // `TaskHistory`へのリダイレクト
             } else {
                 response.sendRedirect("Task?date=" + date);
@@ -104,7 +100,7 @@ public class TaskDetail extends HttpServlet {
         } else {
             // 失敗時：同様に呼び出し元にリダイレクト
             if ("TaskHistory".equals(from)) {
-            	session.setAttribute("taskHistoryId", taskHistoryId);  // セッションに保存
+                session.setAttribute("taskHistoryId", taskHistoryId);  // セッションに保存
                 response.sendRedirect("TaskHistory");
             } else {
                 response.sendRedirect("Task?date=" + date);
@@ -112,4 +108,3 @@ public class TaskDetail extends HttpServlet {
         }
     }
 }
-
