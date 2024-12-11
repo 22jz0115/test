@@ -1173,7 +1173,26 @@ input[type="submit"]{
     margin: 20px;
 }
 
-.lifehacks h3, .lifehacks p{
+#lifeHisha {
+	display: flex;
+	align-items: center;  /* 高さを中央揃え */
+	justify-content: space-between;  /* 両端に配置 */
+}
+
+.lifelink {
+	display: flex;  /* フレックスボックス化 */
+	align-items: center;  /* 中央揃え */
+	text-align: center;
+}
+
+#hensyuuImg {
+	width: 30px;
+	height: 30px;
+	margin-right: 30px;
+	padding: 0;
+}
+
+.lifehacks h3, .lifehacks p {
     margin-left: 20px;
 }
 

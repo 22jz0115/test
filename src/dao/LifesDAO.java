@@ -32,6 +32,27 @@ public class LifesDAO {
 		return list;
     }
 	
+	public List<Lifes> getByAccountId(int account_id) {
+		List<Lifes> list = new ArrayList<>();
+				
+		DBManager manager = DBManager.getInstance();
+		try(Connection cn = manager.getConnection()) {
+			String sql = "SELECT * FROM lifes WHERE account_id = ?";
+			PreparedStatement stmt = cn.prepareStatement(sql);
+			stmt.setInt(1, account_id);
+			ResultSet rs = stmt.executeQuery();
+			
+			// データをリストに格納
+			while(rs.next()) {
+				Lifes lifes = rs2model(rs);
+				list.add(lifes);
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}	
+		return list;
+    }
+	
 	public Lifes find(int id) {
     	Lifes lifes = null;
 		DBManager manager = DBManager.getInstance();
@@ -96,6 +117,35 @@ public class LifesDAO {
 			stmt.setString(2, title);
 			stmt.setString(3, img);
 			stmt.setString(4, content);
+			
+			ret = stmt.executeUpdate();
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
+	 * DBにデータを追加する
+	 * @return 成功時は追加したデータ、失敗時はnull
+	 */
+	public Lifes lifeChange(int id, String title, String img, String content) {
+		int ret = -1;
+		
+		
+		// DBにデータを追加
+		DBManager manager = DBManager.getInstance();
+		try(Connection cn = manager.getConnection()) {
+			
+			// プレースホルダで変数部分を定義
+			String sql = "UPDATE lifes SET tital = ? img = ? content = ? WHERE id = ?";
+			PreparedStatement stmt = cn.prepareStatement(sql);
+		
+			stmt.setString(1, title);
+			stmt.setString(2, img);
+			stmt.setString(3, content);
+			stmt.setInt(4, id);
 			
 			ret = stmt.executeUpdate();
 			

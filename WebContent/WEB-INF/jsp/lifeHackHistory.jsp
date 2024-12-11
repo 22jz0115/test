@@ -27,27 +27,27 @@
 
 <header>
     <a href="Home"><img class="imgVector" src="assets/img/Vector.png" alt="Home"></a>
-    <h1>ライフハック</h1>
+    <h1>投稿履歴</h1>
 </header>
-
-<!-- 検索フォーム -->
-<form action="LifeHack" method="get" class="search-form-3">
-    <label>
-        <input type="text" name="keyword"  placeholder="キーワードを入力">
-    </label>
-    <button type="submit" aria-label="検索"></button>
-</form>
 
 <!-- ライフハック追加リンク -->
 <p class="lifehackAdd"><a href="AddedLife">ライフハック追加</a></p>
-<p class="lifehackAdd"><a href="LifeHackHistory">投稿履歴</a></p>
 
 <!-- ライフハックリストを表示 -->
 <c:forEach var="life" items="${lifeList}">
     <div class="lifehacks">
         <div>
-            <h2>${life.account.name}さん</h2> <!-- ここを変更 -->
-            <h3>${life.title}</h3>
+        	<div id="lifeHisha">
+	        	<h2>${life.account.name}さん</h2> <!-- ここを変更 -->
+	             <!-- フォームで隠しIDを送信 -->
+                <form action="LifeChange" method="Get" style="margin: 0;">
+                    <input type="hidden" name="lifeId" value="${life.id}">
+                    <button type="submit" class="lifelink" style="background: none; border: none; padding: 0;">
+                        <img id="hensyuuImg" alt="編集" src="assets/img/hensyuu.png">
+                    </button>
+                </form>
+        	</div>
+        	<h3>${life.title}</h3>
             <p>${life.content}</p>
             <img src="${life.img}" alt="画像">
         </div>
