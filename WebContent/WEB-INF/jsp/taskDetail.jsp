@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="assets/css/an/style.css">
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
-    <title>タスク詳細画面</title>
+    <title>タスク詳細</title>
     <script>
 	    if ('serviceWorker' in navigator) {
 	        window.addEventListener('load', () => {

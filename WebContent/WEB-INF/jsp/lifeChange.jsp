@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="assets/css/an/style.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script type="text/javascript" src="assets/js/home/script.js"></script>
-    <title>ライフハック変更画面</title>
+    <title>ライフハック変更</title>
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
     <script>
@@ -29,7 +29,7 @@
         <h1>ライフハック変更</h1>
     </header>
     
-    <form action="LifeChange" method="Post" style="margin: 0;" enctype="multipart/form-data">
+    <form action="LifeChange" method="POST" style="margin: 0;" enctype="multipart/form-data">
         <div class="background-1">
             <input type="hidden" name="lifeId" value="${life.id}">
             
@@ -40,7 +40,7 @@
 
             <div class="atcontent">
                 <label for="comment">内容</label>
-                <textarea name="comment" id="comment" rows="13" cols="40" required>${life.content}</textarea>
+                <textarea name="comment" id="comment" rows="13" cols="40" required><c:out value="${life.content}" escapeXml="true"/></textarea>
             </div>
 
             <!-- 現在の写真プレビューと削除オプション -->
@@ -62,7 +62,7 @@
         </div>
     </form>
     
-    <form action="LifeHackHistory" method="Post">
+    <form action="LifeHackHistory" method="POST">
         <div class="button-container">
             <input type="hidden" name="lifeId" value="${life.id}">
             <button type="submit" class="submit-button">削除</button>
@@ -98,6 +98,25 @@
             if (previewImage) {
                 previewImage.remove(); // プレビュー画像削除
                 currentPhoto.innerHTML = '<p>現在の写真は削除されました。</p>';
+                
+                // 写真削除リクエストをサーバーに送信
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = 'LifeChange';
+                const lifeIdInput = document.createElement('input');
+                lifeIdInput.type = 'hidden';
+                lifeIdInput.name = 'lifeId';
+                lifeIdInput.value = '${life.id}';
+                form.appendChild(lifeIdInput);
+                
+                const deleteImageInput = document.createElement('input');
+                deleteImageInput.type = 'hidden';
+                deleteImageInput.name = 'deleteImage';
+                deleteImageInput.value = 'true';
+                form.appendChild(deleteImageInput);
+                
+                document.body.appendChild(form);
+                form.submit();
             }
         });
     </script>
