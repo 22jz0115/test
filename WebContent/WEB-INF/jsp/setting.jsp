@@ -10,55 +10,138 @@
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
    	<script>
-	 	// サービスワーカー登録とPush通知の購読
-	   	function subscribeUserToPush() {
-	   	    if ('serviceWorker' in navigator && 'PushManager' in window) {
-	   	        // サービスワーカーを登録
-	   	        navigator.serviceWorker.register('/test/service-worker.js')
-	   	            .then(function (registration) {
-	   	                console.log('サービスワーカーが登録されました:', registration);
-	   	                // Push通知の購読関数を呼び出し
-	   	                subscribeToPushNotifications(registration);
-	   	            })
-	   	            .catch(function (error) {
-	   	                console.error('サービスワーカーの登録に失敗しました:', error);
-	   	            });
-	   	    } else {
-	   	        console.warn('このブラウザはサービスワーカーまたはPush通知をサポートしていません');
-	   	    }
-	   	}
+	    if ('serviceWorker' in navigator) {
+	        window.addEventListener('load', () => {
+	            navigator.serviceWorker.register('/test/service-worker.js').then((registration) => {
+	                console.log('Service Worker registered with scope:', registration.scope);
 	
-	   	// Push通知の購読
-	   	function subscribeToPushNotifications(registration) {
-	   	    registration.pushManager.subscribe({
-	   	        userVisibleOnly: true, // 通知がユーザーに表示されることを保証
-	   	        applicationServerKey: urlBase64ToUint8Array('BDkzLFhl0ZDx2ho-Snk_ZIITgZjBfXGunbNgycezdritqHIuESNIJkjmG_-LFM5ikVVlRZBmWk1m9uJzRRkZ19Y')
-	   	    })
-	   	    .then(function (subscription) {
-	   	        console.log('Push通知の購読に成功しました:', subscription);
-	   	  		// サーバーに登録情報を送信
-	            fetch('/test/PushServlet', {
-	                method: 'POST',
-	                headers: { 'Content-Type': 'application/json' },
-	                body: JSON.stringify(subscription)
+	                const switch1 = document.getElementById('switch1');
+	                if (switch1) {
+	                    switch1.addEventListener('change', function() {
+	                        if (switch1.checked) {
+	                            subscribeUser(registration);
+	                        } else {
+	                            unsubscribeUser(registration);
+	                        }
+	                    });
+	                } else {
+	                    console.error('スイッチが見つかりません');
+	                }
+	
+	                // Push通知の購読
+	                function subscribeUser(registration) {
+	                    registration.pushManager.getSubscription().then(function(subscription) {
+	                        if (subscription) {
+	                            console.log('既に購読されています');
+	                            return;
+	                        }
+	
+	                        // 新たにPush通知の購読を作成
+	                        registration.pushManager.subscribe({
+	                            userVisibleOnly: true,
+	                            applicationServerKey: urlBase64ToUint8Array('BBNgWYrBUGNBxLIb5IOUufjXNNkP-NWOwyt7k4QFxRxQfkZWKzBwsRwx_NnbNEyJLXeTOHnbXagsT-e_7wmkmMo')
+	                        }).then(function(newSubscription) {
+	                            console.log('Push通知の購読に成功:', newSubscription);
+	                            sendSubscriptionToServer(newSubscription);
+	                        }).catch(function(error) {
+	                            console.error('Push通知の購読に失敗:', error);
+	                            alert('Push通知の購読に失敗しました。後で再試行してください。');
+	                        });
+	                    }).catch(function(error) {
+	                        console.error('Push通知のサブスクリプション取得エラー:', error);
+	                    });
+	                }
+	
+	                // Push通知の解除
+	                function unsubscribeUser(registration) {
+	                    registration.pushManager.getSubscription().then(function(subscription) {
+	                        if (!subscription) {
+	                            console.log('現在、Push通知は購読されていません。');
+	                            return;
+	                        }
+	
+	                        subscription.unsubscribe().then(function() {
+	                            console.log('Push通知を解除しました');
+	                            sendUnsubscriptionToServer();
+	                        }).catch(function(error) {
+	                            console.error('Push通知の解除に失敗:', error);
+	                        });
+	                    }).catch(function(error) {
+	                        console.error('Push通知の解除情報取得エラー:', error);
+	                    });
+	                }
+	
+	                // サーバーに購読情報を送信
+	                function sendSubscriptionToServer(subscription) {
+	                    console.log(subscription);
+	
+	                    if (!subscription.keys || !subscription.keys.auth || !subscription.keys.p256dh) {
+	                        console.error('Pushサブスクリプションの鍵情報が不足しています');
+	                        return;
+	                    }
+	
+	                    const subscriptionData = {
+	                        endpoint: subscription.endpoint,
+	                        keys: {
+	                            auth: subscription.keys.auth,
+	                            p256dh: subscription.keys.p256dh
+	                        }
+	                    };
+	
+	                    fetch('/test/PushServlet', {
+	                        method: 'POST',
+	                        headers: {
+	                            'Content-Type': 'application/json',
+	                        },
+	                        body: JSON.stringify(subscriptionData)
+	                    })
+	                    .then(response => {
+	                        if (response.ok) {
+	                            console.log('購読情報がサーバーに送信されました');
+	                        } else {
+	                            console.error('購読情報の送信に失敗しました');
+	                        }
+	                    })
+	                    .catch(error => {
+	                        console.error('送信エラー:', error);
+	                    });
+	                }
+	
+	                // サーバーに解除情報を送信
+	                function sendUnsubscriptionToServer() {
+	                    fetch('/test/Unsubscribe', {
+	                        method: 'POST',
+	                        headers: { 'Content-Type': 'application/json' }
+	                    })
+	                    .then(response => {
+	                        if (response.ok) {
+	                            console.log('解除情報がサーバーに送信されました');
+	                        } else {
+	                            console.error('解除情報の送信に失敗しました');
+	                        }
+	                    })
+	                    .catch(error => {
+	                        console.error('解除情報送信エラー:', error);
+	                    });
+	                }
+	
+	                // Base64をUint8Arrayに変換
+	                function urlBase64ToUint8Array(base64String) {
+	                    const padding = '='.repeat((4 - base64String.length % 4) % 4);
+	                    const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
+	                    const rawData = window.atob(base64);
+	                    const outputArray = new Uint8Array(rawData.length);
+	                    for (let i = 0; i < rawData.length; ++i) {
+	                        outputArray[i] = rawData.charCodeAt(i);
+	                    }
+	                    return outputArray;
+	                }
+	
+	            }).catch((error) => {
+	                console.error('Service Worker registration failed:', error);
 	            });
-	   	    })
-	   	    .catch(function (error) {
-	   	        console.error('Push通知の購読に失敗しました:', error);
-	   	    });
-	   	}
-	
-	   	// VAPID公開鍵をUint8Arrayに変換する関数
-	   	function urlBase64ToUint8Array(base64String) {
-	   	    const padding = '='.repeat((4 - base64String.length % 4) % 4);
-	   	    const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
-	   	    const rawData = window.atob(base64);
-	   	    const outputArray = new Uint8Array(rawData.length);
-	   	    for (let i = 0; i < rawData.length; ++i) {
-	   	        outputArray[i] = rawData.charCodeAt(i);
-	   	    }
-	   	    return outputArray;
-	   	}
+	        });
+	    }
 	</script>
 </head>
 <body>
@@ -76,7 +159,7 @@
             <label for="switch1" class="switch_label">  
                 <p>OFF</p>
                 <div class="switch">
-                    <input type="checkbox" id="switch1" onclick="subscribeUserToPush()"/>
+                    <input type="checkbox" id="switch1"/>
                     <div class="circle"></div>
                     <div class="base"></div>
                 </div>

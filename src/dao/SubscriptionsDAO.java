@@ -115,6 +115,23 @@ public class SubscriptionsDAO {
 		return null;
 	}
 	
+	public boolean deleteSubscribe(int accountId) {
+	    int ret = -1;
+	    DBManager manager = DBManager.getInstance();
+	    try (Connection cn = manager.getConnection()) {
+	        // SQL文をDELETE文に変更
+	        String sql = "DELETE FROM subscriptions WHERE account_id = ?";
+	        PreparedStatement stmt = cn.prepareStatement(sql);
+	        stmt.setInt(1, accountId);
+	        // 実行結果を取得
+	        ret = stmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    // 更新された行が1行以上かどうかを返す
+	    return ret > 0;
+	}
+	
 	private Subscriptions rs2model(ResultSet rs) throws SQLException {
         int id = rs.getInt("id");
         int accountId = rs.getInt("account_id");
