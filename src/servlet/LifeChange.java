@@ -86,9 +86,6 @@ public class LifeChange extends HttpServlet {
 	        return;
 	    }
 
-	    // 改行を <br> に変換
-	    content = content.replace("\n", "<br>");
-
 	    // ファイルアップロードの処理
 	    Part filePart = request.getPart("file");
 	    String fileName = filePart != null && filePart.getSize() > 0 

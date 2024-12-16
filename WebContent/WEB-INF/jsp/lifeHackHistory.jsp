@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -11,16 +13,16 @@
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
     <script>
-	    if ('serviceWorker' in navigator) {
-	        window.addEventListener('load', () => {
-	            navigator.serviceWorker.register('/test/service-worker.js').then((registration) => {
-	                console.log('Service Worker registered with scope:', registration.scope);
-	            }).catch((error) => {
-	                console.error('Service Worker registration failed:', error);
-	            });
-	        });
-	    }
-	</script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/test/service-worker.js').then((registration) => {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                }).catch((error) => {
+                    console.error('Service Worker registration failed:', error);
+                });
+            });
+        }
+    </script>
 </head>
 <body>
 <div class="pagetop">Top</div>
@@ -37,21 +39,21 @@
 <c:forEach var="life" items="${lifeList}">
     <div class="lifehacks">
         <div>
-        	<div id="lifeHisha">
-	        	<h2>${life.account.name}さん</h2> <!-- ここを変更 -->
-	             <!-- フォームで隠しIDを送信 -->
+            <div id="lifeHisha">
+                <h2>${life.account.name}さん</h2> <!-- ここを変更 -->
+                <!-- フォームで隠しIDを送信 -->
                 <form action="LifeChange" method="Get" style="margin: 0;">
                     <input type="hidden" name="lifeId" value="${life.id}">
                     <button type="submit" class="lifelink" style="background: none; border: none; padding: 0;">
                         <img id="hensyuuImg" alt="編集" src="assets/img/hensyuu.png">
                     </button>
                 </form>
-        	</div>
-        	<h3>${life.title}</h3>
-            <p>${life.content}</p>
+            </div>
+            <h3>${life.title}</h3>
+            <p style="white-space: pre-wrap;">${life.content}</p> <!-- 改行を反映 -->
             <img src="${life.img}" alt="画像">
         </div>
-    </div>    	
+    </div>     
 </c:forEach>
 
 <script>

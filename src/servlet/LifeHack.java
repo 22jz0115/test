@@ -67,8 +67,7 @@ public class LifeHack extends HttpServlet {
 
         String title = request.getParameter("name");
         String content = request.getParameter("comment");
-        
-        content = content.replace("\n", "<br>");
+        System.out.println(content);
 
         // ファイルパートを取得
         Part filePart = request.getPart("file"); // フォームのinput type="file"のname属性が"file"である場合
@@ -76,8 +75,6 @@ public class LifeHack extends HttpServlet {
 
         // 保存先のディレクトリを指定 (絶対パスを使用)
         String uploadDir = "/opt/tomcat/webapps/test/assets/img"; // 直接絶対パスを指定
-        
-        
 
         // 保存先のディレクトリが存在しない場合は作成
         File uploadDirFile = new File(uploadDir);
@@ -85,8 +82,13 @@ public class LifeHack extends HttpServlet {
             uploadDirFile.mkdirs();
         }
 
-        // ファイルを指定したパスに保存
+        // 既存のファイルを削除（同名ファイルが存在する場合）
         File file = new File(uploadDir, fileName);
+        if (file.exists()) {
+            file.delete(); // 既存のファイルを削除
+        }
+
+        // ファイルを保存
         try (InputStream inputStream = filePart.getInputStream()) {
             Files.copy(inputStream, file.toPath(), StandardCopyOption.REPLACE_EXISTING); // ファイルを保存
         }
@@ -107,7 +109,7 @@ public class LifeHack extends HttpServlet {
 
         // 成功したらリダイレクトまたは画面遷移
         response.sendRedirect("LifeHack");
-        
     }
+
     
 }

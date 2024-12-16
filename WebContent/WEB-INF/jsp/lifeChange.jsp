@@ -29,7 +29,7 @@
         <h1>ライフハック変更</h1>
     </header>
     
-    <form action="LifeChange" method="POST" style="margin: 0;" enctype="multipart/form-data">
+    <form id="lifeChangeForm" action="LifeChange" method="POST" style="margin: 0;" enctype="multipart/form-data">
         <div class="background-1">
             <input type="hidden" name="lifeId" value="${life.id}">
             
@@ -40,7 +40,7 @@
 
             <div class="atcontent">
                 <label for="comment">内容</label>
-                <textarea name="comment" id="comment" rows="13" cols="40" required><c:out value="${life.content}" escapeXml="true"/></textarea>
+                <textarea name="comment" id="comment" rows="13" cols="40" required>${life.content}</textarea>
             </div>
 
             <!-- 現在の写真プレビューと削除オプション -->
@@ -70,6 +70,8 @@
     </form>
 
     <script>
+        let isImageDeleted = false; // 画像が削除されたかのフラグ
+
         function previewFiles(input) {
             const preview = document.getElementById('preview');
             preview.innerHTML = ''; // 既存のプレビューをクリア
@@ -98,25 +100,26 @@
             if (previewImage) {
                 previewImage.remove(); // プレビュー画像削除
                 currentPhoto.innerHTML = '<p>現在の写真は削除されました。</p>';
-                
-                // 写真削除リクエストをサーバーに送信
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.action = 'LifeChange';
-                const lifeIdInput = document.createElement('input');
-                lifeIdInput.type = 'hidden';
-                lifeIdInput.name = 'lifeId';
-                lifeIdInput.value = '${life.id}';
-                form.appendChild(lifeIdInput);
-                
+                isImageDeleted = true; // 画像削除フラグをセット
+
+                // 新たに削除された情報をフォームに追加
                 const deleteImageInput = document.createElement('input');
                 deleteImageInput.type = 'hidden';
                 deleteImageInput.name = 'deleteImage';
                 deleteImageInput.value = 'true';
-                form.appendChild(deleteImageInput);
-                
-                document.body.appendChild(form);
-                form.submit();
+                document.getElementById('lifeChangeForm').appendChild(deleteImageInput);
+            }
+        });
+
+        // フォーム送信時に画像削除フラグを確認
+        document.getElementById('lifeChangeForm').addEventListener('submit', function(e) {
+            if (isImageDeleted) {
+                // フォーム送信時に削除情報を送る
+                const deleteImageInput = document.createElement('input');
+                deleteImageInput.type = 'hidden';
+                deleteImageInput.name = 'deleteImage';
+                deleteImageInput.value = 'true';
+                this.appendChild(deleteImageInput);
             }
         });
     </script>
