@@ -22,9 +22,7 @@ public class CreateUser extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-//		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/createUser.jsp");
-//		dispatcher.forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/jsp/shinki.jsp").forward(request, response);
 	}
 
 	/**

@@ -48,7 +48,7 @@
                 <div class="migi0">
                     <button id="touroku" type="submit" class="button00">Login</button>
                     <p class="sinki">
-                        <a href="Shinki" class="sinki"><span id="sinki">新規登録</span></a>
+                        <a href="CreateUser" class="sinki"><span id="sinki">新規登録</span></a>
                     </p>
                 </div>
             </div>
