@@ -13,7 +13,6 @@ import java.security.PublicKey;
 import java.security.Security;
 import java.security.Signature;
 import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.X509EncodedKeySpec;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
@@ -28,7 +27,11 @@ import javax.crypto.KeyAgreement;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.bouncycastle.jce.ECNamedCurveTable;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.bouncycastle.jce.spec.ECParameterSpec;
+import org.bouncycastle.jce.spec.ECPublicKeySpec;
+import org.bouncycastle.math.ec.ECPoint;
 import org.json.JSONObject;
 
 import dao.SubscriptionsDAO;
@@ -132,6 +135,7 @@ public class TaskNotificationScheduler {
         PublicKey recipientPublicKey = generatePublicKey(p256dh);
 
      // エピメラル（一時的）鍵ペア生成
+        Security.addProvider(new BouncyCastleProvider());
         KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("EC", "BC");
         keyPairGenerator.initialize(256);  // 256ビットの鍵生成
         KeyPair ephemeralKeyPair = keyPairGenerator.generateKeyPair();
@@ -156,13 +160,25 @@ public class TaskNotificationScheduler {
     }
     
     public static PublicKey generatePublicKey(String p256dh) throws GeneralSecurityException {
-        // URLセーフBase64デコード
-        byte[] p256dhBytes = Base64.getUrlDecoder().decode(p256dh);
+    	// p256dhをURLセーフ形式からデコード
+        byte[] p256dhBytes = decodeBase64UrlSafe(p256dh);
+        System.out.println("Decoded p256dh length: " + p256dhBytes.length);
+        System.out.println("Decoded p256dh starts with: 0x" + Integer.toHexString(p256dhBytes[0] & 0xFF));
 
-        // EC公開鍵の生成
+        // P-256曲線のパラメータを取得
+        ECParameterSpec ecSpec = ECNamedCurveTable.getParameterSpec("P-256");
+
+        // 曲線上のポイントをデコード
+        ECPoint ecPoint = ecSpec.getCurve().decodePoint(p256dhBytes);
+        System.out.println("ECPoint: " + ecPoint);
+
+        // 公開鍵スペックを作成
+        ECPublicKeySpec publicKeySpec = new ECPublicKeySpec(ecPoint, ecSpec);
+
+        // KeyFactoryを利用して公開鍵を生成
         KeyFactory keyFactory = KeyFactory.getInstance("EC", "BC");
-        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(p256dhBytes);
-        return keyFactory.generatePublic(keySpec);
+        System.out.println("BC Provider added: " + Security.getProvider("BC"));
+        return keyFactory.generatePublic(publicKeySpec);
     }
 
     // HKDFの実装（簡易版）
@@ -170,6 +186,16 @@ public class TaskNotificationScheduler {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         digest.update(salt);
         return digest.digest(inputKeyingMaterial);
+    }
+    
+    public static byte[] decodeBase64UrlSafe(String base64) {
+        // Base64をURLセーフ形式に変換（+ -> -, / -> _, = を削除）
+        String base64UrlSafe = base64
+                .replace('+', '-')
+                .replace('/', '_')
+                .replace("=", "");
+        // URLセーフ形式でデコード
+        return Base64.getUrlDecoder().decode(base64UrlSafe);
     }
 
     // 例としてVAPIDトークンの生成

@@ -10,139 +10,162 @@
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
    	<script>
-	    if ('serviceWorker' in navigator) {
-	        window.addEventListener('load', () => {
-	            navigator.serviceWorker.register('/test/service-worker.js').then((registration) => {
-	                console.log('Service Worker registered with scope:', registration.scope);
-	
-	                const switch1 = document.getElementById('switch1');
-	                if (switch1) {
-	                    switch1.addEventListener('change', function() {
-	                        if (switch1.checked) {
-	                            subscribeUser(registration);
-	                        } else {
-	                            unsubscribeUser(registration);
-	                        }
-	                    });
-	                } else {
-	                    console.error('スイッチが見つかりません');
-	                }
-	
-	                // Push通知の購読
-	                function subscribeUser(registration) {
-	                    registration.pushManager.getSubscription().then(function(subscription) {
-	                        if (subscription) {
-	                            console.log('既に購読されています');
-	                            return;
-	                        }
-	
-	                        // 新たにPush通知の購読を作成
-	                        registration.pushManager.subscribe({
-	                            userVisibleOnly: true,
-	                            applicationServerKey: urlBase64ToUint8Array('BBNgWYrBUGNBxLIb5IOUufjXNNkP-NWOwyt7k4QFxRxQfkZWKzBwsRwx_NnbNEyJLXeTOHnbXagsT-e_7wmkmMo')
-	                        }).then(function(newSubscription) {
-	                            console.log('Push通知の購読に成功:', newSubscription);
-	                            sendSubscriptionToServer(newSubscription);
-	                        }).catch(function(error) {
-	                            console.error('Push通知の購読に失敗:', error);
-	                            alert('Push通知の購読に失敗しました。後で再試行してください。');
-	                        });
-	                    }).catch(function(error) {
-	                        console.error('Push通知のサブスクリプション取得エラー:', error);
-	                    });
-	                }
-	
-	                // Push通知の解除
-	                function unsubscribeUser(registration) {
-	                    registration.pushManager.getSubscription().then(function(subscription) {
-	                        if (!subscription) {
-	                            console.log('現在、Push通知は購読されていません。');
-	                            return;
-	                        }
-	
-	                        subscription.unsubscribe().then(function() {
-	                            console.log('Push通知を解除しました');
-	                            sendUnsubscriptionToServer();
-	                        }).catch(function(error) {
-	                            console.error('Push通知の解除に失敗:', error);
-	                        });
-	                    }).catch(function(error) {
-	                        console.error('Push通知の解除情報取得エラー:', error);
-	                    });
-	                }
-	
-	                // サーバーに購読情報を送信
-	                function sendSubscriptionToServer(subscription) {
-	                    console.log(subscription);
-	
-	                    if (!subscription.keys || !subscription.keys.auth || !subscription.keys.p256dh) {
-	                        console.error('Pushサブスクリプションの鍵情報が不足しています');
-	                        return;
-	                    }
-	
-	                    const subscriptionData = {
-	                        endpoint: subscription.endpoint,
-	                        keys: {
-	                            auth: subscription.keys.auth,
-	                            p256dh: subscription.keys.p256dh
-	                        }
-	                    };
-	
-	                    fetch('/test/PushServlet', {
-	                        method: 'POST',
-	                        headers: {
-	                            'Content-Type': 'application/json',
-	                        },
-	                        body: JSON.stringify(subscriptionData)
-	                    })
-	                    .then(response => {
-	                        if (response.ok) {
-	                            console.log('購読情報がサーバーに送信されました');
-	                        } else {
-	                            console.error('購読情報の送信に失敗しました');
-	                        }
-	                    })
-	                    .catch(error => {
-	                        console.error('送信エラー:', error);
-	                    });
-	                }
-	
-	                // サーバーに解除情報を送信
-	                function sendUnsubscriptionToServer() {
-	                    fetch('/test/Unsubscribe', {
-	                        method: 'POST',
-	                        headers: { 'Content-Type': 'application/json' }
-	                    })
-	                    .then(response => {
-	                        if (response.ok) {
-	                            console.log('解除情報がサーバーに送信されました');
-	                        } else {
-	                            console.error('解除情報の送信に失敗しました');
-	                        }
-	                    })
-	                    .catch(error => {
-	                        console.error('解除情報送信エラー:', error);
-	                    });
-	                }
-	
-	                // Base64をUint8Arrayに変換
-	                function urlBase64ToUint8Array(base64String) {
-	                    const padding = '='.repeat((4 - base64String.length % 4) % 4);
-	                    const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
-	                    const rawData = window.atob(base64);
-	                    const outputArray = new Uint8Array(rawData.length);
-	                    for (let i = 0; i < rawData.length; ++i) {
-	                        outputArray[i] = rawData.charCodeAt(i);
-	                    }
-	                    return outputArray;
-	                }
-	
-	            }).catch((error) => {
-	                console.error('Service Worker registration failed:', error);
-	            });
-	        });
-	    }
-	</script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/test/service-worker.js').then((registration) => {
+                console.log('Service Worker registered with scope:', registration.scope);
+
+                const switch1 = document.getElementById('switch1');
+                if (switch1) {
+                    switch1.addEventListener('change', async function() {
+                        if (switch1.checked) {
+                            await subscribeUser(registration);
+                        } else {
+                            await unsubscribeUser(registration);
+                        }
+                    });
+                } else {
+                    console.error('スイッチが見つかりません');
+                }
+
+                // Push通知の購読
+                async function subscribeUser(registration) {
+                    const subscription = await registration.pushManager.getSubscription();
+                    if (subscription) {
+                        console.log('既に購読されています:', subscription);
+                        return;
+                    }
+
+                    try {
+                        // 鍵を生成
+                        const { publicKey, authKey } = await generatePushKeys();
+
+                        // 新たにPush通知の購読を作成
+                        const newSubscription = await registration.pushManager.subscribe({
+                            userVisibleOnly: true,
+                            applicationServerKey: urlBase64ToUint8Array(publicKey),
+                        });
+
+                        console.log('Push通知の購読に成功:', newSubscription);
+
+                        // サーバーに送信
+                        sendSubscriptionToServer({
+                            endpoint: newSubscription.endpoint,
+                            keys: {
+                                auth: authKey,
+                                p256dh: publicKey,
+                            },
+                        });
+                    } catch (error) {
+                        console.error('Push通知の購読に失敗:', error);
+                        alert('Push通知の購読に失敗しました。後で再試行してください。');
+                    }
+                }
+
+                // Push通知の解除
+                async function unsubscribeUser(registration) {
+                    const subscription = await registration.pushManager.getSubscription();
+                    if (!subscription) {
+                        console.log('現在、Push通知は購読されていません。');
+                        return;
+                    }
+
+                    try {
+                        await subscription.unsubscribe();
+                        console.log('Push通知を解除しました');
+                        sendUnsubscriptionToServer();
+                    } catch (error) {
+                        console.error('Push通知の解除に失敗:', error);
+                    }
+                }
+
+                // サーバーに購読情報を送信
+                function sendSubscriptionToServer(subscriptionData) {
+                    fetch('/test/PushServlet', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(subscriptionData),
+                    })
+                        .then((response) => {
+                            if (response.ok) {
+                                console.log('購読情報がサーバーに送信されました');
+                            } else {
+                                console.error('購読情報の送信に失敗しました');
+                            }
+                        })
+                        .catch((error) => {
+                            console.error('送信エラー:', error);
+                        });
+                }
+
+                // サーバーに解除情報を送信
+                function sendUnsubscriptionToServer() {
+                    fetch('/test/Unsubscribe', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                    })
+                        .then((response) => {
+                            if (response.ok) {
+                                console.log('解除情報がサーバーに送信されました');
+                            } else {
+                                console.error('解除情報の送信に失敗しました');
+                            }
+                        })
+                        .catch((error) => {
+                            console.error('解除情報送信エラー:', error);
+                        });
+                }
+
+                // 鍵生成
+                async function generatePushKeys() {
+                    // P-256（prime256v1）楕円曲線鍵ペアを生成
+                    const keyPair = await window.crypto.subtle.generateKey(
+                        {
+                            name: 'ECDH',
+                            namedCurve: 'P-256',
+                        },
+                        true,
+                        ['deriveKey', 'deriveBits']
+                    );
+
+                    // 公開鍵をBase64エンコード
+                    const publicKey = await exportCryptoKey(keyPair.publicKey);
+
+                    // 認証キー（16バイトランダム値）を生成
+                    const authArray = new Uint8Array(16);
+                    window.crypto.getRandomValues(authArray);
+                    const authKey = btoa(String.fromCharCode(...authArray));
+
+                    console.log('生成された鍵:', { publicKey, authKey });
+                    return { publicKey, authKey };
+                }
+
+                // 公開鍵をBase64形式にエクスポート
+                async function exportCryptoKey(key) {
+                    const exportedKey = await window.crypto.subtle.exportKey('raw', key);
+                    const uint8Array = new Uint8Array(exportedKey);
+                    return btoa(String.fromCharCode(...uint8Array));
+                }
+
+                // Base64をUint8Arrayに変換
+                function urlBase64ToUint8Array(base64String) {
+                    const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
+                    const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+                    const rawData = window.atob(base64);
+                    const outputArray = new Uint8Array(rawData.length);
+                    for (let i = 0; i < rawData.length; ++i) {
+                        outputArray[i] = rawData.charCodeAt(i);
+                    }
+                    return outputArray;
+                }
+            }).catch((error) => {
+                console.error('Service Worker registration failed:', error);
+            });
+        });
+    }
+</script>
 </head>
 <body>
 
