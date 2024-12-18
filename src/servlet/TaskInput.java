@@ -51,11 +51,15 @@ public class TaskInput extends HttpServlet {
     	
     	request.setCharacterEncoding("UTF-8");
         // フォームデータを取得
-        String date = request.getParameter("dateInput");
+        String date = request.getParameter("dateInput1");
+        String date2 = request.getParameter("dateInput2");
         String time = request.getParameter("appt-time");
         String category = request.getParameter("categorySelect"); //int型にする
         String taskName = request.getParameter("taskName");
         String memo = request.getParameter("story");
+        
+        System.out.println("TaskInputDate1" + date);
+        System.out.println("TaskInputDate2"+ date2);
         
         
         int categoryId = Integer.parseInt(category);

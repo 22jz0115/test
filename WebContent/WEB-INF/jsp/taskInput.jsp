@@ -54,7 +54,15 @@
             <div class="form-group">
                 <label for="dateInput">日付</label>
                 <!-- 日付選択 -->
-                <input type="date" id="dateInput" name="dateInput" value="${selectedDate}">
+                <input type="date" id="dateInput" name="dateInput1" value="${selectedDate}">
+            </div>
+            
+            <p>～</p>
+            
+            <div class="form-group">
+                <label for="dateInput">日付</label>
+                <!-- 日付選択 -->
+                <input type="date" id="dateInput" name="dateInput2" value="${selectedDate}">
             </div>
 
             <script>

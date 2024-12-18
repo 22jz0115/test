@@ -17,6 +17,12 @@
     </header>
      
     <h2 class="taskcategory">${categoryName.categoryName}</h2>
+    <select id="categorySelect" name="serchHistory"> 
+    	<option id="task-1" class="deletable" value="">昇順</option>
+    	<option id="task-1" class="deletable" value="">降順</option>
+    	<option id="task-1" class="deletable" value="">完了</option>
+    	<option id="task-1" class="deletable" value="">未完了</option>
+    </select>
     <div>
         <c:forEach var="entry" items="${groupedTasks}">
             <h3 class="taskdate">${entry.key}</h3> <!-- 日付を表示 -->
