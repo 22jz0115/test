@@ -51,7 +51,7 @@
                     <div>
                         <div class="timersolid">
                             <p class="tasktime">${task.formattedTime}</p>
-                            <span></span>
+                            <span class="span"></span>
                         </div>
                 		<a href="TaskDetail?taskId=${task.id}">
                         	<p class="taskname">${task.taskName}</p>

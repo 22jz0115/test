@@ -27,8 +27,8 @@
 	    
 	</script>
 	<script>
-	    const taskDates = ${taskDatesJson};
-	</script>
+        const taskDates = ${taskDatesJson};
+    </script>
 	
 </head>
 <body>

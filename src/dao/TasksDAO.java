@@ -110,6 +110,7 @@ public class TasksDAO {
 	    try (Connection cn = manager.getConnection()) {
 	        // SQL文でtask_datetimeの年月日部分のみを比較
 	        String sql = "SELECT * FROM tasks WHERE account_id = ? AND TRUNC(task_datetime) = TO_DATE(?, 'YYYY-MM-DD') ORDER BY 5";
+	        
 	        PreparedStatement stmt = cn.prepareStatement(sql);
 	        stmt.setInt(1, account_id);
 	        

@@ -62,7 +62,7 @@ function updateTaskList(presetData) {
             					<div>
 	                                <div class="timersolid">
 	                                    <p class="tasktime">${taskTime}</p>
-	                                    <span></span>
+	                                    <span class="span"></span>
 	                                </div>
                                 	<p>${task.name}</p>
                                 <div>

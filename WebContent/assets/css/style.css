@@ -342,6 +342,38 @@ p{
 
 }
 
+/* カレンダーのセルの高さを均等に保つ */
+.calendar td {
+  
+    vertical-align: middle; /* セル内のコンテンツを縦方向で中央に配置 */
+}
+
+/* タスクがある日付に小さな丸を中央に表示 */
+.task-circle {
+    display: block;
+    margin: 0 auto;
+    width: 14px; /* 丸の幅 */
+    height: 14px; /* 丸の高さ */
+    border-radius: 50%;
+    background-color: red; /* 丸の色 */
+    border: 1px solid black;
+}
+
+/* 日曜日と土曜日のスタイル調整 */
+.sunday, .saturday {
+    font-weight: bold;
+    height: 60px; /* 日曜日と土曜日のセル高さも調整 */
+}
+
+/* カレンダーのその他のスタイル */
+.calendar th,
+.calendar td {
+    
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
 .calendar-wrap {
     margin: 5px auto;
     width: 370px;
@@ -363,7 +395,6 @@ p{
   .calendar th,
   .calendar td {
     text-align: center;
-    padding: 10px;
     font-size: 30px;
     font-weight: bold;
   }
@@ -373,7 +404,6 @@ p{
   @media (max-width: 767.98px) {
     .calendar th,
     .calendar td {
-      padding: 6px;
       font-size: 20px;
     }
     .calendar th {
@@ -388,14 +418,9 @@ p{
 }
 
 .today {
-    background-color: rgba(255, 33, 33, 0.822); /* 背景色を赤に */
     border-radius: 50%;                         /* 丸くする */
-    color: #fff;                                /* 文字色を白に */
+    color:rgb(255, 0, 128);                                /* 文字色を白に */
     font-weight: bold;                          /* 太字 */
-    display: inline-block;                      /* サイズを調整しやすくする */
-    width: 25px;                                /* 幅を小さくする */
-    height: 25px;                               /* 高さを小さくする */
-    line-height: 25px;                          /* テキストを中央に揃える */
     text-align: center;                         /* テキストを中央に配置 */
 }
 
@@ -503,6 +528,8 @@ p{
     color: white;
     font-weight: bold;
 }
+
+
 
 
 
@@ -681,11 +708,11 @@ td{
     font-weight: bold;
 }
 
-span{
+.span{
     width: 5px;
     height: 50px;
     background: #c9c9c9;
-    margin-left: 18px;
+    margin-left: 26px;
     padding-top: 7px;
 }
 
@@ -1062,7 +1089,6 @@ input[type="submit"] {
 span{
     width: 5px;
     height: 50px;
-    background: #c9c9c9;
     margin-left: 25px;
     padding-top: 7px;
 }
@@ -1280,3 +1306,5 @@ input[type="submit"]{
 .pagetop:hover {
     box-shadow: 0 0 10px #00A6C4;
 }
+
+

@@ -28,6 +28,7 @@ public class Tasks {
         this.formattedUpdateDate = formattedUpdateDate;
     }
     
+    
     public int getCheck() {
 		return checkTask;
 	}
@@ -93,15 +94,14 @@ public class Tasks {
     }
     
 
-    // フォーマットされた時間のゲッター
     public String getFormattedTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm"); // 時間のフォーマット
-        return formattedTime = taskDate.format(formatter);
+        return taskDate.format(formatter); // 直接フォーマットされた値を返す
     }
-    
+
     public String getFormattedDate() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // 時間のフォーマット
-        return formattedTime = taskDate.format(formatter);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // 日付のフォーマット
+        return taskDate.format(formatter); // 直接フォーマットされた値を返す
     }
 
     public Tasks(int id, int categoryId, int accountId, String taskName, LocalDateTime taskDate, String memo,

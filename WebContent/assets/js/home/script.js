@@ -45,7 +45,6 @@ $(function() {
 });
 
 // カレンダーを生成
-// カレンダーを生成
 function generateCalendar(year, month) {
     const head = '<tr class="week"><th class="sun">日</th><th>月</th>' +
         '<th>火</th><th>水</th><th>木</th><th>金</th><th class="sat">土</th></tr>';
@@ -84,16 +83,59 @@ function generateCalendar(year, month) {
             tdClass += ' saturday'; // 土曜日
         }
 
+        // タスクがある日付を判定し、スタイルを適用
+        const formattedDate = `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')}`;
+        if (taskDates.includes(formattedDate)) {
+            tdClass += ' task-date';  // タスクの日付にクラスを追加
+        }
+
         // クリックイベントで現在の月と日を明示的に指定
-        line.append($('<td>', {
+        const td = $('<td>', {
             class: tdClass,
             text: day,
             click: (function(year, month, day) {
                 return function() {
                     sendDate(new Date(year, month, day)); // 正しい年月日を指定
                 };
-            })(d.getFullYear(), d.getMonth(), day) // 即時関数で現在の年月日を保持
-        }));
+            })(d.getFullYear(), d.getMonth(), day), // 即時関数で現在の年月日を保持
+            css: {
+                verticalAlign: 'middle' // セル内で中央に配置
+            }
+        });
+
+        // タスクがある日付に小さな丸を表示
+        if (taskDates.includes(formattedDate)) {
+            const taskCircle = $('<span>', { 
+                class: 'task-circle',
+                css: {
+                    display: 'block',
+                    margin: '0 auto',
+                    width: '9px', // 丸の幅を調整
+                    height: '2px', // 丸の高さを調整
+                    borderRadius: '50%',
+                    backgroundColor: 'red', // 丸の色を設定
+                    border: '1px solid black',
+                    marginTop: '4px' // 丸をセル内で中央に配置
+                }
+            });
+            td.append(taskCircle);  // 丸を日付セルに追加
+        }else{
+			const taskCircle = $('<span>', { 
+                class: 'task',
+                css: {
+                    display: 'block',
+                    margin: '0 auto',
+                    width: '9px', // 丸の幅を調整
+                    height: '2px', // 丸の高さを調整
+                    borderRadius: '50%',
+                   
+                    marginTop: '4px' // 丸をセル内で中央に配置
+                }
+            });
+             td.append(taskCircle);  // 丸を日付セルに追加
+		}
+
+        line.append(td);
 
         if (yobi == 6) {  // 土曜日で行を終了
             $("table").append(line);
@@ -113,8 +155,6 @@ function generateCalendar(year, month) {
         $("table").append(line);
     }
 }
-
-
 
 // 日付を送信
 function sendDate(date) {

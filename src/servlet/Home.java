@@ -38,34 +38,34 @@ public class Home extends HttpServlet {
             return;
         }
         
-        
         LocalDate today = LocalDate.now();
         String selectedDate = today.toString(); // YYYY-MM-DD形式
 
         // タスクリストの取得
         TasksDAO dao = new TasksDAO();
         List<Tasks> taskList = dao.findByCheckTask(loginUser.getId(), selectedDate);
+        List<Tasks> allTask = dao.findByTaskList(loginUser.getId());
         request.setAttribute("taskList", taskList);
         
-        List<String> taskDates = taskList.stream()
-        	    .map((Tasks task) -> task.getFormattedDate().toString()) // 型を明示的に指定
-        	    .collect(Collectors.toList());
+     // タスクのある日付をリストとして取得
+        List<String> taskDates = allTask.stream()
+            .map(task -> task.getFormattedDate())  // 修正した getFormattedDate() メソッドを使用
+            .collect(Collectors.toList());
 
+        // タスクの日付をJSON形式に変換してJSPに渡す
+        String taskDatesJson = new Gson().toJson(taskDates);
 
-        	String taskDatesJson = new Gson().toJson(taskDates);
-        	request.setAttribute("taskDatesJson", taskDatesJson);
+        System.out.println(taskDatesJson);  // デバッグ用に出力
+        request.setAttribute("taskDatesJson", taskDatesJson);
         
+        System.out.println("Task list size: " + taskList.size()); // タスクリストのサイズを確認
+        taskList.forEach(task -> System.out.println(task.getFormattedDate())); 
 
-     // JavaScriptに渡すためのデータをリクエスト属性に追加
         request.setAttribute("Location", loginUser.getLocation());
 
-    
-        
-   
-
         request.getRequestDispatcher("/WEB-INF/jsp/home.jsp").forward(request, response);
-        
     }
+
 
     
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
