@@ -57,9 +57,6 @@ public class Home extends HttpServlet {
 
         System.out.println(taskDatesJson);  // デバッグ用に出力
         request.setAttribute("taskDatesJson", taskDatesJson);
-        
-        System.out.println("Task list size: " + taskList.size()); // タスクリストのサイズを確認
-        taskList.forEach(task -> System.out.println(task.getFormattedDate())); 
 
         request.setAttribute("Location", loginUser.getLocation());
 
