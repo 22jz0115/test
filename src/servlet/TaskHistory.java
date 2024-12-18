@@ -1,7 +1,11 @@
 package servlet;
 
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,10 +29,7 @@ public class TaskHistory extends HttpServlet {
         Accounts loginUser = (Accounts) session.getAttribute("loginUser");
 
         int categoryId = 0;
-
         String taskHistoryId = (String) session.getAttribute("taskHistoryId");
-        System.out.println(taskHistoryId);
-
         TasksDAO taskDAO = new TasksDAO();
         CategoriesDAO categoryDAO = new CategoriesDAO();
         Categories categoryName = null;
@@ -42,14 +43,28 @@ public class TaskHistory extends HttpServlet {
             categoryName = categoryDAO.find(categoryId);
         }
 
+     // タスクをカテゴリごとに取得
         List<Tasks> taskList = taskDAO.findByCategoryId(loginUser.getId(), categoryId);
 
-        // 取得したデータをリクエストスコープに格納
-        request.setAttribute("taskList", taskList);
-        request.setAttribute("categoryName", categoryName);
-        System.out.print(taskList.size());
+        // 日付ごとにタスクをグループ化
+        Map<String, List<Tasks>> groupedTasks = new LinkedHashMap<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd");
 
+        for (Tasks task : taskList) {
+            // 修正: getCreatedDate() を getCreatedAt() に変更
+            String formattedDate = task.getCreatedAt() != null ? task.getCreatedAt().format(formatter) : "不明な日付";
+
+            // グループ化してリストに追加
+            groupedTasks.computeIfAbsent(formattedDate, k -> new ArrayList<>()).add(task);
+        }
+
+        // グループ化されたタスクをリクエストにセット
+        request.setAttribute("groupedTasks", groupedTasks);
+        request.setAttribute("categoryName", categoryName);
+
+        // JSPに転送
         request.getRequestDispatcher("/WEB-INF/jsp/taskHistory.jsp").forward(request, response);
+
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

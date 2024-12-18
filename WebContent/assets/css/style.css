@@ -45,6 +45,29 @@ p{
     padding-top: 5px;
 }
 
+.task-day {
+    background-color: yellow;
+    border-radius: 50%;
+}
+
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+}
+
+.taskname {
+    font-weight: bold;
+}
+
+.task-status {
+    margin-left: 20px;
+    color: gray;
+}
+
+
 /*========= ナビゲーションのためのCSS ===============*/
 #g-nav {
     position: fixed; /* 修正: 固定配置に変更 */

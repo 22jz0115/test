@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.google.gson.Gson;
 
 import dao.AccountsDAO;
 import dao.MyBoxesDAO;
@@ -43,6 +46,14 @@ public class Home extends HttpServlet {
         TasksDAO dao = new TasksDAO();
         List<Tasks> taskList = dao.findByCheckTask(loginUser.getId(), selectedDate);
         request.setAttribute("taskList", taskList);
+        
+        List<String> taskDates = taskList.stream()
+        	    .map((Tasks task) -> task.getFormattedDate().toString()) // 型を明示的に指定
+        	    .collect(Collectors.toList());
+
+
+        	String taskDatesJson = new Gson().toJson(taskDates);
+        	request.setAttribute("taskDatesJson", taskDatesJson);
         
 
      // JavaScriptに渡すためのデータをリクエスト属性に追加

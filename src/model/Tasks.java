@@ -17,7 +17,16 @@ public class Tasks {
 
     // 新しいフィールドを追加
     private String formattedTime;
+    private String formattedUpdateDate; // 新しいフィールドを追加
 
+    
+    public String getFormattedUpdateDate() {
+        return formattedUpdateDate;
+    }
+
+    public void setFormattedUpdateDate(String formattedUpdateDate) {
+        this.formattedUpdateDate = formattedUpdateDate;
+    }
     
     public int getCheck() {
 		return checkTask;
