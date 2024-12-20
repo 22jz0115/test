@@ -12,6 +12,7 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.Security;
 import java.security.Signature;
+import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -31,6 +32,7 @@ import org.bouncycastle.jce.ECNamedCurveTable;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.jce.spec.ECParameterSpec;
 import org.bouncycastle.jce.spec.ECPublicKeySpec;
+import org.bouncycastle.math.ec.ECCurve;
 import org.bouncycastle.math.ec.ECPoint;
 import org.json.JSONObject;
 
@@ -159,33 +161,48 @@ public class TaskNotificationScheduler {
         return cipher.doFinal(payload.getBytes());
     }
     
-    public static PublicKey generatePublicKey(String p256dh) throws GeneralSecurityException {
-    	// p256dhをURLセーフ形式からデコード
-        byte[] p256dhBytes = decodeBase64UrlSafe(p256dh);
-        System.out.println("Decoded p256dh length: " + p256dhBytes.length);
-        System.out.println("Decoded p256dh starts with: 0x" + Integer.toHexString(p256dhBytes[0] & 0xFF));
-
-        // P-256曲線のパラメータを取得
-        ECParameterSpec ecSpec = ECNamedCurveTable.getParameterSpec("P-256");
-
-        // 曲線上のポイントをデコード
-        ECPoint ecPoint = ecSpec.getCurve().decodePoint(p256dhBytes);
-        System.out.println("ECPoint: " + ecPoint);
-
-        // 公開鍵スペックを作成
-        ECPublicKeySpec publicKeySpec = new ECPublicKeySpec(ecPoint, ecSpec);
-
-        // KeyFactoryを利用して公開鍵を生成
-        KeyFactory keyFactory = KeyFactory.getInstance("EC", "BC");
-        System.out.println("BC Provider added: " + Security.getProvider("BC"));
-        return keyFactory.generatePublic(publicKeySpec);
-    }
-
     // HKDFの実装（簡易版）
     private static byte[] hkdf(byte[] inputKeyingMaterial, byte[] salt) throws Exception {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         digest.update(salt);
         return digest.digest(inputKeyingMaterial);
+    }
+    
+    public static PublicKey generatePublicKey(String p256dh) throws GeneralSecurityException {
+    	// p256dhをURLセーフ形式からデコード
+        byte[] p256dhBytes = decodeBase64UrlSafe(p256dh);
+        System.out.println("Decoded p256dh (hex): " + bytesToHex(p256dhBytes));
+
+        // P-256曲線のパラメータを取得
+        ECParameterSpec ecSpec = ECNamedCurveTable.getParameterSpec("P-256");
+        ECCurve curve = ecSpec.getCurve();
+
+        // ECPointをデコード
+        ECPoint ecPoint = curve.decodePoint(p256dhBytes); // ここでECPointをデコード
+
+        if (!ecPoint.isValid()) {
+            throw new IllegalArgumentException("Invalid ECPoint");
+        }
+
+        // 公開鍵スペックを作成
+        ECPublicKeySpec publicKeySpec = new ECPublicKeySpec(ecPoint, ecSpec);
+
+        // Bouncy Castleプロバイダを追加
+        Security.addProvider(new BouncyCastleProvider());
+
+        // KeyFactoryを利用して公開鍵を生成
+        KeyFactory keyFactory = KeyFactory.getInstance("EC", "BC");
+
+        // 公開鍵の生成と例外処理
+        try {
+            return keyFactory.generatePublic(publicKeySpec);
+        } catch (InvalidKeySpecException e) {
+            System.err.println("InvalidKeySpecException: " + e.getMessage());
+            System.err.println("p256dhBytes: " + bytesToHex(p256dhBytes));
+            System.err.println("ECPoint: " + ecPoint);
+            System.err.println("ECSpec: " + ecSpec);
+            throw e;
+        }
     }
     
     public static byte[] decodeBase64UrlSafe(String base64) {
@@ -196,6 +213,14 @@ public class TaskNotificationScheduler {
                 .replace("=", "");
         // URLセーフ形式でデコード
         return Base64.getUrlDecoder().decode(base64UrlSafe);
+    }
+    
+    private static String bytesToHex(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes) {
+            sb.append(String.format("%02X", b));
+        }
+        return sb.toString();
     }
 
     // 例としてVAPIDトークンの生成
