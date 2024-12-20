@@ -132,7 +132,43 @@ public class TasksDAO {
 	    return taskList;
 	}
 
+	public List<Tasks> findSortedTasks(int accountId, int categoryId, String sortOrder) {
+	    String query = buildSortQuery(sortOrder);
+	    List<Tasks> taskList = new ArrayList<>();
+	    DBManager manager = DBManager.getInstance();
+	    try (Connection cn = manager.getConnection()) {
+	        PreparedStatement stmt = cn.prepareStatement(query);
+	        stmt.setInt(1, accountId);
+	        stmt.setInt(2, categoryId);
+	        ResultSet rs = stmt.executeQuery();
 
+	        while (rs.next()) {
+	            taskList.add(rs2model(rs));
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return taskList;
+	}
+
+	private String buildSortQuery(String sortOrder) {
+	    // 基本のクエリ
+	    String baseQuery = "SELECT * FROM tasks WHERE account_id = ? AND category_id = ?";
+
+	    // ソート条件に基づいてクエリを追加
+	    switch (sortOrder) {
+	        case "dateAsc":
+	            return baseQuery + " ORDER BY task_datetime ASC"; // 日付昇順
+	        case "dateDesc":
+	            return baseQuery + " ORDER BY task_datetime DESC"; // 日付降順
+	        case "completed":
+	            return baseQuery + " AND check_task = 1 ORDER BY task_datetime DESC"; // 完了したタスク（降順）
+	        case "incomplete":
+	            return baseQuery + " AND check_task = 0 ORDER BY task_datetime DESC"; // 未完了のタスク（降順）
+	        default:
+	            return baseQuery + " ORDER BY task_datetime ASC"; // デフォルトは日付昇順
+	    }
+	}
 
 	
 	public List<Tasks> findByCategoryId(int account_id, int category_id) {
@@ -140,7 +176,7 @@ public class TasksDAO {
 		DBManager manager = DBManager.getInstance();
 		try(Connection cn = manager.getConnection()) {
 			// プレースホルダで変数部分を定義
-			String sql = "SELECT * FROM tasks WHERE account_id = ? and category_id = ?";
+			String sql = "SELECT * FROM tasks WHERE account_id = ? and category_id = ? ORDER BY task_datetime ASC";
 			PreparedStatement stmt = cn.prepareStatement(sql);
 			stmt.setInt(1, account_id);
 			stmt.setInt(2, category_id);

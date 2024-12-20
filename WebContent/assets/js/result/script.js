@@ -1,9 +1,4 @@
 $(function () {
-    let d = new Date();
-    let year = d.getFullYear();
-    let month = d.getMonth();
-    const cmp = document.getElementById('cmpmonth');
-    cmp.prepend(year + "年 " + (month + 1) + "月");
 
     // サーバーから渡されたデータを使用して円グラフを更新
     const pieChartElement1 = document.getElementById('pieChart');

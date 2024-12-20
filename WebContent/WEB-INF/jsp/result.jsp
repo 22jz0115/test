@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -10,22 +9,22 @@
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
     <script>
-    // サーブレットから渡されたデータをJavaScriptに埋め込む
-	    const percentageFromDatabase1 = ${percentageFromDatabase1};
-	    const percentageFromDatabase2 = ${percentageFromDatabase2};
-	    const percentageFromDatabase3 = ${percentageFromDatabase3};
-	</script>
-	<script>
-	    if ('serviceWorker' in navigator) {
-	        window.addEventListener('load', () => {
-	            navigator.serviceWorker.register('/test/service-worker.js').then((registration) => {
-	                console.log('Service Worker registered with scope:', registration.scope);
-	            }).catch((error) => {
-	                console.error('Service Worker registration failed:', error);
-	            });
-	        });
-	    }
-	</script>
+        // サーブレットから渡されたデータをJavaScriptに埋め込む
+        const percentageFromDatabase1 = ${percentageFromDatabase1};
+        const percentageFromDatabase2 = ${percentageFromDatabase2};
+        const percentageFromDatabase3 = ${percentageFromDatabase3};
+    </script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/test/service-worker.js').then((registration) => {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                }).catch((error) => {
+                    console.error('Service Worker registration failed:', error);
+                });
+            });
+        }
+    </script>
 </head>
 <body>
     <header>
@@ -33,14 +32,24 @@
         <h1>達成率</h1>
     </header>
 
+    <h2 class="toMounthrate">${month }月の達成率</h2>
 
-    <h2 class="toMounthrate">今月の達成率</h2>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="assets/js/result/script.js"></script>
- 
 
     <div>
-        <p id="cmpmonth"></p>
+
+        <!-- 月の変更ボタン -->
+        <form action="Result" method="get">
+            <input type="hidden" name="month" value="${month - 1}" />
+            <button type="submit">前月</button>
+        </form>
+
+        <form action="Result" method="get">
+            <input type="hidden" name="month" value="${month + 1}" />
+            <button type="submit">次月</button>
+        </form>
+
         <div class="pie-chart-2" id="pieChart"></div>
     </div>
     <div class="cycle-flex">
@@ -54,8 +63,5 @@
             <div class="pie-chart-2" id="pieChart3"></div>
         </div>
     </div>
-    
-    
 </body>
-
 </html>

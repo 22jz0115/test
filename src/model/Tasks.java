@@ -98,10 +98,14 @@ public class Tasks {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm"); // 時間のフォーマット
         return taskDate.format(formatter); // 直接フォーマットされた値を返す
     }
-
+    
+ // Tasks.java: getFormattedDateメソッドを修正して、LocalDate部分を抽出
     public String getFormattedDate() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // 日付のフォーマット
-        return taskDate.format(formatter); // 直接フォーマットされた値を返す
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // 日付部分を抽出
+        if (taskDate != null) {
+            return taskDate.toLocalDate().format(formatter); // LocalDateとして日付をフォーマット
+        }
+        return "";
     }
 
     public Tasks(int id, int categoryId, int accountId, String taskName, LocalDateTime taskDate, String memo,

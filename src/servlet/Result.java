@@ -20,85 +20,75 @@ import model.Tasks;
  */
 @WebServlet("/Result")
 public class Result extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-   
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		  HttpSession session = request.getSession();
-	        Accounts loginUser = (Accounts) session.getAttribute("loginUser");
+    private static final long serialVersionUID = 1L;
 
-	        if (loginUser == null) {
-	            // ログインユーザーがいない場合、ログイン画面へリダイレクト
-	            request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
-	            return;
-	        }
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Accounts loginUser = (Accounts) session.getAttribute("loginUser");
 
-	  
-	        int outSum = 0;
-	        int inSum = 0;
-	        int outCheck = 0;
-	        int inCheck = 0;
-	        // 進捗データをリクエスト属性に設定
-	        
-	        
-	        // タスクリストの取得
-	        LocalDate today = LocalDate.now();
-	        int month = today.getMonthValue();
-	        
-	        TasksDAO dao = new TasksDAO();
-	        List<Tasks> taskList = dao.findByCurrentMonth(loginUser.getId(), month );
-	        
-	        for( Tasks task : taskList ) {
-	        	if(task.getOutin() == 1) {
-	        		outSum++;
-	        		if(task.getCheck() == 1) {
-	        			outCheck++;
-	        		}
-	 
-	        	}else {
-	        		inSum++;
-	        		if(task.getCheck() == 1) {
-	        			inCheck++;
-	        		}
-	        	}
-	        }
-	        
-	     // 分母が0でないか確認してから割り算を行う
-	        int percentageFromDatabase1 = 0;
-	        if (inCheck + outCheck != 0) {
-	            // 割り算をする際、整数同士の割り算を避けるためにキャスト
-	            percentageFromDatabase1 = (int) (((double)(inCheck + outCheck) / taskList.size()) * 100);
-	        }
+        if (loginUser == null) {
+            request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
+            return;
+        }
 
-	        int percentageFromDatabase2 = 0;
-	        if (outSum != 0) { // outSumが0の場合の割り算エラーを防ぐ
-	            percentageFromDatabase2 = (int) (((double) outCheck / outSum) * 100);
-	        }
+        // 現在の月を取得
+        int month = LocalDate.now().getMonthValue();
 
-	        int percentageFromDatabase3 = 0;
-	        if (inSum != 0) { // inSumが0の場合の割り算エラーを防ぐ
-	            percentageFromDatabase3 =(int) (((double) inCheck / inSum) * 100);
-	        }
-	        
-	        
-	        request.setAttribute("percentageFromDatabase1", percentageFromDatabase1);
-	        request.setAttribute("percentageFromDatabase2", percentageFromDatabase2);
-	        request.setAttribute("percentageFromDatabase3", percentageFromDatabase3);
-	        request.setAttribute("taskList", taskList);
-	        
-		request.getRequestDispatcher("/WEB-INF/jsp/result.jsp").forward(request, response);
-	}
+        // リクエストパラメータで月が渡されている場合、その月に変更
+        String monthParam = request.getParameter("month");
+        if (monthParam != null) {
+            try {
+                month = Integer.parseInt(monthParam);
+            } catch (NumberFormatException e) {
+                // パラメータが無効な場合、現在の月を使用
+            }
+        }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+        // 月の調整（1月と12月の境界を調整）
+        if (month < 1) {
+            month = 12;  // 1月より前の月は12月に設定
+        } else if (month == 13) {
+            month = 1;   // 12月より後の月は1月に設定
+        }
 
+        // タスクリストの取得
+        TasksDAO dao = new TasksDAO();
+        List<Tasks> taskList = dao.findByCurrentMonth(loginUser.getId(), month);
+
+        // 統計の計算
+        int outSum = 0;
+        int inSum = 0;
+        int outCheck = 0;
+        int inCheck = 0;
+
+        for (Tasks task : taskList) {
+            if (task.getOutin() == 1) {
+                outSum++;
+                if (task.getCheck() == 1) {
+                    outCheck++;
+                }
+            } else {
+                inSum++;
+                if (task.getCheck() == 1) {
+                    inCheck++;
+                }
+            }
+        }
+
+        // 進捗率の計算
+        int percentageFromDatabase1 = (inCheck + outCheck == 0) ? 0 : (int) (((double) (inCheck + outCheck) / taskList.size()) * 100);
+        int percentageFromDatabase2 = (outSum == 0) ? 0 : (int) (((double) outCheck / outSum) * 100);
+        int percentageFromDatabase3 = (inSum == 0) ? 0 : (int) (((double) inCheck / inSum) * 100);
+
+        // 統計データをリクエストにセット
+        request.setAttribute("percentageFromDatabase1", percentageFromDatabase1);
+        request.setAttribute("percentageFromDatabase2", percentageFromDatabase2);
+        request.setAttribute("percentageFromDatabase3", percentageFromDatabase3);
+        request.setAttribute("taskList", taskList);
+        request.setAttribute("month", month);  // 現在表示している月をセット
+
+        // 結果を表示するJSPへ転送
+        request.getRequestDispatcher("/WEB-INF/jsp/result.jsp").forward(request, response);
+    }
 }
+

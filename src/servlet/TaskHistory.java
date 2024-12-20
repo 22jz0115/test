@@ -43,19 +43,19 @@ public class TaskHistory extends HttpServlet {
             categoryName = categoryDAO.find(categoryId);
         }
 
-     // タスクをカテゴリごとに取得
+        // タスクをカテゴリごとに取得
         List<Tasks> taskList = taskDAO.findByCategoryId(loginUser.getId(), categoryId);
 
-        // 日付ごとにタスクをグループ化
+        // 日付ごとにタスクをグループ化 (順序保持)
         Map<String, List<Tasks>> groupedTasks = new LinkedHashMap<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd");
 
         for (Tasks task : taskList) {
-            // 修正: getCreatedDate() を getCreatedAt() に変更
-            String formattedDate = task.getCreatedAt() != null ? task.getCreatedAt().format(formatter) : "不明な日付";
-
-            // グループ化してリストに追加
-            groupedTasks.computeIfAbsent(formattedDate, k -> new ArrayList<>()).add(task);
+            if (task.getTaskDate() != null) {
+                // 日付を文字列フォーマットに変換
+                String formattedDate = task.getTaskDate().format(formatter);
+                groupedTasks.computeIfAbsent(formattedDate, k -> new ArrayList<>()).add(task);
+            }
         }
 
         // グループ化されたタスクをリクエストにセット
@@ -64,10 +64,46 @@ public class TaskHistory extends HttpServlet {
 
         // JSPに転送
         request.getRequestDispatcher("/WEB-INF/jsp/taskHistory.jsp").forward(request, response);
-
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response);
+        HttpSession session = request.getSession();
+        Accounts loginUser = (Accounts) session.getAttribute("loginUser");
+        String searchHistory = request.getParameter("searchHistory");
+        int categoryId = Integer.parseInt(request.getParameter("categoryId"));  // ここでカテゴリIDを取得
+
+        TasksDAO taskDAO = new TasksDAO();
+        List<Tasks> sortedTasks = taskDAO.findSortedTasks(loginUser.getId(), categoryId, searchHistory);
+
+        // カテゴリIDを使ってカテゴリ名を取得
+        CategoriesDAO categoryDAO = new CategoriesDAO();
+        Categories categoryName = categoryDAO.find(categoryId);
+
+        // カテゴリ名をリクエストスコープにセット
+        request.setAttribute("categoryName", categoryName);
+        request.setAttribute("searchHistory", searchHistory);
+
+        // デバッグ用: ソートされたタスクの確認
+        System.out.println("Sorted Tasks (after sorting):");
+        sortedTasks.forEach(task -> System.out.println(task.getFormattedDate()));  // 日付を表示
+
+        // 日付ごとにタスクをグループ化 (順序保持)
+        Map<String, List<Tasks>> groupedTasks = new LinkedHashMap<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd");
+
+        for (Tasks task : sortedTasks) {
+            if (task.getTaskDate() != null) {
+                // 日付を文字列フォーマットに変換
+                String formattedDate = task.getTaskDate().format(formatter);
+                groupedTasks.computeIfAbsent(formattedDate, k -> new ArrayList<>()).add(task);
+            }
+        }
+
+        // グループ化されたタスクをリクエストにセット
+        request.setAttribute("groupedTasks", groupedTasks);
+        request.getRequestDispatcher("/WEB-INF/jsp/taskHistory.jsp").forward(request, response);
     }
+
+
+
 }
