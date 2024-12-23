@@ -5,8 +5,7 @@ import java.time.LocalDateTime;
 public class Options {
 	private int id;
 	private int accountId;
-	private boolean bluetooth;
-	private boolean message;
+	private int message;
 	private String textColor;
 	private String backgroundColor;
 	private LocalDateTime createdAt;
@@ -23,16 +22,10 @@ public class Options {
 	public void setAccountId(int accountId) {
 		this.accountId = accountId;
 	}
-	public boolean isBluetooth() {
-		return bluetooth;
-	}
-	public void setBluetooth(boolean bluetooth) {
-		this.bluetooth = bluetooth;
-	}
-	public boolean isMessage() {
+	public int getMessage() {
 		return message;
 	}
-	public void setMessage(boolean message) {
+	public void setMessage(int message) {
 		this.message = message;
 	}
 	public String getTextColor() {
@@ -61,12 +54,11 @@ public class Options {
 	}
 	
 	
-	public Options(int id, int accountId, boolean bluetooth, boolean message, String textColor, String backgroundColor,
+	public Options(int id, int accountId, int message, String textColor, String backgroundColor,
 			LocalDateTime createdAt, LocalDateTime updateDate) {
 		super();
 		this.id = id;
 		this.accountId = accountId;
-		this.bluetooth = bluetooth;
 		this.message = message;
 		this.textColor = textColor;
 		this.backgroundColor = backgroundColor;

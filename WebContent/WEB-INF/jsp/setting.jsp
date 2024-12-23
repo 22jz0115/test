@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ page import="java.util.*" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -11,7 +12,7 @@
     <link rel="manifest" href="manifest.json">
    	<script>
     if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
+        window.addEventListener('DOMContentLoaded', () => {
             navigator.serviceWorker.register('/test/service-worker.js').then((registration) => {
                 console.log('Service Worker registered with scope:', registration.scope);
 
@@ -91,12 +92,34 @@
                         .then((response) => {
                             if (response.ok) {
                                 console.log('購読情報がサーバーに送信されました');
+                                sendButtonToServer();
                             } else {
                                 console.error('購読情報の送信に失敗しました');
                             }
                         })
                         .catch((error) => {
                             console.error('送信エラー:', error);
+                        });
+                }
+
+            	 // サーバーにボタン変化を送信
+                function sendButtonToServer() {
+                    fetch('/test/ChangeButton', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `message=1`
+                    })
+                        .then((response) => {
+                            if (response.ok) {
+                                console.log('ボタン情報がサーバーに送信されました');
+                            } else {
+                                console.error('ボタン情報の送信に失敗しました');
+                            }
+                        })
+                        .catch((error) => {
+                            console.error('ボタン情報送信エラー:', error);
                         });
                 }
 
@@ -109,12 +132,34 @@
                         .then((response) => {
                             if (response.ok) {
                                 console.log('解除情報がサーバーに送信されました');
+                                sendUnbuttonToServer();
                             } else {
                                 console.error('解除情報の送信に失敗しました');
                             }
                         })
                         .catch((error) => {
                             console.error('解除情報送信エラー:', error);
+                        });
+                }
+
+                // サーバーにボタン変化を送信
+                function sendUnbuttonToServer() {
+                    fetch('/test/ChangeUnbutton', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `message=0`
+                    })
+                        .then((response) => {
+                            if (response.ok) {
+                                console.log('ボタン解除情報がサーバーに送信されました');
+                            } else {
+                                console.error('ボタン解除情報の送信に失敗しました');
+                            }
+                        })
+                        .catch((error) => {
+                            console.error('ボタン解除情報送信エラー:', error);
                         });
                 }
 
@@ -182,7 +227,7 @@
             <label for="switch1" class="switch_label">  
                 <p>OFF</p>
                 <div class="switch">
-                    <input type="checkbox" id="switch1"/>
+                    <input type="checkbox" id="switch1" <c:if test="${option.message == 1}">checked</c:if>>
                     <div class="circle"></div>
                     <div class="base"></div>
                 </div>

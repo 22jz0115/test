@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.OptionsDAO;
+import model.Accounts;
+import model.Options;
+
 /**
  * Servlet implementation class setting
  */
@@ -16,13 +20,14 @@ import javax.servlet.http.HttpSession;
 public class Setting extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+	    Accounts loginUser = (Accounts) session.getAttribute("loginUser");
+	    int accountId = loginUser.getId();
+	    
+	    OptionsDAO dao = new OptionsDAO();
+	    Options option = dao.find(accountId);
+	    request.setAttribute("option", option);
 		request.getRequestDispatcher("/WEB-INF/jsp/setting.jsp").forward(request, response);
 	}
 

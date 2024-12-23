@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dao.AccountsDAO;
+import dao.OptionsDAO;
 import model.Accounts;
 /**
  * Servlet implementation class CreateUser
@@ -44,6 +45,10 @@ public class CreateUser extends HttpServlet {
 			// ログインしてトップページ（今回はVoD一覧）へリダイレクト
 			HttpSession session = request.getSession();
 			session.setAttribute("loginUser", accounts);
+			
+			OptionsDAO optionDao = new OptionsDAO();
+			optionDao.create(accounts.getId(), 0, "FFFFFF", "000000");
+			
 			response.sendRedirect("/test/Home");
 		} else {
 			// エラー時はエラーメッセージを追加し自分へ戻る
