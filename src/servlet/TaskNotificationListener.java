@@ -16,7 +16,9 @@ public class TaskNotificationListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         System.out.println("バックグラウンドジョブを開始します...");
      // BouncyCastle プロバイダーを初期化
-        Security.addProvider(new BouncyCastleProvider());
+        if (Security.getProvider("BC") == null) {
+        	Security.addProvider(new BouncyCastleProvider());
+        }
         TaskNotificationScheduler.start();
     }
 

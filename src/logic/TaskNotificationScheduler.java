@@ -31,12 +31,12 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
-import org.bouncycastle.asn1.DERBitString;
 import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
+import org.bouncycastle.asn1.x9.X9ObjectIdentifiers;
 import org.bouncycastle.jce.ECNamedCurveTable;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.jce.spec.ECParameterSpec;
+import org.bouncycastle.jce.spec.ECNamedCurveParameterSpec;
 import org.bouncycastle.math.ec.ECCurve;
 import org.bouncycastle.math.ec.ECPoint;
 import org.json.JSONObject;
@@ -179,38 +179,24 @@ public class TaskNotificationScheduler {
         System.out.println("Decoded p256dh (hex): " + bytesToHex(p256dhBytes));
 
         // P-256曲線のパラメータを取得
-        ECParameterSpec ecSpec = ECNamedCurveTable.getParameterSpec("P-256");
+        ECNamedCurveParameterSpec ecSpec = ECNamedCurveTable.getParameterSpec("P-256");
         ECCurve curve = ecSpec.getCurve();
 
         // ECPointをデコード
-        ECPoint ecPoint = curve.decodePoint(p256dhBytes); // ここでECPointをデコード
+        ECPoint ecPoint = curve.decodePoint(p256dhBytes);
 
         if (!ecPoint.isValid()) {
             throw new IllegalArgumentException("Invalid ECPoint");
         }
 
-        // Bouncy Castleプロバイダを追加
-        Security.addProvider(new BouncyCastleProvider());
+        // EC公開鍵アルゴリズム識別子を作成 (OIDは secp256r1 に対応)
+        ASN1ObjectIdentifier ecCurveOid = new ASN1ObjectIdentifier("1.2.840.10045.3.1.7");
+        AlgorithmIdentifier algorithmIdentifier = new AlgorithmIdentifier(X9ObjectIdentifiers.id_ecPublicKey, ecCurveOid);
 
-        // ECPointをDER形式にエンコード
-        DERBitString publicKeyBitString = new DERBitString(ecPoint.getEncoded(false));
+        // SubjectPublicKeyInfoを作成
+        SubjectPublicKeyInfo publicKeyInfo = new SubjectPublicKeyInfo(algorithmIdentifier, ecPoint.getEncoded(false));
 
-        // EC公開鍵アルゴリズム識別子（ECアルゴリズム）を作成
-        ASN1ObjectIdentifier algorithmOid = new ASN1ObjectIdentifier("1.2.840.10045.2.1"); // EC
-
-        // AlgorithmIdentifierを作成
-        AlgorithmIdentifier algorithmIdentifier = new AlgorithmIdentifier(algorithmOid);
-
-        // SubjectPublicKeyInfoに公開鍵情報を設定
-        SubjectPublicKeyInfo publicKeyInfo = null;
-		try {
-			publicKeyInfo = new SubjectPublicKeyInfo(algorithmIdentifier, publicKeyBitString);
-		} catch (IOException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-
-        // 公開鍵をX.509形式で生成
+        // 公開鍵をX.509形式でエンコード
         byte[] encodedPublicKey = null;
 		try {
 			encodedPublicKey = publicKeyInfo.getEncoded();
@@ -218,17 +204,16 @@ public class TaskNotificationScheduler {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
+
+        // KeyFactoryを使用して公開鍵を生成
         KeyFactory keyFactory = KeyFactory.getInstance("EC", "BC");
         X509EncodedKeySpec keySpec = new X509EncodedKeySpec(encodedPublicKey);
 
-        // 公開鍵を生成
         try {
             return keyFactory.generatePublic(keySpec);
         } catch (InvalidKeySpecException e) {
             System.err.println("InvalidKeySpecException: " + e.getMessage());
             System.err.println("p256dhBytes: " + bytesToHex(p256dhBytes));
-            System.err.println("ECPoint: " + ecPoint);
-            System.err.println("ECSpec: " + ecSpec);
             throw e;
         }
     }
