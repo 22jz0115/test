@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -41,28 +42,46 @@ public class Preset extends HttpServlet {
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-        Accounts loginUser = (Accounts) session.getAttribute("loginUser");
-        int accountId = loginUser.getId();
-        
-        String presetName = request.getParameter("preset_name");
-		int presetId = Integer.parseInt(presetName);
-		
-		String date = request.getParameter("dateInput");
-		
-		PresetTasksDAO dao = new PresetTasksDAO();
-        List<PresetTasks> presetData = dao.findPresetTask(presetId);
-        
-        TasksDAO taskDao = new TasksDAO();
-        boolean result = taskDao.insertPresetTasks(presetData, accountId, date);
-        
-        if (result) {
-        	request.setAttribute("msg", "タスクが挿入されました");
-        	response.sendRedirect("/test/Task?date=" + date);
-        } else {
-        	request.setAttribute("msg", "タスクの挿入に失敗しました");
-        	response.sendRedirect("/test/Preset?date=" + date);
-        }
+	    HttpSession session = request.getSession();
+	    Accounts loginUser = (Accounts) session.getAttribute("loginUser");
+	    int accountId = loginUser.getId();
+
+	    // 入力されたプリセットIDと日付を取得
+	    String presetName = request.getParameter("preset_name");
+	    int presetId = Integer.parseInt(presetName);
+
+	    String startDate = request.getParameter("dateInput1");
+	    String endDate = request.getParameter("dateInput2");
+
+	    // プリセットタスクを取得
+	    PresetTasksDAO dao = new PresetTasksDAO();
+	    List<PresetTasks> presetData = dao.findPresetTask(presetId);
+
+	    // 日付範囲を処理
+	    LocalDate start = LocalDate.parse(startDate);
+	    LocalDate end = LocalDate.parse(endDate);
+
+	    // 結果メッセージの初期化
+	    boolean allInserted = true;
+
+	    // 日付範囲内でタスクを挿入
+	    TasksDAO taskDao = new TasksDAO();
+	    for (LocalDate date = start; !date.isAfter(end); date = date.plusDays(1)) {
+	        boolean result = taskDao.insertPresetTasks(presetData, accountId, date.toString());
+	        if (!result) {
+	            allInserted = false;
+	        }
+	    }
+
+	    // 挿入結果の処理
+	    if (allInserted) {
+	        request.setAttribute("msg", "すべてのタスクが正常に挿入されました");
+	        response.sendRedirect("/test/Task?date=" + startDate);
+	    } else {
+	        request.setAttribute("msg", "一部またはすべてのタスク挿入に失敗しました");
+	        response.sendRedirect("/test/Preset?date=" + startDate);
+	    }
 	}
+
 
 }

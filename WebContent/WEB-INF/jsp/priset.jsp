@@ -60,10 +60,16 @@
         </div>
         
         <div class="form-group">
-            <label for="dateInput">日付</label>
-            <!-- 日付選択 -->
-            <input type="date" id="dateInput" name="dateInput" value="${selectedDate != null ? selectedDate : ''}" required>
-        </div>
+			    <label for="dateInput1">日付</label>
+			    <input type="date" id="dateInput1" name="dateInput1" value="${selectedDate}" required>
+			</div>
+			
+			<p>～</p>
+			
+			<div class="form-group">
+			    <label for="dateInput2">日付</label>
+			    <input type="date" id="dateInput2" name="dateInput2" value="${selectedDate}" required>
+			</div>
 
         <div class="presets">
 		    <ul id="taskList">

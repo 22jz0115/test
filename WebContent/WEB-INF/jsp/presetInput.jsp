@@ -82,7 +82,7 @@
 		        <textarea id="story" name="story" rows="5" cols="50" required>メモ</textarea>
 		    </div>
 		
-		    <button id="touroku" type="submit" class="button3">追加</button>
+		    <button id="touroku" type="submit" class="button3" onclick="this.disabled = true; this.form.submit();">追加</button>
 		</form>
     </div>
 </body>  

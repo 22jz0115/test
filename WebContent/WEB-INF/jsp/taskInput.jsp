@@ -50,20 +50,18 @@
     <div class="display">
         <form action="TaskInput" method="post">
 
-            <!-- 日付表示 -->
-            <div class="form-group">
-                <label for="dateInput">日付</label>
-                <!-- 日付選択 -->
-                <input type="date" id="dateInput" name="dateInput1" value="${selectedDate}">
-            </div>
-            
-            <p>～</p>
-            
-            <div class="form-group">
-                <label for="dateInput">日付</label>
-                <!-- 日付選択 -->
-                <input type="date" id="dateInput" name="dateInput2" value="${selectedDate}">
-            </div>
+            <!-- 日付選択 -->
+			<div class="form-group">
+			    <label for="dateInput1">日付</label>
+			    <input type="date" id="dateInput1" name="dateInput1" value="${selectedDate}" required>
+			</div>
+			
+			<p>～</p>
+			
+			<div class="form-group">
+			    <label for="dateInput2">日付</label>
+			    <input type="date" id="dateInput2" name="dateInput2" value="${selectedDate}" required>
+			</div>
 
             <script>
                 // サーバーから渡された日付 (例: "2024-11-15") をJavaScriptに渡す
@@ -90,19 +88,19 @@
             </div>
 
             <!-- カテゴリーのプルダウン -->
-            <div id="categoryDiv" class="form-group">
-                <label for="categorySelect">カテゴリーを選択:</label>
-                <select id="categorySelect" name="categorySelect">
-                    <c:forEach var="category" items="${categoryList}">
-                        <option id="task-1" class="deletable" value="${category.id}">${category.categoryName}</option>
-                    </c:forEach>
-                </select>
-            </div>
+		<div id="categoryDiv" class="form-group">
+		    <label for="categorySelect">カテゴリーを選択:</label>
+		    <select id="categorySelect" name="categorySelect" required>
+		        <c:forEach var="category" items="${categoryList}">
+		            <option id="task-1" class="deletable" value="${category.id}">${category.categoryName}</option>
+		        </c:forEach>
+		    </select>
+		</div>
 
             <!-- タスク名の入力 -->
             <div class="form-group">
                 <label for="taskName" class="taskname">タスク名:</label>
-                <input type="text" id="taskName" name="taskName" required minlength="1" maxlength="8" />
+                <input type="text" id="taskName" name="taskName" required minlength="1" maxlength="15" required/>
             </div>
 
             <!-- メモの入力 -->
@@ -111,7 +109,7 @@
                 <textarea id="story" name="story" rows="5" cols="50">メモ</textarea>
             </div>
 
-            <button id="touroku" type="submit" class="button3">追加</button>
+            <button id="touroku" type="submit" class="button3" onclick="this.disabled = true; this.form.submit();">追加</button>
         </form>
     </div>
 </body>

@@ -46,7 +46,13 @@
 <br>
 </div>
                 <div class="migi0">
-                    <button id="touroku" type="submit" class="button00">Login</button>
+                    <button 
+				        id="touroku" 
+				        type="submit" 
+				        class="button00" 
+				        onclick="this.disabled = true; this.form.submit();">
+				        Login
+				    </button>
                     <p class="sinki">
                         <a href="CreateUser" class="sinki"><span id="sinki">新規登録</span></a>
                     </p>
