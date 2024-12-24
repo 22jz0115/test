@@ -24,18 +24,11 @@ import model.Tasks;
 @WebServlet("/TaskInput")
 public class TaskInput extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
-    /**
-     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-     */
     // GETメソッド：タスク入力フォームの表示
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
        
-
     	// パラメータから日付を取得
         String selectedDate = request.getParameter("date");
-        
-        System.out.print("date=" + selectedDate);
         
         CategoriesDAO categoriesDAO = new CategoriesDAO();
    		
@@ -58,13 +51,9 @@ public class TaskInput extends HttpServlet {
         String taskName = request.getParameter("taskName");
         String memo = request.getParameter("story");
 
-        System.out.println("TaskInputDate1: " + date1);
-        System.out.println("TaskInputDate2: " + date2);
-
         int categoryId = Integer.parseInt(category);
 
         // 日付フォーマットの準備
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
         LocalDateTime startDate = LocalDateTime.parse(date1 + " " + time, dateTimeFormatter);
@@ -91,5 +80,4 @@ public class TaskInput extends HttpServlet {
         // タスク一覧画面にリダイレクト
         response.sendRedirect("Task?date=" + date1);
     }
-
 }

@@ -134,7 +134,6 @@ public class PresetsDAO {
 			PreparedStatement stmt = cn.prepareStatement(sql);
 			stmt.setString(1, preset_name);
 			stmt.setInt(2, account_id);
-			
 			ret = stmt.executeUpdate();
 			
 		} catch(SQLException e) {

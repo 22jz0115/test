@@ -55,7 +55,6 @@ public class Home extends HttpServlet {
         // タスクの日付をJSON形式に変換してJSPに渡す
         String taskDatesJson = new Gson().toJson(taskDates);
 
-        System.out.println(taskDatesJson);  // デバッグ用に出力
         request.setAttribute("taskDatesJson", taskDatesJson);
 
         request.setAttribute("Location", loginUser.getLocation());
@@ -86,7 +85,6 @@ public class Home extends HttpServlet {
         if (updateDate != null) {
             // updateDate の月を取得
             getCollectionMonth = updateDate.getMonthValue();
-            System.out.println("Login user's updateDate month: " + getCollectionMonth);
         } else {
             System.err.println("loginUser's updateDate is null.");
         }

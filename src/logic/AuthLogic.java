@@ -17,13 +17,9 @@ public class AuthLogic {
 	public Accounts login(String email, String password) {
 		AccountsDAO dao = new AccountsDAO();
 		Accounts account = dao.findByEmail(email);
-		
-		
-		
 		if ((account != null) && (BCrypt.checkpw(password, account.getPass()))) {
 			return account;
 		}
-		
 		return null;
 	}
 	

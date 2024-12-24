@@ -113,9 +113,6 @@ public class TasksDAO {
 	        
 	        PreparedStatement stmt = cn.prepareStatement(sql);
 	        stmt.setInt(1, account_id);
-	        
-	     
-	        
 	        // パラメータとしてdateをセット
 	        stmt.setString(2, date);
 	        
@@ -433,7 +430,6 @@ public class TasksDAO {
 			while(rs.next()) {
 				Tasks tasks = rs2model(rs);
 				list.add(tasks);
-				System.out.println("タスクあるよ");
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();

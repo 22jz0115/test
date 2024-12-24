@@ -58,7 +58,6 @@ public class LifeChange extends HttpServlet {
 	        Lifes life = dao.find(lifeId);
 	        
 	        request.setAttribute("life", life);
-	        System.out.println(life.getId());
 	        request.getRequestDispatcher("/WEB-INF/jsp/lifeChange.jsp").forward(request, response);
 	}
 
@@ -67,11 +66,8 @@ public class LifeChange extends HttpServlet {
 
 	    // lifeId パラメータの取得と検証
 	    String lifeIdParam = request.getParameter("lifeId");
-	    System.out.println(lifeIdParam);
 	    String title = request.getParameter("title");
         String content = request.getParameter("comment");
-        System.out.println(title);
-        System.out.println(content);
 
 	    if (lifeIdParam == null || lifeIdParam.isEmpty()) {
 	        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "lifeId パラメータがありません");

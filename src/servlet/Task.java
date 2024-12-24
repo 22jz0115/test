@@ -32,7 +32,6 @@ public class Task extends HttpServlet {
         }
 
         String selectedDate = request.getParameter("date");
-        System.out.println("date = " + selectedDate);
         
         if (selectedDate == null || selectedDate.isEmpty()) {
             LocalDate today = LocalDate.now();
@@ -45,7 +44,6 @@ public class Task extends HttpServlet {
         List<Tasks> taskList  = taskDAO.findByCheckTask(loginUser.getId(), selectedDate);
         
         request.setAttribute("taskList", taskList);
-
         request.getRequestDispatcher("/WEB-INF/jsp/task.jsp").forward(request, response);
     }
 

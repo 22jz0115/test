@@ -51,11 +51,9 @@ public class TaskDetail extends HttpServlet {
         if (from != null && taskHistoryId != null) {
             request.setAttribute("from", from);
             session.setAttribute("taskHistoryId", taskHistoryId);
-            System.out.println(taskHistoryId);
         } else {
             session.removeAttribute("taskHistoryId"); // taskHistoryIdをセッションから削除
         }
-
         // タスク詳細画面へフォワード
         request.getRequestDispatcher("/WEB-INF/jsp/taskDetail.jsp").forward(request, response);
     }
@@ -87,7 +85,6 @@ public class TaskDetail extends HttpServlet {
         // 呼び出し元の情報を取得
         String from = request.getParameter("from");
         String taskHistoryId = (String) session.getAttribute("taskHistoryId");
-        System.out.println(taskHistoryId);
 
         if (clear) {
             // 成功時：呼び出し元にリダイレクト

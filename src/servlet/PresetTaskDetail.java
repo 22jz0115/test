@@ -53,11 +53,8 @@ public class PresetTaskDetail extends HttpServlet {
         boolean result = dao.updatePresetTask(presetTaskId, categoryId, taskName, taskTime, memo, outin);
         
         if (result != false) {
-            
             response.sendRedirect("PresetTaskDetail?presetTaskId=" + presetTaskId);  
-
         } else {
-        	
         	response.sendRedirect("PresetTaskDetail?presetTaskId=" + presetTaskId);
         }
 	}

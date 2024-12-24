@@ -83,10 +83,6 @@ public class TaskHistory extends HttpServlet {
         request.setAttribute("categoryName", categoryName);
         request.setAttribute("searchHistory", searchHistory);
 
-        // デバッグ用: ソートされたタスクの確認
-        System.out.println("Sorted Tasks (after sorting):");
-        sortedTasks.forEach(task -> System.out.println(task.getFormattedDate()));  // 日付を表示
-
         // 日付ごとにタスクをグループ化 (順序保持)
         Map<String, List<Tasks>> groupedTasks = new LinkedHashMap<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd");
@@ -103,7 +99,4 @@ public class TaskHistory extends HttpServlet {
         request.setAttribute("groupedTasks", groupedTasks);
         request.getRequestDispatcher("/WEB-INF/jsp/taskHistory.jsp").forward(request, response);
     }
-
-
-
 }

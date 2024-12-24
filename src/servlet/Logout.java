@@ -32,10 +32,6 @@ public class Logout extends HttpServlet {
         }else {
         	AuthLogic logic = new AuthLogic();
             logic.logout(session);
-      
-            
-            
-            
         }
         
         LocalDate today = LocalDate.now();
