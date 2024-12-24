@@ -1163,8 +1163,33 @@ input[type="submit"]{
     margin-left: auto;
 }
 
+.month-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* ボタン間の間隔を調整 */
+}
+
+.month-navigation form {
+    margin: 0;
+}
+
+.month-navigation button {
+    all: unset; /* デフォルトスタイルをリセット */
+    cursor: pointer; /* クリック可能なマウスカーソルに設定 */
+    padding: 0; /* 余計な余白を削除 */
+    display: inline-flex; /* 中身の画像に合わせて調整 */
+    align-items: center; /* 中央揃え */
+    justify-content: center; /* 中央揃え */
+}
+
+.month-navigation img {
+    width: 30px;
+    height: 30px;
+}
 
 
+ 
 
 
 

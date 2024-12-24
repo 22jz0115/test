@@ -48,47 +48,48 @@ public class TaskInput extends HttpServlet {
     }
     // POSTメソッド：タスクの追加処理
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	
-    	request.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
+
         // フォームデータを取得
-        String date = request.getParameter("dateInput1");
+        String date1 = request.getParameter("dateInput1");
         String date2 = request.getParameter("dateInput2");
         String time = request.getParameter("appt-time");
-        String category = request.getParameter("categorySelect"); //int型にする
+        String category = request.getParameter("categorySelect"); // int型にする
         String taskName = request.getParameter("taskName");
         String memo = request.getParameter("story");
-        
-        System.out.println("TaskInputDate1" + date);
-        System.out.println("TaskInputDate2"+ date2);
-        
-        
+
+        System.out.println("TaskInputDate1: " + date1);
+        System.out.println("TaskInputDate2: " + date2);
+
         int categoryId = Integer.parseInt(category);
-        
-        String datetime = date + " " + time;
-        LocalDateTime taskDateTime = LocalDateTime.parse(datetime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-        
-    	HttpSession session = request.getSession();
+
+        // 日付フォーマットの準備
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+        LocalDateTime startDate = LocalDateTime.parse(date1 + " " + time, dateTimeFormatter);
+        LocalDateTime endDate = LocalDateTime.parse(date2 + " " + time, dateTimeFormatter);
+
+        HttpSession session = request.getSession();
         Accounts loginUser = (Accounts) session.getAttribute("loginUser");
         int accountId = loginUser.getId();
-        
+
         int outin = request.getParameter("switch") != null ? 1 : 0;
-        
 
-        // DAOを使ってデータベースにタスクを挿入
         TasksDAO dao = new TasksDAO();
-        Tasks TaskInput = dao.create(categoryId, accountId, taskName, memo, outin, taskDateTime);
 
-        if (TaskInput != null) {
-            // 挿入が成功した場合、タスク一覧画面にリダイレクト
-            response.sendRedirect("Task?date=" + date);  // 日付をクエリパラメータとして渡してリダイレクト
-
-         
-
-        } else {
-    
-        	response.sendRedirect("Task?date=" + date);
+        // 開始日から終了日までの期間を計算してタスクを作成
+        LocalDateTime currentDate = startDate;
+        while (!currentDate.isAfter(endDate)) {
+            Tasks createdTask = dao.create(categoryId, accountId, taskName, memo, outin, currentDate);
+            if (createdTask == null) {
+                System.err.println("タスク作成失敗: " + currentDate.format(dateTimeFormatter));
+            }
+            currentDate = currentDate.plusDays(1); // 次の日付へ進む
         }
-        
-        
+
+        // タスク一覧画面にリダイレクト
+        response.sendRedirect("Task?date=" + date1);
     }
+
 }

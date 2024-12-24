@@ -32,23 +32,32 @@
         <h1>達成率</h1>
     </header>
 
-    <h2 class="toMounthrate">${month }月の達成率</h2>
+    
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="assets/js/result/script.js"></script>
 
     <div>
 
-        <!-- 月の変更ボタン -->
-        <form action="Result" method="get">
-            <input type="hidden" name="month" value="${month - 1}" />
-            <button type="submit">前月</button>
-        </form>
+      
+        
+       
+        <div class="month-navigation">
+		    <!-- 月の変更ボタン -->
+		    <form action="Result" method="get">
+		        <input type="hidden" name="month" value="${month - 1}" />
+		        <button type="submit"><img alt="前月" src="assets/img/left_01.png"></button>
+		    </form>
+		    <h2 class="toMounthrate">${month }月の達成率</h2>
+		    <form action="Result" method="get">
+		        <input type="hidden" name="month" value="${month + 1}" />
+		        <button type="submit"><img alt="次月" src="assets/img/right_01.png"></button>
+		    </form>
+		</div>
 
-        <form action="Result" method="get">
-            <input type="hidden" name="month" value="${month + 1}" />
-            <button type="submit">次月</button>
-        </form>
+    
+
+      
 
         <div class="pie-chart-2" id="pieChart"></div>
     </div>
