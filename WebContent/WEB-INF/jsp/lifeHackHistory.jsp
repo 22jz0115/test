@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -28,7 +27,7 @@
 <div class="pagetop">Top</div>
 
 <header>
-    <a href="Home"><img class="imgVector" src="assets/img/Vector.png" alt="Home"></a>
+    <a href="LifeHack"><img class="imgVector" src="assets/img/Vector.png" alt="Home"></a>
     <h1>投稿履歴</h1>
 </header>
 
