@@ -39,7 +39,7 @@ public class PresetTasksDAO {
 		DBManager manager = DBManager.getInstance();
 		try(Connection cn = manager.getConnection()) {
 			// プレースホルダで変数部分を定義
-			String sql = "SELECT * FROM preset_tasks WHERE preset_id = ? ORDER BY task_time";
+			String sql = "SELECT * FROM preset_tasks WHERE preset_id = 83 ORDER BY TO_CHAR(task_time, 'HH24:MI:SS')";
 			PreparedStatement stmt = cn.prepareStatement(sql);
 			stmt.setInt(1, presetId);
 			ResultSet rs = stmt.executeQuery();
