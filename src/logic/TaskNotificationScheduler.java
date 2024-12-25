@@ -1,6 +1,5 @@
 package logic;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -15,7 +14,6 @@ import java.security.Security;
 import java.security.Signature;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.X509EncodedKeySpec;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
@@ -30,13 +28,10 @@ import javax.crypto.KeyAgreement;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.bouncycastle.asn1.ASN1ObjectIdentifier;
-import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
-import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
-import org.bouncycastle.asn1.x9.X9ObjectIdentifiers;
 import org.bouncycastle.jce.ECNamedCurveTable;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.jce.spec.ECNamedCurveParameterSpec;
+import org.bouncycastle.jce.spec.ECPublicKeySpec;
 import org.bouncycastle.math.ec.ECCurve;
 import org.bouncycastle.math.ec.ECPoint;
 import org.json.JSONObject;
@@ -182,38 +177,33 @@ public class TaskNotificationScheduler {
         ECNamedCurveParameterSpec ecSpec = ECNamedCurveTable.getParameterSpec("P-256");
         ECCurve curve = ecSpec.getCurve();
 
-        // ECPointをデコード
+        // ECPointをデコード (圧縮形式を解凍)
         ECPoint ecPoint = curve.decodePoint(p256dhBytes);
 
+        // ECPointが無効な場合は例外をスロー
         if (!ecPoint.isValid()) {
             throw new IllegalArgumentException("Invalid ECPoint");
         }
 
-        // EC公開鍵アルゴリズム識別子を作成 (OIDは secp256r1 に対応)
-        ASN1ObjectIdentifier ecCurveOid = new ASN1ObjectIdentifier("1.2.840.10045.3.1.7");
-        AlgorithmIdentifier algorithmIdentifier = new AlgorithmIdentifier(X9ObjectIdentifiers.id_ecPublicKey, ecCurveOid);
+        // 公開鍵スペックを作成
+        ECPublicKeySpec publicKeySpec = new ECPublicKeySpec(ecPoint, ecSpec);
 
-        // SubjectPublicKeyInfoを作成
-        SubjectPublicKeyInfo publicKeyInfo = new SubjectPublicKeyInfo(algorithmIdentifier, ecPoint.getEncoded(false));
+        // Bouncy Castleプロバイダを追加
+        if (Security.getProvider("BC") == null) {
+            Security.addProvider(new BouncyCastleProvider());
+        }
 
-        // 公開鍵をX.509形式でエンコード
-        byte[] encodedPublicKey = null;
-		try {
-			encodedPublicKey = publicKeyInfo.getEncoded();
-		} catch (IOException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-
-        // KeyFactoryを使用して公開鍵を生成
+        // KeyFactoryを利用して公開鍵を生成
         KeyFactory keyFactory = KeyFactory.getInstance("EC", "BC");
-        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(encodedPublicKey);
 
+        // 公開鍵の生成と例外処理
         try {
-            return keyFactory.generatePublic(keySpec);
+            return keyFactory.generatePublic(publicKeySpec);
         } catch (InvalidKeySpecException e) {
             System.err.println("InvalidKeySpecException: " + e.getMessage());
             System.err.println("p256dhBytes: " + bytesToHex(p256dhBytes));
+            System.err.println("ECPoint: " + ecPoint);
+            System.err.println("ECSpec: " + ecSpec);
             throw e;
         }
     }
