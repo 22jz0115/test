@@ -118,6 +118,8 @@
 			        <option value="wednesday">水曜日</option>
 			        <option value="thursday">木曜日</option>
 			        <option value="friday">金曜日</option>
+			        <option value="saturday">土曜日</option>
+			        <option value="sunday">日曜日</option>
 			    </select>
 			</div>
 			
