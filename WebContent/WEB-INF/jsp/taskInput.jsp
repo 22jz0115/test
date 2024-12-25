@@ -21,6 +21,9 @@
             });
         }
     </script>
+   
+</script>
+    
 </head>
 
 <body>
@@ -109,7 +112,14 @@
                 <textarea id="story" name="story" rows="5" cols="50">メモ</textarea>
             </div>
 
-            <button id="touroku" type="submit" class="button3" onclick="this.disabled = true; this.form.submit();">追加</button>
+           <button 
+			    id="touroku" 
+			    type="submit" 
+			    class="button3" 
+			    onclick="preventMultipleSubmit(this);">
+			    追加
+			</button>
+
         </form>
     </div>
 </body>

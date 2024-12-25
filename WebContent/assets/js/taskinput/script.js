@@ -30,25 +30,7 @@ function dateDisplay() {
                 newCategoryDiv.style.display = 'block';
             }
         });
-        const radios = document.querySelectorAll('input[name="categoryType"]');
-            const existingCategoryDiv = document.getElementById('existingCategoryDiv');
-            const newCategoryDiv = document.getElementById('newCategoryDiv');
-
-            radios.forEach(radio => {
-                radio.addEventListener('change', () => {
-                    if (radio.value === 'existing') {
-                        existingCategoryDiv.style.display = 'block';
-                        newCategoryDiv.style.display = 'none';
-                    } else {
-                        existingCategoryDiv.style.display = 'none';
-                        newCategoryDiv.style.display = 'block';
-                    }
-                });
-            });
-            
-
     });
-
 
     function populateCategories(categories) {
         const categorySelect = document.getElementById('categorySelect');
@@ -70,8 +52,19 @@ function dateDisplay() {
     // 初期状態の設定
     populateCategories(indoorCategories);
     document.getElementById('switch').addEventListener('change', toggleCategory);
-    
-    
+
+    // --- 新しい変更をここに追加 ---
+    const form = document.querySelector("form");
+    form.addEventListener("submit", function (e) {
+        const submitButton = document.getElementById("touroku");
+        if (submitButton.disabled) {
+            e.preventDefault(); // 二重送信を防止
+        } else {
+            submitButton.disabled = true; // ボタンを無効化
+            submitButton.innerText = "処理中..."; // フィードバックを表示
+        }
+    });
+    // --- 追加ここまで ---
 }
 
 // ページが読み込まれたときにdateDisplay関数を実行
