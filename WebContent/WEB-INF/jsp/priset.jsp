@@ -13,78 +13,148 @@
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
-	<script>
-	    if ('serviceWorker' in navigator) {
-	        window.addEventListener('load', () => {
-	            navigator.serviceWorker.register('/test/service-worker.js').then((registration) => {
-	                console.log('Service Worker registered with scope:', registration.scope);
-	            }).catch((error) => {
-	                console.error('Service Worker registration failed:', error);
-	            });
-	        });
-	    }
-	</script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/test/service-worker.js').then((registration) => {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                }).catch((error) => {
+                    console.error('Service Worker registration failed:', error);
+                });
+            });
+        }
+    </script>
 </head>
 <body>
-    
-     <header>
-	    <c:choose>
-	
-	        <c:when test="${not empty selectedDate}">
-	            <a href="Task?date=${selectedDate}" class="back1">
-	                <img src="assets/img/戻るボタン.png" alt="戻る">
-	            </a>
-	        </c:when>
-	
-	   
-	        <c:otherwise>
-	            <a href="Home" class="back1">
-	                <img src="assets/img/戻るボタン.png" alt="戻る">
-	            </a>
-	        </c:otherwise>
-	    </c:choose>
-	    <h1>プリセット</h1>
-	</header>
-
-    
+    <header>
+        <c:choose>
+            <c:when test="${not empty selectedDate}">
+                <a href="Task?date=${selectedDate}" class="back1">
+                    <img src="assets/img/戻るボタン.png" alt="戻る">
+                </a>
+            </c:when>
+            <c:otherwise>
+                <a href="Home" class="back1">
+                    <img src="assets/img/戻るボタン.png" alt="戻る">
+                </a>
+            </c:otherwise>
+        </c:choose>
+        <h1>プリセット</h1>
+    </header>
 
     <form action="Preset" method="post" class="presetsForm">
-    	<div class="setName">
+        <div class="setName">
             <h2>プリセット名</h2>
             <select id="presetName" name="preset_name" required>
-            	<option  hidden selected="selected" value="">プリセットを選択してください</option>
-            	<c:forEach var="preset" items="${presetList}">
-			            <option id="preset" value="${preset.id}">${preset.presetName}</option> 
-			    </c:forEach>
+                <option hidden selected="selected" value="">プリセットを選択してください</option>
+                <c:forEach var="preset" items="${presetList}">
+                    <option id="preset" value="${preset.id}">${preset.presetName}</option>
+                </c:forEach>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="dateOption">日付:</label>
+            <select id="dateOption" name="dateOption" onchange="toggleDateInput()" required>
+                <option value="specified">指定</option>
+                <option value="currentMonth">今月</option>
+            </select>
+        </div>
+
+        <!-- 日付を指定する入力欄 -->
+        <div id="dateInputs" style="display: block;">
+            <label for="dateInput1">開始日</label>
+            <input type="date" id="dateInput1" name="dateInput1" value="${selectedDate}" required>
+            
+            <label for="dateInput2">終了日</label>
+            <input type="date" id="dateInput2" name="dateInput2">
+        </div>
+
+        <script>
+            // プルダウン選択に応じて日付入力を切り替える
+            function toggleDateInput() {
+                const dateOption = document.getElementById("dateOption").value;
+                const dateInputs = document.getElementById("dateInputs");
+                const dateInput1 = document.getElementById("dateInput1");
+
+                if (dateOption === "currentMonth") {
+                    // 今月が選択された場合、日付入力を非表示に
+                    dateInputs.style.display = "none";
+                    // 開始日のrequired属性を削除
+                    dateInput1.removeAttribute("required");
+                } else {
+                    // 指定が選択された場合、日付入力を表示
+                    dateInputs.style.display = "block";
+                    // 開始日のrequired属性を追加
+                    dateInput1.setAttribute("required", "required");
+                }
+            }
+
+            // サーバーから渡された日付 (例: "2024-11-15") をJavaScriptに渡す
+            const selectedDate = '<%= request.getAttribute("selectedDate") %>';
+            // 初期状態で、選択された日付を表示
+            document.getElementById("dateInput1").value = selectedDate;
+        </script>
+
+        <!-- 繰り返し設定 -->
+        <div class="form-group">
+            <label for="repeatSelect">繰り返し:</label>
+            <select id="repeatSelect" name="repeatSelect" onchange="toggleRepeatOptions()" required>
+                <option value="daily" selected>毎日</option>
+                <option value="weekly">毎週</option>
             </select>
         </div>
         
-        <div class="form-group">
-			    <label for="dateInput1">日付</label>
-			    <input type="date" id="dateInput1" name="dateInput1" value="${selectedDate}" required>
-			</div>
-			
-			<p>～</p>
-			
-			<div class="form-group">
-			    <label for="dateInput2">日付</label>
-			    <input type="date" id="dateInput2" name="dateInput2" value="${selectedDate}" required>
-			</div>
+        <!-- 毎週の選択肢 -->
+        <div id="weeklyOptions" class="form-group" style="display: none;">
+            <label for="daySelect">曜日を選択:</label>
+            <select id="daySelect" name="daySelect">
+                <option value="monday">月曜日</option>
+                <option value="tuesday">火曜日</option>
+                <option value="wednesday">水曜日</option>
+                <option value="thursday">木曜日</option>
+                <option value="friday">金曜日</option>
+                <option value="saturday">土曜日</option>
+		        <option value="sunday">日曜日</option>
+            </select>
+        </div>
 
+        <script>
+            // プルダウン選択に応じて繰り返し設定を切り替える
+            function toggleRepeatOptions() {
+                const repeatSelect = document.getElementById("repeatSelect").value;
+                const weeklyOptions = document.getElementById("weeklyOptions");
+
+                if (repeatSelect === "weekly") {
+                    // 毎週が選択された場合、曜日選択のプルダウンを表示
+                    weeklyOptions.style.display = "block";
+                } else {
+                    // 毎日が選択された場合、曜日選択のプルダウンを非表示
+                    weeklyOptions.style.display = "none";
+                }
+            }
+
+            // 初期状態のチェックを行う
+            window.onload = function() {
+                toggleRepeatOptions(); // ページ読み込み時に状態を確認
+            };
+        </script>
+
+        <!-- タスクリスト表示 -->
         <div class="presets">
-		    <ul id="taskList">
-		        <!-- タスクリストはJavaScriptで動的に表示されます -->
-		    </ul>
-		</div>
-		
-		<div class="presetActions">
-		    <input type="submit" value="プリセット追加">
-		    <a href="PresetInput" id="presetButton">
-		        <button id="presetTaskAdd" type="button">
-		            <img alt="追加ボタン" src="assets/img/pulsButton.png">
-		        </button>
-		    </a>
-		</div>
+            <ul id="taskList">
+                <!-- タスクリストはJavaScriptで動的に表示されます -->
+            </ul>
+        </div>
+
+        <div class="presetActions">
+            <input type="submit" value="プリセット追加">
+            <a href="PresetInput" id="presetButton">
+                <button id="presetTaskAdd" type="button">
+                    <img alt="追加ボタン" src="assets/img/pulsButton.png">
+                </button>
+            </a>
+        </div>
     </form>
 </body>
 </html>

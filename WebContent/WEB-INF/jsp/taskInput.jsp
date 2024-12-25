@@ -77,14 +77,15 @@
 			</div>
 			
 			<!-- 日付を指定する入力欄 -->
-			<div id="dateInputs" style="display: block;">
+			<div id="dateInputs">
 			    <label for="dateInput1">開始日</label>
 			    <input type="date" id="dateInput1" name="dateInput1" value="${selectedDate}" required>
 			    
-			    <label for="dateInput2">終了日</label>
+			</div>
+			<div id="dateInputs">
+				<label id="labelDateInput2" for="dateInput2">終了日</label>
 			    <input type="date" id="dateInput2" name="dateInput2">
 			</div>
-			
 			<script>
 		    // プルダウン選択に応じて日付入力を切り替える
 		    function toggleDateInput() {
@@ -133,6 +134,8 @@
 			        <option value="wednesday">水曜日</option>
 			        <option value="thursday">木曜日</option>
 			        <option value="friday">金曜日</option>
+			        <option value="saturday">土曜日</option>
+			        <option value="sunday">日曜日</option>
 			    </select>
 			</div>
 			
@@ -196,7 +199,7 @@
             <!-- メモの入力 -->
             <div class="form-group">
                 <label for="story" class="memo-label">メモ</label>
-                <textarea id="story" name="story" rows="5" cols="50">メモ</textarea>
+                <textarea id="story" name="story" minlength="0" maxlength="300">メモ</textarea>
             </div>
 
            <button 
