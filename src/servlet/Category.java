@@ -36,6 +36,7 @@ public class Category extends HttpServlet {
    		
    		request.getRequestDispatcher("/WEB-INF/jsp/category.jsp").forward(request, response);
    	}
+   	
 
    	/**
    	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

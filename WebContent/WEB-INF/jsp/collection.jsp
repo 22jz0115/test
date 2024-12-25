@@ -22,7 +22,6 @@
 	</script>
 </head>
 <body class="body-1">
-
     <header>
         <a href="Home"><img src="assets/img/戻るボタン.png" alt="戻るボタン"></a><h1>Collection</h1>
     </header>
