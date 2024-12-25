@@ -1225,6 +1225,212 @@ input[type="color"]:hover {
     margin-left: 33px;
 }
 
+/*========= ナビゲーションのためのCSS ===============*/
+#g-nav {
+    position: fixed; /* 修正: 固定配置に変更 */
+    z-index: 9999; /* 最前面に表示 */
+    top: 0;
+    left: -120%; /* 初期位置を画面外に設定 */
+    width: 100%;
+    height: 100vh; /* 画面全体をカバー */
+    box-sizing: border-box;
+    background: #ffe2e2; /* 完全な背景色を指定 */
+    overflow-y: auto; /* 縦スクロールを許可 */
+    transition: all 0.6s;
+}
+
+/* メニューがアクティブな場合 */
+#g-nav.panelactive {
+    left: 0; /* 画面内に表示 */
+}
+
+/*ナビゲーションの縦スクロール*/
+#g-nav.panelactive #g-nav-list {
+	/*ナビの数が増えた場合縦スクロール*/
+	position: fixed;
+	z-index: 999;
+	width: 100%;
+	height: 100vh;
+	height: 100%;
+	box-sizing: border-box;
+	/*表示する高さ*/
+}
+
+/*ナビゲーション*/
+/* ナビゲーション内のリスト */
+#g-nav ul {
+	z-index: 999;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0;
+}
+
+/*リストのレイアウト設定*/
+
+#g-nav li {
+	list-style: none;
+	text-align: center;
+}
+
+#g-nav li a {
+	font-size: 1.6rem;
+	color: #333;
+	text-decoration: none;
+	padding: 10px;
+	display: block;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	font-weight: bold;
+}
+
+/*========= ボタンのためのCSS ===============*/
+.openbtn1 {
+    position: absolute; /* 通常時は固定されない */
+    z-index: 10000; /* ボタンを最前面に */
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    width: 70px;
+    height: 70px;
+    transition: position 0.4s; /* スムーズな移動アニメーション */
+}
+
+/* アクティブ時に固定配置に変更 */
+.openbtn1.active {
+    position: fixed; /* active状態では固定配置 */
+    top: 10px;
+    right: 10px;
+}
+
+/*×に変化*/
+.openbtn1 span {
+	z-index: 9999;
+	display: inline-block;
+	transition: all .4s;
+	position: absolute;
+	right: 10px;
+	height: 3px;
+	border-radius: 2px;
+	background-color: rgb(255, 255, 255);
+	width: 66%;
+}
+
+.openbtn1 span:nth-of-type(1) {
+	top: 15px;
+}
+
+.openbtn1 span:nth-of-type(2) {
+	top: 30px;
+}
+
+.openbtn1 span:nth-of-type(3) {
+	top: 45px;
+}
+
+.openbtn1.active span:nth-of-type(1) {
+	top: 18px;
+
+	transform: translateY(6px) rotate(-45deg);
+	width: 59%;
+}
+
+.openbtn1.active span:nth-of-type(2) {
+	opacity: 0;
+}
+
+.openbtn1.active span:nth-of-type(3) {
+	top: 30px;
+
+	transform: translateY(-6px) rotate(45deg);
+	width: 59%;
+}
+
+/*==================================================
+スライダーのためのcss
+===================================*/
+.slider {
+	/*横幅94%で左右に余白を持たせて中央寄せ*/
+	width: 94%;
+	margin: 0 auto;
+}
+
+.slider img {
+	width: 100%;
+	/*スライダー内の画像を横幅100%に*/
+	height: auto;
+}
+
+/*slickのJSで書かれるタグ内、スライド左右の余白調整*/
+
+.slider .slick-slide {
+	margin: 0 10px;
+}
+
+/*矢印の設定*/
+
+/*戻る、次へ矢印の位置*/
+.slick-prev,
+.slick-next {
+	position: absolute;
+	/*絶対配置にする*/
+	top: 42%;
+	cursor: pointer;
+	/*マウスカーソルを指マークに*/
+	outline: none;
+	/*クリックをしたら出てくる枠線を消す*/
+	border-top: 2px solid #666;
+	/*矢印の色*/
+	border-right: 2px solid #666;
+	/*矢印の色*/
+	height: 15px;
+	width: 15px;
+}
+
+.slick-prev {
+	/*戻る矢印の位置と形状*/
+	left: -1.5%;
+	transform: rotate(-135deg);
+}
+
+.slick-next {
+	/*次へ矢印の位置と形状*/
+	right: -1.5%;
+	transform: rotate(45deg);
+}
+
+/*ドットナビゲーションの設定*/
+
+.slick-dots {
+	text-align: center;
+	margin: 20px 0 0 0;
+}
+
+.slick-dots li {
+	display: inline-block;
+	margin: 0 5px;
+}
+
+.slick-dots button {
+	color: transparent;
+	outline: none;
+	width: 8px;
+	/*ドットボタンのサイズ*/
+	height: 8px;
+	/*ドットボタンのサイズ*/
+	display: block;
+	border-radius: 50%;
+	background: #ccc;
+	/*ドットボタンの色*/
+}
+
+.slick-dots .slick-active button {
+	background: #333;
+    margin: 0 auto;
+	/*ドットボタンの現在地表示の色*/
+}
+
 /* 全体のレスポンシブ対応 */
 @media screen and (max-width: 480px) {
   input[type="color"] {

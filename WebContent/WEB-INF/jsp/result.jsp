@@ -30,6 +30,21 @@
     <header>
         <a href="Home"><img src="assets/img/Vector.png" alt=""></a>
         <h1>達成率</h1>
+        <div class="openbtn1"><span></span><span></span><span></span></div>
+	    <nav id="g-nav">
+	      <ul>
+	      <li> <a class="todaybutton" href=Task>今日のタスク</a></li>
+	        <li> <a class="link-button" href="Category">カテゴリー</a></li>
+	        <li> <a class="link-button" href="PresetList">プリセット</a></li>
+	        <li><a class="link-button" href="LifeHack">ライフハック</a></li>
+	        <li> <a class="link-button" href="Result">統計</a></li>
+	        <li><a class="link-button" href="Collection">コレクション</a></li>
+	        <li> <a class="link-button" href="Setting">設定</a></li>        
+	        <c:if test="${not empty loginUser }">
+	       		<li><a class="rogout" href="Logout">ログアウト</a></li>
+	       	</c:if> 
+	      </ul>
+	    </nav>
     </header>
 
     

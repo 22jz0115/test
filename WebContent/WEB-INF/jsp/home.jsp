@@ -22,9 +22,6 @@
 	    }
 
 	    const Location = '${Location}';
-
-	
-	    
 	</script>
 	<script>
         const taskDates = ${taskDatesJson};
