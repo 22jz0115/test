@@ -744,6 +744,13 @@ button:hover {
 }
 
 
+#dateInputs{
+	 margin-bottom: 20px;
+    padding: 0 15px; /* スマホでも左右に余白を追加 */
+    
+    
+}
+
 
 
   
