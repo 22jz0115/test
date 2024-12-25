@@ -92,7 +92,6 @@ public class TaskNotificationScheduler {
             if (Security.getProvider("BC") == null) {
                 Security.addProvider(new BouncyCastleProvider());
             }
-
             // VAPID 鍵ペアを準備
             String publicKey = "BBNgWYrBUGNBxLIb5IOUufjXNNkP-NWOwyt7k4QFxRxQfkZWKzBwsRwx_NnbNEyJLXeTOHnbXagsT-e_7wmkmMo";
             String privateKey = "-----BEGIN PRIVATE KEY-----\r\n"
