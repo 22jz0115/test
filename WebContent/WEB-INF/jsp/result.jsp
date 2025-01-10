@@ -8,6 +8,8 @@
     <title>統計</title>
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/nav/script.js"></script>
     <script>
         // サーブレットから渡されたデータをJavaScriptに埋め込む
         const percentageFromDatabase1 = ${percentageFromDatabase1};

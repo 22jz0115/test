@@ -10,6 +10,9 @@
     <title>タスク入力</title>
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/nav/script.js"></script>
+   <script type="text/javascript" src="assets/js/taskinput/script.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
@@ -27,8 +30,6 @@
 </head>
 
 <body>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script type="text/javascript" src="assets/js/taskinput/script.js"></script>
 
     <header>
 	    <c:choose>

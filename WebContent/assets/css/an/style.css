@@ -136,9 +136,9 @@ h2{
 
 
 /* ボックスモデルを整え、全要素にデフォルトで適用 */
-* {
-    box-sizing: border-box;
-}
+/** {*/
+/*    box-sizing: border-box;*/
+/*}*/
 
 /* スマホ画面に合わせたスタイル */
 @media screen and (max-width: 390px) {
@@ -1437,6 +1437,14 @@ input[type="color"]:hover {
     margin: 0 auto;
 	/*ドットボタンの現在地表示の色*/
 }
+
+span{
+    width: 5px;
+    height: 50px;
+    margin-left: 25px;
+    padding-top: 7px;
+}
+
 
 /* 全体のレスポンシブ対応 */
 @media screen and (max-width: 480px) {

@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/an/style.css">
     <title>カテゴリー画面</title>
-
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/nav/script.js"></script>
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
     <script>

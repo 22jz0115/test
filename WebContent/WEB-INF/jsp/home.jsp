@@ -30,7 +30,6 @@
 </head>
 <body>
     <header>
-        <a href="#"><img class="imgVector" src="assets/js/home/script.js" alt=""></a>
         <h1>ホーム</h1>
         <div class="openbtn1"><span></span><span></span><span></span></div>
 	    <nav id="g-nav">
