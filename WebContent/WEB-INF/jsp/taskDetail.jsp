@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="assets/css/an/style.css">
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/nav/script.js"></script>
     <title>タスク詳細</title>
     <script>
 	    if ('serviceWorker' in navigator) {

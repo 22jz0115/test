@@ -10,6 +10,17 @@
 	<title>タスク</title>
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/nav/script.js"></script>
+    <script type="text/javascript" src="assets/js/task/script.js"></script>
+    
+    <!-- サーバーから送られた日付をJavaScriptに渡す -->
+	<script>
+	// サーバーから送られた日付を取得
+	    const selectedDateString = '<%= request.getAttribute("selectedDate") %>';
+	    const selectedDate = selectedDateString ? new Date(selectedDateString) : new Date();
+    console.log("サーブレットからの日付: " + selectedDate.toISOString());
+	</script>
 	<script>
 	    if ('serviceWorker' in navigator) {
 	        window.addEventListener('load', () => {
@@ -88,16 +99,7 @@
        <a  href="Preset?date=${selectedDate}"><p>プリセット追加</p></a> 
     </div>
     
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script type="text/javascript" src="assets/js/task/script.js"></script>
-    
-    <!-- サーバーから送られた日付をJavaScriptに渡す -->
-	<script>
-	// サーバーから送られた日付を取得
-	    const selectedDateString = '<%= request.getAttribute("selectedDate") %>';
-	    const selectedDate = selectedDateString ? new Date(selectedDateString) : new Date();
-    console.log("サーブレットからの日付: " + selectedDate.toISOString());
-	</script>
+
 
 </body>
 </html>
