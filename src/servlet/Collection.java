@@ -32,14 +32,11 @@ public class Collection extends HttpServlet {
         }
 
         MyBoxesDAO boxDao = new MyBoxesDAO();
-  
         
         // MyBoxsデータを取得
         List<MyBoxs> box = boxDao.findByAccountId(loginUser.getId());
         List<Integer> collectionIds = new ArrayList<>();
         
-  
-
         // MyBoxsリストから collectionId を抽出
         for (MyBoxs myBox : box) {
             collectionIds.add(myBox.getCollectionId());
@@ -48,8 +45,6 @@ public class Collection extends HttpServlet {
         // CollectionsDAO を使ってコレクションリストを取得
         CollectionsDAO collectDao = new CollectionsDAO();
         List<Collections> collects = collectDao.findByCollectionList(collectionIds);
-
-
 
         // コレクションリストをリクエストスコープに設定
         request.setAttribute("collection", collects);
