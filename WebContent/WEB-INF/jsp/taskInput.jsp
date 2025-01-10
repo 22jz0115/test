@@ -78,34 +78,44 @@
 			</div>
 			
 			<!-- 日付を指定する入力欄 -->
-			<div id="dateInputs">
-			    <label for="dateInput1">開始日</label>
-			    <input type="date" id="dateInput1" name="dateInput1" value="${selectedDate}" required>
-			    
+	
+			<div id="dateInputGroup">
+			    <div id="dateInput1Container">
+			        <label for="dateInput1">開始日</label>
+			        <input type="date" id="dateInput1" name="dateInput1" value="${selectedDate}" required>
+			    </div>
+			    <div id="dateInput2Container">
+			        <label id="labelDateInput2" for="dateInput2">終了日</label>
+			        <input type="date" id="dateInput2" name="dateInput2" required>
+			    </div>
 			</div>
-			<div id="dateInputs">
-				<label id="labelDateInput2" for="dateInput2">終了日</label>
-			    <input type="date" id="dateInput2" name="dateInput2">
-			</div>
+			
 			<script>
-		    // プルダウン選択に応じて日付入力を切り替える
-		    function toggleDateInput() {
-		        const dateOption = document.getElementById("dateOption").value;
-		        const dateInputs = document.getElementById("dateInputs");
-		        const dateInput1 = document.getElementById("dateInput1");
-		
-		        if (dateOption === "currentMonth") {
-		            // 今月が選択された場合、日付入力を非表示に
-		            dateInputs.style.display = "none";
-		            // 開始日のrequired属性を削除
-		            dateInput1.removeAttribute("required");
-		        } else {
-		            // 指定が選択された場合、日付入力を表示
-		            dateInputs.style.display = "block";
-		            // 開始日のrequired属性を追加
-		            dateInput1.setAttribute("required", "required");
-		        }
-		    }
+			    // プルダウン選択に応じて日付入力を切り替える
+			    function toggleDateInput() {
+			        const dateOption = document.getElementById("dateOption").value;
+			        const dateInput1Container = document.getElementById("dateInput1Container");
+			        const dateInput2Container = document.getElementById("dateInput2Container");
+			        const dateInput1 = document.getElementById("dateInput1");
+			        const dateInput2 = document.getElementById("dateInput2");
+			
+			        if (dateOption === "currentMonth") {
+			            // 今月が選択された場合、日付入力を非表示に
+			            dateInput1Container.style.display = "none";
+			            dateInput2Container.style.display = "none";
+			            // required属性を削除
+			            dateInput1.removeAttribute("required");
+			            dateInput2.removeAttribute("required");
+			        } else {
+			            // 指定が選択された場合、日付入力を表示
+			            dateInput1Container.style.display = "block";
+			            dateInput2Container.style.display = "block";
+			            // required属性を追加
+			            dateInput1.setAttribute("required", "required");
+			            dateInput2.setAttribute("required", "required");
+			        }
+    }
+
 		
 		    // サーバーから渡された日付 (例: "2024-11-15") をJavaScriptに渡す
 		    const selectedDate = '<%= request.getAttribute("selectedDate") %>';

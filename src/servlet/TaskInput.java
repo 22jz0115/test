@@ -139,6 +139,11 @@ public class TaskInput extends HttpServlet {
         int targetDay = getDayOfWeek(weekday);
         int currentDay = currentDate.getDayOfWeek().getValue();
 
+        // 現在日が目標曜日と一致する場合、当日を返す
+        if (targetDay == currentDay) {
+            return currentDate;
+        }
+
         // 目標の曜日が現在の日付より後なら、その週の目標曜日を設定
         if (targetDay > currentDay) {
             return currentDate.plusDays(targetDay - currentDay);
