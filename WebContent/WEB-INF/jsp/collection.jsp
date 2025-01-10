@@ -55,22 +55,22 @@
                 </c:forEach>
             </c:when>
             <c:otherwise>
-                <!-- ${collection} がある場合は、各月のコレクション画像を表示 -->
-                <c:forEach var="month" begin="1" end="12" step="1">
-                    <c:forEach var="collect" items="${collection}">
-                        <c:choose>
-                            <c:when test="${collect.id == month}">
-                                <img src="${collect.img}" alt="金メダル" class="round-image">
-                            </c:when>
-                            <c:otherwise>
-                                <div class="dotted-circle">
-                                    <p>${month}月</p>
-                                </div>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:forEach>
-                </c:forEach>
-            </c:otherwise>
+	            <!-- ${collection} がある場合は、各月のコレクション画像を表示 -->
+	            <c:forEach var="month" begin="1" end="12" step="1">
+	                <c:set var="found" value="false" />
+	                <c:forEach var="collect" items="${collection}">
+	                    <c:if test="${!found && collect.id == month}">
+	                        <img src="${collect.img}" alt="コレクション画像" class="round-image">
+	                        <c:set var="found" value="true" />
+	                    </c:if>
+	                </c:forEach>
+	                <c:if test="${!found}">
+	                    <div class="dotted-circle">
+	                        <p>${month}月</p>
+	                    </div>
+	                </c:if>
+	            </c:forEach>
+	        </c:otherwise>
         </c:choose>
     </div>
 </body>

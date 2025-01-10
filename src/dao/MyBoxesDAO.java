@@ -141,12 +141,12 @@ public class MyBoxesDAO {
         int id = rs.getInt("id");
         int account_id = rs.getInt("account_id");
         int collection_id = rs.getInt("collection_id");
-       
+        int created_year = rs.getInt("created_year");
         LocalDateTime createdAt =
                  rs.getTimestamp("created_at").toLocalDateTime();                          
         LocalDateTime updateDate = 
                  rs.getTimestamp("update_date").toLocalDateTime();  
 
-        return new MyBoxs(id, account_id, collection_id, createdAt, updateDate);
+        return new MyBoxs(id, account_id, collection_id, created_year, createdAt, updateDate);
     }
 }

@@ -89,12 +89,11 @@ public class CollectionsDAO {
 	private Collections rs2model(ResultSet rs) throws SQLException {
         int id = rs.getInt("id");
         String img = rs.getString("img");
-        String rank = rs.getString("rank");
         LocalDateTime createdAt =
                  rs.getTimestamp("created_at").toLocalDateTime();                          
         LocalDateTime updateDate = 
                  rs.getTimestamp("update_date").toLocalDateTime();  
 
-        return new Collections(id, img, rank, createdAt, updateDate);
+        return new Collections(id, img, createdAt, updateDate);
     }
 }
