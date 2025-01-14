@@ -833,7 +833,7 @@ button:hover {
 /* まるの中の */
 
 .dotted-circle p {
-  margin: 35px 0px 0px 33px; /* 不要な余白を除去 */
+  margin: 36px 0px 0px 36px; /* 不要な余白を除去 */
   font-size: 16px; /* テキストサイズを調整 */
   color:rgb(246, 170, 7);
 }
@@ -917,6 +917,7 @@ input[type='checkbox'] {
 
 .title {
     margin-left: 4px;
+    margin-top: 20px
 }
 
 input:checked ~ .base {
@@ -1135,8 +1136,9 @@ header h1{
 .notification, .bluetooth {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
-    margin: 40px;
+    margin: 13px;
+    gap: 33px;
+
 }
 
 .switch {
@@ -1441,7 +1443,6 @@ input[type="color"]:hover {
 span{
     width: 5px;
     height: 50px;
-    margin-left: 25px;
     padding-top: 7px;
 }
 

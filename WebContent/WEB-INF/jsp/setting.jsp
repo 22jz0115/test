@@ -237,10 +237,10 @@
 	      </ul>
 	    </nav>
     </header>
+    <p class="setting">通知</p>
     <div class="switch">   
         <div class="notification">
             <img src="assets/img/通知アイコン.png" alt="通知アイコン">
-            <p>通知</p>
             <label for="switch1" class="switch_label">  
                 <p>OFF</p>
                 <div class="switch">
@@ -278,7 +278,7 @@
     </div>
     <p class="setting">ログアウト</p>
     <div class="button-1">
-        <form action="Login" method="post">
+        <form action="Logout" method="post">
             <button type="submit" class="logout-button">ログアウト</button>
         </form>
     </div>

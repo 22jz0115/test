@@ -43,7 +43,7 @@
                     <div>
                         <div class="timersolid">
                             <p class="tasktime">${presetTask.taskTime}</p>
-                            <span></span>
+                            <span class="prisetSpan"></span>
                         </div>
                         <a href="PresetTaskDetail?presetTaskId=${presetTask.id}">
                         	<p class="taskname">${presetTask.name}</p>

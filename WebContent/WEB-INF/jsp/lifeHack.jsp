@@ -70,7 +70,7 @@
 	            <div>
 	                <h2>${life.account.name}さん</h2> <!-- ここを変更 -->
 	                <h3>${life.title}</h3>
-	                <p>${life.content}</p>
+	                <p class="ligeptag">${life.content}</p>
 	                <img src="${life.img}" alt="画像">
 	            </div>
 	        </div>    	

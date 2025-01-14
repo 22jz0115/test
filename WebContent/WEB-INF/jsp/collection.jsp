@@ -44,7 +44,7 @@
 	    </nav>
     </header>
 
-    <p class="years">現在の年は <span id="year"><%= new java.util.Date().getYear() + 1900 %></span>年です。</p>
+    <p class="years">現在の年は<span id="year"><%= new java.util.Date().getYear() + 1900 %></span>年です。</p>
 
     <div class="grid-container">
         <c:choose>

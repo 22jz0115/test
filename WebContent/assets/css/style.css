@@ -1182,6 +1182,13 @@ input[type="submit"]{
     height: 30px;
 }
 
+.prisetSpan{
+	 width: 5px;
+    height: 50px;
+    background: #c9c9c9;
+    margin-left: 26px;
+    padding-top: 7px;
+}
 
  
 
@@ -1195,6 +1202,11 @@ input[type="submit"]{
  width: 200px;
  position: fixed;
 }
+
+.ligeptag{
+	width: 19rem;
+}
+
 
 .search-form-3 {
     width: 290px;
@@ -1281,7 +1293,7 @@ input[type="submit"]{
 .lifehackAdd{
     width: 180px;
     height: 40px;
-    margin: 0 auto;
+    margin: 15px auto;
     background: #fedada;
     border-radius: 25px;
     color: #000;
@@ -1297,7 +1309,7 @@ input[type="submit"]{
     text-align: center;     /* テキストを中央に揃える */
     line-height: 30px;      /* ボタンの高さに合わせてテキストを中央に配置 */
     color: inherit;         /* 親要素の色を継承 */
-    padding-top: 4px;
+    padding-top: 2px;
     font-size: 18px;
 }
 
