@@ -10,6 +10,8 @@
     <title>プリセット詳細</title>
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/nav/script.js"></script>
     <script>
 	    if ('serviceWorker' in navigator) {
 	        window.addEventListener('load', () => {
@@ -26,6 +28,21 @@
 	<header>
 	    <a href="PresetList"><img src="assets/img/Vector.png" alt=""></a>
 	    <h1>プリセット詳細</h1>
+	    <div class="openbtn1"><span></span><span></span><span></span></div>
+	    <nav id="g-nav">
+	      <ul>
+	      <li> <a class="todaybutton" href=Task>今日のタスク</a></li>
+	        <li> <a class="link-button" href="Category">タスク履歴</a></li>
+	        <li> <a class="link-button" href="PresetList">プリセット</a></li>
+	        <li><a class="link-button" href="LifeHack">ライフハック</a></li>
+	        <li> <a class="link-button" href="Result">統計</a></li>
+	        <li><a class="link-button" href="Collection">コレクション</a></li>
+	        <li> <a class="link-button" href="Setting">設定</a></li>        
+	        <c:if test="${not empty loginUser }">
+	       		<li><a class="rogout" href="Logout">ログアウト</a></li>
+	       	</c:if> 
+	      </ul>
+	    </nav>
 	</header>
 	 
 	<div id="presetDelete">

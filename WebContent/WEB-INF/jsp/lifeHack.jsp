@@ -35,7 +35,7 @@
 	    <nav id="g-nav">
 	      <ul>
 	      <li> <a class="todaybutton" href=Task>今日のタスク</a></li>
-	        <li> <a class="link-button" href="Category">カテゴリー</a></li>
+	        <li> <a class="link-button" href="Category">タスク履歴</a></li>
 	        <li> <a class="link-button" href="PresetList">プリセット</a></li>
 	        <li><a class="link-button" href="LifeHack">ライフハック</a></li>
 	        <li> <a class="link-button" href="Result">統計</a></li>

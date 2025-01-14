@@ -13,6 +13,8 @@
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/nav/script.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
@@ -40,6 +42,21 @@
             </c:otherwise>
         </c:choose>
         <h1>プリセット</h1>
+        <div class="openbtn1"><span></span><span></span><span></span></div>
+	    <nav id="g-nav">
+	      <ul>
+	      <li> <a class="todaybutton" href=Task>今日のタスク</a></li>
+	        <li> <a class="link-button" href="Category">タスク履歴</a></li>
+	        <li> <a class="link-button" href="PresetList">プリセット</a></li>
+	        <li><a class="link-button" href="LifeHack">ライフハック</a></li>
+	        <li> <a class="link-button" href="Result">統計</a></li>
+	        <li><a class="link-button" href="Collection">コレクション</a></li>
+	        <li> <a class="link-button" href="Setting">設定</a></li>        
+	        <c:if test="${not empty loginUser }">
+	       		<li><a class="rogout" href="Logout">ログアウト</a></li>
+	       	</c:if> 
+	      </ul>
+	    </nav>
     </header>
 
     <form action="Preset" method="post" class="presetsForm">

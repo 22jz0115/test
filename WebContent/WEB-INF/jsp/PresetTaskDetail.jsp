@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="assets/css/an/style.css">
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/nav/script.js"></script>
     <title>プリセットタスク詳細画面</title>
     <script>
 	    if ('serviceWorker' in navigator) {
@@ -31,6 +33,21 @@
             <img class="imgVector" src="assets/img/戻るボタン.png" alt="">
         </a>
         <h1>プリセットタスク詳細</h1>
+        <div class="openbtn1"><span></span><span></span><span></span></div>
+	    <nav id="g-nav">
+	      <ul>
+	      <li> <a class="todaybutton" href=Task>今日のタスク</a></li>
+	        <li> <a class="link-button" href="Category">タスク履歴</a></li>
+	        <li> <a class="link-button" href="PresetList">プリセット</a></li>
+	        <li><a class="link-button" href="LifeHack">ライフハック</a></li>
+	        <li> <a class="link-button" href="Result">統計</a></li>
+	        <li><a class="link-button" href="Collection">コレクション</a></li>
+	        <li> <a class="link-button" href="Setting">設定</a></li>        
+	        <c:if test="${not empty loginUser }">
+	       		<li><a class="rogout" href="Logout">ログアウト</a></li>
+	       	</c:if> 
+	      </ul>
+	    </nav>
     </header>
 
     <form action="PresetTaskDetail" method="post">
