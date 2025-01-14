@@ -50,7 +50,7 @@
 				        id="touroku" 
 				        type="submit" 
 				        class="button00" 
-				        onclick="this.disabled = true; this.form.submit();">
+				        >
 				        Login
 				    </button>
                     <p class="sinki">
