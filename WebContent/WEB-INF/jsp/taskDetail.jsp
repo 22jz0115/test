@@ -88,7 +88,7 @@
 
         <!-- カテゴリ選択 -->
         <div class="form-group">
-            <p class="taskname">カテゴリ名</p>
+            <p class="taskname">カテゴリ</p>
             <select id="categorySelect" name="categorySelect" required>
                 <c:forEach var="category" items="${categoryList}">
                     <option value="${category.id}" <c:if test="${category.id == task.categoryId}">selected</c:if>>
