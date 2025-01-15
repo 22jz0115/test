@@ -73,6 +73,7 @@
         <div class="form-group">
             <label for="dateOption">日付:</label>
             <select id="dateOption" name="dateOption" onchange="toggleDateInput()" required>
+            	<option value="todayonly">一日</option>
                 <option value="specified">指定</option>
                 <option value="currentMonth">今月</option>
             </select>
@@ -84,11 +85,20 @@
 			        <label for="dateInput1">開始日</label>
 			        <input type="date" id="dateInput1" name="dateInput1" value="${selectedDate}" required>
 			    </div>
-			    <div id="dateInput2Container">
+			    <div id="dateInput2Container" style="display:none;">
 			        <label id="labelDateInput2" for="dateInput2">終了日</label>
-			        <input type="date" id="dateInput2" name="dateInput2" required>
+			        <input type="date" id="dateInput2" name="dateInput2">
 			    </div>
 			</div>
+
+	        <!-- 繰り返し設定 -->
+	        <div id="repeatafterme" class="form-group" style="display:none;">
+	            <label for="repeatSelect">繰り返し:</label>
+	            <select id="repeatSelect" name="repeatSelect" onchange="toggleRepeatOptions()">
+	                <option value="daily" selected>毎日</option>
+	                <option value="weekly">毎週</option>
+	            </select>
+	        </div>
 			
 			<script>
 			    // プルダウン選択に応じて日付入力を切り替える
@@ -98,89 +108,95 @@
 			        const dateInput2Container = document.getElementById("dateInput2Container");
 			        const dateInput1 = document.getElementById("dateInput1");
 			        const dateInput2 = document.getElementById("dateInput2");
+			        const repeatafterme = document.getElementById("repeatafterme");
 			
 			        if (dateOption === "currentMonth") {
 			            // 今月が選択された場合、日付入力を非表示に
 			            dateInput1Container.style.display = "none";
 			            dateInput2Container.style.display = "none";
+			            repeatafterme.style.display = "block";
+			            
 			            // required属性を削除
 			            dateInput1.removeAttribute("required");
 			            dateInput2.removeAttribute("required");
-			        } else {
+			            repeatafterme.setAttribute("required", "required");
+			        } else if(dateOption === "specified") {
 			            // 指定が選択された場合、日付入力を表示
 			            dateInput1Container.style.display = "block";
 			            dateInput2Container.style.display = "block";
+			            repeatafterme.style.display = "block";
 			            // required属性を追加
 			            dateInput1.setAttribute("required", "required");
 			            dateInput2.setAttribute("required", "required");
-			        }
-    }
+			            repeatafterme.setAttribute("required", "required");
+			        } else {
+			        	dateInput1Container.style.display = "block";
+			        	dateInput2Container.style.display = "none";
+			        	repeatafterme.style.display = "none";
 
-            // サーバーから渡された日付 (例: "2024-11-15") をJavaScriptに渡す
-            const selectedDate = '<%= request.getAttribute("selectedDate") %>';
-            // 初期状態で、選択された日付を表示
-            document.getElementById("dateInput1").value = selectedDate;
-        </script>
+			        	dateInput1.setAttribute("required", "required");
+			        	dateInput2.removeAttribute("required");
+			        	repeatafterme.removeAttribute("required");
+				    }
+    			}
 
-        <!-- 繰り返し設定 -->
-        <div class="form-group">
-            <label for="repeatSelect">繰り返し:</label>
-            <select id="repeatSelect" name="repeatSelect" onchange="toggleRepeatOptions()" required>
-                <option value="daily" selected>毎日</option>
-                <option value="weekly">毎週</option>
-            </select>
-        </div>
+		
+			    // サーバーから渡された日付 (例: "2024-11-15") をJavaScriptに渡す
+			    const selectedDate = '<%= request.getAttribute("selectedDate") %>';
+			    // 初期状態で、選択された日付を表示
+			    document.getElementById("dateInput1").value = selectedDate;
+			</script>
         
-        <!-- 毎週の選択肢 -->
-        <div id="weeklyOptions" class="form-group" style="display: none;">
-            <label for="daySelect">曜日を選択:</label>
-            <select id="daySelect" name="daySelect">
-                <option value="monday">月曜日</option>
-                <option value="tuesday">火曜日</option>
-                <option value="wednesday">水曜日</option>
-                <option value="thursday">木曜日</option>
-                <option value="friday">金曜日</option>
-                <option value="saturday">土曜日</option>
-		        <option value="sunday">日曜日</option>
-            </select>
-        </div>
+	        <!-- 毎週の選択肢 -->
+	        <div id="weeklyOptions" class="form-group" style="display: none;">
+	            <label for="daySelect">曜日を選択:</label>
+	            <select id="daySelect" name="daySelect">
+	                <option value="monday">月曜日</option>
+	                <option value="tuesday">火曜日</option>
+	                <option value="wednesday">水曜日</option>
+	                <option value="thursday">木曜日</option>
+	                <option value="friday">金曜日</option>
+	                <option value="saturday">土曜日</option>
+			        <option value="sunday">日曜日</option>
+	            </select>
+	        </div>
 
-        <script>
-            // プルダウン選択に応じて繰り返し設定を切り替える
-            function toggleRepeatOptions() {
-                const repeatSelect = document.getElementById("repeatSelect").value;
-                const weeklyOptions = document.getElementById("weeklyOptions");
+	        <script>
+	            // プルダウン選択に応じて繰り返し設定を切り替える
+	            function toggleRepeatOptions() {
+	                const repeatSelect = document.getElementById("repeatSelect").value;
+	                const weeklyOptions = document.getElementById("weeklyOptions");
+	
+	                if (repeatSelect === "weekly") {
+	                    // 毎週が選択された場合、曜日選択のプルダウンを表示
+	                    weeklyOptions.style.display = "block";
+	                } else {
+	                    // 毎日が選択された場合、曜日選択のプルダウンを非表示
+	                    weeklyOptions.style.display = "none";
+	                }
+	            }
+	
+	            // 初期状態のチェックを行う
+	            window.onload = function() {
+	                toggleRepeatOptions(); // ページ読み込み時に状態を確認
+	            };
+	        </script>
 
-                if (repeatSelect === "weekly") {
-                    // 毎週が選択された場合、曜日選択のプルダウンを表示
-                    weeklyOptions.style.display = "block";
-                } else {
-                    // 毎日が選択された場合、曜日選択のプルダウンを非表示
-                    weeklyOptions.style.display = "none";
-                }
-            }
-
-            // 初期状態のチェックを行う
-            window.onload = function() {
-                toggleRepeatOptions(); // ページ読み込み時に状態を確認
-            };
-        </script>
-
-        <!-- タスクリスト表示 -->
-        <div class="presets">
-            <ul id="taskList">
-                <!-- タスクリストはJavaScriptで動的に表示されます -->
-            </ul>
-        </div>
-
-        <div class="presetActions">
-            <input type="submit" value="プリセット追加">
-            <a href="PresetInput" id="presetButton">
-                <button id="presetTaskAdd" type="button">
-                    <img alt="追加ボタン" src="assets/img/pulsButton.png">
-                </button>
-            </a>
-        </div>
-    </form>
+	        <!-- タスクリスト表示 -->
+	        <div class="presets">
+	            <ul id="taskList">
+	                <!-- タスクリストはJavaScriptで動的に表示されます -->
+	            </ul>
+	        </div>
+	
+	        <div class="presetActions">
+	            <input type="submit" value="プリセット追加">
+	            <a href="PresetInput" id="presetButton">
+	                <button id="presetTaskAdd" type="button">
+	                    <img alt="追加ボタン" src="assets/img/pulsButton.png">
+	                </button>
+	            </a>
+	        </div>
+   		 </form>
 </body>
 </html>
