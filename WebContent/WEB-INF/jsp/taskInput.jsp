@@ -77,7 +77,8 @@
             <div class="form-group">
 			    <label for="dateOption">日付:</label>
 			    <select id="dateOption" name="dateOption" onchange="toggleDateInput()" required>
-			        <option value="specified">指定</option>
+			    	<option value="todayonly">一日</option>
+			        <option value="specified">範囲指定</option>
 			        <option value="currentMonth">今月</option>
 			    </select>
 			</div>
@@ -89,10 +90,19 @@
 			        <label for="dateInput1">開始日</label>
 			        <input type="date" id="dateInput1" name="dateInput1" value="${selectedDate}" required>
 			    </div>
-			    <div id="dateInput2Container">
+			    <div id="dateInput2Container" style="display:none;">
 			        <label id="labelDateInput2" for="dateInput2">終了日</label>
-			        <input type="date" id="dateInput2" name="dateInput2" required>
+			        <input type="date" id="dateInput2" name="dateInput2">
 			    </div>
+			</div>
+			
+            <!-- 繰り返し設定 -->
+			<div id="repeatafterme" class="form-group" style="display:none;">
+			    <label for="repeatSelect">繰り返し:</label>
+			    <select id="repeatSelect" name="repeatSelect" onchange="toggleRepeatOptions()">
+			        <option value="daily" selected>毎日</option>
+			        <option value="weekly">毎週</option>
+			    </select>
 			</div>
 			
 			<script>
@@ -103,22 +113,36 @@
 			        const dateInput2Container = document.getElementById("dateInput2Container");
 			        const dateInput1 = document.getElementById("dateInput1");
 			        const dateInput2 = document.getElementById("dateInput2");
+			        const repeatafterme = document.getElementById("repeatafterme");
 			
 			        if (dateOption === "currentMonth") {
 			            // 今月が選択された場合、日付入力を非表示に
 			            dateInput1Container.style.display = "none";
 			            dateInput2Container.style.display = "none";
+			            repeatafterme.style.display = "block";
+			            
 			            // required属性を削除
 			            dateInput1.removeAttribute("required");
 			            dateInput2.removeAttribute("required");
-			        } else {
+			            repeatafterme.setAttribute("required", "required");
+			        } else if(dateOption === "specified") {
 			            // 指定が選択された場合、日付入力を表示
 			            dateInput1Container.style.display = "block";
 			            dateInput2Container.style.display = "block";
+			            repeatafterme.style.display = "block";
 			            // required属性を追加
 			            dateInput1.setAttribute("required", "required");
 			            dateInput2.setAttribute("required", "required");
-			        }
+			            repeatafterme.setAttribute("required", "required");
+			        } else {
+			        	dateInput1Container.style.display = "block";
+			        	dateInput2Container.style.display = "none";
+			        	repeatafterme.style.display = "none";
+
+			        	dateInput1.setAttribute("required", "required");
+			        	dateInput2.removeAttribute("required");
+			        	repeatafterme.removeAttribute("required");
+				    }
     }
 
 		
@@ -127,19 +151,6 @@
 		    // 初期状態で、選択された日付を表示
 		    document.getElementById("dateInput1").value = selectedDate;
 		</script>
-
-
-
-           
-            
-            <!-- 繰り返し設定 -->
-			<div class="form-group">
-		    <label for="repeatSelect">繰り返し:</label>
-		    <select id="repeatSelect" name="repeatSelect" onchange="toggleRepeatOptions()" required>
-		        <option value="daily" selected>毎日</option>
-		        <option value="weekly">毎週</option>
-		    </select>
-		</div>
 			
 			<!-- 毎週の選択肢 -->
 			<div id="weeklyOptions" class="form-group" style="display: none;">

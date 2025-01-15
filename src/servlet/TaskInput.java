@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -29,6 +30,11 @@ public class TaskInput extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // パラメータから日付を取得
         String selectedDate = request.getParameter("date");
+        
+        if (selectedDate == null || selectedDate.isEmpty()) {
+            LocalDate today = LocalDate.now();
+            selectedDate = today.toString();
+        }
         
         CategoriesDAO categoriesDAO = new CategoriesDAO();
         List<Categories> categoryList = categoriesDAO.get();  // DAOからデータを取得
@@ -71,63 +77,72 @@ public class TaskInput extends HttpServlet {
 
         TasksDAO dao = new TasksDAO();
 
-        // 日付指定がない場合（今月選択）
-        if ("currentMonth".equals(dateOption)) {
-            currentDate = LocalDateTime.now().withDayOfMonth(1).withHour(Integer.parseInt(time.split(":")[0]))
-                .withMinute(Integer.parseInt(time.split(":")[1]));
-            endDate = currentDate.withDayOfMonth(currentDate.toLocalDate().lengthOfMonth());
-            endDate = endDate.withHour(Integer.parseInt(time.split(":")[0])).withMinute(Integer.parseInt(time.split(":")[1]));
+        if("todayonly".equals(dateOption)) {
+        	currentDate = LocalDateTime.parse(date1 + " " + time, dateTimeFormatter);
+        	Tasks createdTask = dao.create(categoryId, accountId, taskName, memo, outin, currentDate);
+            if (createdTask == null) {
+                System.err.println("タスク作成失敗");
+            }
         } else {
-            if (date1 != null && !date1.isEmpty()) {
-                currentDate = LocalDateTime.parse(date1 + " " + time, dateTimeFormatter);
+        	// 日付指定がない場合（今月選択）
+            if ("currentMonth".equals(dateOption)) {
+                currentDate = LocalDateTime.now().withDayOfMonth(1).withHour(Integer.parseInt(time.split(":")[0]))
+                    .withMinute(Integer.parseInt(time.split(":")[1]));
+                endDate = currentDate.withDayOfMonth(currentDate.toLocalDate().lengthOfMonth());
+                endDate = endDate.withHour(Integer.parseInt(time.split(":")[0])).withMinute(Integer.parseInt(time.split(":")[1]));
+            } else {
+                if (date1 != null && !date1.isEmpty()) {
+                    currentDate = LocalDateTime.parse(date1 + " " + time, dateTimeFormatter);
+                }
+
+                if (date2 != null && !date2.isEmpty()) {
+                    endDate = LocalDateTime.parse(date2 + " " + time, dateTimeFormatter);
+                }
             }
 
-            if (date2 != null && !date2.isEmpty()) {
-                endDate = LocalDateTime.parse(date2 + " " + time, dateTimeFormatter);
-            }
-        }
+            // 繰り返し設定によるタスクの追加
+            switch (repeatOption) {
+                case "daily":  // 毎日
+                    if (currentDate != null) {
+                        LocalDateTime end = endDate != null ? endDate : currentDate.withDayOfMonth(currentDate.toLocalDate().lengthOfMonth());
+                        while (!currentDate.isAfter(end)) {
+                            Tasks createdTask = dao.create(categoryId, accountId, taskName, memo, outin, currentDate);
+                            if (createdTask == null) {
+                                System.err.println("タスク作成失敗: " + currentDate.format(dateTimeFormatter));
+                            }
+                            currentDate = currentDate.plusDays(1); // 次の日
+                        }
+                    }
+                    break;
 
-        // 繰り返し設定によるタスクの追加
-        switch (repeatOption) {
-            case "daily":  // 毎日
-                if (currentDate != null) {
-                    LocalDateTime end = endDate != null ? endDate : currentDate.withDayOfMonth(currentDate.toLocalDate().lengthOfMonth());
-                    while (!currentDate.isAfter(end)) {
+                case "weekly": // 毎週
+                    if (currentDate != null && selectedDay != null) {
+                        // 曜日を設定
+                        LocalDateTime startDate = getNextWeekday(currentDate, selectedDay);
+
+                        // 終了日が指定されていない場合、1年後を終了日と設定
+                        LocalDateTime end = endDate != null ? endDate : currentDate.plusYears(1);
+                        while (!startDate.isAfter(end)) {
+                            Tasks createdTask = dao.create(categoryId, accountId, taskName, memo, outin, startDate);
+                            if (createdTask == null) {
+                                System.err.println("タスク作成失敗: " + startDate.format(dateTimeFormatter));
+                            }
+                            startDate = startDate.plusWeeks(1); // 次の週
+                        }
+                    }
+                    break;
+
+                default:  // 繰り返しなし
+                    if (currentDate != null) {
                         Tasks createdTask = dao.create(categoryId, accountId, taskName, memo, outin, currentDate);
                         if (createdTask == null) {
                             System.err.println("タスク作成失敗: " + currentDate.format(dateTimeFormatter));
                         }
-                        currentDate = currentDate.plusDays(1); // 次の日
                     }
-                }
-                break;
-
-            case "weekly": // 毎週
-                if (currentDate != null && selectedDay != null) {
-                    // 曜日を設定
-                    LocalDateTime startDate = getNextWeekday(currentDate, selectedDay);
-
-                    // 終了日が指定されていない場合、1年後を終了日と設定
-                    LocalDateTime end = endDate != null ? endDate : currentDate.plusYears(1);
-                    while (!startDate.isAfter(end)) {
-                        Tasks createdTask = dao.create(categoryId, accountId, taskName, memo, outin, startDate);
-                        if (createdTask == null) {
-                            System.err.println("タスク作成失敗: " + startDate.format(dateTimeFormatter));
-                        }
-                        startDate = startDate.plusWeeks(1); // 次の週
-                    }
-                }
-                break;
-
-            default:  // 繰り返しなし
-                if (currentDate != null) {
-                    Tasks createdTask = dao.create(categoryId, accountId, taskName, memo, outin, currentDate);
-                    if (createdTask == null) {
-                        System.err.println("タスク作成失敗: " + currentDate.format(dateTimeFormatter));
-                    }
-                }
-                break;
-        }
+                    break;
+             }
+         }
+        
 
         // タスク一覧画面にリダイレクト
         response.sendRedirect("Task?date=" + date1);
