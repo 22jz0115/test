@@ -12,7 +12,7 @@
     <link rel="manifest" href="manifest.json">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script type="text/javascript" src="assets/js/nav/script.js"></script>
-    <script type="text/javascript" src="assets/js/task/script.js"></script>
+   
     
     <!-- サーバーから送られた日付をJavaScriptに渡す -->
 	<script>
@@ -100,6 +100,6 @@
     </div>
     
 
-
+    <script type="text/javascript" src="assets/js/task/script.js"></script>
 </body>
 </html>
