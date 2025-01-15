@@ -99,13 +99,15 @@
         </div>
 
      
-
-        <!-- 変更保存ボタン -->
-        <input type="hidden" name="presetTaskId" value="${presetTask.id}">
-        <input type="hidden" name="action" value="edit">
-        <button type="submit" class="button">変更を保存</button>
+		<div class="button-container">
+	        <!-- 変更保存ボタン -->
+	        <input type="hidden" name="presetTaskId" value="${presetTask.id}">
+	        <input type="hidden" name="action" value="edit">
+	        <button type="submit" class="button">変更を保存</button>
+        </div>
     </form>
     
+    <div class="button-container">
        <!-- 削除ボタン -->
         <form action="PresetTaskDelete" method="post">
             <input type="hidden" name="taskId" value="${presetTask.id}">
@@ -113,5 +115,6 @@
             <input type="hidden" name="action" value="delete">
             <button type="submit" class="button">削除</button>
         </form>
+        </div>
 </body>
 </html>

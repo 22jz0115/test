@@ -26,7 +26,12 @@
     </script>
    
 </script>
-    
+    <%
+    // 今日の日付を "YYYY-MM-DD" フォーマットで取得
+    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+    String currentDate = sdf.format(new java.util.Date());
+    request.setAttribute("currentDate", currentDate);
+%>
 </head>
 
 <body>
