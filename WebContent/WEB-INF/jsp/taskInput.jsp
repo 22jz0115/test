@@ -226,7 +226,7 @@
             <!-- メモの入力 -->
             <div class="form-group">
                 <label for="story" class="memo-label">メモ</label>
-                <textarea id="story" name="story" minlength="0" maxlength="300">メモ</textarea>
+                <textarea id="story" name="story" minlength="0" maxlength="300" placeholder="メモを入力してください。"></textarea>
             </div>
 
            <button 
