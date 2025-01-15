@@ -1077,7 +1077,7 @@ input:checked ~ .circle {
 
 /* ボタンが押された時のスタイル */
 button:active {
-    background-color: #3e8e41;  /* 押下時にさらに濃い緑 */
+    background-color: rgb(255, 128, 192);  /* 押下時にさらに濃い緑 */
 }
 
 

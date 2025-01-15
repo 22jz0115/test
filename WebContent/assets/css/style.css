@@ -350,7 +350,7 @@ button:disabled {
     height: 14px; /* 丸の高さ */
     border-radius: 50%;
     background-color: red; /* 丸の色 */
-    border: 1px solid black;
+    border: 1px solid;
 }
 
 /* 日曜日と土曜日のスタイル調整 */
