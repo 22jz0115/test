@@ -75,60 +75,67 @@ public class Preset extends HttpServlet {
         // 日付の処理
         LocalDate start = null;
         LocalDate end = null;
-
-        if ("currentMonth".equals(dateOption)) {
-            // 今月の場合
-            start = LocalDate.now().withDayOfMonth(1); // 今月の1日
-            end = start.withDayOfMonth(start.lengthOfMonth()); // 今月の最後の日
-        } else if ("specified".equals(dateOption)) {
-            // 日付指定の場合
-            start = LocalDate.parse(startDate);
-            end = LocalDate.parse(endDate);
+        
+        if("todayonly".equals(dateOption)) {
+        	boolean result = tasksDAO.insertPresetTasks(presetData, accountId, startDate.toString());
+        	if (!result) {
+                allInserted = false;
+            }
         } else {
-            // デフォルトとして指定された日付を使用
-            start = LocalDate.parse(startDate);
-            end = LocalDate.parse(endDate);
-        }
+        	if ("currentMonth".equals(dateOption)) {
+                // 今月の場合
+                start = LocalDate.now().withDayOfMonth(1); // 今月の1日
+                end = start.withDayOfMonth(start.lengthOfMonth()); // 今月の最後の日
+            } else if ("specified".equals(dateOption)) {
+                // 日付指定の場合
+                start = LocalDate.parse(startDate);
+                end = LocalDate.parse(endDate);
+            } else {
+                // デフォルトとして指定された日付を使用
+                start = LocalDate.parse(startDate);
+                end = LocalDate.parse(endDate);
+            }
 
-        // 繰り返し設定によるタスク挿入処理
-        switch (repeatOption) {
-            case "daily": // 毎日
-                for (LocalDate date = start; !date.isAfter(end); date = date.plusDays(1)) {
-                    boolean result = tasksDAO.insertPresetTasks(presetData, accountId, date.toString());
-                    if (!result) {
-                        allInserted = false;
+            // 繰り返し設定によるタスク挿入処理
+            switch (repeatOption) {
+                case "daily": // 毎日
+                    for (LocalDate date = start; !date.isAfter(end); date = date.plusDays(1)) {
+                        boolean result = tasksDAO.insertPresetTasks(presetData, accountId, date.toString());
+                        if (!result) {
+                            allInserted = false;
+                        }
                     }
-                }
-                break;
+                    break;
 
-            case "weekly": // 毎週
-                // 曜日を取得
-                int targetDay = getDayOfWeek(selectedDay);
-                LocalDate currentDate = start;
+                case "weekly": // 毎週
+                    // 曜日を取得
+                    int targetDay = getDayOfWeek(selectedDay);
+                    LocalDate currentDate = start;
 
-                // 指定された曜日が来るまで日付を進める
-                while (currentDate.getDayOfWeek().getValue() != targetDay) {
-                    currentDate = currentDate.plusDays(1); // 次の日に進める
-                }
-
-                // 現在の曜日が指定した曜日に一致した場合からタスクを挿入
-                while (!currentDate.isAfter(end)) {
-                    boolean result = tasksDAO.insertPresetTasks(presetData, accountId, currentDate.toString());
-                    if (!result) {
-                        allInserted = false;
+                    // 指定された曜日が来るまで日付を進める
+                    while (currentDate.getDayOfWeek().getValue() != targetDay) {
+                        currentDate = currentDate.plusDays(1); // 次の日に進める
                     }
-                    currentDate = currentDate.plusWeeks(1); // 次の週の同じ曜日に進む
-                }
-                break;
 
-            default: // 繰り返しなし
-                for (LocalDate date = start; !date.isAfter(end); date = date.plusDays(1)) {
-                    boolean result = tasksDAO.insertPresetTasks(presetData, accountId, date.toString());
-                    if (!result) {
-                        allInserted = false;
+                    // 現在の曜日が指定した曜日に一致した場合からタスクを挿入
+                    while (!currentDate.isAfter(end)) {
+                        boolean result = tasksDAO.insertPresetTasks(presetData, accountId, currentDate.toString());
+                        if (!result) {
+                            allInserted = false;
+                        }
+                        currentDate = currentDate.plusWeeks(1); // 次の週の同じ曜日に進む
                     }
-                }
-                break;
+                    break;
+
+                default: // 繰り返しなし
+                    for (LocalDate date = start; !date.isAfter(end); date = date.plusDays(1)) {
+                        boolean result = tasksDAO.insertPresetTasks(presetData, accountId, date.toString());
+                        if (!result) {
+                            allInserted = false;
+                        }
+                    }
+                    break;
+             }
         }
 
         // 結果メッセージの処理

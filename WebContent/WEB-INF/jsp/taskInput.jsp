@@ -143,7 +143,7 @@
 			        	dateInput2.removeAttribute("required");
 			        	repeatafterme.removeAttribute("required");
 				    }
-    }
+    			}
 
 		
 		    // サーバーから渡された日付 (例: "2024-11-15") をJavaScriptに渡す
