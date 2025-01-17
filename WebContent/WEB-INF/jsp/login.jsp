@@ -29,6 +29,9 @@
                 <h1 class="rogin1">ログイン</h1>
             </div>
             <h2>sign in to your account</h2>
+            
+            
+            
             <div class="ground-1">
                 <div class="form-1">
                     <div class="login">
@@ -45,6 +48,12 @@
 				</p>
 				<br>
 				</div>
+				
+				   <!-- エラーメッセージを表示 -->
+            <c:if test="${not empty errorMessage}">
+                <p class="error-message">${errorMessage}</p>
+            </c:if>
+				
                 <div class="migi0">
                     <button 
 				        id="touroku" 
