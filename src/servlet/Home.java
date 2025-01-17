@@ -96,7 +96,7 @@ public class Home extends HttpServlet {
            int outCheck = 0;
            int inCheck = 0;
 
-           int comperTask = 10;  // 比較基準となるタスク数
+           int comperTask =10;  // 比較基準となるタスク数
            int comperParsent = 10;  // 比較基準となる達成率
 
            // タスクリストを取得

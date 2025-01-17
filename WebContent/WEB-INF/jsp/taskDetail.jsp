@@ -128,6 +128,7 @@
             <input type="hidden" name="taskId" value="${task.id}">
             <input type="hidden" name="selectedDate" value="${selectedDate}">
             <input type="hidden" name="action" value="delete">
+            <input type="hidden" name="from" value="${from}">
             <button type="submit" class="button">削除</button>
         </form>
       </div>

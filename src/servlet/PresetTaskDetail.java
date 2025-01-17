@@ -43,7 +43,9 @@ public class PresetTaskDetail extends HttpServlet {
         String taskName = request.getParameter("taskName");
         String memo = request.getParameter("story");
         String taskId = request.getParameter("presetTaskId");
+        String presetId = request.getParameter("presetId");
         
+        System.out.print(presetId);
         int categoryId = Integer.parseInt(category);
         int presetTaskId = Integer.parseInt(taskId);
         int outin = request.getParameter("switch") != null ? 1 : 0;
@@ -53,7 +55,7 @@ public class PresetTaskDetail extends HttpServlet {
         boolean result = dao.updatePresetTask(presetTaskId, categoryId, taskName, taskTime, memo, outin);
         
         if (result != false) {
-            response.sendRedirect("PresetTaskDetail?presetTaskId=" + presetTaskId);  
+            response.sendRedirect("PresetDetail?presetId=" + presetId);  
         } else {
         	response.sendRedirect("PresetTaskDetail?presetTaskId=" + presetTaskId);
         }

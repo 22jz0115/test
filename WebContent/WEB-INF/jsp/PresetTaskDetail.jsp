@@ -51,7 +51,7 @@
     </header>
 
     <form action="PresetTaskDetail" method="post">
-
+	<input type="hidden" id="presetId" name="presetId" value="${presetTask.presetId}" />
         <!-- 時間入力 -->
         <div class="form-group">
             <label for="appt-time-${presetTask.id}">時間:</label>
