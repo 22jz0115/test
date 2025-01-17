@@ -75,7 +75,7 @@
         <form action="TaskInput" method="post">
 
             <div class="form-group">
-			    <label for="dateOption">日付:</label>
+			    <label for="dateOption">日付</label>
 			    <select id="dateOption" name="dateOption" onchange="toggleDateInput()" required>
 			    	<option value="todayonly">一日</option>
 			        <option value="specified">範囲指定</option>
