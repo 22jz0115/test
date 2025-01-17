@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,13 +34,16 @@ public class MyBoxesDAO {
 	
 	public List<MyBoxs> findByAccountId(int account_Id) {
 		List<MyBoxs> list = new ArrayList<>();
+		LocalDate nowDate = LocalDate.now();
+		int current_Year = nowDate.getYear();
 				
 		DBManager manager = DBManager.getInstance();
 		try(Connection cn = manager.getConnection()) {
-			String sql = "SELECT * FROM my_boxes WHERE account_id = ?";
+			String sql = "SELECT * FROM my_boxes WHERE account_id = ? AND created_year = ?";
 			
 			PreparedStatement stmt = cn.prepareStatement(sql);
 			stmt.setInt(1, account_Id);
+			stmt.setInt(2, current_Year);
 			ResultSet rs = stmt.executeQuery();
 			
 			// データをリストに格納
@@ -103,7 +107,7 @@ public class MyBoxesDAO {
 	 * DBにデータを追加する
 	 * @return 成功時は追加したデータ、失敗時はnull
 	 */
-	public MyBoxs create(int account_Id, int collection_Id) {
+	public MyBoxs create(int account_Id, int collection_Id, int created_year) {
 		int ret = -1;
 		
 		// 重複確認 → タスク名+タスク時間が重複でメッセージ出す
@@ -119,12 +123,12 @@ public class MyBoxesDAO {
 		try(Connection cn = manager.getConnection()) {
 			
 			// プレースホルダで変数部分を定義
-			String sql = "INSERT INTO my_boxes (account_id, collection_id) VALUES (?, ?)";
+			String sql = "INSERT INTO my_boxes (account_id, collection_id, created_year) VALUES (?, ?, ?)";
 			PreparedStatement stmt = cn.prepareStatement(sql);
 		
 			stmt.setInt(1, account_Id);
 			stmt.setInt(2, collection_Id);
-			
+			stmt.setInt(3, created_year);		
 			ret = stmt.executeUpdate();
 			
 		} catch(SQLException e) {

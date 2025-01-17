@@ -18,31 +18,37 @@ import model.Accounts;
 @WebServlet("/Delete")
 public class Delete extends HttpServlet {
     private static final long serialVersionUID = 1L;
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 画面遷移だけ
-		request.getRequestDispatcher("/WEB-INF/jsp/Task.jsp").forward(request, response);
-	}
+        // 画面遷移だけ
+        request.getRequestDispatcher("/WEB-INF/jsp/Task.jsp").forward(request, response);
+    }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			HttpSession session = request.getSession();
-		    Accounts loginUser = (Accounts) session.getAttribute("loginUser");
-		    
-		    String taskIdStr = request.getParameter("taskId");
-		    int taskId = Integer.parseInt(taskIdStr);
-		    
-		 // パラメータから日付を取得
-	        String selectedDate = request.getParameter("selectedDate");
-	        
-	        
-	        TasksDAO taskdao = new TasksDAO();
-	        taskdao.deleteTask(loginUser.getId(), taskId);
-	        
-	        request.getAttribute("selectedDate");
-	        response.sendRedirect(request.getContextPath() + "/Task?date=" + selectedDate);
-	   		
-	}
+    /**
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Accounts loginUser = (Accounts) session.getAttribute("loginUser");
 
+        // タスクIDを取得
+        String taskIdStr = request.getParameter("taskId");
+        int taskId = Integer.parseInt(taskIdStr);
+
+        // パラメータから日付と遷移元を取得
+        String selectedDate = request.getParameter("selectedDate");
+        String from = request.getParameter("from");
+
+        // タスクを削除
+        TasksDAO taskdao = new TasksDAO();
+        taskdao.deleteTask(loginUser.getId(), taskId);
+
+        // 遷移元に応じたリダイレクト
+        if ("TaskHistory".equals(from)) {
+            String categoryId = request.getParameter("categoryId");
+            response.sendRedirect(request.getContextPath() + "/TaskHistory?categoryId=" + categoryId);
+        } else {
+            response.sendRedirect(request.getContextPath() + "/Task?date=" + selectedDate);
+        }
+    }
 }

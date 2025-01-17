@@ -96,7 +96,7 @@ public class Home extends HttpServlet {
            int outCheck = 0;
            int inCheck = 0;
 
-           int comperTask = 10;  // 比較基準となるタスク数
+           int comperTask =10;  // 比較基準となるタスク数
            int comperParsent = 10;  // 比較基準となる達成率
 
            // タスクリストを取得
@@ -127,7 +127,7 @@ public class Home extends HttpServlet {
            // タスク数と達成率に基づいて新しいコレクションを作成
            if (taskList.size() >= comperTask && percentageFromDatabase1 >= comperParsent) {
            
-               boxDao.create(account.getId(), getCollectionMonth);  // 新しいコレクションを作成
+               boxDao.create(account.getId(), getCollectionMonth, updateDate.getYear());  // 新しいコレクションを作成
             
            }
        }
@@ -140,7 +140,6 @@ public class Home extends HttpServlet {
 		    System.out.println("ログイン時刻の更新に失敗しました。");
 		}
         
-
         HttpSession session = request.getSession();
 		session.setAttribute("loginUser", account);
          
