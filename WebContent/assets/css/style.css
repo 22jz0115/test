@@ -423,6 +423,7 @@ button:disabled {
 
 .notice{
     font-size: 1rem;
+    background: #ececec;
     margin-left: 10px;
 }
 
@@ -430,7 +431,7 @@ button:disabled {
     margin-left: 10px;
     margin-right: 10px;
     padding: 0.5em 1em;
-    color: #5989cf;
+    color: #084093;
     background: #c6e4ff;
     border-bottom: solid 6px #aac5de;
     border-radius: 9px;
@@ -876,7 +877,7 @@ td{
 
 .taskhistory {
   border-radius: 8px; /* 丸みを追加 */
-  box-shadow:0px 1px 10px #ff8d8d; /* シルバーのボックスシャドウ */
+  box-shadow:0px 1px 10px #8a7d7d; /* シルバーのボックスシャドウ */
   padding: 0.5em 0.5em 0.5em 2em; /* 内側の余白 */
     margin: 26px;
   
@@ -915,12 +916,6 @@ td{
     padding: 0;  /* 余白をリセット */ /* 親コンテナの高さを画面全体に設定 */
 }
 
-
-
-
-
-
-
 .pie-chart-2 {
     display: flex;
     justify-content: center;
@@ -933,11 +928,6 @@ td{
     background-image: radial-gradient(#fff 55%, transparent 55%), conic-gradient(#2589d0 50%, #f2f2f2 50% 100%);
     font-size: 20px;
 }
-
-
-
-
-
 
 
 

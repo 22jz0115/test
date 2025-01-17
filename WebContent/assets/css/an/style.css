@@ -699,7 +699,7 @@ button {
     width: 100%;
     padding: 12px; /* ボタンをタップしやすいように余白を増加 */
     font-size: 16px;
-    border-radius: 4px;
+    border-radius: 7px;
     background-color: #ffeeee;
     border: 1.5px solid #893535;
     color: #B15E5E;
