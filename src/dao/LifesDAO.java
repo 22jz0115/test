@@ -158,6 +158,28 @@ public class LifesDAO {
 	    return lifes;
 	}
 	
+	public Lifes lifeChangeText(int id, String title, String content) {
+	    int ret = -1;
+	    Lifes lifes = null;
+
+	    DBManager manager = DBManager.getInstance();
+	    try (Connection cn = manager.getConnection()) {
+	        // 正しいSQL文に修正
+	        String sql = "UPDATE lifes SET title = ?, content = ? WHERE id = ?";
+	        PreparedStatement stmt = cn.prepareStatement(sql);
+
+	        // プレースホルダに値をセット
+	        stmt.setString(1, title);
+	        stmt.setString(2, content);
+	        stmt.setInt(3, id);
+
+	        ret = stmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return lifes;
+	}
+	
 	public boolean deleteLife(int accountId, int Id) {
 	    int ret = -1;
 	    DBManager manager = DBManager.getInstance();

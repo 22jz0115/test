@@ -87,34 +87,35 @@ public class LifeChange extends HttpServlet {
 	    String fileName = filePart != null && filePart.getSize() > 0 
 	                      ? Paths.get(filePart.getSubmittedFileName()).getFileName().toString() 
 	                      : null;
+	    if(fileName == null) {
+	    	// DAOを使ってデータ更新
+		    LifesDAO lifesDAO = new LifesDAO();
+		    lifesDAO.lifeChangeText(lifeId, title, content);
+	    } else {
+	    	String uploadDir = "/opt/tomcat/webapps/test/assets/img"; // サーバ上のアップロード先ディレクトリ
 
-	    String uploadDir = "/opt/tomcat/webapps/test/assets/img"; // サーバ上のアップロード先ディレクトリ
+		    // ファイルを保存
+		    String relativePath = null;
+		    if (fileName != null && !fileName.isEmpty()) {
+		        File uploadDirFile = new File(uploadDir);
+		        if (!uploadDirFile.exists()) {
+		            uploadDirFile.mkdirs();
+		        }
 
-	    // ファイルを保存
-	    String relativePath = null;
-	    if (fileName != null && !fileName.isEmpty()) {
-	        File uploadDirFile = new File(uploadDir);
-	        if (!uploadDirFile.exists()) {
-	            uploadDirFile.mkdirs();
-	        }
+		        File file = new File(uploadDir, fileName);
+		        try (InputStream inputStream = filePart.getInputStream()) {
+		            Files.copy(inputStream, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		        }
+		        relativePath = "assets/img/" + fileName; // 相対パス
+		    }
 
-	        File file = new File(uploadDir, fileName);
-	        try (InputStream inputStream = filePart.getInputStream()) {
-	            Files.copy(inputStream, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
-	        }
-	        relativePath = "assets/img/" + fileName; // 相対パス
+		    // DAOを使ってデータ更新
+		    LifesDAO lifesDAO = new LifesDAO();
+
+		    lifesDAO.lifeChange(lifeId, title, relativePath, content); // データ更新
 	    }
 
-	    // DAOを使ってデータ更新
-	    LifesDAO lifesDAO = new LifesDAO();
-	    HttpSession session = request.getSession();
-	    Accounts loginUser = (Accounts) session.getAttribute("loginUser");
-
-	    lifesDAO.lifeChange(lifeId, title, relativePath, content); // データ更新
-	    
 	 // 成功したらリダイレクトまたは画面遷移
         response.sendRedirect("LifeHackHistory");
-
-	   
 	}
 }
