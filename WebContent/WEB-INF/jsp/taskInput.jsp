@@ -209,7 +209,7 @@
 
             <!-- カテゴリーのプルダウン -->
 		<div id="categoryDiv" class="form-group">
-		    <label for="categorySelect">カテゴリーを選択:</label>
+		    <label for="categorySelect">カテゴリーを選択</label>
 		    <select id="categorySelect" name="categorySelect" required>
 		        <c:forEach var="category" items="${categoryList}">
 		            <option id="task-1" class="deletable" value="${category.id}">${category.categoryName}</option>
@@ -219,7 +219,7 @@
 
             <!-- タスク名の入力 -->
             <div class="form-group">
-                <label for="taskName" class="taskname">タスク名:</label>
+                <label for="taskName" class="taskname">タスク名</label>
                 <input type="text" id="taskName" name="taskName" required minlength="1" maxlength="15" required/>
             </div>
 

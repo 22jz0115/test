@@ -915,12 +915,6 @@ td{
     padding: 0;  /* 余白をリセット */ /* 親コンテナの高さを画面全体に設定 */
 }
 
-
-
-
-
-
-
 .pie-chart-2 {
     display: flex;
     justify-content: center;
@@ -933,11 +927,6 @@ td{
     background-image: radial-gradient(#fff 55%, transparent 55%), conic-gradient(#2589d0 50%, #f2f2f2 50% 100%);
     font-size: 20px;
 }
-
-
-
-
-
 
 
 
