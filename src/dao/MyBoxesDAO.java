@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,13 +34,16 @@ public class MyBoxesDAO {
 	
 	public List<MyBoxs> findByAccountId(int account_Id) {
 		List<MyBoxs> list = new ArrayList<>();
+		LocalDate nowDate = LocalDate.now();
+		int current_Year = nowDate.getYear();
 				
 		DBManager manager = DBManager.getInstance();
 		try(Connection cn = manager.getConnection()) {
-			String sql = "SELECT * FROM my_boxes WHERE account_id = ?";
+			String sql = "SELECT * FROM my_boxes WHERE account_id = ? AND created_year = ?";
 			
 			PreparedStatement stmt = cn.prepareStatement(sql);
 			stmt.setInt(1, account_Id);
+			stmt.setInt(2, current_Year);
 			ResultSet rs = stmt.executeQuery();
 			
 			// データをリストに格納
