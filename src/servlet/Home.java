@@ -73,6 +73,13 @@ public class Home extends HttpServlet {
         AuthLogic logic = new AuthLogic();
         Accounts account = logic.login(email, pass);
         
+        if (account == null) {
+            // ログイン失敗時の処理
+            request.setAttribute("errorMessage", "メールアドレスまたはパスワードが正しくありません。");
+            request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
+            return;
+        }
+        
         
         MyBoxesDAO boxDao = new MyBoxesDAO();
         AccountsDAO Accountdao = new AccountsDAO();
