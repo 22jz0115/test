@@ -140,7 +140,6 @@ public class Home extends HttpServlet {
 		    System.out.println("ログイン時刻の更新に失敗しました。");
 		}
         
-
         HttpSession session = request.getSession();
 		session.setAttribute("loginUser", account);
          
