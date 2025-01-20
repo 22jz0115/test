@@ -43,7 +43,7 @@ public class Home extends HttpServlet {
 
         // タスクリストの取得
         TasksDAO dao = new TasksDAO();
-        List<Tasks> taskList = dao.findByCheckTask(loginUser.getId(), selectedDate);
+        List<Tasks> taskList = dao.findByHomeTask(loginUser.getId(), selectedDate);
         List<Tasks> allTask = dao.findByTaskList(loginUser.getId());
         request.setAttribute("taskList", taskList);
         

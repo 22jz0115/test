@@ -87,7 +87,7 @@ public class TasksDAO {
 		DBManager manager = DBManager.getInstance();
 		try(Connection cn = manager.getConnection()) {
 			// プレースホルダで変数部分を定義
-			String sql = "SELECT * FROM tasks WHERE account_id = ?　ORDER　BY 5";
+			String sql = "SELECT * FROM tasks WHERE account_id = ? ORDER BY 5";
 			PreparedStatement stmt = cn.prepareStatement(sql);
 			stmt.setInt(1, account_id);
 			ResultSet rs = stmt.executeQuery();
@@ -110,6 +110,31 @@ public class TasksDAO {
 	    try (Connection cn = manager.getConnection()) {
 	        // SQL文でtask_datetimeの年月日部分のみを比較
 	        String sql = "SELECT * FROM tasks WHERE account_id = ? AND TRUNC(task_datetime) = TO_DATE(?, 'YYYY-MM-DD') ORDER BY 5";
+	        
+	        PreparedStatement stmt = cn.prepareStatement(sql);
+	        stmt.setInt(1, account_id);
+	        // パラメータとしてdateをセット
+	        stmt.setString(2, date);
+	        
+	        ResultSet rs = stmt.executeQuery();
+	        
+	        // データをリストに格納
+	        while (rs.next()) {
+	            taskList.add(rs2model(rs));
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return taskList;
+	}
+	
+	public List<Tasks> findByHomeTask(int account_id, String date) {
+	    List<Tasks> taskList = new ArrayList<>();
+	    DBManager manager = DBManager.getInstance();
+	    try (Connection cn = manager.getConnection()) {
+	        // SQL文でtask_datetimeの年月日部分のみを比較
+	        String sql = "SELECT * FROM tasks WHERE account_id = ? AND TRUNC(task_datetime) = TO_DATE(?, 'YYYY-MM-DD') AND check_task = 0 ORDER BY 5";
 	        
 	        PreparedStatement stmt = cn.prepareStatement(sql);
 	        stmt.setInt(1, account_id);
