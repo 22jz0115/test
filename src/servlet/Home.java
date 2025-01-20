@@ -86,12 +86,20 @@ public class Home extends HttpServlet {
         LocalDate now = LocalDate.now();  // 現在の日付を取得
 
         int getCollectionMonth = 0;  // 初期値を設定
+        int getCollectyear = 0;
         
         LocalDateTime updateDate = account.getUpdateDate();  // updateDate を取得
 
         if (updateDate != null) {
             // updateDate の月を取得
             getCollectionMonth = updateDate.getMonthValue();
+        } else {
+            System.err.println("loginUser's updateDate is null.");
+        }
+        
+        if (updateDate != null) {
+            // updateDate の月を取得
+            getCollectyear = updateDate.getYear();
         } else {
             System.err.println("loginUser's updateDate is null.");
         }
@@ -108,7 +116,7 @@ public class Home extends HttpServlet {
 
            // タスクリストを取得
            TasksDAO dao = new TasksDAO();
-           List<Tasks> taskList = dao.findByCurrentMonth(account.getId(), getCollectionMonth);
+           List<Tasks> taskList = dao.findByYearAndMonth(account.getId(), getCollectyear, getCollectionMonth);
 
            // タスクリストを反復処理
            for (Tasks task : taskList) {

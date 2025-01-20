@@ -59,18 +59,25 @@
       
         
        
-        <div class="month-navigation">
-		    <!-- 月の変更ボタン -->
-		    <form action="Result" method="get">
-		        <input type="hidden" name="month" value="${month - 1}" />
-		        <button type="submit"><img alt="前月" src="assets/img/left_01.png"></button>
-		    </form>
-		    <h2 class="toMounthrate">${month }月の達成率</h2>
-		    <form action="Result" method="get">
-		        <input type="hidden" name="month" value="${month + 1}" />
-		        <button type="submit"><img alt="次月" src="assets/img/right_01.png"></button>
-		    </form>
-		</div>
+	<div class="month-navigation">
+	    <!-- 月の変更ボタン -->
+		<form action="Result" method="get">
+		    <!-- 前月の計算 -->
+		    <input type="hidden" name="month" value="${month == 1 ? 12 : month - 1}" />
+		    <input type="hidden" name="year" value="${month == 1 ? year - 1 : year}" />
+		    <button type="submit"><img alt="前月" src="assets/img/left_01.png"></button>
+		</form>
+		
+		<h2 class="toMounthrate">${year}年${month}月の達成率</h2>
+		
+		<form action="Result" method="get">
+		    <!-- 次月の計算 -->
+		    <input type="hidden" name="month" value="${month == 12 ? 1 : month + 1}" />
+		    <input type="hidden" name="year" value="${month == 12 ? year + 1 : year}" />
+		    <button type="submit"><img alt="次月" src="assets/img/right_01.png"></button>
+		</form>	
+	</div>
+
 
     
 

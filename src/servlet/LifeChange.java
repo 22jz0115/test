@@ -67,7 +67,8 @@ public class LifeChange extends HttpServlet {
 	    // lifeId パラメータの取得と検証
 	    String lifeIdParam = request.getParameter("lifeId");
 	    String title = request.getParameter("title");
-        String content = request.getParameter("comment");
+	    String content = request.getParameter("comment");
+	    String deleteImage = request.getParameter("deleteImage"); // 画像削除フラグ
 
 	    if (lifeIdParam == null || lifeIdParam.isEmpty()) {
 	        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "lifeId パラメータがありません");
@@ -82,40 +83,63 @@ public class LifeChange extends HttpServlet {
 	        return;
 	    }
 
-	    // ファイルアップロードの処理
-	    Part filePart = request.getPart("file");
-	    String fileName = filePart != null && filePart.getSize() > 0 
-	                      ? Paths.get(filePart.getSubmittedFileName()).getFileName().toString() 
-	                      : null;
-	    if(fileName == null) {
-	    	// DAOを使ってデータ更新
-		    LifesDAO lifesDAO = new LifesDAO();
-		    lifesDAO.lifeChangeText(lifeId, title, content);
+	    // DAOのインスタンス作成
+	    LifesDAO lifesDAO = new LifesDAO();
+
+	    // 画像削除フラグがセットされている場合、画像を空白で更新
+	    if ("true".equals(deleteImage)) {
+	        // 現在の画像パスを取得
+	        Lifes life = lifesDAO.find(lifeId);
+	        String currentImagePath = life.getImg(); // 現在の画像のパスを取得
+	        
+	        // ファイルシステムから画像を削除
+	        if (currentImagePath != null && !currentImagePath.isEmpty()) {
+	            String uploadDir = "/opt/tomcat/webapps/test/assets/img";
+	            File fileToDelete = new File(uploadDir, currentImagePath);
+	            if (fileToDelete.exists()) {
+	                fileToDelete.delete(); // 画像ファイルを削除
+	            }
+	        }
+	        
+	        // 画像のパスを空白にしてデータベースを更新
+	        lifesDAO.lifeChange(lifeId, title, "", content); 
+	        response.sendRedirect("LifeHackHistory");
+	        return;
 	    } else {
-	    	String uploadDir = "/opt/tomcat/webapps/test/assets/img"; // サーバ上のアップロード先ディレクトリ
+	        // ファイルアップロードの処理
+	        Part filePart = request.getPart("file");
+	        String fileName = filePart != null && filePart.getSize() > 0 
+	                          ? Paths.get(filePart.getSubmittedFileName()).getFileName().toString() 
+	                          : null;
 
-		    // ファイルを保存
-		    String relativePath = null;
-		    if (fileName != null && !fileName.isEmpty()) {
-		        File uploadDirFile = new File(uploadDir);
-		        if (!uploadDirFile.exists()) {
-		            uploadDirFile.mkdirs();
-		        }
+	        if (fileName == null) {
+	            // 画像がない場合はテキスト情報のみを更新
+	            lifesDAO.lifeChangeText(lifeId, title, content);
+	        } else {
+	            String uploadDir = "/opt/tomcat/webapps/test/assets/img"; // サーバ上のアップロード先ディレクトリ
+	            String relativePath = null;
 
-		        File file = new File(uploadDir, fileName);
-		        try (InputStream inputStream = filePart.getInputStream()) {
-		            Files.copy(inputStream, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
-		        }
-		        relativePath = "assets/img/" + fileName; // 相対パス
-		    }
+	            if (!fileName.isEmpty()) {
+	                File uploadDirFile = new File(uploadDir);
+	                if (!uploadDirFile.exists()) {
+	                    uploadDirFile.mkdirs();
+	                }
 
-		    // DAOを使ってデータ更新
-		    LifesDAO lifesDAO = new LifesDAO();
+	                File file = new File(uploadDir, fileName);
+	                try (InputStream inputStream = filePart.getInputStream()) {
+	                    Files.copy(inputStream, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+	                }
+	                relativePath = "assets/img/" + fileName; // 相対パス
+	            }
 
-		    lifesDAO.lifeChange(lifeId, title, relativePath, content); // データ更新
+	            // データベースの情報を更新
+	            lifesDAO.lifeChange(lifeId, title, relativePath, content);
+	        }
 	    }
 
-	 // 成功したらリダイレクトまたは画面遷移
-        response.sendRedirect("LifeHackHistory");
+	    // 成功したらリダイレクト
+	    response.sendRedirect("LifeHackHistory");
 	}
+
+
 }

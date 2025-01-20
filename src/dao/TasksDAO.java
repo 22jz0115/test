@@ -208,17 +208,17 @@ public class TasksDAO {
 	    }
 	}
 
-	public List<Tasks> findByCurrentMonth(int accountId , int currentMonth) {
+	public List<Tasks> findByYearAndMonth(int accountId, int year, int month) {
 	    List<Tasks> taskList = new ArrayList<>();
 	    DBManager manager = DBManager.getInstance();
 	    try (Connection cn = manager.getConnection()) {
 
-
-	        // SQL文でtask_datetimeの月部分のみを比較
-	        String sql = "SELECT * FROM tasks WHERE account_id = ? AND EXTRACT(MONTH FROM task_datetime) = ?";
+	        // SQL文でtask_datetimeの年と月を比較
+	        String sql = "SELECT * FROM tasks WHERE account_id = ? AND EXTRACT(YEAR FROM task_datetime) = ? AND EXTRACT(MONTH FROM task_datetime) = ?";
 	        PreparedStatement stmt = cn.prepareStatement(sql);
 	        stmt.setInt(1, accountId);
-	        stmt.setInt(2, currentMonth);  // 今日の月をSQLに渡す
+	        stmt.setInt(2, year);  // 年をSQLに渡す
+	        stmt.setInt(3, month);  // 月をSQLに渡す
 
 	        ResultSet rs = stmt.executeQuery();
 
