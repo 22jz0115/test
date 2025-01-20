@@ -24,9 +24,6 @@ public class Delete extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/jsp/Task.jsp").forward(request, response);
     }
 
-    /**
-     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         Accounts loginUser = (Accounts) session.getAttribute("loginUser");
