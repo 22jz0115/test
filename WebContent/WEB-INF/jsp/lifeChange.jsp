@@ -13,6 +13,7 @@
     <link rel="manifest" href="manifest.json">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script type="text/javascript" src="assets/js/nav/script.js"></script>
+   
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
@@ -47,37 +48,47 @@
     </header>
     
     <form id="lifeChangeForm" action="LifeChange" method="POST" style="margin: 0;" enctype="multipart/form-data">
-        <div class="background-1">
-            <input type="hidden" name="lifeId" value="${life.id}">
-            
-            <div class="class1">
-                <label for="title">タイトル</label>
-                <input type="text" id="title" name="title" required minlength="1" maxlength="50" size="30" value="${life.title}">
-            </div>
+	   <div class="background-1">
+	       <input type="hidden" name="lifeId" value="${life.id}">
+	       
+	       <div class="class1">
+	           <label for="title">タイトル</label>
+	           <input type="text" id="title" name="title" required minlength="1" maxlength="50" size="30" value="${life.title}">
+	       </div>
+	
+	       <div class="atcontent">
+	           <label for="comment">内容</label>
+	           <textarea name="comment" id="comment" rows="13" cols="40" required>${life.content}</textarea>
+	       </div>
+	
+	       <c:if test="${not empty life.img}">
+	           <!-- 現在の写真プレビューと削除オプション -->
+	           <div id="currentPhoto">
+	               <img id="previewImage" src="${life.img}" alt="現在の画像" style="width: 150px;">
+	               <button type="button" id="deleteImageButton">写真を削除</button>
+	           </div>
+	           <!-- 画像がある場合、新しい写真選択を無効化 -->
+	           <input type="file" id="file" name="file" accept="image/*" multiple disabled>
+	           <p>写真を削除すると新しい写真を選択できます。</p>
+	       </c:if>
+	       
+	       <c:if test="${empty life.img}">
+	           <!-- 画像がない場合、新しい写真を選択可能 -->
+	           <label for="file">新しい写真を選択:</label>
+	           <input type="file" id="file" name="file" accept="image/*" multiple onchange="previewFiles(this);">
+	       </c:if>
+	       
+   	       <div id="preview"></div>
+	       <!-- 画像削除用の隠しフィールド -->
+	        <input type="hidden" name="deleteImage" id="deleteImage" value="false">
+	        
+	    </div>
+	    
+	    <div class="button-container">
+	        <button type="submit" class="submit-button">変更を保存</button>
+	    </div>
+	</form>
 
-            <div class="atcontent">
-                <label for="comment">内容</label>
-                <textarea name="comment" id="comment" rows="13" cols="40" required>${life.content}</textarea>
-            </div>
-
-            <!-- 現在の写真プレビューと削除オプション -->
-            <div id="currentPhoto">
-                <c:if test="${not empty life.img}">
-                    <img id="previewImage" src="${life.img}" alt="現在の画像" style="width: 150px;">
-                    <button type="button" id="deleteImageButton">写真を削除</button>
-                </c:if>
-            </div>
-
-            <label for="file">新しい写真を選択:</label>
-            <input type="file" id="file" name="file" accept="image/*" multiple onchange="previewFiles(this);">
-            
-            <div id="preview"></div>
-        </div>
-        
-        <div class="button-container">
-            <button type="submit" class="submit-button">変更を保存</button>
-        </div>
-    </form>
     
     <form action="LifeHackHistory" method="POST">
         <div class="button-container">
@@ -86,59 +97,6 @@
         </div>
     </form>
 
-    <script>
-        let isImageDeleted = false; // 画像が削除されたかのフラグ
-
-        function previewFiles(input) {
-            const preview = document.getElementById('preview');
-            preview.innerHTML = ''; // 既存のプレビューをクリア
-
-            const files = input.files;
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i];
-                const reader = new FileReader();
-                
-                reader.onload = function(e) {
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.style.width = '150px';
-                    img.style.margin = '5px';
-                    preview.appendChild(img);
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-        
-        // 現在の写真を削除
-        document.getElementById('deleteImageButton')?.addEventListener('click', () => {
-            const currentPhoto = document.getElementById('currentPhoto');
-            const previewImage = document.getElementById('previewImage');
-
-            if (previewImage) {
-                previewImage.remove(); // プレビュー画像削除
-                currentPhoto.innerHTML = '<p>現在の写真は削除されました。</p>';
-                isImageDeleted = true; // 画像削除フラグをセット
-
-                // 新たに削除された情報をフォームに追加
-                const deleteImageInput = document.createElement('input');
-                deleteImageInput.type = 'hidden';
-                deleteImageInput.name = 'deleteImage';
-                deleteImageInput.value = 'true';
-                document.getElementById('lifeChangeForm').appendChild(deleteImageInput);
-            }
-        });
-
-        // フォーム送信時に画像削除フラグを確認
-        document.getElementById('lifeChangeForm').addEventListener('submit', function(e) {
-            if (isImageDeleted) {
-                // フォーム送信時に削除情報を送る
-                const deleteImageInput = document.createElement('input');
-                deleteImageInput.type = 'hidden';
-                deleteImageInput.name = 'deleteImage';
-                deleteImageInput.value = 'true';
-                this.appendChild(deleteImageInput);
-            }
-        });
-    </script>
+     <script type="text/javascript" src="assets/js/lifeChange/script.js"></script>
 </body>
 </html>

@@ -63,11 +63,15 @@ public class LifeChange extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    request.setCharacterEncoding("UTF-8");
-
-	    // lifeId パラメータの取得と検証
+	    
+	    // パラメータの取得
 	    String lifeIdParam = request.getParameter("lifeId");
 	    String title = request.getParameter("title");
-        String content = request.getParameter("comment");
+	    String content = request.getParameter("comment");
+	    String deleteImage = request.getParameter("deleteImage"); // 画像削除フラグ
+
+	    // デバッグ用
+	    System.out.println("deleteImage : " + deleteImage); // 削除フラグが正しく渡されているか確認
 
 	    if (lifeIdParam == null || lifeIdParam.isEmpty()) {
 	        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "lifeId パラメータがありません");
@@ -82,40 +86,63 @@ public class LifeChange extends HttpServlet {
 	        return;
 	    }
 
-	    // ファイルアップロードの処理
-	    Part filePart = request.getPart("file");
-	    String fileName = filePart != null && filePart.getSize() > 0 
-	                      ? Paths.get(filePart.getSubmittedFileName()).getFileName().toString() 
-	                      : null;
-	    if(fileName == null) {
-	    	// DAOを使ってデータ更新
-		    LifesDAO lifesDAO = new LifesDAO();
-		    lifesDAO.lifeChangeText(lifeId, title, content);
+	    // DAOインスタンス作成
+	    LifesDAO lifesDAO = new LifesDAO();
+
+	    // 画像削除フラグが 'true' なら画像削除処理
+	    if ("true".equals(deleteImage)) {
+	        // 現在の画像パスを取得
+	        Lifes life = lifesDAO.find(lifeId);
+	        String currentImagePath = life.getImg();
+
+	        if (currentImagePath != null && !currentImagePath.isEmpty()) {
+	            String uploadDir = "/opt/tomcat/webapps/test/assets/img";
+	            File fileToDelete = new File(uploadDir, currentImagePath);
+	            if (fileToDelete.exists()) {
+	                fileToDelete.delete(); // 画像削除
+	            }
+	        }
+
+	        // データベースで画像のパスを空に更新
+	        lifesDAO.lifeChange(lifeId, title, "", content);
+	        response.sendRedirect("LifeHackHistory");
+	        return;
 	    } else {
-	    	String uploadDir = "/opt/tomcat/webapps/test/assets/img"; // サーバ上のアップロード先ディレクトリ
+	        // 画像が送信されていればアップロード処理
+	        Part filePart = request.getPart("file");
+	        String fileName = filePart != null && filePart.getSize() > 0 
+	                          ? Paths.get(filePart.getSubmittedFileName()).getFileName().toString() 
+	                          : null;
 
-		    // ファイルを保存
-		    String relativePath = null;
-		    if (fileName != null && !fileName.isEmpty()) {
-		        File uploadDirFile = new File(uploadDir);
-		        if (!uploadDirFile.exists()) {
-		            uploadDirFile.mkdirs();
-		        }
+	        if (fileName == null) {
+	            // 画像がない場合はテキストのみ更新
+	            lifesDAO.lifeChangeText(lifeId, title, content);
+	        } else {
+	            String uploadDir = "/opt/tomcat/webapps/test/assets/img";
+	            String relativePath = null;
 
-		        File file = new File(uploadDir, fileName);
-		        try (InputStream inputStream = filePart.getInputStream()) {
-		            Files.copy(inputStream, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
-		        }
-		        relativePath = "assets/img/" + fileName; // 相対パス
-		    }
+	            if (!fileName.isEmpty()) {
+	                File uploadDirFile = new File(uploadDir);
+	                if (!uploadDirFile.exists()) {
+	                    uploadDirFile.mkdirs();
+	                }
 
-		    // DAOを使ってデータ更新
-		    LifesDAO lifesDAO = new LifesDAO();
+	                File file = new File(uploadDir, fileName);
+	                try (InputStream inputStream = filePart.getInputStream()) {
+	                    Files.copy(inputStream, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+	                }
+	                relativePath = "assets/img/" + fileName;
+	            }
 
-		    lifesDAO.lifeChange(lifeId, title, relativePath, content); // データ更新
+	            // 新しい画像のパスでデータベース更新
+	            lifesDAO.lifeChange(lifeId, title, relativePath, content);
+	        }
 	    }
 
-	 // 成功したらリダイレクトまたは画面遷移
-        response.sendRedirect("LifeHackHistory");
+	    // 処理後にリダイレクト
+	    response.sendRedirect("LifeHackHistory");
 	}
+
+
+
 }

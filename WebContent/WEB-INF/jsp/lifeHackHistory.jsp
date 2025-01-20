@@ -67,7 +67,7 @@
             </div>
             <h3>${life.title}</h3>
             <p style="white-space: pre-wrap;">${life.content}</p> <!-- 改行を反映 -->
-            <img src="${life.img}" alt="画像">
+            <img src="${life.img}">
         </div>
     </div>     
 </c:forEach>
