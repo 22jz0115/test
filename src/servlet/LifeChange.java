@@ -63,7 +63,6 @@ public class LifeChange extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    request.setCharacterEncoding("UTF-8");
-
 	    // lifeId パラメータの取得と検証
 	    String lifeIdParam = request.getParameter("lifeId");
 	    String title = request.getParameter("title");
