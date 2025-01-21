@@ -11,7 +11,6 @@
     <title>ライフハック変更</title>
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script type="text/javascript" src="assets/js/nav/script.js"></script>
    
     <script>
@@ -75,7 +74,7 @@
 	       <c:if test="${empty life.img}">
 	           <!-- 画像がない場合、新しい写真を選択可能 -->
 	           <label for="file">新しい写真を選択:</label>
-	           <input type="file" id="file" name="file" accept="image/*" multiple onchange="previewFiles(this);">
+	           <input type="file" id="file2" name="file" accept="image/*" multiple onchange="previewFiles(this);">
 	       </c:if>
 	       
    	       <div id="preview"></div>

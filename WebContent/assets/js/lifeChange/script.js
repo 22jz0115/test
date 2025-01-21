@@ -46,6 +46,12 @@ document.getElementById('deleteImageButton')?.addEventListener('click', () => {
 });
 
 document.getElementById('file').addEventListener('change', function() {
+    const files = this.files;
+    console.log("come");
+    
+    // 変更がない場合は処理を中止
+    if (files.length === 0) return;
+
     // 画像削除後に再度写真を選択した場合、プレビューを更新
     if (isImageDeleted) {
         isImageDeleted = false; // フラグをリセット
@@ -58,6 +64,7 @@ document.getElementById('file').addEventListener('change', function() {
 
     previewFiles(this);
 });
+
 
 // フォーム送信時に画像削除フラグが送信されるようにする
 document.getElementById('lifeChangeForm').addEventListener('submit', function(e) {

@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -99,51 +101,79 @@ public class TaskInput extends HttpServlet {
                     endDate = LocalDateTime.parse(date2 + " " + time, dateTimeFormatter);
                 }
             }
+            
+            ExecutorService executorService = Executors.newFixedThreadPool(1); // スレッドプールを適切に設定
 
-            // 繰り返し設定によるタスクの追加
-            switch (repeatOption) {
-                case "daily":  // 毎日
-                    if (currentDate != null) {
-                        LocalDateTime end = endDate != null ? endDate : currentDate.withDayOfMonth(currentDate.toLocalDate().lengthOfMonth());
-                        while (!currentDate.isAfter(end)) {
-                            Tasks createdTask = dao.create(categoryId, accountId, taskName, memo, outin, currentDate);
-                            if (createdTask == null) {
-                                System.err.println("タスク作成失敗: " + currentDate.format(dateTimeFormatter));
-                            }
-                            currentDate = currentDate.plusDays(1); // 次の日
-                        }
-                    }
-                    break;
-
-                case "weekly": // 毎週
-                    if (currentDate != null && selectedDay != null) {
-                        // 曜日を設定
-                        LocalDateTime startDate = getNextWeekday(currentDate, selectedDay);
-
-                        // 終了日が指定されていない場合、1年後を終了日と設定
-                        LocalDateTime end = endDate != null ? endDate : currentDate.plusYears(1);
-                        while (!startDate.isAfter(end)) {
-                            Tasks createdTask = dao.create(categoryId, accountId, taskName, memo, outin, startDate);
-                            if (createdTask == null) {
-                                System.err.println("タスク作成失敗: " + startDate.format(dateTimeFormatter));
-                            }
-                            startDate = startDate.plusWeeks(1); // 次の週
-                        }
-                    }
-                    break;
-
-                default:  // 繰り返しなし
-                    if (currentDate != null) {
-                        Tasks createdTask = dao.create(categoryId, accountId, taskName, memo, outin, currentDate);
-                        if (createdTask == null) {
-                            System.err.println("タスク作成失敗: " + currentDate.format(dateTimeFormatter));
-                        }
-                    }
-                    break;
-             }
+	         // 繰り返し設定によるタスクの追加
+	         switch (repeatOption) {
+	             case "daily":  // 毎日
+	                 if (currentDate != null) {
+	                     LocalDateTime end = endDate != null ? endDate : currentDate.withDayOfMonth(currentDate.toLocalDate().lengthOfMonth());
+	                     while (!currentDate.isAfter(end)) {
+	                         final LocalDateTime taskDate = currentDate;  // finalまたはeffectively finalにする
+	                         executorService.submit(() -> {
+	                             try {
+	                                 // 非同期でタスク作成処理
+	                                 Tasks createdTask = dao.create(categoryId, accountId, taskName, memo, outin, taskDate);
+	                                 if (createdTask == null) {
+	                                     System.err.println("タスク作成失敗: " + taskDate.format(dateTimeFormatter));
+	                                 }
+	                                 Thread.sleep(500);  // 遅延（非同期タスク内）
+	                             } catch (InterruptedException e) {
+	                                 e.printStackTrace();
+	                             }
+	                         });
+	                         currentDate = currentDate.plusDays(1); // 次の日
+	                     }
+	                 }
+	                 break;
+	
+	             case "weekly": // 毎週
+	                 if (currentDate != null && selectedDay != null) {
+	                     // 曜日を設定
+	                     LocalDateTime startDate = getNextWeekday(currentDate, selectedDay);
+	
+	                     // 終了日が指定されていない場合、1年後を終了日と設定
+	                     LocalDateTime end = endDate != null ? endDate : currentDate.plusYears(1);
+	                     while (!startDate.isAfter(end)) {
+	                         final LocalDateTime taskDate = startDate;  // finalまたはeffectively finalにする
+	                         executorService.submit(() -> {
+	                             try {
+	                                 Tasks createdTask = dao.create(categoryId, accountId, taskName, memo, outin, taskDate);
+	                                 if (createdTask == null) {
+	                                     System.err.println("タスク作成失敗: " + taskDate.format(dateTimeFormatter));
+	                                 }
+	                                 Thread.sleep(500);  // 遅延（非同期タスク内）
+	                             } catch (InterruptedException e) {
+	                                 e.printStackTrace();
+	                             }
+	                         });
+	                         startDate = startDate.plusWeeks(1); // 次の週
+	                     }
+	                 }
+	                 break;
+	
+	             	 default:  // 繰り返しなし
+	            	    if (currentDate != null) {
+	            	        final LocalDateTime taskDate = currentDate;  // finalにして非同期タスク内で使用
+	            	        executorService.submit(() -> {
+	            	            try {
+	            	                Tasks createdTask = dao.create(categoryId, accountId, taskName, memo, outin, taskDate);
+	            	                if (createdTask == null) {
+	            	                    System.err.println("タスク作成失敗: " + taskDate.format(dateTimeFormatter));
+	            	                }
+	            	                Thread.sleep(500);  // 遅延（非同期タスク内）
+	            	            } catch (InterruptedException e) {
+	            	                e.printStackTrace();
+	            	            }
+	            	        });
+	            	    }
+	            	    break;
+	         	 }
+		         // ExecutorServiceのシャットダウン
+		         executorService.shutdown();
          }
         
-
         // タスク一覧画面にリダイレクト
         response.sendRedirect("Task?date=" + date1);
     }

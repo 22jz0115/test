@@ -103,6 +103,7 @@
 			        <option value="daily" selected>毎日</option>
 			        <option value="weekly">毎週</option>
 			    </select>
+			    <p>タスクが反映されるまで時間がかかります</p>
 			</div>
 			
 			<script>
