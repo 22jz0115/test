@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/an/style.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/nav/script.js"></script>
     <title>ライフハック追加画面</title>
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
     <link rel="manifest" href="manifest.json">
@@ -29,7 +30,8 @@
         <div class="openbtn1"><span></span><span></span><span></span></div>
 	    <nav id="g-nav">
 	      <ul>
-	      <li> <a class="todaybutton" href=Task>今日のタスク</a></li>
+	      	<li> <a class="homebutton" href=Home>ホーム</a></li>
+	      	<li> <a class="todaybutton" href=Task>今日のタスク</a></li>
 	        <li> <a class="link-button" href="Category">タスク履歴</a></li>
 	        <li> <a class="link-button" href="PresetList">プリセット</a></li>
 	        <li><a class="link-button" href="LifeHack">ライフハック</a></li>

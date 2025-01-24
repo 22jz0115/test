@@ -34,31 +34,32 @@
 	</script>
 </head>
 <body>
-	    <header>
-        <a href="Home"><img class="imgVector" src="assets/img/Vector.png" alt=""></a>
-        <h1>タスク</h1>
-        <div class="openbtn1"><span></span><span></span><span></span></div>
-	    <nav id="g-nav">
-	      <ul>
-	      <li> <a class="todaybutton" href=Task>今日のタスク</a></li>
-	        <li> <a class="link-button" href="Category">タスク履歴</a></li>
-	        <li> <a class="link-button" href="PresetList">プリセット</a></li>
-	        <li><a class="link-button" href="LifeHack">ライフハック</a></li>
-	        <li> <a class="link-button" href="Result">統計</a></li>
-	        <li><a class="link-button" href="Collection">コレクション</a></li>
-	        <li> <a class="link-button" href="Setting">設定</a></li>        
-	        <c:if test="${not empty loginUser }">
-	       		<li><a class="rogout" href="Logout">ログアウト</a></li>
-	       	</c:if> 
-	      </ul>
-	    </nav>
-    </header>
-    	 <div id="month-buttons">
-            <button id="prev-month"><img alt="前月" src="assets/img/left_01.png"></button>
-            <h2 id="yearMonth"></h2>
-            <button id="next-month"><img alt="次月" src="assets/img/right_01.png"></button>
-        </div>
-        <table></table>
+    <header>
+       <a href="Home"><img class="imgVector" src="assets/img/Vector.png" alt=""></a>
+       <h1>タスク</h1>
+       <div class="openbtn1"><span></span><span></span><span></span></div>
+    <nav id="g-nav">
+      <ul>
+      	<li> <a class="homebutton" href=Home>ホーム</a></li>
+      	<li> <a class="todaybutton" href=Task>今日のタスク</a></li>
+        <li> <a class="link-button" href="Category">タスク履歴</a></li>
+        <li> <a class="link-button" href="PresetList">プリセット</a></li>
+        <li><a class="link-button" href="LifeHack">ライフハック</a></li>
+        <li> <a class="link-button" href="Result">統計</a></li>
+        <li><a class="link-button" href="Collection">コレクション</a></li>
+        <li> <a class="link-button" href="Setting">設定</a></li>        
+        <c:if test="${not empty loginUser }">
+       		<li><a class="rogout" href="Logout">ログアウト</a></li>
+       	</c:if> 
+      </ul>
+    </nav>
+   </header>
+ 	 <div id="month-buttons">
+         <button id="prev-month"><img alt="前月" src="assets/img/left_01.png"></button>
+         <h2 id="yearMonth"></h2>
+         <button id="next-month"><img alt="次月" src="assets/img/right_01.png"></button>
+     </div>
+     <table></table>
             
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 

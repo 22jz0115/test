@@ -12,7 +12,7 @@
     <link rel="manifest" href="manifest.json">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script type="text/javascript" src="assets/js/nav/script.js"></script>
-   <script type="text/javascript" src="assets/js/taskinput/script.js"></script>
+    <script type="text/javascript" src="assets/js/taskinput/script.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
@@ -24,14 +24,12 @@
             });
         }
     </script>
-   
-</script>
     <%
     // 今日の日付を "YYYY-MM-DD" フォーマットで取得
     java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
     String currentDate = sdf.format(new java.util.Date());
     request.setAttribute("currentDate", currentDate);
-%>
+	%>
 </head>
 
 <body>
@@ -56,7 +54,8 @@
 	    <div class="openbtn1"><span></span><span></span><span></span></div>
 	    <nav id="g-nav">
 	      <ul>
-	      <li> <a class="todaybutton" href=Task>今日のタスク</a></li>
+	      	<li> <a class="homebutton" href=Home>ホーム</a></li>
+	      	<li> <a class="todaybutton" href=Task>今日のタスク</a></li>
 	        <li> <a class="link-button" href="Category">タスク履歴</a></li>
 	        <li> <a class="link-button" href="PresetList">プリセット</a></li>
 	        <li><a class="link-button" href="LifeHack">ライフハック</a></li>

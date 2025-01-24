@@ -17,7 +17,7 @@ public class LifesDAO {
 				
 		DBManager manager = DBManager.getInstance();
 		try(Connection cn = manager.getConnection()) {
-			String sql = "SELECT * FROM lifes ORDER BY post_date";
+			String sql = "SELECT * FROM lifes ORDER BY post_date desc";
 			PreparedStatement stmt = cn.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			
@@ -37,7 +37,7 @@ public class LifesDAO {
 				
 		DBManager manager = DBManager.getInstance();
 		try(Connection cn = manager.getConnection()) {
-			String sql = "SELECT * FROM lifes WHERE account_id = ? ORDER BY post_date";
+			String sql = "SELECT * FROM lifes WHERE account_id = ? ORDER BY post_date desc";
 			PreparedStatement stmt = cn.prepareStatement(sql);
 			stmt.setInt(1, account_id);
 			ResultSet rs = stmt.executeQuery();
@@ -83,7 +83,7 @@ public class LifesDAO {
 	    DBManager manager = DBManager.getInstance();
 
 	    try (Connection cn = manager.getConnection()) {
-	        String sql = "SELECT * FROM lifes WHERE content LIKE ? ORDER BY post_date";
+	        String sql = "SELECT * FROM lifes WHERE content LIKE ? ORDER BY post_date desc";
 	        PreparedStatement stmt = cn.prepareStatement(sql);
 	        stmt.setString(1, "%" + keyword + "%");
 	        ResultSet rs = stmt.executeQuery();
