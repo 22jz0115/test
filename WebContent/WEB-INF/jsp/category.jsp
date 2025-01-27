@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/an/style.css">
-    <title>カテゴリー画面</title>
+    <title>タスク履歴画面</title>
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script type="text/javascript" src="assets/js/nav/script.js"></script>
     <link rel="shortcut icon" href="assets/img/icon-192x192.png" type="image/png">
@@ -27,7 +27,7 @@
 <body>
    <header>
         <a href="Home" class="back1"><img src="assets/img/戻るボタン.png" alt="戻るボタン"></a>
-        <h1>カテゴリー</h1>
+        <h1>タスク履歴</h1>
         <div class="openbtn1"><span></span><span></span><span></span></div>
 	    <nav id="g-nav">
 	      <ul>

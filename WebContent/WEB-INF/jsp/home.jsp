@@ -69,6 +69,7 @@
         <p id="weather"></p>
     </div>
 
+	<h2 class="notice">今日のタスク</h2>
     <div class="flex-other">
         <div class="columntaskbt">
             <div class="shorttaskmaneger">
