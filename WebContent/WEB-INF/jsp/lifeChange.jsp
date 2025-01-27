@@ -23,6 +23,18 @@
                 });
             });
         }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const deleteForm = document.querySelector('form[action="LifeHackHistory"]');
+            deleteForm.addEventListener('submit', function(event) {
+                event.preventDefault(); // フォーム送信を一時停止
+
+                if (confirm("本当に削除しますか？")) {
+                    this.submit(); // OKならフォーム送信
+                }
+            });
+        });
+                
     </script>
 </head>
 <body>

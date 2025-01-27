@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -71,7 +72,7 @@ public class LifeChange extends HttpServlet {
 	    String deleteImage = request.getParameter("deleteImage"); // 画像削除フラグ
 
 	    // デバッグ用
-	    System.out.println("deleteImage : " + deleteImage); // 削除フラグが正しく渡されているか確認
+	    System.out.println("deleteImage : " + deleteImage);
 
 	    if (lifeIdParam == null || lifeIdParam.isEmpty()) {
 	        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "lifeId パラメータがありません");
@@ -91,7 +92,6 @@ public class LifeChange extends HttpServlet {
 
 	    // 画像削除フラグが 'true' なら画像削除処理
 	    if ("true".equals(deleteImage)) {
-	        // 現在の画像パスを取得
 	        Lifes life = lifesDAO.find(lifeId);
 	        String currentImagePath = life.getImg();
 
@@ -103,35 +103,44 @@ public class LifeChange extends HttpServlet {
 	            }
 	        }
 
-	        // データベースで画像のパスを空に更新
 	        lifesDAO.lifeChange(lifeId, title, "", content);
 	        response.sendRedirect("LifeHackHistory");
 	        return;
 	    } else {
-	        // 画像が送信されていればアップロード処理
 	        Part filePart = request.getPart("file");
 	        String fileName = filePart != null && filePart.getSize() > 0 
 	                          ? Paths.get(filePart.getSubmittedFileName()).getFileName().toString() 
 	                          : null;
 
 	        if (fileName == null) {
-	            // 画像がない場合はテキストのみ更新
 	            lifesDAO.lifeChangeText(lifeId, title, content);
 	        } else {
 	            String uploadDir = "/opt/tomcat/webapps/test/assets/img";
 	            String relativePath = null;
 
 	            if (!fileName.isEmpty()) {
+	                // ファイル拡張子の取得
+	                String fileExtension = "";
+	                int dotIndex = fileName.lastIndexOf(".");
+	                if (dotIndex > 0) {
+	                    fileExtension = fileName.substring(dotIndex);
+	                }
+
+	                // 重複を防ぐためにUUID + タイムスタンプでファイル名を生成
+	                String uniqueFileName = UUID.randomUUID().toString() + "_" + System.currentTimeMillis() + fileExtension;
+	                System.out.println("Renamed filename: " + uniqueFileName);
+
+	                // アップロードディレクトリが存在しない場合は作成
 	                File uploadDirFile = new File(uploadDir);
 	                if (!uploadDirFile.exists()) {
 	                    uploadDirFile.mkdirs();
 	                }
 
-	                File file = new File(uploadDir, fileName);
+	                File file = new File(uploadDir, uniqueFileName);
 	                try (InputStream inputStream = filePart.getInputStream()) {
 	                    Files.copy(inputStream, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
 	                }
-	                relativePath = "assets/img/" + fileName;
+	                relativePath = "assets/img/" + uniqueFileName;
 	            }
 
 	            // 新しい画像のパスでデータベース更新
@@ -142,6 +151,7 @@ public class LifeChange extends HttpServlet {
 	    // 処理後にリダイレクト
 	    response.sendRedirect("LifeHackHistory");
 	}
+
 
 
 

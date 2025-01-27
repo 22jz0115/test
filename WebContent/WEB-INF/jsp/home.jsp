@@ -56,8 +56,7 @@
             <h2 id="yearMonth"></h2>
             <button id="next-month"><img alt="次月" src="assets/img/right_01.png"></button>
         </div>
-    
- 	   
+
         
        	<table class="calendar">   	
         </table>
