@@ -46,6 +46,7 @@
 	    </select>
 	</form>
 	
+	
     <div>
         <c:forEach var="entry" items="${groupedTasks}">
             <h3 class="taskdate">${entry.key}</h3> <!-- 日付を表示 -->
