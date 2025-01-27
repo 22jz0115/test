@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -70,34 +71,50 @@ public class LifeHack extends HttpServlet {
         System.out.println(content);
 
         // ファイルパートを取得
-        Part filePart = request.getPart("file"); // フォームのinput type="file"のname属性が"file"である場合
-        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // ファイル名を取得
+        Part filePart = request.getPart("file");
+        String relativePath = ""; // 初期値（写真がない場合）
 
-        // 保存先のディレクトリを指定 (絶対パスを使用)
-        String uploadDir = "/opt/tomcat/webapps/test/assets/img"; // 直接絶対パスを指定
+        if (filePart != null && filePart.getSize() > 0) { // ファイルが存在する場合のみ処理
+            String originalFileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+            System.out.println("Original filename: " + originalFileName);
 
-        // 保存先のディレクトリが存在しない場合は作成
-        File uploadDirFile = new File(uploadDir);
-        if (!uploadDirFile.exists()) {
-            uploadDirFile.mkdirs();
-        }
+            // 拡張子を取得
+            String fileExtension = "";
+            int dotIndex = originalFileName.lastIndexOf(".");
+            if (dotIndex > 0) {
+                fileExtension = originalFileName.substring(dotIndex);
+            }
 
-        // 既存のファイルを削除（同名ファイルが存在する場合）
-        File file = new File(uploadDir, fileName);
-        if (file.exists()) {
-            file.delete(); // 既存のファイルを削除
-        }
+            // 重複しないようにファイル名を変更（UUID + タイムスタンプ）
+            String uniqueFileName = UUID.randomUUID().toString() + "_" + System.currentTimeMillis() + fileExtension;
+            System.out.println("Renamed filename: " + uniqueFileName);
 
-        // ファイルを保存
-        try (InputStream inputStream = filePart.getInputStream()) {
-            Files.copy(inputStream, file.toPath(), StandardCopyOption.REPLACE_EXISTING); // ファイルを保存
+            // 保存先のディレクトリを指定
+            String uploadDir = "/opt/tomcat/webapps/test/assets/img";
+
+            // 保存先のディレクトリが存在しない場合は作成
+            File uploadDirFile = new File(uploadDir);
+            if (!uploadDirFile.exists()) {
+                uploadDirFile.mkdirs();
+            }
+
+            // 保存先ファイルパスを設定
+            File file = new File(uploadDir, uniqueFileName);
+
+            // ファイルを保存
+            try (InputStream inputStream = filePart.getInputStream()) {
+                Files.copy(inputStream, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            }
+
+            // 相対パスを設定
+            relativePath = "assets/img/" + uniqueFileName;
+        } else {
+            System.out.println("No file uploaded.");
+            relativePath = ""; // デフォルト画像を指定（存在しない場合は空文字）
         }
 
         // 成功メッセージ
-        response.getWriter().write("File uploaded successfully: " + fileName);
-        
-        // データベースに保存する相対パス
-        String relativePath = "assets/img/" + fileName;
+        response.getWriter().write("File uploaded successfully: " + relativePath);
 
         // DAOを使ってデータベースに保存
         LifesDAO lifesDAO = new LifesDAO();
@@ -110,6 +127,8 @@ public class LifeHack extends HttpServlet {
         // 成功したらリダイレクトまたは画面遷移
         response.sendRedirect("LifeHack");
     }
+
+
 
     
 }
