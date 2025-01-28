@@ -17,7 +17,7 @@ public class LifesDAO {
 				
 		DBManager manager = DBManager.getInstance();
 		try(Connection cn = manager.getConnection()) {
-			String sql = "SELECT * FROM lifes ORDER BY post_date desc";
+			String sql = "SELECT * FROM (SELECT * FROM lifes ORDER BY post_date desc) where rownum <= 15";
 			PreparedStatement stmt = cn.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			
