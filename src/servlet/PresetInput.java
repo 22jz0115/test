@@ -31,6 +31,12 @@ public class PresetInput extends HttpServlet {
 		
 		HttpSession session = request.getSession();
         Accounts loginUser = (Accounts) session.getAttribute("loginUser");
+
+        if (loginUser == null) {
+            request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
+            return;
+        }
+        
         int accountId = loginUser.getId();
 		
         CategoriesDAO dao = new CategoriesDAO();
@@ -78,5 +84,4 @@ public class PresetInput extends HttpServlet {
         
         response.sendRedirect("/test/Preset");
 	}
-
 }

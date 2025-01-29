@@ -15,13 +15,9 @@ import dao.LifesDAO;
 import model.Accounts;
 import model.Lifes;
 
-/**
- * Servlet implementation class LifeHackHisotry
- */
 @WebServlet("/LifeHackHistory")
 public class LifeHackHistory extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		   HttpSession session = request.getSession();
 	        Accounts loginUser = (Accounts) session.getAttribute("loginUser");
@@ -31,11 +27,8 @@ public class LifeHackHistory extends HttpServlet {
 	            return;
 	        }
 
-
 	        LifesDAO dao = new LifesDAO();
 	        List<Lifes> lifeList;
-
-	        
 
 	       lifeList = dao.getByAccountId(loginUser.getId());
 	       
@@ -49,9 +42,6 @@ public class LifeHackHistory extends HttpServlet {
 	        request.getRequestDispatcher("/WEB-INF/jsp/lifeHackHistory.jsp").forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
         Accounts loginUser = (Accounts) session.getAttribute("loginUser");
@@ -84,7 +74,5 @@ public class LifeHackHistory extends HttpServlet {
         
    	 // 成功したらリダイレクトまたは画面遷移
            response.sendRedirect("LifeHackHistory");
-		
 	}
-
 }

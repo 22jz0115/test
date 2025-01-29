@@ -18,6 +18,12 @@ public class Unsubscribe extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 	    Accounts loginUser = (Accounts) session.getAttribute("loginUser");
+
+        if (loginUser == null) {
+            request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
+            return;
+        }
+	    
 	    int accountId = loginUser.getId();
 
 	    try {
@@ -41,5 +47,4 @@ public class Unsubscribe extends HttpServlet {
 	        response.getWriter().write("Error: " + e.getMessage());
 	    }
 	}
-
 }

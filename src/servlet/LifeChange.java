@@ -21,17 +21,10 @@ import dao.LifesDAO;
 import model.Accounts;
 import model.Lifes;
 
-/**
- * Servlet implementation class LifeChange
- */
 @WebServlet("/LifeChange")
 @MultipartConfig
 public class LifeChange extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		   HttpSession session = request.getSession();
 	        Accounts loginUser = (Accounts) session.getAttribute("loginUser");
@@ -70,9 +63,6 @@ public class LifeChange extends HttpServlet {
 	    String title = request.getParameter("title");
 	    String content = request.getParameter("comment");
 	    String deleteImage = request.getParameter("deleteImage"); // 画像削除フラグ
-
-	    // デバッグ用
-	    System.out.println("deleteImage : " + deleteImage);
 
 	    if (lifeIdParam == null || lifeIdParam.isEmpty()) {
 	        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "lifeId パラメータがありません");
@@ -128,7 +118,6 @@ public class LifeChange extends HttpServlet {
 
 	                // 重複を防ぐためにUUID + タイムスタンプでファイル名を生成
 	                String uniqueFileName = UUID.randomUUID().toString() + "_" + System.currentTimeMillis() + fileExtension;
-	                System.out.println("Renamed filename: " + uniqueFileName);
 
 	                // アップロードディレクトリが存在しない場合は作成
 	                File uploadDirFile = new File(uploadDir);
@@ -151,8 +140,4 @@ public class LifeChange extends HttpServlet {
 	    // 処理後にリダイレクト
 	    response.sendRedirect("LifeHackHistory");
 	}
-
-
-
-
 }

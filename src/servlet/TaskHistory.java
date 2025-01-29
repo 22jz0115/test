@@ -23,10 +23,14 @@ import model.Tasks;
 @WebServlet("/TaskHistory")
 public class TaskHistory extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         Accounts loginUser = (Accounts) session.getAttribute("loginUser");
+
+        if (loginUser == null) {
+            request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
+            return;
+        }
 
         int categoryId = 0;
         String taskHistoryId = (String) session.getAttribute("taskHistoryId");

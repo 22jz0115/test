@@ -15,9 +15,6 @@ import dao.TasksDAO;
 import model.Accounts;
 import model.Tasks;
 
-/**
- * Servlet implementation class Result
- */
 @WebServlet("/Result")
 public class Result extends HttpServlet {
     private static final long serialVersionUID = 1L;

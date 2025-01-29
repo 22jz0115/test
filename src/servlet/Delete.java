@@ -12,15 +12,20 @@ import javax.servlet.http.HttpSession;
 import dao.TasksDAO;
 import model.Accounts;
 
-/**
- * Servlet implementation class Delete
- */
 @WebServlet("/Delete")
 public class Delete extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // 画面遷移だけ
+    	HttpSession session = request.getSession();
+        Accounts loginUser = (Accounts) session.getAttribute("loginUser");
+
+        if (loginUser == null) {
+            request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
+            return;
+        }
+    	
+    	// 画面遷移だけ
         request.getRequestDispatcher("/WEB-INF/jsp/Task.jsp").forward(request, response);
     }
 

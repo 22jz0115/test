@@ -15,13 +15,9 @@ import dao.TasksDAO;
 import model.Accounts;
 import model.Tasks;
 
-/**
- * Servlet implementation class Task
- */
 @WebServlet("/Task")
 public class Task extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         Accounts loginUser = (Accounts) session.getAttribute("loginUser");

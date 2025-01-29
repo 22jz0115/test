@@ -12,9 +12,6 @@ import javax.servlet.http.HttpSession;
 import dao.OptionsDAO;
 import model.Accounts;
 
-/**
- * Servlet implementation class ChangeUnbutton
- */
 @WebServlet("/ChangeUnbutton")
 public class ChangeUnbutton extends HttpServlet {
 	private static final long serialVersionUID = 1L;

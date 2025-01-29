@@ -10,9 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.PresetTasksDAO;
 
-/**
- * Servlet implementation class PresetTaskDelete
- */
 @WebServlet("/PresetTaskDelete")
 public class PresetTaskDelete extends HttpServlet {
 	private static final long serialVersionUID = 1L;

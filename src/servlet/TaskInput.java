@@ -21,16 +21,20 @@ import model.Accounts;
 import model.Categories;
 import model.Tasks;
 
-/**
- * Servlet implementation class TaskInput
- */
 @WebServlet("/TaskInput")
 public class TaskInput extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    
     // GETメソッド：タスク入力フォームの表示
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // パラメータから日付を取得
+    	HttpSession session = request.getSession();
+        Accounts loginUser = (Accounts) session.getAttribute("loginUser");
+
+        if (loginUser == null) {
+            request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
+            return;
+        }
+    	
+    	// パラメータから日付を取得
         String selectedDate = request.getParameter("date");
         
         if (selectedDate == null || selectedDate.isEmpty()) {
@@ -47,7 +51,6 @@ public class TaskInput extends HttpServlet {
     }
 
     // POSTメソッド：タスクの追加処理
- // POSTメソッド：タスクの追加処理
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 
@@ -211,5 +214,4 @@ public class TaskInput extends HttpServlet {
             default: throw new IllegalArgumentException("Invalid weekday: " + weekday);
         }
     }
-
 }
