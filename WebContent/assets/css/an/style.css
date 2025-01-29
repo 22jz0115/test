@@ -1112,6 +1112,7 @@ header{
     position: relative;      /* 画像の位置調整用に追加 */
 }
 
+
 header img{
     position: absolute;  /* 画像の位置を絶対配置 */
     left: 50px;          /* 画面の左から50pxに配置 */
