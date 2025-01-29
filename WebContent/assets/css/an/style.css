@@ -1112,16 +1112,17 @@ header{
     position: relative;      /* 画像の位置調整用に追加 */
 }
 
-
 header img{
     position: absolute;  /* 画像の位置を絶対配置 */
     left: 50px;          /* 画面の左から50pxに配置 */
+    margin-top:0;            /* 縦方向の中央に配置 */
     transform: translateY(-50%);  /* 縦方向の中央に正確に配置 */
 }
 
 header h1{
     color: #ffffff;
     margin: 0;
+    font-size: medium;
 }
 
 .setting{
@@ -1293,7 +1294,6 @@ input[type="color"]:hover {
 .openbtn1 {
     position: absolute; /* 通常時は固定されない */
     z-index: 10000; /* ボタンを最前面に */
-    top: 10px;
     right: 10px;
     cursor: pointer;
     width: 70px;
