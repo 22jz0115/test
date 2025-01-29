@@ -696,6 +696,10 @@ input, select, textarea {
     box-sizing: border-box; /* パディングが幅に影響しないように調整 */
 }
 
+.free_dropdown{
+	width: 240px;
+}
+
 textarea {
     resize: none;
 }
