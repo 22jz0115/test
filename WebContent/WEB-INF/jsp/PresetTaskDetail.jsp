@@ -24,7 +24,7 @@
 	    }
 
 	    document.addEventListener("DOMContentLoaded", function() {
-            const deleteForm = document.querySelector('form[action="PrisetTaskDelete"]');
+            const deleteForm = document.querySelector('form[action="PresetTaskDelete"]');
             deleteForm.addEventListener('submit', function(event) {
                 event.preventDefault(); // フォーム送信を一時停止
 
