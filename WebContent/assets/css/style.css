@@ -556,7 +556,7 @@ header{
 
 header img{
     position: absolute;  /* 画像の位置を絶対配置 */
-    left: 50px;          /* 画面の左から50pxに配置 */
+    left: 30px;          /* 画面の左から50pxに配置 */
     margin-top: 0;            /* 縦方向の中央に配置 */
     transform: translateY(-50%);  /* 縦方向の中央に正確に配置 */
 }

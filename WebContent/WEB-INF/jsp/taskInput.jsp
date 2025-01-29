@@ -191,7 +191,7 @@
             <!-- 時間入力 -->
             <div class="form-group">
                 <label for="appt-time">時間</label>
-                <input id="appt-time" type="time" name="appt-time" value="13:30" />
+                <input id="appt-time" type="time" name="appt-time" value="13:30" required/>
             </div>
 
             <!-- ラジオボタン -->
