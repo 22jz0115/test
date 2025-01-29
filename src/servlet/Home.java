@@ -145,7 +145,7 @@ public class Home extends HttpServlet {
                boxDao.create(account.getId(), getCollectionMonth, updateDate.getYear());  // 新しいコレクションを作成
             
            }
-       }
+        }
         
         boolean isUpdated = Accountdao.updateLoginTime(account.getId());
         

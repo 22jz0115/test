@@ -127,8 +127,4 @@ public class LifeHack extends HttpServlet {
         // 成功したらリダイレクトまたは画面遷移
         response.sendRedirect("LifeHack");
     }
-
-
-
-    
 }

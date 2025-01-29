@@ -8,9 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.PresetTasksDAO;
 import dao.PresetsDAO;
+import model.Accounts;
 import model.PresetTasks;
 import model.Presets;
 
@@ -18,6 +20,14 @@ import model.Presets;
 public class PresetDetail extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+        Accounts loginUser = (Accounts) session.getAttribute("loginUser");
+
+        if (loginUser == null) {
+            request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
+            return;
+        }
+		
 		int presetId = Integer.parseInt(request.getParameter("presetId"));
 		
 		PresetsDAO dao = new PresetsDAO();
@@ -45,5 +55,4 @@ public class PresetDetail extends HttpServlet {
         	response.sendRedirect("PresetDetail?presetId=" + presetId);
         }
 	}
-
 }

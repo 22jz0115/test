@@ -15,9 +15,6 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import dao.PresetTasksDAO;
 import model.PresetTasks;
 
-/**
- * Servlet implementation class GetPresetData
- */
 @WebServlet("/GetPresetData")
 public class GetPresetData extends HttpServlet {
 	private static final long serialVersionUID = 1L;

@@ -23,12 +23,18 @@ public class Preset extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // パラメータから日付を取得
+    	HttpSession session = request.getSession();
+        Accounts loginUser = (Accounts) session.getAttribute("loginUser");
+
+        if (loginUser == null) {
+            request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
+            return;
+        }
+    	
+    	// パラメータから日付を取得
         String selectedDate = request.getParameter("date");
         request.setAttribute("selectedDate", selectedDate);
-
-        HttpSession session = request.getSession();
-        Accounts loginUser = (Accounts) session.getAttribute("loginUser");
+        
         int accountId = loginUser.getId();
 
         PresetsDAO dao = new PresetsDAO();

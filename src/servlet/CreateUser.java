@@ -18,17 +18,10 @@ import model.Accounts;
 @WebServlet("/CreateUser")
 public class CreateUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher("/WEB-INF/jsp/shinki.jsp").forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		AccountsDAO dao = new AccountsDAO();
 		
@@ -56,6 +49,4 @@ public class CreateUser extends HttpServlet {
 			doGet(request, response);
 		}
 	}
-
-	
 }
