@@ -371,7 +371,7 @@ padding: 0 15px;
   
   input[type="file"] {
     margin-top: 10px;
-    width: 350px;
+    width: 260px;
   }
   
    
@@ -1052,7 +1052,7 @@ input:checked ~ .circle {
     border-radius: 5px;  /* 角を丸く */
     cursor: pointer;  /* ポインターカーソル */
     transition: background-color 0.3s ease, transform 0.3s ease;  /* 背景色と動きに遷移を設定 */
-    width: 350px;
+    width: 260px;
     
 }
 
@@ -1122,7 +1122,7 @@ header img{
 header h1{
     color: #ffffff;
     margin: 0;
-    font-size: medium;
+    font-size: 24px;
 }
 
 .setting{
@@ -1277,6 +1277,7 @@ input[type="color"]:hover {
 #g-nav li {
 	list-style: none;
 	text-align: center;
+	width: 240px;
 }
 
 #g-nav li a {

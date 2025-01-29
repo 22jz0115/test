@@ -567,7 +567,7 @@ header img{
 header h1{
     color: #ffffff;
     margin: 0;
-    font-size: medium;
+    font-size: 24px;
 }
 
 /* テーブル全体のスタイル */
@@ -888,9 +888,13 @@ td{
   font-size: 20px;
 }
 
+.TaskHistorySelect{
+	margin: 0 15px;	
+}
 
-
-
+.TaskHistoryDiv{
+	margin: 0 15px
+}
 
 
 

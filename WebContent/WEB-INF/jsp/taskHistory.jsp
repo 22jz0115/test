@@ -36,7 +36,7 @@
      
     <h2 class="taskcategory">${categoryName.categoryName}</h2>
     
-     <form action="TaskHistory" method="POST">
+     <form class="TaskHistorySelect" action="TaskHistory" method="POST">
 	    <input type="hidden" name="categoryId" value="${categoryName.id}"> <!-- hiddenでカテゴリIDを送信 -->
 	    <select id="categorySelect" name="searchHistory" onchange="this.form.submit()">            
 	        <option value="dateAsc" <c:if test="${searchHistory == 'dateAsc'}">selected</c:if>>昇順</option>
@@ -47,7 +47,7 @@
 	</form>
 	
 	
-    <div>
+    <div class="TaskHistoryDiv">
         <c:forEach var="entry" items="${groupedTasks}">
             <h3 class="taskdate">${entry.key}</h3> <!-- 日付を表示 -->
             <ul class="taskhistory">
