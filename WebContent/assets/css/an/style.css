@@ -28,9 +28,7 @@ body {
  display: contents;
   border: none; 
 }
-.loginpass{
-	width: 260px;
-}
+
 /* フォームの配置 */
 .form-1 {
     display: flex;
@@ -202,7 +200,13 @@ h2{
 }
 
 
+#loginpassword{
+	width: 200px;
+}
 
+#loginemail{
+	width: 200px;
+}
 
 
 /* ---------------------------------------------------------------新規登録画面---------------------------------------------- */

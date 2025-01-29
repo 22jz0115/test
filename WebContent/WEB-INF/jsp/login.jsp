@@ -37,13 +37,13 @@
                     <div class="login">
 				  <p class="form-item">
 				  <img src="assets/img/mail.png" alt="mail" class="icon">
-				  <input type="text" id="email" placeholder="メールアドレス" name="email" required>
+				  <input type="text" class="loginemail"id="loginemail" placeholder="メールアドレス" name="email" required>
 				  <div class="text_underline"></div>
 				</p>
 				<br>
 				<p class="form-item">
 				  <img src="assets/img/パスワード.png" alt="パスワード" class="icon">
-				  <input type="password" id="password" class="loginpass" placeholder="パスワード" name="password" minlength="4" maxlength="20" required>
+				  <input type="password" id="loginpassword" class="loginpass" placeholder="パスワード" name="password" minlength="4" maxlength="20" required>
 				  <div class="text_underline"></div>
 				</p>
 				<br>
