@@ -1196,10 +1196,13 @@ input[type="submit"]{
  position: fixed;
 }
 
-.ligeptag{
-	width: 19rem;
-}
+/*.ligeptag{*/
+/*	width: 19rem;*/
+/*}*/
 
+.lifehacksdiv{
+	margin: 0 10px;
+}
 
 .search-form-3 {
     width: 290px;
@@ -1273,6 +1276,7 @@ input[type="submit"]{
 
 .lifehacks h3, .lifehacks p {
     margin-left: 20px;
+    margin-right: 5px;
 }
 
 .lifehacks div img{

@@ -68,10 +68,10 @@
 		<!-- ライフハックリストを表示 -->
 	    <c:forEach var="life" items="${lifeList}">
 	        <div class="lifehacks">
-	            <div>
+	            <div class="lifehacksdiv">
 	                <h2>${life.account.name}さん</h2> <!-- ここを変更 -->
 	                <h3>${life.title}</h3>
-	                <p class="ligeptag">${life.content}</p>
+	                 <p style="white-space: pre-wrap;">${life.content}</p> <!-- 改行を反映 -->
 	                <img src="${life.img}">
 	            </div>
 	        </div>    	

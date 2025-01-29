@@ -53,7 +53,7 @@
         <form action="PresetInput" method="post">
 
 			<div class="setName">
-                <label for="preset_name">プリセット名</label>
+                <label class="PrisetNameLabel" for="preset_name">プリセット名</label>
                 <input type="text" name="presetTask_name" value="" data-options='${presetList}' class="free_dropdown" required/>
             </div>
 			
