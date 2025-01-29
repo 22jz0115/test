@@ -43,7 +43,7 @@
 				<br>
 				<p class="form-item">
 				  <img src="assets/img/パスワード.png" alt="パスワード" class="icon">
-				  <input type="password" id="password" placeholder="パスワード" name="password" minlength="4" maxlength="20" required>
+				  <input type="password" id="password" class="loginpass" placeholder="パスワード" name="password" minlength="4" maxlength="20" required>
 				  <div class="text_underline"></div>
 				</p>
 				<br>
