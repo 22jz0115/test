@@ -43,7 +43,7 @@
         <a href="PresetDetail?presetId=${presetTask.presetId}">
             <img class="imgVector" src="assets/img/戻るボタン.png" alt="">
         </a>
-        <h1>プリセットタスク詳細</h1>
+        <h1 class="presetH1">プリセットタスク詳細</h1>
         <div class="openbtn1"><span></span><span></span><span></span></div>
 	    <nav id="g-nav">
 	      <ul>

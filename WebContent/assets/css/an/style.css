@@ -28,7 +28,9 @@ body {
  display: contents;
   border: none; 
 }
-
+.loginpass{
+	width: 260px;
+}
 /* フォームの配置 */
 .form-1 {
     display: flex;
@@ -36,6 +38,7 @@ body {
     align-items: center;
     padding-top: 50px;
     padding-bottom: 30px;
+    margin: 0 30px;
 }
 
 /* 全体の文字サイズ調整 */
@@ -93,15 +96,22 @@ body {
 
 /* h1のスタイル */
 .rogin1 {
-  margin-top: 2cm; /* 2cm下に移動 */
   font-family: "Nico Moji", sans-serif;
   color: #893535;
   font-size: 3rem;
   text-align: center;
+  height: 60px;
 }
 
-
-
+#nickname{
+	width: 180px;
+}
+#email{
+	width: 180px;
+}
+#password{
+	width: 180px
+}
 h2{
   margin: 0;
   padding-left: 60px;
@@ -220,6 +230,7 @@ body {
   color: #893535;
   font-size: 2.5rem;
   text-align: center;
+  height: 60px;
 }
 
 
@@ -234,7 +245,7 @@ h2{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
+    margin: 20px 15px;
     flex-direction: column;
 }
 
@@ -1129,6 +1140,12 @@ header img{
 
 header h1{
     color: #ffffff;
+    margin: 0;
+    font-size: 30px;
+}
+
+.presetH1{
+	color: #ffffff;
     margin: 0;
     font-size: 20px;
 }
