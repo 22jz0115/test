@@ -67,7 +67,7 @@
         <!-- 時間入力 -->
         <div class="form-group">
             <label for="appt-time-${presetTask.id}">時間:</label>
-            <input id="appt-time-${presetTask.id}" type="time" name="apptTime" value="${presetTask.taskTime}"  />
+            <input id="appt-time-${presetTask.id}" type="time" name="apptTime" value="${presetTask.taskTime}"  required/>
         </div>
 
         <!-- 屋内・屋外スイッチ -->
