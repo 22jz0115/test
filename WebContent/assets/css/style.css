@@ -659,6 +659,7 @@ td{
     display: flex;
     align-items: center;
    justify-content: space-between;
+   margin-bottom: -13px;
 }
 
 .tasks ul li div{
@@ -669,7 +670,7 @@ td{
     font-weight: bold;
 }
 
-.tasktime {
+p.tasktime  {
     margin-top: 10px;
     }
 
