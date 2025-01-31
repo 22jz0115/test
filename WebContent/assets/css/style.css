@@ -536,7 +536,9 @@ button:disabled {
 
 /*タスク画面ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー*/
 
-
+.taskNameAndTime{
+	padding-top: 10px;	
+}
 .area{
     /* align-items: center;
     justify-content: center; */
@@ -670,14 +672,10 @@ td{
     font-weight: bold;
 }
 
-p.tasktime  {
-    margin-top: 10px;
-    }
-
 .tasks ul li div .taskname{
     width: 130px;
     margin-left: 25px;
-    margin-top: 12px;
+    margin-top: 4px;
 }
 
 
@@ -702,7 +700,7 @@ p.tasktime  {
     border-radius: 50%;
     margin: 0;
     text-align: left;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: bold;
 }
 

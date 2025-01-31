@@ -75,7 +75,7 @@
         <ul>
 	        <c:forEach var="task" items="${taskList}">
 	            <li class="task" data-task-id="${task.id}">
-                    <div>
+                    <div class="taskNameAndTime">
                         <div class="timersolid">
                             <p class="tasktime">${task.formattedTime}</p>
                             <span class="span"></span>
