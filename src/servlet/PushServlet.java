@@ -36,13 +36,10 @@ public class PushServlet extends HttpServlet {
             String jsonData = jsonBuffer.toString();
             
             JSONObject jsonObject = new JSONObject(jsonData);
-            String endpoint = jsonObject.getString("endpoint");
-            JSONObject keys = jsonObject.getJSONObject("keys");
-            String p256dh = keys.getString("p256dh");
-            String auth = keys.getString("auth");
+            String endpoint = jsonObject.getString("token");
 
             SubscriptionsDAO dao = new SubscriptionsDAO();
-            dao.create(accountId, endpoint, p256dh, auth);
+            dao.create(accountId, endpoint);
             
 
             // 成功レスポンス

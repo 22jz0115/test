@@ -18,7 +18,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -43,7 +45,8 @@ import model.Tasks;
 
 public class TaskNotificationScheduler {
     private static ScheduledExecutorService scheduler;
-    
+    private static final String FCM_URL = "https://fcm.googleapis.com/v1/projects/graduation03-c5ea0/messages:send";
+        
     public static void start() {
         scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(() -> {
@@ -88,43 +91,32 @@ public class TaskNotificationScheduler {
     
     public static void pushNotifiction(Tasks task, Subscriptions userSubsc) throws GeneralSecurityException {
         try {
-            // Bouncy Castleが登録されていない場合に登録
-            if (Security.getProvider("BC") == null) {
-                Security.addProvider(new BouncyCastleProvider());
-            }
-            // VAPID 鍵ペアを準備
-            String publicKey = "BBNgWYrBUGNBxLIb5IOUufjXNNkP-NWOwyt7k4QFxRxQfkZWKzBwsRwx_NnbNEyJLXeTOHnbXagsT-e_7wmkmMo";
-            String privateKey = "-----BEGIN PRIVATE KEY-----\r\n"
-            		+ "MD4CAQAwEAYHKoZIzj0CAQYFK4EEAAoEJzAlAgEBBCA3uA+5Qq2mkMkkF3c+qBrj\r\n"
-            		+ "7+OjxuJoBHEaQ+QyYhCgmQ==\r\n"
-            		+ "-----END PRIVATE KEY-----";
-            String subject = "https://graduation03.mydns.jp/test/Login";
+        	URL url = new URL(FCM_URL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Authorization", "Bearer " + "ya29.c.c0ASRK0GYPXJUumEHoBbgaGjAgo_3YwlkqyWTIgawVjvUvock2mOEcx_-pHacmd7KaMXbLc4f8Ki1jJAq51C8NPASv114GmGGxarOFUfhEDxp4Eseqv_kbu0wIq6AWHo4ezWOSJnXv5bK9catwzT9ikTrhjPLYDLLmeaUMjFgK7K_kw-8W_iV2gfWEgguArPndIGVTtmOJIslu5Zr-hH1AvsDuuf-cpfOsX6G10RqvoVaOC51XBIraVUFBpI-BCuiSsvyA6KPRuuiva0Trt_kLwinNu3AgaPAqflGx-m_-z_NWGcBygpkQQF7LzaWvCi5nxe7jGzxbyauoQIh9iB-PqUdaUbz3svmRmxmFxvyyzV27otWQOPDtdarIL385CsgWQSvaO6hU3-t00c0fvXUVcxky8MyzR3BmnBBZcZjzy1VMWz-xlzy1Riht_frxcO_qko2WZ_uuI-dqzUkfW1nwflV48z61v3wVvSa5jYYIbwIjMFkgapUubak10Qq4wkBp8gZdyW2exSw3luwm4W25xnXMsM3l6aIFzZS9dyw7xg3xUh-hpghX8ratxoq7IiRYOlpdhMQfs1MmevZQSfQFBa27rJgSOtmg-V3hFzVRfB02dVv7hofOqyn1MUwjZsdOI0Vckvw2_stFRS7mUFzS7Uew1Q3VVhy4Miy5tpVrlXnn5tWpSp0inespZciFFQitvmkgxv8k9-6qBRkwpp3ympZ7edRrRZfQh0bnMBc_-ifcjZQ0cJn8hpF1-SmwukIb_36d5JXiFhrtaqdys8RM-zn04g6gOr-32evFWJq39W42_qO26mxwM26_bgxO77MF5R7f__1sO8U_de2kcRuB-zd90vtIuh_RhyhZ31Q4hhza88eorRWoj_bUQS_cW3hFWn5Ilmlnxoiab5yMBR82dB3mudt6pZW3RqMRgSmtQwkoud_-uY-BbXwiSggt9u1Y6YBrv3W_c3SV0RwVnqIFSfSvfp1aOBuWSb5VjyrFMuJpr5O4j9SJi9c");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setDoOutput(true);
 
-            // ペイロードの生成
-            String payload = "{\"title\":\"" + task.getTaskName() + "\",\"body\":\"" + task.getMemo() + "\"}";
-            System.out.println("Payload created: " + payload);
+            // JSONデータ作成
+            Map<String, Object> notification = new HashMap<>();
+            notification.put("title", task.getTaskName());
+            notification.put("body", task.getMemo());
 
-            // VAPID トークンの生成
-            String vapidToken = createVapidToken(userSubsc.getEnd_point(), publicKey, privateKey, subject);
+            Map<String, Object> message = new HashMap<>();
+            message.put("to", userSubsc.getEnd_point());
+            message.put("notification", notification);
 
-            // Web Push 通知を送信
-            URL url = new URL(userSubsc.getEnd_point());
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("POST");
-            connection.setRequestProperty("Content-Type", "application/octet-stream");
-            connection.setRequestProperty("Authorization", "WebPush " + vapidToken);
-            connection.setRequestProperty("TTL", "2419200"); // 有効期限 (秒)
-            connection.setDoOutput(true);
+            JSONObject jsonMessage = new JSONObject(message);
 
-            // 暗号化されたペイロードを送信
-            byte[] encryptedPayload = encryptPayload(payload, userSubsc.getP256dh(), userSubsc.getAuth());
-            try (OutputStream os = connection.getOutputStream()) {
-                os.write(encryptedPayload);
-            }
+            // 送信
+            OutputStream os = conn.getOutputStream();
+            os.write(jsonMessage.toString().getBytes("UTF-8"));
+            os.close();
 
-            // レスポンスコードの確認
-            int responseCode = connection.getResponseCode();
-            System.out.println("Response Code: " + responseCode);
+            // レスポンスコード確認
+            int responseCode = conn.getResponseCode();
+            System.out.println("FCM Response Code: " + responseCode);
         } catch (Exception e) {
             e.printStackTrace();
         }

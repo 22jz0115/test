@@ -82,7 +82,7 @@ public class SubscriptionsDAO {
 	 * DBにデータを追加する
 	 * @return 成功時は追加したデータ、失敗時はnull
 	 */
-	public Subscriptions create(int accountId, String endPoint, String p256dh, String auth) {
+	public Subscriptions create(int accountId, String endPoint) {
 		int ret = -1;
 		
 		// 重複確認
@@ -96,12 +96,10 @@ public class SubscriptionsDAO {
 		try(Connection cn = manager.getConnection()) {
 			
 			// プレースホルダで変数部分を定義
-			String sql = "INSERT INTO subscriptions (account_id, end_point, p256dh, auth) VALUES (?, ?, ?, ?)";
+			String sql = "INSERT INTO subscriptions (account_id, end_point) VALUES (?, ?)";
 			PreparedStatement stmt = cn.prepareStatement(sql);
 			stmt.setInt(1, accountId);
 			stmt.setString(2, endPoint);
-			stmt.setString(3, p256dh);
-			stmt.setString(4, auth);
 			
 			ret = stmt.executeUpdate();
 			
