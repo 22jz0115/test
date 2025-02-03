@@ -12,33 +12,6 @@
     <link rel="manifest" href="manifest.json">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script type="text/javascript" src="assets/js/nav/script.js"></script>
-	<script type="module">
- 		 // Import the functions you need from the SDKs you need
- 		 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
- 		 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-analytics.js";
-		 import { getToken } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-messaging.js";
-		 import { getMessaging } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-messaging.js";
- 		 // TODO: Add SDKs for Firebase products that you want to use
- 		 // https://firebase.google.com/docs/web/setup#available-libraries
-
-  		// Your web app's Firebase configuration
- 		 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-		  const firebaseConfig = {
-   		 apiKey: "AIzaSyC73cdmKtY826SG3i_h2aNJonQ4wUJbgZg",
-   		 authDomain: "graduation03-c5ea0.firebaseapp.com",
-   		 projectId: "graduation03-c5ea0",
-   		 storageBucket: "graduation03-c5ea0.firebasestorage.app",
-   		 messagingSenderId: "224295109024",
-   		 appId: "1:224295109024:web:fa07b058c1bc4c424424c5",
-   		 measurementId: "G-5ZK298YMTC"
-  		};
-
-  		// Initialize Firebase
-  		const app = initializeApp(firebaseConfig);
-  		const analytics = getAnalytics(app);
-		const token = getToken(app);
-		const messaging = getMessaging(app);
-	</script>
    	<script>
     if ('serviceWorker' in navigator) {
         window.addEventListener('DOMContentLoaded', () => {
@@ -65,22 +38,31 @@
                         console.log('既に購読されています:', subscription);
                         return;
                     }
-                    Notification.requestPermission().then((permission) => {
-                        if (permission === "granted") {
-                            getToken(messaging, { vapidKey: "BFWUXDkoOBIxiwfhQ9b3OV7qQzPZRdpcdisQ0nCk7Ypgk6h4eFg-OcVcL6GHXdgrecFFo001rluhUbGcGwt5Row" }).then((currentToken) => {
-                                if (currentToken) {
-                                    console.log("取得したトークン:", currentToken);
-                                    sendSubscriptionToServer({
-                                        token: currentToken,
-                                    });
-                                } else {
-                                    console.log("トークンを取得できませんでした");
-                                }
-                            }).catch((err) => {
-                                console.error("トークン取得中にエラー:", err);
-                            });
-                        }
-                    });
+
+                    try {
+                        // 鍵を生成
+                        const { publicKey, authKey } = await generatePushKeys();
+
+                        // 新たにPush通知の購読を作成
+                        const newSubscription = await registration.pushManager.subscribe({
+                            userVisibleOnly: true,
+                            applicationServerKey: urlBase64ToUint8Array(publicKey),
+                        });
+
+                        console.log('Push通知の購読に成功:', newSubscription);
+
+                        // サーバーに送信
+                        sendSubscriptionToServer({
+                            endpoint: newSubscription.endpoint,
+                            keys: {
+                                auth: authKey,
+                                p256dh: publicKey,
+                            },
+                        });
+                    } catch (error) {
+                        console.error('Push通知の購読に失敗:', error);
+                        alert('Push通知の購読に失敗しました。後で再試行してください。');
+                    }
                 }
 
                 // Push通知の解除
@@ -301,5 +283,7 @@
             <button type="submit" class="logout-button">ログアウト</button>
         </form>
     </div>
+
+
 </body>
 </html>
