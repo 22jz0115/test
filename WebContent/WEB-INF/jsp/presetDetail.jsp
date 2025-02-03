@@ -60,10 +60,6 @@
 	 
 	<div id="presetDelete">
 		<h2 class="presetCategory">${preset.presetName}</h2>
-		<form action="PresetDetail" method="post" id="presetDeleteForm">
-			<input type="hidden" id="presetId" name="presetId" value="${presetId}" />
-			<button type="submit" id="presetDeleteButton">プリセット削除</button>
-		</form>
 	</div> 
 	
 	<div class="tasks">
@@ -83,5 +79,21 @@
 	        </c:forEach>
 	    </ul>
     </div>
+    
+    	
+	<div class="presetActiondiv">
+		<div class="presetAction2">
+            <form action="PresetDetail" method="post" id="presetDeleteForm">
+				<input type="hidden" id="presetId" name="presetId" value="${presetId}" />
+				<button type="submit" id="presetDeleteButton">プリセット削除</button>
+			</form>
+            <a href="PresetInput" id="presetButton">
+                <button id="presetTaskAdd" type="button">
+                    <img alt="追加ボタン" class="deleteImg" src="assets/img/pulsButton.png">
+                </button>
+            </a>
+       </div>
+	</div>
+		
 </body>
 </html>
