@@ -66,7 +66,7 @@
 	<input type="hidden" id="presetId" name="presetId" value="${presetTask.presetId}" />
         <!-- 時間入力 -->
         <div class="form-group">
-            <label for="appt-time-${presetTask.id}">時間:</label>
+            <label for="appt-time-${presetTask.id}">時間</label>
             <input id="appt-time-${presetTask.id}" type="time" name="apptTime" value="${presetTask.taskTime}"  required/>
         </div>
 

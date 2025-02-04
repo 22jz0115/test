@@ -1098,8 +1098,12 @@ input[type="submit"] {
     font-size: 18px;
     font-weight: bold;
     height: 36px;
-    padding-top: 5px;
     width: 50px;
+    
+     /* 中央揃えのためにflexを追加 */
+    display: flex;
+    justify-content: center;  /* 横方向の中央揃え */
+    align-items: center;      /* 縦方向の中央揃え */
 }
 
 span{
