@@ -61,7 +61,7 @@
                 </div>
                 <textarea name="comment" id="comment" rows="13" cols="40" placeholder="内容を入力してください" required></textarea>
                 
-                <label for="example">写真を選択:</label>
+                <label for="example">写真を選択</label>
                 <input type="file" name="file" accept="image/*" multiple onchange="previewFiles(this);">
             </div>
 

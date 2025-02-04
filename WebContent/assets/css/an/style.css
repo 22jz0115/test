@@ -713,7 +713,7 @@ input, select, textarea {
 }
 
 .free_dropdown{
-	width: 180px;
+	width: 160px;
 }
 
 textarea {
@@ -731,6 +731,9 @@ button {
     cursor: pointer;
 }
 
+.setName{
+	margin-top: 10px;
+}
 button:hover {
     background-color: #fdd; /* ホバー時に少し明るくする */
 }

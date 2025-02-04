@@ -77,7 +77,7 @@
 
 			<!-- カテゴリーのプルダウン -->
 			<div id="categoryDiv" class="form-group">
-			    <label for="categorySelect">カテゴリーを選択:</label>
+			    <label for="categorySelect">カテゴリーを選択</label>
 			    <select id="categorySelect" name="categorySelect">
 			        <!-- カテゴリのオプションがJavaScriptで動的に設定されます -->
 			        <c:forEach var="category" items="${categoryList}">
@@ -89,7 +89,7 @@
 		
 		    <!-- タスク名の入力 -->
 		    <div class="form-group">
-		        <label for="taskName" class="taskname">タスク名:</label>
+		        <label for="taskName" class="taskname">タスク名</label>
 		        <input type="text" id="taskName" name="taskName" required minlength="1" maxlength="8" required/>
 		    </div>
 		    

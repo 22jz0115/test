@@ -1099,6 +1099,11 @@ input[type="submit"] {
     font-weight: bold;
     height: 36px;
     width: 50px;
+    
+     /* 中央揃えのためにflexを追加 */
+    display: flex;
+    justify-content: center;  /* 横方向の中央揃え */
+    align-items: center;      /* 縦方向の中央揃え */
 }
 
 span{
