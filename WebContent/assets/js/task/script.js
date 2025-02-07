@@ -127,12 +127,17 @@ function getStartOfWeek(date) {
 
 
    function updateCheckedCount() {
-        const totalElements = document.querySelectorAll('.task').length;
-        const checkedCount = document.querySelectorAll('.check:checked').length;
-        let taskRate = Math.round((checkedCount / totalElements) * 100);
-        document.getElementById('countDisplay').textContent = taskRate + "％達成";
-        document.querySelector('.progress-bar').style.width = taskRate + '%';
-    }
+    const totalElements = document.querySelectorAll('.task').length;
+    const checkedCount = document.querySelectorAll('.check:checked').length;
+    
+    console.log('totalElements =' + totalElements);
+
+    let taskRate = totalElements > 0 ? Math.round((checkedCount / totalElements) * 100) : 0;
+
+    document.getElementById('countDisplay').textContent = taskRate + "％達成";
+    document.querySelector('.progress-bar').style.width = taskRate + '%';
+}
+
 
     // チェックボックスにイベントリスナーを追加
     document.querySelectorAll('.check').forEach(checkbox => {
