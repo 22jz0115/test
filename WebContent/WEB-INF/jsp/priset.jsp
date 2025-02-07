@@ -141,6 +141,11 @@
 			        	dateInput1.setAttribute("required", "required");
 			        	dateInput2.removeAttribute("required");
 			        	repeatafterme.removeAttribute("required");
+
+			
+						document.getElementById("repeatSelect").options[0].selected = true;
+			
+			             toggleRepeatOptions(); // UIを更新
 				    }
     			}
 

@@ -126,6 +126,8 @@ function getStartOfWeek(date) {
 
 
 
+
+
    function updateCheckedCount() {
     const totalElements = document.querySelectorAll('.task').length;
     const checkedCount = document.querySelectorAll('.check:checked').length;
