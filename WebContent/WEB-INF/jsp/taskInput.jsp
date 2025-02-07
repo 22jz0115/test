@@ -114,6 +114,8 @@
 			        const dateInput1 = document.getElementById("dateInput1");
 			        const dateInput2 = document.getElementById("dateInput2");
 			        const repeatafterme = document.getElementById("repeatafterme");
+			        const repeatSelect = document.getElementById("repeatSelect").value;
+			        const weeklyOptions = document.getElementById("weeklyOptions");
 			
 			        if (dateOption === "currentMonth") {
 			            // 今月が選択された場合、日付入力を非表示に
@@ -138,6 +140,8 @@
 			        	dateInput1Container.style.display = "block";
 			        	dateInput2Container.style.display = "none";
 			        	repeatafterme.style.display = "none";
+			        	 weeklyOptions.style.display = "none";
+			        	
 
 			        	dateInput1.setAttribute("required", "required");
 			        	dateInput2.removeAttribute("required");

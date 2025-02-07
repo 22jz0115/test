@@ -779,6 +779,7 @@ td{
 }
 
 /* 進捗バー全体のコンテナ */
+/* 進捗バー全体のコンテナ */
 .progress-container {
     width: 90%;
     background-color: #e0e0e0;
@@ -795,14 +796,19 @@ td{
     background-color: #FFACAC;
     width: 0%;
     border-radius: 25px 0 0 25px;
-    transition: width 0.4s ease, background-color 0.4s ease;  /* 色の変化にもアニメーション追加 */
+    transition: width 0.4s ease, background-color 0.4s ease, color 0.4s ease;  /* 文字色の変化もアニメーション */
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #ffffff;
+    color: rgba(255, 255, 255, 0); /* 初期状態では透明 */
     font-weight: bold;
     font-size: 11px;
+}
+
+/* 進捗バーが0%以上になったら文字を表示 */
+.progress-bar:not([style*="width: 0%"]) {
+    color: rgba(255, 255, 255, 1);
 }
 
 /* 100%になったときに色を変える */
