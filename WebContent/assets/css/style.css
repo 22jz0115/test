@@ -409,11 +409,6 @@ button:disabled {
     
 }
 
-.today {                        /* 丸くする */
-    color:#e19696;                              /* 文字色を白に */
-    font-weight: bold;                          /* 太字 */
-    text-align: center;                         /* テキストを中央に配置 */
-}
 
 
 .notice{
@@ -523,6 +518,11 @@ button:disabled {
 
 
 
+.today {                    
+    color:#f4f433;                              /* 文字色を白に */
+    font-weight: bold;                          /* 太字 */
+    text-align: center;                         /* テキストを中央に配置 */
+}
 
 
 
